@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Models">
+      <UniqueIdentifier>{1f87551c-c898-4bea-a6a2-ac31b0a92982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms">
+      <UniqueIdentifier>{d50f8fee-e153-429a-beaa-702866e0cf63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\CustomControls">
+      <UniqueIdentifier>{48e4ecaf-c773-4bc5-9903-393c195301d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{deb0e2c8-6520-40b8-994a-a2d864987fe7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms">
+      <UniqueIdentifier>{924a33b0-10de-4b85-9503-ba8b0bd53dd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\CustomControls">
+      <UniqueIdentifier>{c28589eb-b90d-46d7-b255-8b7b57f10d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Database">
+      <UniqueIdentifier>{a44c25b8-a522-4d26-a430-ed6537e0d187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Database">
+      <UniqueIdentifier>{37ef90b3-f132-4a78-8a74-6ee8cc762635}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Libs">
+      <UniqueIdentifier>{b28d64b3-0c77-477f-8425-1c80e63bcff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Libs">
+      <UniqueIdentifier>{94d9451d-2242-448d-ae09-e07e1e03b68b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="CustomList.cpp">
+      <Filter>Source Files\CustomControls</Filter>
+    </ClCompile>
+    <ClCompile Include="DatabaseLocal.cpp">
+      <Filter>Source Files\Database</Filter>
+    </ClCompile>
+    <ClCompile Include="Phone.cpp">
+      <Filter>Source Files\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StoreForm.cpp">
+      <Filter>Source Files\Forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\tinyxml.cpp">
+      <Filter>Source Files\Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\tinyxmlerror.cpp">
+      <Filter>Source Files\Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\tinyxmlparser.cpp">
+      <Filter>Source Files\Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="Libs\tinystr.cpp">
+      <Filter>Source Files\Libs</Filter>
+    </ClCompile>
+    <ClCompile Include="CustomFunctor.cpp">
+      <Filter>Source Files\CustomControls</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DatabaseLocal.h">
+      <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Phone.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomList.h">
+      <Filter>Header Files\CustomControls</Filter>
+    </ClInclude>
+    <ClInclude Include="XMLModel.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="StoreForm.h">
+      <Filter>Header Files\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\tinystr.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="Libs\tinyxml.h">
+      <Filter>Header Files\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="CustomFunctor.h">
+      <Filter>Header Files\CustomControls</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="StoreForm.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+  </ItemGroup>
+</Project>

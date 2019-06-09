@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<Phones>
+	<Phone Processor="Ine" Diagonal="0.15" Height="20" Name="dsf" Id="1" Model="dsfsdf" MP="0.3" OS="Windows" Price="12.02" RAM="4.8" Width="13"/>
+	<Phone Processor="Ine" Diagonal="0.15" Height="20" Name="two" Id="2" Model="dsfsdf" MP="0.3" OS="Windows" Price="12.02" RAM="5.06" Width="13"/>
+	<Phone Processor="sdfdff" Diagonal="0.15" Height="20" Name="dfeer" Id="3" Model="dsfsdf" MP="0.3" OS="Windows" Price="12.02" RAM="1.8" Width="13"/>
+	<Phone Processor="sdfdffdd" Diagonal="0.15" Height="20" Name="tryty" Id="4" Model="dsfsdf" MP="0.3" OS="Windows" Price="12.02" RAM="44.8" Width="13"/>
+</Phones>
