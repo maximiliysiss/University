@@ -1,0 +1,13 @@
+eclipse.preferences.version=1
+encoding//src/main/java/remoterclient/application/ClientSocketConnect.java=UTF-8
+encoding//src/main/java/remoterclient/application/StartClient.java=UTF-8
+encoding//src/main/java/remoterclient/forms/ClientForm.java=UTF-8
+encoding//src/main/java/remoterclient/forms/ContextMenu.java=UTF-8
+encoding//src/main/java/remoterclient/forms/CustomContextMenu.java=UTF-8
+encoding//src/main/java/remoterclient/forms/EnterDataForm.java=UTF-8
+encoding//src/main/java/remoterclient/forms/FileContextMenu.java=UTF-8
+encoding//src/main/java/remoterclient/forms/FolderContextMenu.java=UTF-8
+encoding//src/main/java/remoterclient/listener/ContextClickHandler.java=UTF-8
+encoding//src/main/java/remoterclient/listener/DoubleClickHandler.java=UTF-8
+encoding//src/main/java/remoterclient/listener/DoubleClickListener.java=UTF-8
+encoding//src/main/java/remoterclient/listener/TextInputHandler.java=UTF-8
