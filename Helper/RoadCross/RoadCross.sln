@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2024
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RoadCross", "RoadCross\RoadCross.vcxproj", "{A457ACA2-28AD-4A4C-95A5-E565FE493862}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Debug|x64.ActiveCfg = Debug|x64
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Debug|x64.Build.0 = Debug|x64
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Debug|x86.ActiveCfg = Debug|Win32
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Debug|x86.Build.0 = Debug|Win32
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Release|x64.ActiveCfg = Release|x64
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Release|x64.Build.0 = Release|x64
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Release|x86.ActiveCfg = Release|Win32
+		{A457ACA2-28AD-4A4C-95A5-E565FE493862}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B781EAAB-7CBB-40EF-8C75-79A2B3FCB5B8}
+	EndGlobalSection
+EndGlobal
