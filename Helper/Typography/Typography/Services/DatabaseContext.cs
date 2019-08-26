@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Design;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +10,22 @@ using Typography.Models;
 
 namespace Typography.Services
 {
-    public class DatabaseContext : DbContext
+    public interface IDatabaseContext
+    {
+        DbSet<Paper> Papers { get; set; }
+        DbSet<Distribution> Distributions { get; set; }
+        DbSet<PostOfficer> PostOfficers { get; set; }
+        DbSet<Release> Releases { get; set; }
+        DbSet<Models.Typography> Typographies { get; set; }
+
+        int SaveChanges();
+        EntityEntry Add(object obj);
+        EntityEntry Update(object obj);
+        EntityEntry Remove(object obj);
+    }
+
+
+    public class DatabaseContext : DbContext, IDatabaseContext
     {
         public DatabaseContext(string connectionString)
         {
