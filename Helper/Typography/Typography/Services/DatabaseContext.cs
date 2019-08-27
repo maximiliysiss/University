@@ -43,7 +43,7 @@ namespace Typography.Services
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(ConnectionString).UseLazyLoadingProxies();
+            optionsBuilder.UseSqlServer(ConnectionString);
         }
     }
 }

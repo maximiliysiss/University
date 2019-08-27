@@ -14,6 +14,7 @@ namespace Typography.Forms.CreateEdit
         protected System.Windows.Forms.Button deleteBtn;
         protected System.Windows.Forms.Button actionBtn;
 
+        public bool IsEdit { get; set; } = false;
         protected readonly IDatabaseContext databaseContext;
         public Func<List<T>> dbSet;
 
@@ -31,7 +32,6 @@ namespace Typography.Forms.CreateEdit
         public CreateEditBaseForm(IDatabaseContext databaseContext, Func<List<T>> dbSet, string name = null)
         {
             InitializeComponent();
-            this.FormClosed += CreateEditBaseForm_FormClosed;
             this.actionBtn.Text = "Add";
             this.actionBtn.Click += Add_Click;
             this.databaseContext = databaseContext;
@@ -40,18 +40,12 @@ namespace Typography.Forms.CreateEdit
             this.Context = new T();
         }
 
-        private void CreateEditBaseForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            foreach (var control in Controls.Cast<Control>())
-                control.Text = string.Empty;
-        }
-
         public CreateEditBaseForm(T elem, Func<List<T>> dbSet, string name = null)
         {
             InitializeComponent();
-            this.FormClosed += CreateEditBaseForm_FormClosed;
             this.actionBtn.Text = "Edit";
             this.actionBtn.Click += Edit_Click;
+            this.deleteBtn.Text = "Delete";
             this.deleteBtn.Visible = true;
             this.deleteBtn.Click += Delete_Click;
             this.dbSet = dbSet;
@@ -64,13 +58,7 @@ namespace Typography.Forms.CreateEdit
             this.actionBtn = new System.Windows.Forms.Button();
             this.deleteBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
-            // 
-            // CreateEditBaseForm
-            // 
-            this.ClientSize = new System.Drawing.Size(452, 516);
-            this.Name = "CreateEditBaseForm";
             this.ResumeLayout(false);
-
         }
 
         private void Delete_Click(object sender, EventArgs e)

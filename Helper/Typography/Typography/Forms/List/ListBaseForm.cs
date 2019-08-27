@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +15,14 @@ namespace Typography.Forms.List
         private DataGridView dataGridView;
         private readonly IDatabaseContext databaseContext;
         private Button addNewElement;
-        private readonly Func<List<T>> actionList;
+        private readonly DbSet<T> actionList;
 
         private Type type = typeof(T);
 
         private List<T> casheElements;
-        public void RefreshData() => dataGridView.DataSource = casheElements = actionList();
+        public void RefreshData() => dataGridView.DataSource = casheElements = actionList.ToList();
 
-        public ListBaseForm(IDatabaseContext databaseContext, Func<List<T>> actionList, string name = null)
+        public ListBaseForm(IDatabaseContext databaseContext, DbSet<T> actionList, string name = null)
         {
             this.actionList = actionList;
             this.databaseContext = databaseContext;
@@ -32,8 +33,9 @@ namespace Typography.Forms.List
 
         private void DataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            var dialog = GlobalContext.FactoryGeneratorCreateEdit.Build(this.Name);
-            (dialog as CreateEditBaseForm<T>).Context = casheElements[e.RowIndex];
+            var dialog = GlobalContext.FactoryGeneratorCreateEdit.Build(this.Name) as CreateEditBaseForm<T>;
+            dialog.Context = casheElements[e.RowIndex];
+            dialog.IsEdit = true;
             dialog.ShowDialog();
             RefreshData();
         }
@@ -84,7 +86,9 @@ namespace Typography.Forms.List
 
         private void addNewElement_Click(object sender, EventArgs e)
         {
-            GlobalContext.FactoryGeneratorCreateEdit.Build(this.Name).ShowDialog();
+            var dialog = GlobalContext.FactoryGeneratorCreateEdit.Build(this.Name) as CreateEditBaseForm<T>;
+            dialog.IsEdit = false;
+            dialog.ShowDialog();
             RefreshData();
         }
     }

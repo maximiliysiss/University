@@ -28,6 +28,7 @@ namespace Typography.Services
         }
 
         static FactoryGenerator<Form> factoryGenerator;
+
         public static FactoryGenerator<Form> FactoryGeneratorCreateEdit
         {
             get
@@ -36,17 +37,18 @@ namespace Typography.Services
                     return factoryGenerator;
                 factoryGenerator = new FactoryGenerator<Form>();
                 var context = standardKernel.Get<IDatabaseContext>();
-                factoryGenerator.AddFor(new TypographyForm(context, () => context.Typographies.ToList(), "Typography"))
+                factoryGenerator.AddFor(() => new TypographyForm(context, () => context.Typographies.ToList(), "Typography"))
                     .Where(x => (x[0] as string) == "Typography");
-                factoryGenerator.AddFor(new CreateEditBaseForm<Models.Distribution>(context, () => context.Distributions.ToList(), "Distribution"))
+                factoryGenerator.AddFor(() => new CreateEditBaseForm<Models.Distribution>(context, () => context.Distributions.ToList(), "Distribution"))
                     .Where(x => (x[0] as string) == "Distribution");
-                factoryGenerator.AddFor(new PostOfficerForm(context, () => context.PostOfficers.ToList(), "PostOfficer"))
+                factoryGenerator.AddFor(() => new PostOfficerForm(context, () => context.PostOfficers.ToList(), "PostOfficer"))
                     .Where(x => (x[0] as string) == "PostOfficer");
                 return factoryGenerator;
             }
         }
 
         static FactoryGenerator<Form> factoryGeneratorList;
+
         public static FactoryGenerator<Form> FactoryGeneratorList
         {
             get
@@ -55,11 +57,11 @@ namespace Typography.Services
                     return factoryGeneratorList;
                 factoryGeneratorList = new FactoryGenerator<Form>();
                 var context = StandardKernel.Get<IDatabaseContext>();
-                factoryGeneratorList.AddFor(new ListBaseForm<Models.Typography>(context, () => context.Typographies.ToList(), "Typography"))
+                factoryGeneratorList.AddFor(() => new ListBaseForm<Models.Typography>(context, context.Typographies, "Typography"))
                     .Where(x => (x[0] as string) == "Typography");
-                factoryGeneratorList.AddFor(new ListBaseForm<Models.Distribution>(context, () => context.Distributions.ToList(), "Distribution"))
+                factoryGeneratorList.AddFor(() => new ListBaseForm<Models.Distribution>(context, context.Distributions, "Distribution"))
                     .Where(x => (x[0] as string) == "Distribution");
-                factoryGeneratorList.AddFor(new ListBaseForm<Models.PostOfficer>(context, () => context.PostOfficers.ToList(), "PostOfficer"))
+                factoryGeneratorList.AddFor(() => new ListBaseForm<Models.PostOfficer>(context, context.PostOfficers, "PostOfficer"))
                     .Where(x => (x[0] as string) == "PostOfficer");
                 return factoryGeneratorList;
             }
