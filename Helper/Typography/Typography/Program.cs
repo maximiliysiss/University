@@ -17,7 +17,7 @@ namespace Typography
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(GlobalContext.FactoryGeneratorList.Build("PostOfficer"));
+            Application.Run(GlobalContext.FactoryGeneratorListForm.Build("Distribution"));
         }
     }
 }

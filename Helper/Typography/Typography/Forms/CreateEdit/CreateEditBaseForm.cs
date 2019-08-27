@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -16,7 +17,7 @@ namespace Typography.Forms.CreateEdit
 
         public bool IsEdit { get; set; } = false;
         protected readonly IDatabaseContext databaseContext;
-        public Func<List<T>> dbSet;
+        public DbSet<T> dbSet;
 
         private Type _type;
         public Type Type => _type ?? (_type = typeof(T));
@@ -29,7 +30,7 @@ namespace Typography.Forms.CreateEdit
         public Dictionary<string, PropertyInfo> PropertyInfos => _propertyInfos ??
                                     (_propertyInfos = Type.GetProperties().ToDictionary(x => x.Name, x => x));
 
-        public CreateEditBaseForm(IDatabaseContext databaseContext, Func<List<T>> dbSet, string name = null)
+        public CreateEditBaseForm(IDatabaseContext databaseContext, DbSet<T> dbSet, string name = null)
         {
             InitializeComponent();
             this.actionBtn.Text = "Add";
@@ -40,7 +41,7 @@ namespace Typography.Forms.CreateEdit
             this.Context = new T();
         }
 
-        public CreateEditBaseForm(T elem, Func<List<T>> dbSet, string name = null)
+        public CreateEditBaseForm(IDatabaseContext databaseContext, T elem, DbSet<T> dbSet, string name = null)
         {
             InitializeComponent();
             this.actionBtn.Text = "Edit";
@@ -51,12 +52,14 @@ namespace Typography.Forms.CreateEdit
             this.dbSet = dbSet;
             this.Name = name ?? Type.Name;
             this.Context = elem;
+            this.databaseContext = databaseContext;
         }
 
         protected virtual void InitializeComponent()
         {
             this.actionBtn = new System.Windows.Forms.Button();
             this.deleteBtn = new System.Windows.Forms.Button();
+            this.deleteBtn.Visible = false;
             this.SuspendLayout();
             this.ResumeLayout(false);
         }
@@ -70,7 +73,7 @@ namespace Typography.Forms.CreateEdit
 
         private void Add_Click(object sender, EventArgs e)
         {
-            databaseContext.Add(_context);
+            databaseContext.AddModel(_context, this.Name);
             databaseContext.SaveChanges();
             this.Close();
         }
@@ -99,16 +102,25 @@ namespace Typography.Forms.CreateEdit
                     this.CustomAttrs.TryGetValue(control.Name, out var goTo);
 
                     EventHandler changeAction = (s, e) => { prop.SetValue(_context, Convert.ChangeType(control.Text, prop.PropertyType)); };
+                    control.Text = prop.GetValue(_context)?.ToString() ?? string.Empty;
 
-                    if (goTo != null)
+                    if (goTo != null && control is TextBox textBox)
                     {
-                        MouseEventHandler goToDblClick = (s, e) => { GlobalContext.FactoryGeneratorList.Build(goTo.NextForm).ShowDialog(); };
+                        textBox.ReadOnly = true;
+                        MouseEventHandler goToDblClick = (s, e) =>
+                        {
+                            var form = GlobalContext.FactoryGeneratorSelectListForm.Build(goTo.NextForm);
+                            form.ShowDialog();
+                            if (form.SelectedContext != null)
+                            {
+                                textBox.Text = form.SelectedContext.ToString();
+                                prop.SetValue(_context, form.SelectedContext);
+                            }
+                        };
                         control.MouseDoubleClick -= goToDblClick;
                         control.MouseDoubleClick += goToDblClick;
                     }
-
-                    control.Text = prop.GetValue(_context)?.ToString() ?? string.Empty;
-                    if (control.Enabled)
+                    else
                     {
                         control.TextChanged -= changeAction;
                         control.TextChanged += changeAction;

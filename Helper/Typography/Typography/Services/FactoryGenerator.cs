@@ -6,27 +6,26 @@ using System.Threading.Tasks;
 
 namespace Typography.Services
 {
-    public class FactoryGenerator<T> where T : class, new()
+    public class FactoryGenerator<T, A, W> where T : class
     {
         public class FactoryPosition
         {
-            private readonly Func<List<object>, T> result;
-            private readonly bool isArguments = false;
-            public T Result => result(null);
-            public T ResultWithArguments(List<object> list) => result(list);
-            private Func<List<object>, bool> where;
+            private readonly Func<A, T> result;
+            public T Result => result(default(A));
+            public T ResultWithArguments(A arg) => result(arg);
+            private Func<W, bool> where;
 
-            public void Where(Func<List<object>, bool> where) => this.where = where;
-            public bool If(List<object> args) => where(args);
+            public void Where(Func<W, bool> where) => this.where = where;
+            public void Where(W where) => this.where = (x) => where.Equals(x);
+            public bool If(W args) => where(args);
 
             public FactoryPosition(Func<T> elem)
             {
                 this.result = (x) => elem();
             }
 
-            public FactoryPosition(Func<List<object>, T> elem)
+            public FactoryPosition(Func<A, T> elem)
             {
-                this.isArguments = true;
                 this.result = elem;
             }
         }
@@ -40,23 +39,26 @@ namespace Typography.Services
             return newPos;
         }
 
-        public FactoryPosition AddFor(Func<List<object>, T> elem)
+        public FactoryPosition AddFor(Func<A, T> elem)
         {
             var newPos = new FactoryPosition(elem);
             factoryPositions.Add(newPos);
             return newPos;
         }
 
-        public T Build(params object[] list)
+        public T Build(W where)
         {
             foreach (var elem in factoryPositions)
-                if (elem.If(list.ToList()))
+                if (elem.If(where))
                     return elem.Result;
             return null;
         }
 
-        public T BuildWithArguments(List<object> args, List<object> where)
+        public T BuildWithArguments(A args, W where)
         {
+            foreach (var elem in factoryPositions)
+                if (elem.If(where))
+                    return elem.ResultWithArguments(args);
             return null;
         }
     }

@@ -15,5 +15,6 @@ namespace Typography.Models
         public string TypographyNumber { get; set; }
         public string TypographyAdress { get; set; }
 
+        public override string ToString() => $"{TypographyName}({TypographyNumber}|{TypographyAdress})";
     }
 }

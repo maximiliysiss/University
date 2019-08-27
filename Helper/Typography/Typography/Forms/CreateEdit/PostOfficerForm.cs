@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,12 @@ namespace Typography.Forms.CreateEdit
         private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;
 
-        public PostOfficerForm(IDatabaseContext databaseContext, Func<List<PostOfficer>> dbSet, string name = null) : base(databaseContext, dbSet, name)
+        public PostOfficerForm(IDatabaseContext databaseContext, DbSet<PostOfficer> dbSet, string name = null) : base(databaseContext, dbSet, name)
         {
         }
 
-        public PostOfficerForm(PostOfficer elem, Func<List<PostOfficer>> dbSet, string name = null) : base(elem, dbSet, name)
+        public PostOfficerForm(IDatabaseContext databaseContext, PostOfficer elem, DbSet<PostOfficer> dbSet, string name = null)
+            : base(databaseContext, elem, dbSet, name)
         {
         }
 
@@ -87,21 +89,14 @@ namespace Typography.Forms.CreateEdit
             // actionBtn
             // 
             this.actionBtn.Location = new System.Drawing.Point(25, 184);
-            this.actionBtn.Name = "actionBtn";
             this.actionBtn.Size = new System.Drawing.Size(319, 23);
             this.actionBtn.TabIndex = 6;
-            this.actionBtn.Text = "button1";
-            this.actionBtn.UseVisualStyleBackColor = true;
             // 
             // deleteBtn
             // 
             this.deleteBtn.Location = new System.Drawing.Point(25, 228);
-            this.deleteBtn.Name = "deleteBtn";
             this.deleteBtn.Size = new System.Drawing.Size(319, 23);
             this.deleteBtn.TabIndex = 7;
-            this.deleteBtn.Text = "Delete";
-            this.deleteBtn.UseVisualStyleBackColor = true;
-            this.deleteBtn.Visible = false;
             // 
             // PostWorkForm
             // 
