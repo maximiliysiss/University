@@ -48,7 +48,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(800, 450);
+            this.tabControl1.Size = new System.Drawing.Size(716, 497);
             this.tabControl1.TabIndex = 0;
             // 
             // Release
@@ -56,9 +56,9 @@
             this.Release.Location = new System.Drawing.Point(4, 22);
             this.Release.Name = "Release";
             this.Release.Padding = new System.Windows.Forms.Padding(3);
-            this.Release.Size = new System.Drawing.Size(792, 424);
+            this.Release.Size = new System.Drawing.Size(708, 471);
             this.Release.TabIndex = 0;
-            this.Release.Text = "Release";
+            this.Release.Text = "Выпущено";
             this.Release.UseVisualStyleBackColor = true;
             // 
             // PostOfficer
@@ -66,43 +66,43 @@
             this.PostOfficer.Location = new System.Drawing.Point(4, 22);
             this.PostOfficer.Name = "PostOfficer";
             this.PostOfficer.Padding = new System.Windows.Forms.Padding(3);
-            this.PostOfficer.Size = new System.Drawing.Size(792, 424);
+            this.PostOfficer.Size = new System.Drawing.Size(708, 471);
             this.PostOfficer.TabIndex = 1;
-            this.PostOfficer.Text = "Post Officer";
+            this.PostOfficer.Text = "Обработчик";
             this.PostOfficer.UseVisualStyleBackColor = true;
             // 
             // Paper
             // 
             this.Paper.Location = new System.Drawing.Point(4, 22);
             this.Paper.Name = "Paper";
-            this.Paper.Size = new System.Drawing.Size(792, 424);
+            this.Paper.Size = new System.Drawing.Size(708, 471);
             this.Paper.TabIndex = 2;
-            this.Paper.Text = "Paper";
+            this.Paper.Text = "Документ";
             this.Paper.UseVisualStyleBackColor = true;
             // 
             // Distribution
             // 
             this.Distribution.Location = new System.Drawing.Point(4, 22);
             this.Distribution.Name = "Distribution";
-            this.Distribution.Size = new System.Drawing.Size(792, 424);
+            this.Distribution.Size = new System.Drawing.Size(708, 471);
             this.Distribution.TabIndex = 3;
-            this.Distribution.Text = "Distribution";
+            this.Distribution.Text = "Распространение";
             this.Distribution.UseVisualStyleBackColor = true;
             // 
             // Typography
             // 
             this.Typography.Location = new System.Drawing.Point(4, 22);
             this.Typography.Name = "Typography";
-            this.Typography.Size = new System.Drawing.Size(792, 424);
+            this.Typography.Size = new System.Drawing.Size(708, 471);
             this.Typography.TabIndex = 4;
-            this.Typography.Text = "Typography";
+            this.Typography.Text = "Типография";
             this.Typography.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(716, 497);
             this.Controls.Add(this.tabControl1);
             this.Name = "MainForm";
             this.Text = "MainForm";

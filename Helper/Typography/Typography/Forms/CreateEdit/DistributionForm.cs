@@ -10,6 +10,9 @@ using Typography.Services;
 
 namespace Typography.Forms.CreateEdit
 {
+    /// <summary>
+    /// Форма для создания/изменения Distibution
+    /// </summary>
     public class DistributionForm : CreateEditBaseForm<Models.Distribution>
     {
         private Label label1;
@@ -17,11 +20,11 @@ namespace Typography.Forms.CreateEdit
         private TextBox textBox2;
         private Label label2;
 
-        public DistributionForm(IDatabaseContext databaseContext, DbSet<Distribution> dbSet, string name = null) : base(databaseContext, dbSet, name)
+        public DistributionForm(IDatabaseContext databaseContext, string name = null) : base(databaseContext, name)
         {
         }
 
-        public DistributionForm(IDatabaseContext databaseContext, Distribution elem, DbSet<Distribution> dbSet, string name = null) : base(databaseContext, elem, dbSet, name)
+        public DistributionForm(IDatabaseContext databaseContext, Distribution elem, string name = null) : base(databaseContext, elem, name)
         {
         }
 
@@ -41,7 +44,7 @@ namespace Typography.Forms.CreateEdit
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Paper";
+            this.label1.Text = "Документ";
             // 
             // textBox1
             // 
@@ -64,7 +67,7 @@ namespace Typography.Forms.CreateEdit
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "PostOfficer";
+            this.label2.Text = "Обработчик";
             // 
             // actionBtn
             // 

@@ -10,6 +10,9 @@ using Typography.Services;
 
 namespace Typography.Forms.CreateEdit
 {
+    /// <summary>
+    /// Форма для создания/изменения Paper
+    /// </summary>
     public class PaperForm : CreateEditBaseForm<Paper>
     {
         private Label label1;
@@ -23,11 +26,11 @@ namespace Typography.Forms.CreateEdit
         private TextBox textBox5;
         private Label label5;
 
-        public PaperForm(IDatabaseContext databaseContext, DbSet<Paper> dbSet, string name = null) : base(databaseContext, dbSet, name)
+        public PaperForm(IDatabaseContext databaseContext, string name = null) : base(databaseContext, name)
         {
         }
 
-        public PaperForm(IDatabaseContext databaseContext, Paper elem, DbSet<Paper> dbSet, string name = null) : base(databaseContext, elem, dbSet, name)
+        public PaperForm(IDatabaseContext databaseContext, Paper elem, string name = null) : base(databaseContext, elem, name)
         {
         }
 
@@ -53,7 +56,7 @@ namespace Typography.Forms.CreateEdit
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Name";
+            this.label1.Text = "Название";
             // 
             // textBox1
             // 
@@ -76,7 +79,7 @@ namespace Typography.Forms.CreateEdit
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(31, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Price";
+            this.label2.Text = "Цена";
             // 
             // textBox3
             // 
@@ -92,7 +95,7 @@ namespace Typography.Forms.CreateEdit
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Editor FIO";
+            this.label3.Text = "ФИО редактора";
             // 
             // textBox4
             // 
@@ -108,7 +111,7 @@ namespace Typography.Forms.CreateEdit
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(66, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Edition code";
+            this.label4.Text = "Код изменения";
             // 
             // textBox5
             // 
@@ -124,7 +127,7 @@ namespace Typography.Forms.CreateEdit
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(75, 13);
             this.label5.TabIndex = 8;
-            this.label5.Text = "Paper quantity";
+            this.label5.Text = "Количество страниц";
             // 
             // actionBtn
             // 

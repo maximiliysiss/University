@@ -10,6 +10,9 @@ using Typography.Services;
 
 namespace Typography.Forms.CreateEdit
 {
+    /// <summary>
+    /// Форма для создания/изменения Release
+    /// </summary>
     public class ReleaseForm : CreateEditBaseForm<Models.Release>
     {
         private Label label1;
@@ -17,11 +20,11 @@ namespace Typography.Forms.CreateEdit
         private TextBox textBox2;
         private Label label2;
 
-        public ReleaseForm(IDatabaseContext databaseContext, DbSet<Release> dbSet, string name = null) : base(databaseContext, dbSet, name)
+        public ReleaseForm(IDatabaseContext databaseContext, string name = null) : base(databaseContext, name)
         {
         }
 
-        public ReleaseForm(IDatabaseContext databaseContext, Release elem, DbSet<Release> dbSet, string name = null) : base(databaseContext, elem, dbSet, name)
+        public ReleaseForm(IDatabaseContext databaseContext, Release elem, string name = null) : base(databaseContext, elem, name)
         {
         }
 
@@ -41,7 +44,7 @@ namespace Typography.Forms.CreateEdit
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(63, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Typography";
+            this.label1.Text = "Типография";
             // 
             // textBox1
             // 
@@ -64,7 +67,7 @@ namespace Typography.Forms.CreateEdit
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(35, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Paper";
+            this.label2.Text = "Документ";
             // 
             // actionBtn
             // 

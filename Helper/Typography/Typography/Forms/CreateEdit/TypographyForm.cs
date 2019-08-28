@@ -10,6 +10,9 @@ using Typography.Services;
 
 namespace Typography.Forms.CreateEdit
 {
+    /// <summary>
+    /// Форма для создания/изменения Typography
+    /// </summary>
     public class TypographyForm : CreateEditBaseForm<Models.Typography>
     {
         private Label label1;
@@ -19,12 +22,12 @@ namespace Typography.Forms.CreateEdit
         private TextBox textBox3;
         private Label label3;
 
-        public TypographyForm(IDatabaseContext databaseContext, DbSet<Models.Typography> dbSet, string name = null) : base(databaseContext, dbSet, name)
+        public TypographyForm(IDatabaseContext databaseContext, string name = null) : base(databaseContext, name)
         {
         }
 
-        public TypographyForm(IDatabaseContext databaseContext, Models.Typography elem, DbSet<Models.Typography> dbSet, string name = null)
-            : base(databaseContext, elem, dbSet, name)
+        public TypographyForm(IDatabaseContext databaseContext, Models.Typography elem, string name = null)
+            : base(databaseContext, elem, name)
         {
         }
 
@@ -46,7 +49,7 @@ namespace Typography.Forms.CreateEdit
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(35, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Name";
+            this.label1.Text = "Название";
             // 
             // textBox1
             // 
@@ -69,7 +72,7 @@ namespace Typography.Forms.CreateEdit
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Number";
+            this.label2.Text = "Номер";
             // 
             // textBox3
             // 
@@ -85,7 +88,7 @@ namespace Typography.Forms.CreateEdit
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 13);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Adress";
+            this.label3.Text = "Адрес";
             // 
             // actionBtn
             // 
