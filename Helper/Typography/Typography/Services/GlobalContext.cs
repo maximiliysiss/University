@@ -29,6 +29,9 @@ namespace Typography.Services
             }
         }
 
+        static IDatabaseContext context;
+        public static IDatabaseContext DatabaseContext => context ?? (context = StandardKernel.Get<IDatabaseContext>());
+
         static FactoryGenerator<Form, object, string> factoryGetCreateForm;
 
         public static FactoryGenerator<Form, object, string> FactoryGeneratorCreateForm
@@ -38,15 +41,16 @@ namespace Typography.Services
                 if (factoryGetCreateForm != null)
                     return factoryGetCreateForm;
                 factoryGetCreateForm = new FactoryGenerator<Form, object, string>();
-                var context = standardKernel.Get<IDatabaseContext>();
-                factoryGetCreateForm.AddFor(() => new TypographyForm(context, context.Typographies, "Typography"))
+                factoryGetCreateForm.AddFor(() => new TypographyForm(DatabaseContext, DatabaseContext.Typographies, "Typography"))
                     .Where("Typography");
-                factoryGetCreateForm.AddFor(() => new DistributionForm(context, context.Distributions, "Distribution"))
+                factoryGetCreateForm.AddFor(() => new DistributionForm(DatabaseContext, DatabaseContext.Distributions, "Distribution"))
                     .Where("Distribution");
-                factoryGetCreateForm.AddFor(() => new PaperForm(context, context.Papers, "Paper"))
+                factoryGetCreateForm.AddFor(() => new PaperForm(DatabaseContext, DatabaseContext.Papers, "Paper"))
                     .Where("Paper");
-                factoryGetCreateForm.AddFor(() => new PostOfficerForm(context, context.PostOfficers, "PostOfficer"))
+                factoryGetCreateForm.AddFor(() => new PostOfficerForm(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer"))
                     .Where("PostOfficer");
+                factoryGetCreateForm.AddFor(() => new ReleaseForm(DatabaseContext, DatabaseContext.Releases, "Release"))
+                    .Where("Release");
                 return factoryGetCreateForm;
             }
         }
@@ -60,16 +64,15 @@ namespace Typography.Services
                 if (factoryGetListForm != null)
                     return factoryGetListForm;
                 factoryGetListForm = new FactoryGenerator<Form, object, string>();
-                var context = StandardKernel.Get<IDatabaseContext>();
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Typography>(context, context.Typographies, "Typography"))
+                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Typography>(DatabaseContext, DatabaseContext.Typographies, "Typography"))
                     .Where("Typography");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Distribution>(context, context.Distributions, "Distribution"))
+                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Distribution>(DatabaseContext, DatabaseContext.Distributions, "Distribution"))
                     .Where("Distribution");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.PostOfficer>(context, context.PostOfficers, "PostOfficer"))
+                factoryGetListForm.AddFor(() => new ListBaseForm<Models.PostOfficer>(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer"))
                     .Where("PostOfficer");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Paper>(context, context.Papers, "Paper"))
+                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Paper>(DatabaseContext, DatabaseContext.Papers, "Paper"))
                     .Where("Paper");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Release>(context, context.Releases, "Release"))
+                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Release>(DatabaseContext, DatabaseContext.Releases, "Release"))
                     .Where("Release");
                 return factoryGetListForm;
             }
@@ -84,16 +87,15 @@ namespace Typography.Services
                 if (factoryGetSelectListForm != null)
                     return factoryGetSelectListForm;
                 factoryGetSelectListForm = new FactoryGenerator<ISelectForm, object, string>();
-                var context = StandardKernel.Get<IDatabaseContext>();
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Typography>(context, context.Typographies, "Typography") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Typography>(DatabaseContext, DatabaseContext.Typographies, "Typography") { IsSelect = true })
                     .Where("Typography");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Distribution>(context, context.Distributions, "Distribution") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Distribution>(DatabaseContext, DatabaseContext.Distributions, "Distribution") { IsSelect = true })
                     .Where("Distribution");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.PostOfficer>(context, context.PostOfficers, "PostOfficer") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.PostOfficer>(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer") { IsSelect = true })
                     .Where("PostOfficer");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Paper>(context, context.Papers, "Paper") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Paper>(DatabaseContext, DatabaseContext.Papers, "Paper") { IsSelect = true })
                     .Where("Paper");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Release>(context, context.Releases, "Release") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Release>(DatabaseContext, DatabaseContext.Releases, "Release") { IsSelect = true })
                     .Where("Release");
                 return factoryGetSelectListForm;
             }
@@ -108,15 +110,16 @@ namespace Typography.Services
                 if (factoryGetEditForm != null)
                     return factoryGetEditForm;
                 factoryGetEditForm = new FactoryGenerator<Form, object, string>();
-                var context = StandardKernel.Get<IDatabaseContext>();
-                factoryGetEditForm.AddFor((x) => new TypographyForm(context, x as Models.Typography, context.Typographies, "Typography"))
+                factoryGetEditForm.AddFor((x) => new TypographyForm(DatabaseContext, x as Models.Typography, DatabaseContext.Typographies, "Typography"))
                     .Where("Typography");
-                factoryGetEditForm.AddFor((x) => new DistributionForm(context, x as Models.Distribution, context.Distributions, "Distribution"))
+                factoryGetEditForm.AddFor((x) => new DistributionForm(DatabaseContext, x as Models.Distribution, DatabaseContext.Distributions, "Distribution"))
                     .Where("Distribution");
-                factoryGetEditForm.AddFor((x) => new PostOfficerForm(context, x as PostOfficer, context.PostOfficers, "PostOfficer"))
+                factoryGetEditForm.AddFor((x) => new PostOfficerForm(DatabaseContext, x as PostOfficer, DatabaseContext.PostOfficers, "PostOfficer"))
                     .Where("PostOfficer");
-                factoryGetEditForm.AddFor((x) => new PaperForm(context, x as Paper, context.Papers, "Paper"))
+                factoryGetEditForm.AddFor((x) => new PaperForm(DatabaseContext, x as Paper, DatabaseContext.Papers, "Paper"))
                     .Where("Paper");
+                factoryGetEditForm.AddFor((x) => new ReleaseForm(DatabaseContext, x as Release, DatabaseContext.Releases, "Release"))
+                    .Where("Release");
                 return factoryGetEditForm;
             }
         }

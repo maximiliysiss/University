@@ -21,27 +21,13 @@ namespace Typography.Services
         DbSet<Models.Typography> Typographies { get; set; }
 
         int SaveChanges();
-        EntityEntry AddModel<T>(T obj, string name) where T : class;
+        EntityEntry Add(object o);
         EntityEntry Update(object obj);
         EntityEntry Remove(object obj);
     }
 
-
     public class DatabaseContext : DbContext, IDatabaseContext
     {
-        private static Dictionary<string, string> typeDictionary;
-        public static Dictionary<string, string> TypeDictionary
-        {
-            get
-            {
-                if (typeDictionary != null)
-                    return typeDictionary;
-                typeDictionary = typeof(DatabaseContext).GetProperties().Where(x => x.PropertyType.IsGenericType)
-                    .ToDictionary(x => x.PropertyType.GetGenericArguments()[0].Name, x => x.Name);
-                return typeDictionary;
-            }
-        }
-
         public DatabaseContext(string connectionString)
         {
             ConnectionString = new SqlConnectionStringBuilder(connectionString);
@@ -54,15 +40,6 @@ namespace Typography.Services
         public DbSet<PostOfficer> PostOfficers { get; set; }
         public DbSet<Release> Releases { get; set; }
         public DbSet<Models.Typography> Typographies { get; set; }
-
-        public EntityEntry AddModel<T>(T obj, string name) where T : class
-        {
-            Database.ExecuteSqlCommand($"SET IDENTITY_INSERT [dbo].[{TypeDictionary[name]}] ON");
-            var res = Add(obj);
-            SaveChanges();
-            Database.ExecuteSqlCommand($"SET IDENTITY_INSERT [dbo].[{TypeDictionary[name]}] OFF");
-            return res;
-        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

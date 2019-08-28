@@ -73,7 +73,7 @@ namespace Typography.Forms.CreateEdit
 
         private void Add_Click(object sender, EventArgs e)
         {
-            databaseContext.AddModel(_context, this.Name);
+            databaseContext.Add(_context);
             databaseContext.SaveChanges();
             this.Close();
         }
@@ -101,7 +101,15 @@ namespace Typography.Forms.CreateEdit
                         continue;
                     this.CustomAttrs.TryGetValue(control.Name, out var goTo);
 
-                    EventHandler changeAction = (s, e) => { prop.SetValue(_context, Convert.ChangeType(control.Text, prop.PropertyType)); };
+                    EventHandler changeAction = (s, e) =>
+                    {
+                        try
+                        {
+                            prop.SetValue(_context, Convert.ChangeType(control.Text, prop.PropertyType));
+                        }
+                        catch
+                        { }
+                    };
                     control.Text = prop.GetValue(_context)?.ToString() ?? string.Empty;
 
                     if (goTo != null && control is TextBox textBox)

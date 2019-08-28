@@ -283,11 +283,20 @@
     <Compile Include="Forms\CreateEdit\PostOfficerForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\CreateEdit\ReleaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\CreateEdit\TypographyForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\List\ListBaseForm.cs">
       <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\20190826195310_Init.cs" />
     <Compile Include="Migrations\20190826195310_Init.designer.cs">
@@ -318,11 +327,17 @@
     <EmbeddedResource Include="Forms\CreateEdit\PostOfficerForm.resx">
       <DependentUpon>PostOfficerForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\CreateEdit\ReleaseForm.resx">
+      <DependentUpon>ReleaseForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\CreateEdit\TypographyForm.resx">
       <DependentUpon>TypographyForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\List\ListBaseForm.resx">
       <DependentUpon>ListBaseForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
