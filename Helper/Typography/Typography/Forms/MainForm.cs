@@ -17,7 +17,11 @@ namespace Typography.Forms
         {
             InitializeComponent();
             foreach (var tab in tabControl1.TabPages.Cast<TabPage>())
-                tab.Controls.AddRange(GlobalContext.FactoryGeneratorListForm.Build(tab.Name).Controls.Cast<Control>().ToArray());
+            {
+                var listData = GlobalContext.FactoryGeneratorListForm.Build(tab.Name);
+                tabControl1.SelectedIndexChanged += (s, e) => listData.RefreshData();
+                tab.Controls.AddRange(listData.Controls.Cast<Control>().ToArray());
+            }
         }
     }
 }

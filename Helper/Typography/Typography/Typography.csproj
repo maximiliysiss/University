@@ -96,6 +96,18 @@
     <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Design, Version=15.3.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.Design.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=15.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportingServices.ReportViewerControl.Winforms.150.1358.0\lib\net40\Microsoft.ReportViewer.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Types, Version=14.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.SqlServer.Types.14.0.314.76\lib\net40\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Win32.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Primitives.4.3.0\lib\net46\Microsoft.Win32.Primitives.dll</HintPath>
       <Private>True</Private>
@@ -289,7 +301,22 @@
     <Compile Include="Forms\CreateEdit\TypographyForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Forms\List\DistributionList.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Forms\List\ListBaseForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\List\PaperList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\List\PostOfficerList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\List\ReleaseList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\List\TypographyList.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Forms\MainForm.cs">
@@ -298,9 +325,12 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20190826195310_Init.cs" />
-    <Compile Include="Migrations\20190826195310_Init.designer.cs">
-      <DependentUpon>20190826195310_Init.cs</DependentUpon>
+    <Compile Include="Forms\ReportForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Migrations\20190911192056_Init.cs" />
+    <Compile Include="Migrations\20190911192056_Init.designer.cs">
+      <DependentUpon>20190911192056_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Services\AttributeGoForm.cs" />
@@ -315,6 +345,12 @@
     <Compile Include="Models\Release.cs" />
     <Compile Include="Models\Typography.cs" />
     <Compile Include="Services\NinjectContainer.cs" />
+    <Compile Include="Services\Templates\GenerateOrder.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>GenerateOrder.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Templates\ReportColumn.cs" />
     <EmbeddedResource Include="Forms\CreateEdit\CreateEditBaseForm.resx">
       <DependentUpon>CreateEditBaseForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -339,6 +375,9 @@
     <EmbeddedResource Include="Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ReportForm.resx">
+      <DependentUpon>ReportForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -362,7 +401,15 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Services\Templates\GenerateOrder.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>GenerateOrder.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

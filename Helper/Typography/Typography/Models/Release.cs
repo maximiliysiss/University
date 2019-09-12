@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Typography.Services;
-
 namespace Typography.Models
 {
     public class Release
@@ -14,11 +13,17 @@ namespace Typography.Models
         [Key]
         [Browsable(false)]
         public int ReleaseID { get; set; }
-        [DisplayName("Типография")]
+        [Browsable(false)]
         [AttributeGoForm(NextForm = "Typography")]
         public virtual Typography Typography { get; set; }
-        [DisplayName("Документ")]
+        [Browsable(false)]
         [AttributeGoForm(NextForm = "Paper")]
         public virtual Paper Paper { get; set; }
+
+        [DisplayName("Типография")]
+        public string TypographyString => Typography.ToString();
+
+        [DisplayName("Документ")]
+        public string PaperStr => Paper.ToString();
     }
 }
