@@ -15,10 +15,15 @@ namespace Typography.Models
         [Browsable(false)]
         public int DistributionID { get; set; }
         [AttributeGoForm(NextForm = "Paper")]
-        [DisplayName("Документ")]
+        [Browsable(false)]
         public virtual Paper Paper { get; set; }
         [AttributeGoForm(NextForm = "PostOfficer")]
-        [DisplayName("Обработчик")]
+        [Browsable(false)]
         public virtual PostOfficer PostOfficer { get; set; }
+
+        [DisplayName("Обработчик")]
+        public string PostOfficerStr => PostOfficer.ToString();
+        [DisplayName("Документ")]
+        public string PaperStr => Paper.ToString();
     }
 }

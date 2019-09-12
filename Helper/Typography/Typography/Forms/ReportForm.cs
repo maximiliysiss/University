@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Reporting.WinForms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,11 @@ using Typography.Services.Templates;
 
 namespace Typography.Forms
 {
+    /// <summary>
+    /// Форма отчета
+    /// </summary>
     public class ReportForm : Form
     {
-        private Microsoft.Reporting.WinForms.ReportViewer reportViewer1;
 
         public ReportForm()
         {
@@ -21,26 +24,21 @@ namespace Typography.Forms
 
         private void InitializeComponent()
         {
-            this.reportViewer1 = new Microsoft.Reporting.WinForms.ReportViewer();
             this.SuspendLayout();
-            // 
-            // reportViewer1
-            // 
-            this.reportViewer1.Location = new System.Drawing.Point(0, 0);
-            this.reportViewer1.Name = "ReportViewer";
-            this.reportViewer1.Size = new System.Drawing.Size(396, 246);
-            this.reportViewer1.TabIndex = 0;
+            this.reportViewer1 = new ReportViewer();
+            reportViewer1.Dock = DockStyle.Fill;
             // 
             // ReportForm
             // 
             this.ClientSize = new System.Drawing.Size(636, 415);
             this.Name = "ReportForm";
             this.ResumeLayout(false);
-
+            this.Controls.Add(reportViewer1);
         }
 
+        public ReportViewer reportViewer1;
         public List<ReportColumn> ReportColumns { get; set; }
-        public Object ReportData { get; set; }
+        public object ReportData { get; set; }
 
         private void ReportForm_Load(object sender, EventArgs e)
         {

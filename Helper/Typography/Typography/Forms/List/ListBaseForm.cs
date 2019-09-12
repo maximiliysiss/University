@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Typography.Forms.CreateEdit;
 using Typography.Services;
+using Typography.Services.Templates;
+using static System.Windows.Forms.Control;
 
 namespace Typography.Forms.List
 {
@@ -26,11 +28,17 @@ namespace Typography.Forms.List
         DialogResult ShowDialog();
     }
 
+    public interface IRefreshDataForm
+    {
+        void RefreshData();
+        ControlCollection Controls { get; }
+    }
+
     /// <summary>
     /// Форма для отображения списка объектов
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class ListBaseForm<T> : Form, ISelectForm where T : class, new()
+    public abstract class ListBaseForm<T> : Form, ISelectForm, IRefreshDataForm where T : class, new()
     {
         /// <summary>
         /// Таблица
@@ -64,6 +72,9 @@ namespace Typography.Forms.List
         /// Layout для элементов
         /// </summary>
         private TableLayoutPanel tableLayoutPanel1;
+        private TextBox textBox1;
+        private Button reportBtn;
+
         /// <summary>
         /// Сохраненные элементы (кэш)
         /// </summary>
@@ -117,6 +128,8 @@ namespace Typography.Forms.List
             this.dataGridView = new System.Windows.Forms.DataGridView();
             this.addNewElement = new System.Windows.Forms.Button();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.reportBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -131,12 +144,12 @@ namespace Typography.Forms.List
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tableLayoutPanel1.SetColumnSpan(this.dataGridView, 2);
-            this.dataGridView.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView.Location = new System.Drawing.Point(3, 48);
             this.dataGridView.MultiSelect = false;
             this.dataGridView.Name = "dataGridView";
             this.dataGridView.ReadOnly = true;
             this.dataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dataGridView.Size = new System.Drawing.Size(734, 401);
+            this.dataGridView.Size = new System.Drawing.Size(734, 311);
             this.dataGridView.TabIndex = 0;
             this.dataGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridView_CellDoubleClick);
             // 
@@ -146,9 +159,9 @@ namespace Typography.Forms.List
             | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tableLayoutPanel1.SetColumnSpan(this.addNewElement, 2);
-            this.addNewElement.Location = new System.Drawing.Point(3, 410);
+            this.addNewElement.Location = new System.Drawing.Point(3, 365);
             this.addNewElement.Name = "addNewElement";
-            this.addNewElement.Size = new System.Drawing.Size(734, 40);
+            this.addNewElement.Size = new System.Drawing.Size(734, 39);
             this.addNewElement.TabIndex = 1;
             this.addNewElement.Text = "Добавить элемент";
             this.addNewElement.UseVisualStyleBackColor = true;
@@ -156,19 +169,45 @@ namespace Typography.Forms.List
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.addNewElement, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.dataGridView, 0, 0);
+            this.tableLayoutPanel1.ColumnCount = 1;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.Controls.Add(this.addNewElement, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.dataGridView, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.reportBtn, 0, 3);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 90F));
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 10F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(740, 453);
             this.tableLayoutPanel1.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.Location = new System.Drawing.Point(12, 12);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(12);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(716, 20);
+            this.textBox1.TabIndex = 3;
+            this.textBox1.TextChanged += new System.EventHandler(this.SearchTextChanged);
+            // 
+            // reportBtn
+            // 
+            this.reportBtn.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.reportBtn.Location = new System.Drawing.Point(3, 410);
+            this.reportBtn.Name = "reportBtn";
+            this.reportBtn.Size = new System.Drawing.Size(734, 40);
+            this.reportBtn.TabIndex = 4;
+            this.reportBtn.Text = "Создать отчет";
+            this.reportBtn.UseVisualStyleBackColor = true;
+            this.reportBtn.Click += new System.EventHandler(this.ReportBtn_Click);
             // 
             // ListBaseForm
             // 
@@ -177,6 +216,7 @@ namespace Typography.Forms.List
             this.Name = "ListBaseForm";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -192,6 +232,20 @@ namespace Typography.Forms.List
             dialog.IsEdit = false;
             dialog.ShowDialog();
             RefreshData();
+        }
+
+        protected abstract bool Search(T elem, string val);
+
+        private void SearchTextChanged(object sender, EventArgs e) => dataGridView.DataSource = casheElements = actionList.Where(x => string.IsNullOrEmpty(textBox1.Text) ? true : Search(x, textBox1.Text)).ToList();
+
+        private void ReportBtn_Click(object sender, EventArgs e)
+        {
+            var reportForm = new ReportForm();
+            reportForm.ReportColumns = this.dataGridView.Columns.Cast<DataGridViewColumn>()
+                      .Select(x => new ReportColumn(x.DataPropertyName)
+                      { Title = x.HeaderText, Width = x.Width }).ToList();
+            reportForm.ReportData = this.dataGridView.DataSource;
+            reportForm.ShowDialog();
         }
     }
 }

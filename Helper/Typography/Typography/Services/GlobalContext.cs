@@ -69,23 +69,23 @@ namespace Typography.Services
         /// <summary>
         /// Фабрика для создания форм со списком (кэш)
         /// </summary>
-        static FactoryGenerator<Form, object, string> factoryGetListForm;
-        public static FactoryGenerator<Form, object, string> FactoryGeneratorListForm
+        static FactoryGenerator<IRefreshDataForm, object, string> factoryGetListForm;
+        public static FactoryGenerator<IRefreshDataForm, object, string> FactoryGeneratorListForm
         {
             get
             {
                 if (factoryGetListForm != null)
                     return factoryGetListForm;
-                factoryGetListForm = new FactoryGenerator<Form, object, string>();
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Typography>(DatabaseContext, DatabaseContext.Typographies, "Typography"))
+                factoryGetListForm = new FactoryGenerator<IRefreshDataForm, object, string>();
+                factoryGetListForm.AddFor(() => new TypographyList(DatabaseContext, DatabaseContext.Typographies, "Typography"))
                     .Where("Typography");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Distribution>(DatabaseContext, DatabaseContext.Distributions, "Distribution"))
+                factoryGetListForm.AddFor(() => new DistributionList(DatabaseContext, DatabaseContext.Distributions, "Distribution"))
                     .Where("Distribution");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.PostOfficer>(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer"))
+                factoryGetListForm.AddFor(() => new PostOfficerList(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer"))
                     .Where("PostOfficer");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Paper>(DatabaseContext, DatabaseContext.Papers, "Paper"))
+                factoryGetListForm.AddFor(() => new PaperList(DatabaseContext, DatabaseContext.Papers, "Paper"))
                     .Where("Paper");
-                factoryGetListForm.AddFor(() => new ListBaseForm<Models.Release>(DatabaseContext, DatabaseContext.Releases, "Release"))
+                factoryGetListForm.AddFor(() => new ReleaseList(DatabaseContext, DatabaseContext.Releases, "Release"))
                     .Where("Release");
                 return factoryGetListForm;
             }
@@ -102,15 +102,15 @@ namespace Typography.Services
                 if (factoryGetSelectListForm != null)
                     return factoryGetSelectListForm;
                 factoryGetSelectListForm = new FactoryGenerator<ISelectForm, object, string>();
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Typography>(DatabaseContext, DatabaseContext.Typographies, "Typography") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new TypographyList(DatabaseContext, DatabaseContext.Typographies, "Typography") { IsSelect = true })
                     .Where("Typography");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Distribution>(DatabaseContext, DatabaseContext.Distributions, "Distribution") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new DistributionList(DatabaseContext, DatabaseContext.Distributions, "Distribution") { IsSelect = true })
                     .Where("Distribution");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.PostOfficer>(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new PostOfficerList(DatabaseContext, DatabaseContext.PostOfficers, "PostOfficer") { IsSelect = true })
                     .Where("PostOfficer");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Paper>(DatabaseContext, DatabaseContext.Papers, "Paper") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new PaperList(DatabaseContext, DatabaseContext.Papers, "Paper") { IsSelect = true })
                     .Where("Paper");
-                factoryGetSelectListForm.AddFor(() => new ListBaseForm<Models.Release>(DatabaseContext, DatabaseContext.Releases, "Release") { IsSelect = true })
+                factoryGetSelectListForm.AddFor(() => new ReleaseList(DatabaseContext, DatabaseContext.Releases, "Release") { IsSelect = true })
                     .Where("Release");
                 return factoryGetSelectListForm;
             }

@@ -19,10 +19,7 @@ namespace Typography.Forms
             foreach (var tab in tabControl1.TabPages.Cast<TabPage>())
             {
                 var listData = GlobalContext.FactoryGeneratorListForm.Build(tab.Name);
-                tabControl1.SelectedIndexChanged += (s, e) =>
-                {
-                    MessageBox.Show("sdfsdf");
-                };
+                tabControl1.SelectedIndexChanged += (s, e) => listData.RefreshData();
                 tab.Controls.AddRange(listData.Controls.Cast<Control>().ToArray());
             }
         }

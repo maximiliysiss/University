@@ -7,26 +7,47 @@ using System.Threading.Tasks;
 
 namespace Typography.Services.Templates
 {
+    /// <summary>
+    /// Колонка для отчета
+    /// </summary>
     public class ReportColumn
     {
         public ReportColumn(string name)
         {
             Name = name;
             Title = name;
-            Type = typeof(System.String);
+            Type = typeof(string);
             Width = GetPixelFromInch(1);
             Expression = string.Format("=Fields!{0}.Value", name);
             HeaderBackColor = Color.LightPink;
         }
+        /// <summary>
+        /// Название
+        /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// Заголовок
+        /// </summary>
         public string Title { get; set; }
+        /// <summary>
+        /// Тип
+        /// </summary>
         public Type Type { get; set; }
+        /// <summary>
+        /// Ширина
+        /// </summary>
         public int Width { get; set; }
         public float WidthInInch
         {
             get { return GetInchFromPixel(Width); }
         }
+        /// <summary>
+        /// Выражение для шаблона
+        /// </summary>
         public string Expression { get; set; }
+        /// <summary>
+        /// Цвет заголовка
+        /// </summary>
         public Color HeaderBackColor { get; set; }
         public string HeaderBackColorInHtml
         {
