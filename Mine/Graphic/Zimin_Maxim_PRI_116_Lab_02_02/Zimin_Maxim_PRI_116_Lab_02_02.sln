@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Zimin_Maxim_PRI_116_Lab_02_02", "Zimin_Maxim_PRI_116_Lab_02_02\Zimin_Maxim_PRI_116_Lab_02_02.csproj", "{75BC291E-4EE9-49F0-A180-7F77AA8D4F32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{75BC291E-4EE9-49F0-A180-7F77AA8D4F32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75BC291E-4EE9-49F0-A180-7F77AA8D4F32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75BC291E-4EE9-49F0-A180-7F77AA8D4F32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75BC291E-4EE9-49F0-A180-7F77AA8D4F32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {630C1D5E-A53A-43DE-A598-807B62BE7C63}
+	EndGlobalSection
+EndGlobal
