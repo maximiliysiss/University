@@ -34,8 +34,8 @@ namespace SchoolService.Models
             get
             {
                 var claims = new[] {
-                    new Claim(ClaimTypes.NameIdentifier, Login),
-                    new Claim(ClaimTypes.Role, UserType.ToString())
+                    new Claim(ClaimsIdentity.DefaultNameClaimType, Login),
+                    new Claim(ClaimsIdentity.RoleClaimType, UserType.ToString()),
                 };
                 return new ClaimsIdentity(claims);
             }

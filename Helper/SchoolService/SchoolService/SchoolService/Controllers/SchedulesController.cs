@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using SchoolService.Models;
 using SchoolService.Services;
 
@@ -12,6 +14,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
     public class SchedulesController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -39,6 +42,18 @@ namespace SchoolService.Controllers
                 return NotFound();
             }
 
+            return schedule;
+        }
+
+        [HttpGet("{id}/facultative")]
+        public async Task<ActionResult<Schedule>> MakeFacultative(int id)
+        {
+            var schedule = await _context.Schedules.FirstOrDefaultAsync(x => x.ID == id);
+            if (schedule == null)
+                return NotFound();
+            schedule.IsFacultative = !schedule.IsFacultative;
+            _context.Update(schedule);
+            _context.SaveChanges();
             return schedule;
         }
 

@@ -13,7 +13,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AuthorizeAttribute("Admin")]
+    [AuthorizeAttribute(Roles = "Admin, KnowledgeTeacher")]
     public class ChildrenController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -103,6 +103,18 @@ namespace SchoolService.Controllers
         private bool ChildExists(int id)
         {
             return _context.Children.Any(e => e.ID == id);
+        }
+
+        [HttpGet("{id}/archive")]
+        public ActionResult<Child> Archive(int id)
+        {
+            var child = _context.Children.FirstOrDefault(x => x.ID == id);
+            if (child == null)
+                return NotFound();
+            child.IsArchive = !child.IsArchive;
+            _context.Update(child);
+            _context.SaveChanges();
+            return child;
         }
     }
 }

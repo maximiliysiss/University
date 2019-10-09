@@ -11,7 +11,7 @@ using SchoolService.Services;
 
 namespace SchoolService.Controllers
 {
-    [Authorize("Admin")]
+    [Authorize(Roles = "Admin, JobTeacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase

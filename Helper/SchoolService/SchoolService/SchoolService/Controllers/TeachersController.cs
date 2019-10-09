@@ -13,7 +13,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AuthorizeAttribute("Admin")]
+    [AuthorizeAttribute(Roles = "Admin")]
     public class TeachersController : ControllerBase
     {
         private readonly DatabaseContext _context;
