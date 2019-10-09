@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace SchoolService.Models
@@ -24,5 +26,19 @@ namespace SchoolService.Models
         public string Surname { get; set; }
         public string SecondName { get; set; }
         public DateTime Birthday { get; set; }
+        public UserType UserType { get; set; }
+
+        [NotMapped]
+        public ClaimsIdentity ClaimsIdentity
+        {
+            get
+            {
+                var claims = new[] {
+                    new Claim(ClaimTypes.NameIdentifier, Login),
+                    new Claim(ClaimTypes.Role, UserType.ToString())
+                };
+                return new ClaimsIdentity(claims);
+            }
+        }
     }
 }

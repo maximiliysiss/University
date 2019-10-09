@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [AuthorizeAttribute("Admin")]
     public class ChildrenController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -25,7 +27,7 @@ namespace SchoolService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Child>>> GetChildren()
         {
-            return await _context.Children.ToListAsync();
+            return await _context.Children.Where(x => !x.IsArchive).ToListAsync();
         }
 
         // GET: api/Children/5
