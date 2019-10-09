@@ -19,8 +19,6 @@ namespace SchoolService.Services
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<ChildArchive> ChildArchives { get; set; }
-        public DbSet<Document> Documents { get; set; }
         public DbSet<RiskGroup> RiskGroups { get; set; }
         public DbSet<Mark> Marks { get; set; }
     }

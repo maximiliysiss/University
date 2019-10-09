@@ -28,9 +28,12 @@ namespace SchoolService
         {
             var authorize = Configuration.GetSection("Authorize").Get<Authorize>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().AddJsonOptions(option =>
+            {
+                option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<DatabaseContext>(x =>
-                        x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                        x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
 
             services.AddAuthentication().AddJwtBearer(x =>
             {

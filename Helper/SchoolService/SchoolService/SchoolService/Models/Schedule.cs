@@ -8,10 +8,13 @@ namespace SchoolService.Models
     public class Schedule
     {
         public int ID { get; set; }
+        public int ClassId { get; set; }
         public virtual Class Class { get; set; }
         public int LessonNumber { get; set; }
         public string Lesson { get; set; }
+        public int TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
+        public bool IsFacultative { get; set; }
     }
 }

@@ -11,12 +11,7 @@ namespace SchoolService.Models
         public string SecondName { get; set; }
         public DateTime Birthday { get; set; }
         public virtual Class Class { get; set; }
-        public virtual Document Document { get; set; }
         public virtual List<Mark> Marks { get; set; }
-    }
-
-    public class ChildArchive : Child
-    {
-        public DateTime CreateDate { get; set; }
+        public bool IsArchive { get; set; }
     }
 }

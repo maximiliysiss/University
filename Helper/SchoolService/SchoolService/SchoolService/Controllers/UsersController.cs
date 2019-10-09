@@ -14,46 +14,46 @@ namespace SchoolService.Controllers
     [Authorize("Admin")]
     [Route("api/[controller]")]
     [ApiController]
-    public class ClassesController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly DatabaseContext _context;
 
-        public ClassesController(DatabaseContext context)
+        public UsersController(DatabaseContext context)
         {
             _context = context;
         }
 
-        // GET: api/Classes
+        // GET: api/Users
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
+        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Classes.ToListAsync();
+            return await _context.Users.ToListAsync();
         }
 
-        // GET: api/Classes/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Class>> GetClass(int id)
+        public async Task<ActionResult<User>> GetUser(int id)
         {
-            var @class = await _context.Classes.FindAsync(id);
+            var user = await _context.Users.FindAsync(id);
 
-            if (@class == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return @class;
+            return user;
         }
 
-        // PUT: api/Classes/5
+        // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClass(int id, Class @class)
+        public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != @class.ID)
+            if (id != user.ID)
             {
                 return BadRequest();
             }
 
-            _context.Entry(@class).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -61,7 +61,7 @@ namespace SchoolService.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ClassExists(id))
+                if (!UserExists(id))
                 {
                     return NotFound();
                 }
@@ -74,35 +74,36 @@ namespace SchoolService.Controllers
             return NoContent();
         }
 
-        // POST: api/Classes
+        // POST: api/Users
         [HttpPost]
-        public async Task<ActionResult<Class>> PostClass(Class @class)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Classes.Add(@class);
+            user.PasswordHash = CryptService.CreateMD5(user.PasswordHash);
+            _context.Users.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClass", new { id = @class.ID }, @class);
+            return CreatedAtAction("GetUser", new { id = user.ID }, user);
         }
 
-        // DELETE: api/Classes/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Class>> DeleteClass(int id)
+        public async Task<ActionResult<User>> DeleteUser(int id)
         {
-            var @class = await _context.Classes.FindAsync(id);
-            if (@class == null)
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Classes.Remove(@class);
+            _context.Users.Remove(user);
             await _context.SaveChangesAsync();
 
-            return @class;
+            return user;
         }
 
-        private bool ClassExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.Classes.Any(e => e.ID == id);
+            return _context.Users.Any(e => e.ID == id);
         }
     }
 }
