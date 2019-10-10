@@ -104,5 +104,23 @@ namespace SchoolService.Controllers
         {
             return _context.RiskGroups.Any(e => e.ID == id);
         }
+
+        [HttpGet("risk/{child}/{group}")]
+        public async Task<ActionResult<ChildInRiskGroup>> ChangeChildInGroup(int child, int group)
+        {
+            var _child = _context.Children.FirstOrDefault(x => x.ID == child);
+            var riskGroup = _context.RiskGroups.FirstOrDefault(x => x.ID == group);
+
+            if (_child == null || riskGroup == null)
+                return NotFound();
+
+            var childInGroup = _context.ChildInRiskGroups.FirstOrDefault(x => x.ChildId == child && x.RiskGroupId == group);
+            if (childInGroup == null)
+                _context.Add(childInGroup = new ChildInRiskGroup { Child = _child, RiskGroup = riskGroup });
+            else
+                _context.Remove(childInGroup);
+            await _context.SaveChangesAsync();
+            return childInGroup;
+        }
     }
 }

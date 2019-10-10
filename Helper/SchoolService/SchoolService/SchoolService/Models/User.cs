@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -28,6 +29,7 @@ namespace SchoolService.Models
         public DateTime Birthday { get; set; }
         public UserType UserType { get; set; }
 
+        [JsonIgnoreAttribute]
         [NotMapped]
         public ClaimsIdentity ClaimsIdentity
         {
@@ -35,7 +37,7 @@ namespace SchoolService.Models
             {
                 var claims = new[] {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, Login),
-                    new Claim(ClaimsIdentity.RoleClaimType, UserType.ToString()),
+                    new Claim(ClaimsIdentity.DefaultRoleClaimType, UserType.ToString()),
                 };
                 return new ClaimsIdentity(claims);
             }

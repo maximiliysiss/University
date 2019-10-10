@@ -49,9 +49,7 @@ namespace SchoolService.Controllers
         public async Task<IActionResult> PutChild(int id, Child child)
         {
             if (id != child.ID)
-            {
                 return BadRequest();
-            }
 
             _context.Entry(child).State = EntityState.Modified;
 
@@ -62,22 +60,38 @@ namespace SchoolService.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!ChildExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
+        }
+
+        // GET: api/3/class/3
+        [HttpGet("{id}/class/{class}")]
+        public async Task<ActionResult<Child>> ChangeClass(int id, int @class)
+        {
+            var child = _context.Children.FirstOrDefault(x => x.ID == id);
+            var cl = _context.Classes.FirstOrDefault(x => x.ID == @class);
+
+            if (child == null || cl == null)
+                return NotFound();
+
+            child.Class = cl;
+            _context.Entry(child).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return child;
         }
 
         // POST: api/Children
         [HttpPost]
         public async Task<ActionResult<Child>> PostChild(Child child)
         {
+            if (_context.Children.Any(x => x.Login == child.Login))
+                return BadRequest();
+
+            child.PasswordHash = CryptService.CreateMD5(child.PasswordHash);
             _context.Children.Add(child);
             await _context.SaveChangesAsync();
 
@@ -90,9 +104,7 @@ namespace SchoolService.Controllers
         {
             var child = await _context.Children.FindAsync(id);
             if (child == null)
-            {
                 return NotFound();
-            }
 
             _context.Children.Remove(child);
             await _context.SaveChangesAsync();

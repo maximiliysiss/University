@@ -13,7 +13,7 @@ using SchoolService.Services;
 namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
-    [AuthorizeAttribute("Teacher")]
+    [AuthorizeAttribute(Roles = "Teacher")]
     [ApiController]
     public class MarksController : ControllerBase
     {

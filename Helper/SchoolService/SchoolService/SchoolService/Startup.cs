@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -26,26 +27,28 @@ namespace SchoolService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var authorize = Configuration.GetSection("Authorize").Get<Authorize>();
+            var authConfig = Configuration.GetSection("Authorize").Get<Authorize>();
 
+            services.AddSingleton(authConfig);
             services.AddMvc().AddJsonOptions(option =>
             {
                 option.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddDbContext<DatabaseContext>(x =>
-                        x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
 
-            services.AddAuthentication().AddJwtBearer(x =>
-            {
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+            services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies(), ServiceLifetime.Transient);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
-                    ValidateAudience = true,
-                    ValidAudience = authorize.Audience,
-                    ValidateIssuer = true,
-                    ValidIssuer = authorize.Issuer,
-                    ValidateLifetime = true
-                };
-            });
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = authConfig.Issuer,
+                        ValidateAudience = true,
+                        ValidAudience = authConfig.Audience,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = authConfig.SymmetricSecurityKey
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

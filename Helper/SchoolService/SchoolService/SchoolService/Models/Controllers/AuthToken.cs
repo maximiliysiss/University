@@ -10,7 +10,6 @@ namespace SchoolService.Models.Controllers
     {
 
         private string token;
-        [JsonIgnore]
         public string Token
         {
             get => $"Bearer {token}";

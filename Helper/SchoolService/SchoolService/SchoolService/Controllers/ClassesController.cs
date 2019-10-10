@@ -12,7 +12,7 @@ using SchoolService.Services;
 
 namespace SchoolService.Controllers
 {
-    [Authorize(Roles = "Admin, Teacher")]
+    [Authorize(Roles = "Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassesController : ControllerBase
@@ -28,10 +28,10 @@ namespace SchoolService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
         {
-            var user = this.GetCurrentUser(_context);
-            if (user.UserType == UserType.Admin)
+            var userContext = this.GetCurrentUser(_context);
+            if (userContext.UserType == UserType.Admin)
                 return await _context.Classes.ToListAsync();
-            return _context.Teachers.Find(user.ID).Class;
+            return _context.Teachers.Find(userContext.ID).Class;
         }
 
         // GET: api/Classes/5
@@ -39,13 +39,10 @@ namespace SchoolService.Controllers
         public async Task<ActionResult<Class>> GetClass(int id)
         {
             var @class = await _context.Classes.FindAsync(id);
-            var user = this.GetCurrentUser(_context);
-
-            if (@class == null || (user.UserType == UserType.Teacher && !_context.Teachers.Find(user.ID).Class.Select(x => x.ID).Contains(id)))
-            {
+            var userContext = this.GetCurrentUser(_context);
+            var teacher = userContext as Teacher;
+            if (@class == null || (userContext.UserType == UserType.Teacher && !_context.Teachers.Find(userContext.ID).Class.Select(x => x.ID).Contains(id)))
                 return NotFound();
-            }
-
             return @class;
         }
 
@@ -53,10 +50,10 @@ namespace SchoolService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutClass(int id, Class @class)
         {
-            var user = this.GetCurrentUser(_context);
-            if (id != @class.ID || (user.UserType == UserType.Teacher && !_context.Teachers.Find(user.ID).Class.Select(x => x.ID).Contains(id)))
+            using (var userContext = this.GetUserContext())
             {
-                return BadRequest();
+                if (id != @class.ID || (!(userContext.User as Teacher)?.Class.Select(x => x.ID).Contains(id) ?? false))
+                    return BadRequest();
             }
 
             _context.Entry(@class).State = EntityState.Modified;
@@ -68,13 +65,9 @@ namespace SchoolService.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!ClassExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
@@ -84,6 +77,7 @@ namespace SchoolService.Controllers
         [HttpPost]
         public async Task<ActionResult<Class>> PostClass(Class @class)
         {
+            @class.TeacherId = this.GetCurrentUser(_context).ID;
             _context.Classes.Add(@class);
             await _context.SaveChangesAsync();
 
@@ -95,11 +89,11 @@ namespace SchoolService.Controllers
         public async Task<ActionResult<Class>> DeleteClass(int id)
         {
             var user = this.GetCurrentUser(_context);
+            var teacher = user as Teacher;
             var @class = await _context.Classes.FindAsync(id);
-            if (@class == null || (user.UserType == UserType.Teacher && !_context.Teachers.Find(user.ID).Class.Select(x => x.ID).Contains(id)))
-            {
+
+            if (@class == null || (!teacher?.Class.Select(x=>x.ID).Contains(@class.ID) ?? false))
                 return NotFound();
-            }
 
             _context.Classes.Remove(@class);
             await _context.SaveChangesAsync();
