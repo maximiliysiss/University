@@ -37,9 +37,7 @@ namespace SchoolService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mark>>> GetMarks()
         {
-            var teacherClasses = Teacher.Class.Select(x => x.ID);
-            var schedules = _context.Schedules.Where(x => teacherClasses.Contains(x.ID)).Select(x => x.ID);
-            return await _context.Marks.Where(x => schedules.Contains(x.Schedule.ID)).ToListAsync();
+            return await _context.Marks.Where(x => x.TeacherId == Teacher.ID).ToListAsync();
         }
 
         // GET: api/Marks/5
@@ -60,9 +58,12 @@ namespace SchoolService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMark(int id, Mark mark)
         {
-            if (id != mark.ID || !Teacher.Class.Select(x => x.ID).Contains(_context.Marks.Find(id).Schedule.ClassId))
+            using (var userContext = this.GetUserContext())
             {
-                return BadRequest();
+                var markClass = userContext.DatabaseContext.Marks.FirstOrDefault(x => x.ID == id)?.Schedule?.Class;
+                if (id != mark.ID || !(userContext.User as Teacher).Class.Select(x => x.ID).Contains(markClass.ID))
+                    return BadRequest();
+                mark.TeacherId = userContext.User.ID;
             }
 
             _context.Entry(mark).State = EntityState.Modified;
@@ -74,13 +75,9 @@ namespace SchoolService.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!MarkExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
@@ -90,6 +87,7 @@ namespace SchoolService.Controllers
         [HttpPost]
         public async Task<ActionResult<Mark>> PostMark(Mark mark)
         {
+            mark.TeacherId = this.GetCurrentUser(_context).ID;
             _context.Marks.Add(mark);
             await _context.SaveChangesAsync();
 
@@ -102,9 +100,7 @@ namespace SchoolService.Controllers
         {
             var mark = await _context.Marks.FindAsync(id);
             if (mark == null || !Teacher.Class.Select(x => x.ID).Contains(mark.Schedule.ClassId))
-            {
                 return NotFound();
-            }
 
             _context.Marks.Remove(mark);
             await _context.SaveChangesAsync();
@@ -112,9 +108,6 @@ namespace SchoolService.Controllers
             return mark;
         }
 
-        private bool MarkExists(int id)
-        {
-            return _context.Marks.Any(e => e.ID == id);
-        }
+        private bool MarkExists(int id) => _context.Marks.Any(e => e.ID == id);
     }
 }

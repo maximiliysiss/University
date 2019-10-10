@@ -30,18 +30,10 @@ namespace SchoolService.Controllers
             return await _context.Children.Where(x => !x.IsArchive).ToListAsync();
         }
 
-        // GET: api/Children/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Child>> GetChild(int id)
+        [HttpGet("archived")]
+        public async Task<ActionResult<IEnumerable<Child>>> GetArchived()
         {
-            var child = await _context.Children.FindAsync(id);
-
-            if (child == null)
-            {
-                return NotFound();
-            }
-
-            return child;
+            return await _context.Children.Where(x => x.IsArchive).ToListAsync();
         }
 
         // PUT: api/Children/5
@@ -95,27 +87,10 @@ namespace SchoolService.Controllers
             _context.Children.Add(child);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetChild", new { id = child.ID }, child);
+            return CreatedAtAction("GetUser", "Users", new { id = child.ID }, child);
         }
 
-        // DELETE: api/Children/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Child>> DeleteChild(int id)
-        {
-            var child = await _context.Children.FindAsync(id);
-            if (child == null)
-                return NotFound();
-
-            _context.Children.Remove(child);
-            await _context.SaveChangesAsync();
-
-            return child;
-        }
-
-        private bool ChildExists(int id)
-        {
-            return _context.Children.Any(e => e.ID == id);
-        }
+        private bool ChildExists(int id) => _context.Children.Any(e => e.ID == id);
 
         [HttpGet("{id}/archive")]
         public ActionResult<Child> Archive(int id)

@@ -14,6 +14,7 @@ namespace SchoolService.Extensions
     {
         private readonly DatabaseContext databaseContext;
         public User User { get; set; }
+        public DatabaseContext DatabaseContext => databaseContext;
 
         public UserContext(DatabaseContext databaseContext, User user)
         {

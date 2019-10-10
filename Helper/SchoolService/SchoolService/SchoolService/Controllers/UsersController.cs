@@ -36,7 +36,7 @@ namespace SchoolService.Controllers
         {
             var user = await _context.Users.FindAsync(id);
 
-            if (user == null || (user != null && user.UserType == UserType.Student))
+            if (user == null)
                 return NotFound();
 
             return user;
@@ -46,7 +46,7 @@ namespace SchoolService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
-            if (id != user.ID || user.UserType == UserType.Student)
+            if (id != user.ID || user.UserType == UserType.Student || user.UserType == UserType.Teacher)
                 return BadRequest();
 
             _context.Entry(user).State = EntityState.Modified;
@@ -70,13 +70,11 @@ namespace SchoolService.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            if (user.UserType == UserType.Student || _context.Users.Any(x => x.Login == user.Login))
+            if (user.UserType == UserType.Student || user.UserType == UserType.Teacher || _context.Users.Any(x => x.Login == user.Login))
                 return BadRequest();
-
             user.PasswordHash = CryptService.CreateMD5(user.PasswordHash);
             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction("GetUser", new { id = user.ID }, user);
         }
 
@@ -85,18 +83,13 @@ namespace SchoolService.Controllers
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
-            if (user == null || (user != null && user.UserType == UserType.Student))
+            if (user == null)
                 return NotFound();
-
             _context.Users.Remove(user);
             await _context.SaveChangesAsync();
-
             return user;
         }
 
-        private bool UserExists(int id)
-        {
-            return _context.Users.Any(e => e.ID == id);
-        }
+        private bool UserExists(int id) => _context.Users.Any(e => e.ID == id);
     }
 }

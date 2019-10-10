@@ -28,7 +28,7 @@ namespace SchoolService.Controllers
 
         // GET: api/Schedules
         [HttpGet]
-        [Authorize(Roles = "Teacher, Student")]
+        [Authorize(Roles = "Teacher, Student, KnowledgeTeacher, Admin, JobTeacher")]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
             Task<List<Schedule>> res = null;

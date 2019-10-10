@@ -30,28 +30,12 @@ namespace SchoolService.Controllers
             return await _context.Teachers.ToListAsync();
         }
 
-        // GET: api/Teachers/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Teacher>> GetTeacher(int id)
-        {
-            var teacher = await _context.Teachers.FindAsync(id);
-
-            if (teacher == null)
-            {
-                return NotFound();
-            }
-
-            return teacher;
-        }
-
         // PUT: api/Teachers/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTeacher(int id, Teacher teacher)
         {
             if (id != teacher.ID)
-            {
                 return BadRequest();
-            }
 
             _context.Entry(teacher).State = EntityState.Modified;
 
@@ -62,13 +46,9 @@ namespace SchoolService.Controllers
             catch (DbUpdateConcurrencyException)
             {
                 if (!TeacherExists(id))
-                {
                     return NotFound();
-                }
                 else
-                {
                     throw;
-                }
             }
 
             return NoContent();
@@ -78,31 +58,13 @@ namespace SchoolService.Controllers
         [HttpPost]
         public async Task<ActionResult<Teacher>> PostTeacher(Teacher teacher)
         {
+            teacher.PasswordHash = CryptService.CreateMD5(teacher.PasswordHash);
             _context.Teachers.Add(teacher);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTeacher", new { id = teacher.ID }, teacher);
+            return CreatedAtAction("GetUser", "Users", new { id = teacher.ID }, teacher);
         }
 
-        // DELETE: api/Teachers/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Teacher>> DeleteTeacher(int id)
-        {
-            var teacher = await _context.Teachers.FindAsync(id);
-            if (teacher == null)
-            {
-                return NotFound();
-            }
-
-            _context.Teachers.Remove(teacher);
-            await _context.SaveChangesAsync();
-
-            return teacher;
-        }
-
-        private bool TeacherExists(int id)
-        {
-            return _context.Teachers.Any(e => e.ID == id);
-        }
+        private bool TeacherExists(int id) => _context.Teachers.Any(e => e.ID == id);
     }
 }
