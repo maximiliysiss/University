@@ -6,6 +6,7 @@ namespace SchoolService.Models
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public int TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; }
         public virtual List<Child> Children { get; set; }
     }

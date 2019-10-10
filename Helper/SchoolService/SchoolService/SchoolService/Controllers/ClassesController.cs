@@ -6,12 +6,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolService.Extensions;
 using SchoolService.Models;
 using SchoolService.Services;
 
 namespace SchoolService.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassesController : ControllerBase
@@ -27,7 +28,10 @@ namespace SchoolService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
         {
-            return await _context.Classes.ToListAsync();
+            var user = this.GetCurrentUser(_context);
+            if (user.UserType == UserType.Admin)
+                return await _context.Classes.ToListAsync();
+            return _context.Teachers.Find(user.ID).Class;
         }
 
         // GET: api/Classes/5
@@ -35,8 +39,9 @@ namespace SchoolService.Controllers
         public async Task<ActionResult<Class>> GetClass(int id)
         {
             var @class = await _context.Classes.FindAsync(id);
+            var user = this.GetCurrentUser(_context);
 
-            if (@class == null)
+            if (@class == null || (user.UserType == UserType.Teacher && !_context.Teachers.Find(user.ID).Class.Select(x => x.ID).Contains(id)))
             {
                 return NotFound();
             }
@@ -48,7 +53,8 @@ namespace SchoolService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutClass(int id, Class @class)
         {
-            if (id != @class.ID)
+            var user = this.GetCurrentUser(_context);
+            if (id != @class.ID || (user.UserType == UserType.Teacher && !_context.Teachers.Find(user.ID).Class.Select(x => x.ID).Contains(id)))
             {
                 return BadRequest();
             }
@@ -88,8 +94,9 @@ namespace SchoolService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Class>> DeleteClass(int id)
         {
+            var user = this.GetCurrentUser(_context);
             var @class = await _context.Classes.FindAsync(id);
-            if (@class == null)
+            if (@class == null || (user.UserType == UserType.Teacher && !_context.Teachers.Find(user.ID).Class.Select(x => x.ID).Contains(id)))
             {
                 return NotFound();
             }

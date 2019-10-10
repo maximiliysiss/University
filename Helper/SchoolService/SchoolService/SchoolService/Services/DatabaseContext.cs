@@ -21,5 +21,6 @@ namespace SchoolService.Services
         public DbSet<User> Users { get; set; }
         public DbSet<RiskGroup> RiskGroups { get; set; }
         public DbSet<Mark> Marks { get; set; }
+        public DbSet<ChildInRiskGroup> ChildInRiskGroups { get; set; }
     }
 }

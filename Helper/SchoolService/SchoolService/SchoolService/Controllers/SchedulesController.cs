@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using SchoolService.Extensions;
 using SchoolService.Models;
 using SchoolService.Services;
 
@@ -26,9 +28,33 @@ namespace SchoolService.Controllers
 
         // GET: api/Schedules
         [HttpGet]
+        [Authorize(Roles = "Teacher, Student")]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
-            return await _context.Schedules.ToListAsync();
+            Task<List<Schedule>> res = null;
+            var user = this.GetCurrentUser(_context);
+            switch (user.UserType)
+            {
+                case UserType.Admin:
+                case UserType.JobTeacher:
+                case UserType.KnowledgeTeacher:
+                    res = _context.Schedules.ToListAsync();
+                    break;
+                case UserType.Teacher:
+                    {
+                        var classes = _context.Teachers.Find(user.ID).Class.Select(x => x.ID);
+                        res = _context.Schedules.Where(x => classes.Contains(x.ClassId)).ToListAsync();
+                    }
+                    break;
+                case UserType.Student:
+                    {
+                        var c = _context.Children.Find(user.ID).Class.ID;
+                        res = _context.Schedules.Where(x => x.ClassId == c).ToListAsync();
+                    }
+                    break;
+            }
+
+            return await res;
         }
 
         // GET: api/Schedules/5

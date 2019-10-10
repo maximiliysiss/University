@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SchoolService.Extensions;
 using SchoolService.Models;
 using SchoolService.Services;
 
 namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
+    [AuthorizeAttribute("Teacher")]
     [ApiController]
     public class MarksController : ControllerBase
     {
@@ -21,11 +24,22 @@ namespace SchoolService.Controllers
             _context = context;
         }
 
+        public Teacher Teacher
+        {
+            get
+            {
+                var user = this.GetCurrentUser(_context);
+                return _context.Teachers.Find(user.ID);
+            }
+        }
+
         // GET: api/Marks
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Mark>>> GetMarks()
         {
-            return await _context.Marks.ToListAsync();
+            var teacherClasses = Teacher.Class.Select(x => x.ID);
+            var schedules = _context.Schedules.Where(x => teacherClasses.Contains(x.ID)).Select(x => x.ID);
+            return await _context.Marks.Where(x => schedules.Contains(x.Schedule.ID)).ToListAsync();
         }
 
         // GET: api/Marks/5
@@ -34,7 +48,7 @@ namespace SchoolService.Controllers
         {
             var mark = await _context.Marks.FindAsync(id);
 
-            if (mark == null)
+            if (mark == null || !Teacher.Class.Select(x => x.ID).Contains(mark.Schedule.ClassId))
             {
                 return NotFound();
             }
@@ -46,7 +60,7 @@ namespace SchoolService.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutMark(int id, Mark mark)
         {
-            if (id != mark.ID)
+            if (id != mark.ID || !Teacher.Class.Select(x => x.ID).Contains(_context.Marks.Find(id).Schedule.ClassId))
             {
                 return BadRequest();
             }
@@ -87,7 +101,7 @@ namespace SchoolService.Controllers
         public async Task<ActionResult<Mark>> DeleteMark(int id)
         {
             var mark = await _context.Marks.FindAsync(id);
-            if (mark == null)
+            if (mark == null || !Teacher.Class.Select(x => x.ID).Contains(mark.Schedule.ClassId))
             {
                 return NotFound();
             }

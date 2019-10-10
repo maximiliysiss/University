@@ -10,11 +10,11 @@ namespace SchoolService.Models
     public enum UserType
     {
         Admin,
-        Director, // Директор
         Social, // Соц педагог
         KnowledgeTeacher, // Зауч по учебному процессу
         JobTeacher, // Зауч по рабочему процессу
         Teacher,
+        Student
     }
 
     public class User

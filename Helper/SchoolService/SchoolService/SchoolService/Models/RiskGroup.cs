@@ -8,7 +8,16 @@ namespace SchoolService.Models
     public class RiskGroup
     {
         public int ID { get; set; }
+        public string Name { get; set; }
+        public virtual List<ChildInRiskGroup> ChildInRiskGroups { get; set; }
+    }
+
+    public class ChildInRiskGroup
+    {
+        public int ID { get; set; }
+        public int RiskGroupId { get; set; }
+        public virtual RiskGroup RiskGroup { get; set; }
+        public int ChildId { get; set; }
         public virtual Child Child { get; set; }
-        public string Description { get; set; }
     }
 }
