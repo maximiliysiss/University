@@ -25,6 +25,24 @@ namespace SchoolService.Controllers
             this.authorize = authorize;
         }
 
+        [HttpGet]
+        public ActionResult<User> AdminCreate()
+        {
+            var admin = new User
+            {
+                Birthday = DateTime.Now,
+                Login = "Admin",
+                Name = "Admin",
+                PasswordHash = CryptService.CreateMD5("Admin"),
+                SecondName = "Admin",
+                UserType = UserType.Admin,
+                Surname = "Admin"
+            };
+            databaseContext.Add(admin);
+            databaseContext.SaveChanges();
+            return admin;
+        }
+
         [HttpPost]
         public ActionResult<AuthToken> Login(LoginModel loginModel)
         {
@@ -35,10 +53,10 @@ namespace SchoolService.Controllers
                 return NotFound();
             var now = DateTime.Now;
             var jwt = new JwtSecurityToken(
-                issuer: authorize.Issuer, 
+                issuer: authorize.Issuer,
                 audience: authorize.Audience,
-                claims: loginUser.ClaimsIdentity.Claims, 
-                notBefore: now, 
+                claims: loginUser.ClaimsIdentity.Claims,
+                notBefore: now,
                 expires: now.AddDays(authorize.Day),
                 signingCredentials: new SigningCredentials(authorize.SymmetricSecurityKey, SecurityAlgorithms.HmacSha256));
             var jwtCrypt = new JwtSecurityTokenHandler().WriteToken(jwt);
