@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Storage</string>
+    <string name="title_home">История</string>
+    <string name="title_group">Группы</string>
+    <string name="title_storage">Покупки</string>
+    <string name="database">storage-db</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

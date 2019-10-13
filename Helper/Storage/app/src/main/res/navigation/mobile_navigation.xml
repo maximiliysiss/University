@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/statistics_home">
+
+    <fragment
+        android:id="@+id/statistics_home"
+        android:name="com.example.storage.ui.home.StatisticFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_statistic" />
+
+    <fragment
+        android:id="@+id/navigation_group"
+        android:name="com.example.storage.ui.group.GroupFragment"
+        android:label="@string/title_group"
+        tools:layout="@layout/fragment_group" />
+
+    <fragment
+        android:id="@+id/navigation_storage"
+        android:name="com.example.storage.ui.storage.StorageFragment"
+        android:label="@string/title_storage"
+        tools:layout="@layout/fragment_storage" />
+
+    <fragment
+        android:id="@+id/navigation_group_element"
+        android:name="com.example.storage.ui.group.GroupElementFragment"
+        tools:layout="@layout/fragment_group_element" />
+
+    <fragment
+        android:id="@+id/navigation_storage_element"
+        android:name="com.example.storage.ui.storage.StorageElementFragment"
+        tools:layout="@layout/fragment_storage_element" />
+
+
+</navigation>
