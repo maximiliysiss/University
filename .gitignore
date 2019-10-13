@@ -5,3 +5,8 @@ obj/
 x64/
 .vs/
 packages/
+*.jar
+*.java
+.gradle/
+.idea/
+build/
