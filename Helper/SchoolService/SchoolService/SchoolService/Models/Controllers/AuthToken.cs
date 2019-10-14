@@ -9,11 +9,18 @@ namespace SchoolService.Models.Controllers
     public class AuthToken
     {
 
-        private string token;
-        public string Token
+        private string accessToken;
+        public string AccessToken
         {
-            get => $"Bearer {token}";
-            set => token = value;
+            get => $"Bearer {accessToken}";
+            set => accessToken = value;
+        }
+
+        private string refreshToken;
+        public string RefreshToken
+        {
+            get => $"Bearer {refreshToken}";
+            set => refreshToken = value;
         }
 
         public UserType UserType { get; set; }

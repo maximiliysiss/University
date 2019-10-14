@@ -13,6 +13,7 @@ namespace SchoolService.Services
         public string Issuer { get; set; }
         public string Key { get; set; }
         public SymmetricSecurityKey SymmetricSecurityKey => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
-        public int Day { get; set; }
+        public int ShortDay { get; set; }
+        public int LongDay { get; set; }
     }
 }

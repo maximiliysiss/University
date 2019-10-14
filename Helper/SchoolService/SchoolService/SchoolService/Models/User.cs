@@ -28,6 +28,7 @@ namespace SchoolService.Models
         public string SecondName { get; set; }
         public DateTime Birthday { get; set; }
         public UserType UserType { get; set; }
+        public string Token { get; set; }
 
         [JsonIgnoreAttribute]
         [NotMapped]
