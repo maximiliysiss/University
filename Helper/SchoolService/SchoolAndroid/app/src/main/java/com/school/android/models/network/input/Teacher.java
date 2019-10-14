@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-class Teacher {
+public class Teacher {
     @SerializedName("isClassWork")
     @Expose
     private Boolean isClassWork;

@@ -3,7 +3,7 @@ package com.school.android.models.network.input;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Schedule {
+public class Schedule {
     @SerializedName("id")
     @Expose
     private Integer id;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Security.AccessControl;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authorization;
 using SchoolService.Models;
 using SchoolService.Models.Controllers;
 using SchoolService.Services;
@@ -118,6 +120,12 @@ namespace SchoolService.Controllers
             databaseContext.SaveChanges();
 
             return new AuthToken { AccessToken = newJwt, RefreshToken = user.Token, UserType = user.UserType };
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Try(){
+            return Ok();
         }
     }
 }
