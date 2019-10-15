@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_schedules">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.school.android.ui.home.HomeFragment"
+        android:id="@+id/navigation_schedules"
+        android:name="com.school.android.ui.profile.ProfileFragment"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.school.android.ui.dashboard.DashboardFragment"
+        android:id="@+id/navigation_profile"
+        android:name="com.school.android.ui.schedule.ScheduleFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.school.android.ui.notifications.NotificationsFragment"
+        android:name="com.school.android.ui.mark.MarkFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_mark" />
 </navigation>

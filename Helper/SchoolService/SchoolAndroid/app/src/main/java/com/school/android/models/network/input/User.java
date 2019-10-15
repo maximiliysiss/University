@@ -6,28 +6,28 @@ import com.google.gson.annotations.SerializedName;
 public class User {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    protected Integer id;
     @SerializedName("login")
     @Expose
-    private String login;
+    protected String login;
     @SerializedName("passwordHash")
     @Expose
-    private String passwordHash;
+    protected String passwordHash;
     @SerializedName("name")
     @Expose
-    private String name;
+    protected String name;
     @SerializedName("surname")
     @Expose
-    private String surname;
+    protected String surname;
     @SerializedName("secondName")
     @Expose
-    private String secondName;
+    protected String secondName;
     @SerializedName("birthday")
     @Expose
-    private String birthday;
+    protected String birthday;
     @SerializedName("userType")
     @Expose
-    private Integer userType;
+    protected Integer userType;
 
     public Integer getId() {
         return id;

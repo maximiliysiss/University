@@ -14,6 +14,17 @@ public class LoginResult {
     @SerializedName("userType")
     @Expose
     private Integer userType;
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getAccessToken() {
         return accessToken;

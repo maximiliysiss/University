@@ -77,7 +77,10 @@ namespace SchoolService.Controllers
         [HttpPost]
         public async Task<ActionResult<Class>> PostClass(Class @class)
         {
-            @class.TeacherId = this.GetCurrentUser(_context).ID;
+            Teacher teacher = this.GetCurrentUser(_context) as Teacher;
+            @class.TeacherId = teacher.ID;
+            teacher.IsClassWork = true;
+            _context.Update(teacher);
             _context.Classes.Add(@class);
             await _context.SaveChangesAsync();
 
@@ -95,7 +98,9 @@ namespace SchoolService.Controllers
             if (@class == null || (!teacher?.Class.Select(x=>x.ID).Contains(@class.ID) ?? false))
                 return NotFound();
 
+            teacher.IsClassWork = teacher.Class.Count <= 1;
             _context.Classes.Remove(@class);
+            _context.Update(teacher);
             await _context.SaveChangesAsync();
 
             return @class;

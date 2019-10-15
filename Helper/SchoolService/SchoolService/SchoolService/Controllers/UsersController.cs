@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolService.Models;
 using SchoolService.Services;
+using SchoolService.Extensions;
 
 namespace SchoolService.Controllers
 {
@@ -32,8 +33,14 @@ namespace SchoolService.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<User>> GetUser(int id)
         {
+            var currentUser = this.GetCurrentUser(_context);
+
+            if (currentUser.UserType != UserType.Admin && currentUser.ID != id)
+                return BadRequest();
+
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
