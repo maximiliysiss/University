@@ -6,20 +6,45 @@
     app:startDestination="@+id/navigation_schedules">
 
     <fragment
-        android:id="@+id/navigation_schedules"
+        android:id="@+id/navigation_profile"
         android:name="com.school.android.ui.profile.ProfileFragment"
-        android:label="@string/title_home"
+        android:label="@string/profile"
         tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/navigation_profile"
+        android:id="@+id/navigation_schedules"
         android:name="com.school.android.ui.schedule.ScheduleFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/schedules"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_marks"
         android:name="com.school.android.ui.mark.MarkFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/mark"
         tools:layout="@layout/fragment_mark" />
+
+    <fragment
+        android:id="@+id/navigation_archive"
+        android:name="com.school.android.ui.mark.MarkFragment"
+        android:label="@string/archive"
+        tools:layout="@layout/fragment_archive" />
+
+    <fragment
+        android:id="@+id/navigation_riskgroups"
+        android:name="com.school.android.ui.mark.MarkFragment"
+        android:label="@string/riskgroup"
+        tools:layout="@layout/fragment_risk_group" />
+
+    <fragment
+        android:id="@+id/navigation_students"
+        android:name="com.school.android.ui.mark.MarkFragment"
+        android:label="@string/student"
+        tools:layout="@layout/fragment_student" />
+
+    <fragment
+        android:id="@+id/navigation_users"
+        android:name="com.school.android.ui.mark.MarkFragment"
+        android:label="@string/users"
+        tools:layout="@layout/fragment_user" />
+
 </navigation>

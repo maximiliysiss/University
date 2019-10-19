@@ -1,5 +1,7 @@
 package com.school.android.network.interfaces;
 
+import com.school.android.models.network.input.Teacher;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -9,16 +11,18 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
-public interface CruRetrofit<T> {
+public interface TeacherRetrofit {
+
     @GET("")
-    Call<List<T>> getModels();
+    Call<List<Teacher>> getModels();
 
     @GET("{id}")
-    Call<T> getModel(@Path("id") int id);
+    Call<Teacher> getModel(@Path("id") int id);
 
     @POST("")
-    Call<T> create(@Body T t);
+    Call<Teacher> create(@Body Teacher t);
 
     @PUT("{id}")
-    Call<T> update(@Path("id") int id, T t);
+    Call<Teacher> update(@Path("id") int id, Teacher t);
+
 }

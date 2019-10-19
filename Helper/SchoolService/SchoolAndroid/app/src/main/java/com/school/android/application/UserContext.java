@@ -5,6 +5,7 @@ import com.school.android.models.network.input.Teacher;
 import com.school.android.models.network.input.User;
 import com.school.android.threadable.Future;
 import com.school.android.threadable.ThreadResult;
+import com.school.android.utilities.NetworkUtilities;
 
 import java.io.IOException;
 
@@ -28,7 +29,7 @@ public class UserContext {
             @Override
             public User get() throws IOException {
                 Response<User> response = App.getUserRetrofit().getModel(id).execute();
-                if (response.code() >= 200 && response.code() < 300) {
+                if (NetworkUtilities.isSuccess(response.code())) {
                     if (response.body().getUserType() != UserType.Teacher.ordinal())
                         return response.body();
 

@@ -76,7 +76,8 @@ namespace SchoolService.Controllers
             {
                 AccessToken = GenerateToken(loginUser, authorize.ShortDay),
                 RefreshToken = loginUser.Token,
-                UserType = loginUser.UserType
+                UserType = loginUser.UserType,
+                Id = loginUser.ID
             };
         }
 
@@ -124,7 +125,8 @@ namespace SchoolService.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult Try(){
+        public ActionResult Try()
+        {
             return Ok();
         }
     }

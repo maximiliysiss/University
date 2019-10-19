@@ -1,22 +1,19 @@
 package com.school.android.application;
 
 import android.app.Application;
-import android.content.res.Resources;
 
 import com.google.gson.Gson;
 import com.school.android.R;
-import com.school.android.models.network.input.Children;
-import com.school.android.models.network.input.Class;
 import com.school.android.models.network.input.LoginResult;
-import com.school.android.models.network.input.Mark;
-import com.school.android.models.network.input.Teacher;
-import com.school.android.models.network.input.User;
 import com.school.android.network.interfaces.AuthRetrofit;
 import com.school.android.network.interfaces.ChildrenRetrofit;
-import com.school.android.network.interfaces.CruRetrofit;
-import com.school.android.network.interfaces.CrudRetrofit;
+import com.school.android.network.interfaces.ClassRetrofit;
+import com.school.android.network.interfaces.MarkRetrofit;
 import com.school.android.network.interfaces.RiskGroupRetrofit;
 import com.school.android.network.interfaces.ScheduleRetrofit;
+import com.school.android.network.interfaces.TeacherRetrofit;
+import com.school.android.network.interfaces.UserRetrofit;
+import com.school.android.utilities.NetworkUtilities;
 
 import java.io.IOException;
 import java.net.UnknownHostException;
@@ -41,13 +38,13 @@ public class App extends Application {
     }
 
     private static AuthRetrofit authRetrofit;
-    private static CrudRetrofit<Class> classRetrofit;
+    private static ClassRetrofit classRetrofit;
     private static ChildrenRetrofit childrenRetrofit;
-    private static CrudRetrofit<Mark> markRetrofit;
+    private static MarkRetrofit markRetrofit;
     private static RiskGroupRetrofit riskGroupRetrofit;
     private static ScheduleRetrofit scheduleRetrofit;
-    private static CruRetrofit<Teacher> teacherRetrofit;
-    private static CrudRetrofit<User> userRetrofit;
+    private static TeacherRetrofit teacherRetrofit;
+    private static UserRetrofit userRetrofit;
 
     private Retrofit createRetrofit(String path, OkHttpClient okHttpClient) {
         return new Retrofit.Builder().baseUrl(new StringBuilder(getString(R.string.server_url)).append(path).toString())
@@ -68,11 +65,11 @@ public class App extends Application {
                         Request.Builder builder = new Request.Builder();
                         String header = null;
                         retrofit2.Response response = authRetrofit.tryConnect(userContext.accessToken).execute();
-                        if (response.code() >= 200 && response.code() < 300)
+                        if (NetworkUtilities.isSuccess(response.code()))
                             header = userContext.accessToken;
                         else {
                             retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.accessToken, userContext.refreshToken).execute();
-                            if (execute.code() >= 200 && execute.code() < 300) {
+                            if (NetworkUtilities.isSuccess(execute.code())) {
                                 LoginResult loginResult = execute.body();
                                 header = loginResult.getAccessToken();
                                 userContext.accessToken = loginResult.getAccessToken();
@@ -89,20 +86,20 @@ public class App extends Application {
                     }
                 }).build();
 
-        classRetrofit = createRetrofit("api/classes/", okHttpClient).create(CrudRetrofit.class);
-        childrenRetrofit = createRetrofit("api/children", okHttpClient).create(ChildrenRetrofit.class);
-        markRetrofit = createRetrofit("api/marks", okHttpClient).create(CrudRetrofit.class);
-        riskGroupRetrofit = createRetrofit("api/riskgroups", okHttpClient).create(RiskGroupRetrofit.class);
-        scheduleRetrofit = createRetrofit("api/schedules", okHttpClient).create(ScheduleRetrofit.class);
-        teacherRetrofit = createRetrofit("api/teachers", okHttpClient).create(CruRetrofit.class);
-        userRetrofit = createRetrofit("api/users", okHttpClient).create(CrudRetrofit.class);
+        classRetrofit = createRetrofit("api/classes/", okHttpClient).create(ClassRetrofit.class);
+        childrenRetrofit = createRetrofit("api/children/", okHttpClient).create(ChildrenRetrofit.class);
+        markRetrofit = createRetrofit("api/marks/", okHttpClient).create(MarkRetrofit.class);
+        riskGroupRetrofit = createRetrofit("api/riskgroups/", okHttpClient).create(RiskGroupRetrofit.class);
+        scheduleRetrofit = createRetrofit("api/schedules/", okHttpClient).create(ScheduleRetrofit.class);
+        teacherRetrofit = createRetrofit("api/teachers/", okHttpClient).create(TeacherRetrofit.class);
+        userRetrofit = createRetrofit("api/users/", okHttpClient).create(UserRetrofit.class);
     }
 
     public static AuthRetrofit getAuthRetrofit() {
         return authRetrofit;
     }
 
-    public static CrudRetrofit<Class> getClassRetrofit() {
+    public static ClassRetrofit getClassRetrofit() {
         return classRetrofit;
     }
 
@@ -110,7 +107,7 @@ public class App extends Application {
         return childrenRetrofit;
     }
 
-    public static CrudRetrofit<Mark> getMarkRetrofit() {
+    public static MarkRetrofit getMarkRetrofit() {
         return markRetrofit;
     }
 
@@ -122,11 +119,11 @@ public class App extends Application {
         return scheduleRetrofit;
     }
 
-    public static CruRetrofit<Teacher> getTeacherRetrofit() {
+    public static TeacherRetrofit getTeacherRetrofit() {
         return teacherRetrofit;
     }
 
-    public static CrudRetrofit<User> getUserRetrofit() {
+    public static UserRetrofit getUserRetrofit() {
         return userRetrofit;
     }
 }

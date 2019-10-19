@@ -5,10 +5,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class LoginResult {
 
-    @SerializedName("accesstoken")
+    @SerializedName("accessToken")
     @Expose
     private String accessToken;
-    @SerializedName("refreshtoken")
+    @SerializedName("refreshToken")
     @Expose
     private String refreshToken;
     @SerializedName("userType")

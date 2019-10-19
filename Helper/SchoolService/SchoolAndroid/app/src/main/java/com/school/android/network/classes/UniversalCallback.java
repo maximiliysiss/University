@@ -19,7 +19,10 @@ public class UniversalCallback<T> implements Callback<T> {
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
-        callbackAction.process(response.body());
+        if (response.body() != null)
+            callbackAction.process(response.body());
+        else
+            Toast.makeText(context, "Empty result", Toast.LENGTH_SHORT).show();
     }
 
     @Override

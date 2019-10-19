@@ -8,7 +8,7 @@ namespace SchoolService.Models.Controllers
 {
     public class AuthToken
     {
-
+        public int Id { get; set; }
         private string accessToken;
         public string AccessToken
         {
