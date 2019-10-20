@@ -12,7 +12,7 @@ using SchoolService.Extensions;
 
 namespace SchoolService.Controllers
 {
-    [Authorize(Roles = "Admin, JobTeacher")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -26,6 +26,7 @@ namespace SchoolService.Controllers
 
         // GET: api/Users
         [HttpGet]
+        [Authorize(Roles = "Admin, JobTeacher")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
@@ -51,6 +52,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, JobTeacher")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
             if (id != user.ID || user.UserType == UserType.Student || user.UserType == UserType.Teacher)
@@ -75,6 +77,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Users
         [HttpPost]
+        [Authorize(Roles = "Admin, JobTeacher")]
         public async Task<ActionResult<User>> PostUser(User user)
         {
             if (user.UserType == UserType.Student || user.UserType == UserType.Teacher || _context.Users.Any(x => x.Login == user.Login))
@@ -87,6 +90,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin, JobTeacher")]
         public async Task<ActionResult<User>> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);

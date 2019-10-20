@@ -2,17 +2,12 @@ package com.school.android.models.network.input;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.school.android.models.network.FragmentModel;
 
-public class User {
+public class User implements FragmentModel {
     @SerializedName("id")
     @Expose
     protected Integer id;
-    @SerializedName("login")
-    @Expose
-    protected String login;
-    @SerializedName("passwordHash")
-    @Expose
-    protected String passwordHash;
     @SerializedName("name")
     @Expose
     protected String name;
@@ -28,6 +23,39 @@ public class User {
     @SerializedName("userType")
     @Expose
     protected Integer userType;
+    @SerializedName("phone")
+    @Expose
+    protected String phone;
+    @SerializedName("passport")
+    @Expose
+    protected String passport;
+    @SerializedName("email")
+    @Expose
+    protected String email;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public Integer getId() {
         return id;
@@ -35,22 +63,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
     }
 
     public String getName() {

@@ -62,7 +62,7 @@ public class App extends Application {
                 .addInterceptor(new Interceptor() {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
-                        Request.Builder builder = new Request.Builder();
+                        Request.Builder builder = chain.request().newBuilder();
                         String header = null;
                         retrofit2.Response response = authRetrofit.tryConnect(userContext.accessToken).execute();
                         if (NetworkUtilities.isSuccess(response.code()))

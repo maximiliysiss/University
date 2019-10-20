@@ -30,6 +30,9 @@ namespace SchoolService.Controllers
             return await _context.Children.Where(x => !x.IsArchive).ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        public ActionResult<Teacher> GetChildren(int id) => RedirectToAction("GetUser", "Users", new { id = id });
+
         [HttpGet("archived")]
         public async Task<ActionResult<IEnumerable<Child>>> GetArchived()
         {

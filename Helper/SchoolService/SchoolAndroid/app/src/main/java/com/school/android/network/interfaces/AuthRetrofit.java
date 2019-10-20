@@ -3,6 +3,7 @@ package com.school.android.network.interfaces;
 import com.school.android.models.network.input.LoginResult;
 import com.school.android.models.network.output.LoginModel;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -15,7 +16,7 @@ public interface AuthRetrofit {
     public Call<LoginResult> login(@Body LoginModel loginModel);
 
     @GET("try")
-    public Call tryConnect(@Header("Authorization") String token);
+    public Call<ResponseBody> tryConnect(@Header("Authorization") String token);
 
     @GET("refresh")
     public Call<LoginResult> refresh(@Header("token") String token, @Header("refresh") String refresh);

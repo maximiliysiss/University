@@ -13,7 +13,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AuthorizeAttribute(Roles = "Admin")]
+    [Authorize]
     public class TeachersController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -25,13 +25,19 @@ namespace SchoolService.Controllers
 
         // GET: api/Teachers
         [HttpGet]
+        [AuthorizeAttribute(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<Teacher>>> GetTeachers()
         {
             return await _context.Teachers.ToListAsync();
         }
 
+        [HttpGet("{id}")]
+        [AuthorizeAttribute(Roles = "Admin, Teacher")]
+        public ActionResult<Teacher> GetTeacher(int id) => RedirectToAction("GetUser", "Users", new { id = id });
+
         // PUT: api/Teachers/5
         [HttpPut("{id}")]
+        [AuthorizeAttribute(Roles = "Admin")]
         public async Task<IActionResult> PutTeacher(int id, Teacher teacher)
         {
             if (id != teacher.ID)
@@ -56,6 +62,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Teachers
         [HttpPost]
+        [AuthorizeAttribute(Roles = "Admin")]
         public async Task<ActionResult<Teacher>> PostTeacher(Teacher teacher)
         {
             teacher.PasswordHash = CryptService.CreateMD5(teacher.PasswordHash);

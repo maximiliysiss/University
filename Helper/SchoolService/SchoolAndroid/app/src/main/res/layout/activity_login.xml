@@ -15,13 +15,15 @@
         <EditText
             android:id="@+id/login"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></EditText>
+            android:layout_height="wrap_content"
+            android:text="@string/user"></EditText>
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"></EditText>
+            android:inputType="textPassword"
+            android:text="@string/user"></EditText>
 
         <Button
             android:layout_width="match_parent"

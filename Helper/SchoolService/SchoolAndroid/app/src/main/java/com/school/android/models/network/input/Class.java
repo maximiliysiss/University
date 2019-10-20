@@ -2,10 +2,11 @@ package com.school.android.models.network.input;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.school.android.models.network.FragmentModel;
 
 import java.util.List;
 
-public class Class {
+public class Class implements FragmentModel {
     @SerializedName("id")
     @Expose
     private Integer id;

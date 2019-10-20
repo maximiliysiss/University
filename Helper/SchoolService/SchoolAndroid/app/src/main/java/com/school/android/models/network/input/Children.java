@@ -3,7 +3,7 @@ package com.school.android.models.network.input;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Children extends User {
+public class Children extends User{
     @SerializedName("class")
     @Expose
     private Class _class;

@@ -15,9 +15,10 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.io.Serializable;
 import java.util.Set;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ActivityFragmenter {
 
     NavController navController;
 
@@ -32,15 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        Menu menu = findViewById(MenuFactory.getMenuFactory().create(App.getUserContext().getUser()));
-        Set<Integer> menuItems = new ArraySet<>();
-        for (int i = 0; i < menu.size(); i++)
-            menuItems.add(menu.getItem(i).getItemId());
-
-
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(menuItems).build();
+        navView.inflateMenu(MenuFactory.getMenuFactory().create(App.getUserContext().getUser()));
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 
