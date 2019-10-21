@@ -3,12 +3,15 @@ package com.school.android.ui.activity;
 import android.os.Bundle;
 import android.util.ArraySet;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.school.android.R;
 import com.school.android.application.App;
 import com.school.android.factory.MenuFactory;
+import com.school.android.factory.MenuItemFactory;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,8 +22,6 @@ import java.io.Serializable;
 import java.util.Set;
 
 public class MainActivity extends ActivityFragmenter {
-
-    NavController navController;
 
     @Override
     public void onBackPressed() {
@@ -34,7 +35,9 @@ public class MainActivity extends ActivityFragmenter {
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         navView.inflateMenu(MenuFactory.getMenuFactory().create(App.getUserContext().getUser()));
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navView.getMenu()).build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 

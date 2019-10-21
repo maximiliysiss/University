@@ -22,12 +22,7 @@ public class FactoryGenerator<T, W, A> {
         }
 
         public void when(final W when) {
-            this.whenFactory = new WhenFactory<W>() {
-                @Override
-                public boolean is(W w) {
-                    return w.equals(when);
-                }
-            };
+            this.whenFactory = w -> w.equals(when);
         }
 
         public boolean is(W w) {
@@ -36,6 +31,10 @@ public class FactoryGenerator<T, W, A> {
     }
 
     private List<FactoryPosition<T, W, A>> factoryPositions = new ArrayList<>();
+
+    public FactoryPosition<T, W, A> add(T res) {
+        return add(a -> res);
+    }
 
     public FactoryPosition<T, W, A> add(CreateObject<T, A> createObject) {
         FactoryPosition<T, W, A> position = new FactoryPosition<>(createObject);

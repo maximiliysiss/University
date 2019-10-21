@@ -25,31 +25,41 @@
 
     <fragment
         android:id="@+id/navigation_archive"
-        android:name="com.school.android.ui.mark.MarkFragment"
+        android:name="com.school.android.ui.archive.ArchiveFragment"
         android:label="@string/archive"
         tools:layout="@layout/fragment_archive" />
 
     <fragment
         android:id="@+id/navigation_riskgroups"
-        android:name="com.school.android.ui.mark.MarkFragment"
+        android:name="com.school.android.ui.riskgroup.RiskGroupFragment"
         android:label="@string/riskgroup"
         tools:layout="@layout/fragment_risk_group" />
 
     <fragment
         android:id="@+id/navigation_students"
-        android:name="com.school.android.ui.mark.MarkFragment"
+        android:name="com.school.android.ui.student.StudentFragment"
         android:label="@string/student"
         tools:layout="@layout/fragment_student" />
 
     <fragment
         android:id="@+id/navigation_users"
-        android:name="com.school.android.ui.mark.MarkFragment"
+        android:name="com.school.android.ui.user.UserFragment"
         android:label="@string/users"
         tools:layout="@layout/fragment_user" />
 
     <fragment
         android:id="@+id/navigation_users_element"
-        android:name="com.school.android.ui.mark.MarkFragment"
+        android:name="com.school.android.ui.user.UserElementFragment"
         tools:layout="@layout/fragment_user_element" />
+
+    <fragment
+        android:id="@+id/navigation_super_class"
+        android:name="com.school.android.ui.superclass.SuperClassFragment"
+        tools:layout="@layout/fragment_super_class" />
+
+    <fragment
+        android:id="@+id/navigation_workers"
+        android:name="com.school.android.ui.workers.WorkerFragment"
+        tools:layout="@layout/fragment_worker" />
 
 </navigation>

@@ -3,11 +3,14 @@ package com.school.android.ui.activity;
 import android.app.Activity;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
+
+import com.school.android.R;
 
 import java.io.Serializable;
 
-public abstract class ActivityFragmenter extends Activity {
+public abstract class ActivityFragmenter extends AppCompatActivity {
 
     protected NavController navController;
 

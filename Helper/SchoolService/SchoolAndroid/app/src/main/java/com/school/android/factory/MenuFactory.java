@@ -17,92 +17,24 @@ public class MenuFactory {
             return menuFactory;
 
         menuFactory = new FactoryGenerator<>();
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_admin;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                return user.getUserType() == UserType.Admin.ordinal();
-            }
+        menuFactory.add(R.menu.bottom_nav_menu_admin).when(user -> user.getUserType() == UserType.Admin.ordinal());
+
+        menuFactory.add(R.menu.bottom_nav_menu_superteacher).when(user -> {
+            if (user instanceof Teacher)
+                return ((Teacher) user).getIsClassWork() && user.getUserType() == UserType.Teacher.ordinal();
+            return false;
         });
 
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_superteacher;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                if (user instanceof Teacher)
-                    return ((Teacher) user).getIsClassWork() && user.getUserType() == UserType.Teacher.ordinal();
-                return false;
-            }
-        });
+        menuFactory.add(R.menu.bottom_nav_menu_student).when(user -> user.getUserType() == UserType.Student.ordinal());
 
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_student;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                return user.getUserType() == UserType.Student.ordinal();
-            }
-        });
+        menuFactory.add(R.menu.bottom_nav_menu_social).when(user -> user.getUserType() == UserType.Social.ordinal());
 
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_social;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                return user.getUserType() == UserType.Social.ordinal();
-            }
-        });
+        menuFactory.add(R.menu.bottom_nav_menu_knowledgeteacher).when(user -> user.getUserType() == UserType.KnowledgeTeacher.ordinal());
 
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_knowledgeteacher;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                return user.getUserType() == UserType.KnowledgeTeacher.ordinal();
-            }
-        });
+        menuFactory.add(R.menu.bottom_nav_menu_jobteacher).when(user -> user.getUserType() == UserType.JobTeacher.ordinal());
 
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_jobteacher;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                return user.getUserType() == UserType.JobTeacher.ordinal();
-            }
-        });
+        menuFactory.add(R.menu.bottom_nav_menu_teacher).when(user -> user.getUserType() == UserType.Teacher.ordinal());
 
-        menuFactory.add(new CreateObject<Integer, Void>() {
-            @Override
-            public Integer create(Void aVoid) {
-                return R.menu.bottom_nav_menu_teacher;
-            }
-        }).when(new WhenFactory<User>() {
-            @Override
-            public boolean is(User user) {
-                return user.getUserType() == UserType.Teacher.ordinal();
-            }
-        });
-        
         return menuFactory;
     }
 }
