@@ -22,17 +22,20 @@ namespace AutoStation.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Schedule>>> UploadSchedule([FromBody]IFormFile file)
+        public async Task<ActionResult<List<Schedule>>> UploadSchedule([FromForm]IFormFile file)
         {
+            if (file.Length <= 0)
+                return NotFound();
+
             context.Schedules.RemoveRange(context.Schedules);
             context.Points.RemoveRange(context.Points);
 
             using (var workBook = new XLWorkbook(file.OpenReadStream()))
             {
-                foreach (var row in workBook.Worksheet(0).Rows().Skip(1))
+                foreach (var row in workBook.Worksheet(1).Rows().Skip(1))
                 {
-                    var fromName = row.Cell(0).ToString().Trim();
-                    var toName = row.Cell(1).ToString().Trim();
+                    var fromName = row.Cell(1).Value.ToString().Trim();
+                    var toName = row.Cell(2).Value.ToString().Trim();
 
                     var from = context.Points.FirstOrDefault(x => x.Name.ToLower() == fromName.ToLower());
                     var to = context.Points.FirstOrDefault(x => x.Name.ToLower() == toName.ToLower());
@@ -43,19 +46,19 @@ namespace AutoStation.Controllers
 
                     var schedule = new Schedule
                     {
-                        DayOfWeek = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), row.Cell(2).Value.ToString()),
-                        Distance = double.Parse(row.Cell(3).ToString()),
+                        DayOfWeek = (DayOfWeek)Enum.Parse(typeof(DayOfWeek), row.Cell(3).Value.ToString()),
+                        Distance = double.Parse(row.Cell(4).Value.ToString()),
                         From = from,
-                        Price = double.Parse(row.Cell(4).ToString()),
-                        Time = row.Cell(5).ToString(),
+                        Price = double.Parse(row.Cell(5).Value.ToString()),
+                        Time = ((DateTime)row.Cell(6).Value).ToShortTimeString(),
                         To = to
                     };
 
                     context.Add(schedule);
+                    await context.SaveChangesAsync();
                 }
             }
 
-            await context.SaveChangesAsync();
             return context.Schedules.ToList();
         }
     }
