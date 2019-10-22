@@ -39,22 +39,6 @@ namespace AutoStation.Controllers
             _context.Buyings.Add(buying);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetBuying", new { id = buying.Id }, buying);
-        }
-
-        // DELETE: api/Buyings/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Buying>> DeleteBuying(int id)
-        {
-            var buying = await _context.Buyings.FindAsync(id);
-            if (buying == null)
-            {
-                return NotFound();
-            }
-
-            _context.Buyings.Remove(buying);
-            await _context.SaveChangesAsync();
-
             return buying;
         }
     }
