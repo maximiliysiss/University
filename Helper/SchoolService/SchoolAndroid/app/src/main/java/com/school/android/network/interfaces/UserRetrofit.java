@@ -14,19 +14,19 @@ import retrofit2.http.Path;
 
 public interface UserRetrofit {
 
-    @GET("")
+    @GET("users")
     Call<List<User>> getModels();
 
-    @GET("{id}")
+    @GET("users/{id}")
     Call<User> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("users")
     Call<User> create(@Body User t);
 
-    @PUT("{id}")
-    Call<User> update(@Path("id") int id, User t);
+    @PUT("users/{id}")
+    Call<User> update(@Path("id") int id, @Body User t);
 
-    @DELETE("{id}")
+    @DELETE("users/{id}")
     Call<User> delete(@Path("id") int id);
 
 }

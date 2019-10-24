@@ -25,23 +25,14 @@ public class UserContext {
     }
 
     public User getUser() {
-        Future<User> userGet = new Future<>(new ThreadResult<User>() {
-            @Override
-            public User get() throws IOException {
-                Response<User> response = App.getUserRetrofit().getModel(id).execute();
-                if (NetworkUtilities.isSuccess(response.code())) {
-                    if (response.body().getUserType() != UserType.Teacher.ordinal())
-                        return response.body();
-
-                    return new Future<>(new ThreadResult<Teacher>() {
-                        @Override
-                        public Teacher get() throws IOException {
-                            return App.getTeacherRetrofit().getModel(id).execute().body();
-                        }
-                    }).get();
-                }
-                return null;
+        Future<User> userGet = new Future<>(() -> {
+            Response<User> response = App.getUserRetrofit().getModel(id).execute();
+            if (NetworkUtilities.isSuccess(response.code())) {
+                if (response.body().getUserType() != UserType.Teacher.ordinal())
+                    return response.body();
+                return new Future<>(() -> App.getTeacherRetrofit().getModel(id).execute().body()).get();
             }
+            return null;
         });
         return userGet.get();
 

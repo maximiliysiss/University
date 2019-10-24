@@ -1,25 +1,15 @@
 package com.school.android.ui.activity;
 
 import android.os.Bundle;
-import android.util.ArraySet;
-import android.view.Menu;
-import android.view.MenuItem;
+
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.school.android.R;
 import com.school.android.application.App;
 import com.school.android.factory.MenuFactory;
-import com.school.android.factory.MenuItemFactory;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import java.io.Serializable;
-import java.util.Set;
 
 public class MainActivity extends ActivityFragmenter {
 

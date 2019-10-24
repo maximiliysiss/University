@@ -19,7 +19,7 @@ public abstract class ModelFragment<T extends ActivityFragmenter, M extends Frag
     public void onStart() {
         super.onStart();
         model = (M) getArguments().getSerializable(getModelName());
-        isEdit = model.getId() != 0;
+        isEdit = model.getId() != null && model.getId() != 0;
     }
 
     public M getModel() {

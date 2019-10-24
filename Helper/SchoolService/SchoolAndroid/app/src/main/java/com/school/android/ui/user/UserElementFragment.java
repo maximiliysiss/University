@@ -2,11 +2,6 @@ package com.school.android.ui.user;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +10,21 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Spinner;
 
+import androidx.fragment.app.Fragment;
+
 import com.school.android.R;
 import com.school.android.application.App;
 import com.school.android.models.extension.UserType;
 import com.school.android.models.network.input.Children;
+import com.school.android.models.network.input.Class;
 import com.school.android.models.network.input.Teacher;
 import com.school.android.models.network.input.User;
-import com.school.android.network.classes.EmptyResult;
 import com.school.android.network.classes.UniversalCallback;
+import com.school.android.network.classes.UniversalWithCodeCallback;
 import com.school.android.ui.activity.MainActivity;
 import com.school.android.ui.adapters.spinner.SpinnerCustomAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
-import com.school.android.ui.fragments.ModelFragment;
+import com.school.android.utilities.NetworkUtilities;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -39,7 +37,6 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
 
     FrameLayout frameLayout;
     Spinner spinner;
-    NavController navController;
 
     public UserElementFragment() {
         super(R.id.navigation_users);
@@ -51,20 +48,24 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         return inflater.inflate(R.layout.fragment_user_element, container, false);
     }
 
+    public void openFragment(int id, Fragment fragment) {
+        this.getActivity().getSupportFragmentManager().beginTransaction().replace(id, fragment).commit();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
 
         spinner = getView().findViewById(R.id.user_type);
         frameLayout = getView().findViewById(R.id.user_frame);
-        navController = Navigation.findNavController(this.getActivity(), R.id.user_frame);
 
         UserType[] userTypes = UserType.values();
 
         spinner.setAdapter(new SpinnerCustomAdapter<UserType>(Arrays.stream(userTypes).collect(Collectors.toList()), R.layout.spinner_item, getContext()) {
             @Override
             protected String getModelName(UserType el) {
-                return getString(new StringBuilder("elem_").append(el.toString().toLowerCase()).toString());
+                //return "Hello";
+                return getString(new StringBuilder("enum_").append(el.toString().toLowerCase()).toString());
             }
         });
 
@@ -72,22 +73,24 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 UserType type = userTypes[position];
-                int layoutId = R.layout.fragment_user_default;
+                Fragment fragment = new UserDefaultFragment();
                 setModel(new User());
                 switch (type) {
                     case Teacher:
-                        layoutId = R.layout.fragment_user_teacher;
+                        fragment = new UserTeacherFragment();
                         setModel(new Teacher());
                         break;
                     case Student:
-                        layoutId = R.layout.fragment_user_child;
+                        fragment = new UserChildFragment();
                         setModel(new Children());
                         break;
                 }
 
+                getModel().setUserType(type.ordinal());
                 Bundle bundle = new Bundle();
                 bundle.putSerializable(getModelName(), getModel());
-                navController.navigate(layoutId, bundle);
+                fragment.setArguments(bundle);
+                openFragment(R.id.user_frame, fragment);
             }
 
             @Override
@@ -96,6 +99,7 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
             }
         });
         spinner.setSelection(getSpinnerIndex(spinner, UserType.values()[getModel().getUserType()]));
+        generateModelActions(getView());
     }
 
     @Override
@@ -115,13 +119,13 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
     public void onSave(User user) {
         switch (UserType.values()[user.getUserType()]) {
             case Teacher:
-                App.getTeacherRetrofit().update(user.getId(), (Teacher) user).enqueue(new EmptyResult<>(getContext()));
+                App.getTeacherRetrofit().update(user.getId(), (Teacher) user).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, object) -> endOperation(c, Operation.Add, object)));
                 break;
             case Student:
-                App.getChildrenRetrofit().update(user.getId(), (Children) user).enqueue(new EmptyResult<>(getContext()));
+                App.getChildrenRetrofit().update(user.getId(), (Children) user).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, object) -> endOperation(c, Operation.Add, object)));
                 break;
             default:
-                App.getUserRetrofit().update(user.getId(), user).enqueue(new EmptyResult<>(getContext()));
+                App.getUserRetrofit().update(user.getId(), user).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, object) -> endOperation(c, Operation.Add, object)));
                 break;
         }
     }
@@ -135,13 +139,13 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
     public void onAdd(User user) {
         switch (UserType.values()[user.getUserType()]) {
             case Teacher:
-                App.getTeacherRetrofit().create((Teacher) user).enqueue(new EmptyResult<>(getContext()));
+                App.getTeacherRetrofit().create((Teacher) user).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, object) -> endOperation(c, Operation.Add, object)));
                 break;
             case Student:
-                App.getChildrenRetrofit().create((Children) user).enqueue(new EmptyResult<>(getContext()));
+                App.getChildrenRetrofit().create((Children) user).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, object) -> endOperation(c, Operation.Add, object)));
                 break;
             default:
-                App.getUserRetrofit().create(user).enqueue(new EmptyResult<>(getContext()));
+                App.getUserRetrofit().create(user).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, object) -> endOperation(c, Operation.Add, object)));
                 break;
         }
     }
@@ -158,7 +162,7 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         View view = getView();
 
         surname = view.findViewById(R.id.surname);
-        name = view.findViewById(R.id.name);
+        name = view.findViewById(R.id.username);
         secondName = view.findViewById(R.id.second_name);
         phone = view.findViewById(R.id.phone);
         passport = view.findViewById(R.id.passport);
@@ -171,5 +175,35 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         getModel().setSurname(surname.getText().toString().trim());
         getModel().setPhone(phone.getText().toString().trim());
         getModel().setPassport(passport.getText().toString().trim());
+
+        switch (UserType.values()[getModel().getUserType()]) {
+            case Student: {
+
+                Spinner classes = getView().findViewById(R.id.current_class);
+                Class aClass = (Class) classes.getSelectedItem();
+                if (aClass.getId() != 0)
+                    ((Children) getModel()).setClass_(aClass);
+                break;
+            }
+        }
+    }
+
+    @Override
+    public void endOperation(int code, Operation operation, User user) {
+        if (NetworkUtilities.isSuccess(code)) {
+            super.endOperation(code, operation, user);
+        }
+    }
+
+    @Override
+    public void afterOperation(Operation operation, User user) {
+        super.afterOperation(operation, user);
+
+        if (getModel().getUserType() == UserType.Teacher.ordinal()) {
+            Spinner classes = getView().findViewById(R.id.current_class);
+            Class aClass = (Class) classes.getSelectedItem();
+            if (aClass.getId() != 0)
+                App.getClassRetrofit().setTeacher(aClass.getId());
+        }
     }
 }

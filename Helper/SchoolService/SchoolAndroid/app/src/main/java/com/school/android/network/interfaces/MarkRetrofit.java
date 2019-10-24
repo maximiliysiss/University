@@ -14,19 +14,19 @@ import retrofit2.http.Path;
 
 public interface MarkRetrofit {
 
-    @GET("")
+    @GET("marks")
     Call<List<Mark>> getModels();
 
-    @GET("{id}")
+    @GET("marks/{id}")
     Call<Mark> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("marks")
     Call<Mark> create(@Body Mark t);
 
-    @PUT("{id}")
-    Call<Mark> update(@Path("id") int id, Mark t);
+    @PUT("marks/{id}")
+    Call<Mark> update(@Path("id") int id, @Body Mark t);
 
-    @DELETE("{id}")
+    @DELETE("marks/{id}")
     Call<Mark> delete(@Path("id") int id);
 
 }

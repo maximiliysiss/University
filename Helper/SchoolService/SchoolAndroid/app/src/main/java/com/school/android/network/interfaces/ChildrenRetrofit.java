@@ -14,25 +14,25 @@ import retrofit2.http.Path;
 
 public interface ChildrenRetrofit {
 
-    @GET("")
+    @GET("children")
     Call<List<Children>> getModels();
 
-    @GET("{id}")
+    @GET("children/{id}")
     Call<Children> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("children")
     Call<Children> create(@Body Children t);
 
-    @PUT("{id}")
-    Call<Children> update(@Path("id") int id, Children t);
+    @PUT("children/{id}")
+    Call<Children> update(@Path("id") int id, @Body Children t);
 
-    @DELETE("{id}")
+    @DELETE("children/{id}")
     Call<Children> delete(@Path("id") int id);
 
-    @GET("archived")
+    @GET("children/archived")
     Call<List<Children>> archived();
 
-    @GET("{id}/archive")
+    @GET("children/{id}/archive")
     Call<Children> archive(@Path("id") int id);
 
 }

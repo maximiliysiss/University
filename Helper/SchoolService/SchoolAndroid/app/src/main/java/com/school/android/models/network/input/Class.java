@@ -9,10 +9,10 @@ import java.util.List;
 public class Class implements FragmentModel {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Integer id = 0;
     @SerializedName("name")
     @Expose
-    private String name;
+    private String name = null;
     @SerializedName("teacherId")
     @Expose
     private Integer teacherId;

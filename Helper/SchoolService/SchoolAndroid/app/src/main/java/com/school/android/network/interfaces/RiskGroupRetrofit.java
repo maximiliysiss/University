@@ -15,22 +15,22 @@ import retrofit2.http.Path;
 
 public interface RiskGroupRetrofit{
 
-    @GET("")
+    @GET("riskgroups")
     Call<List<RiskGroup>> getModels();
 
-    @GET("{id}")
+    @GET("riskgroups/{id}")
     Call<RiskGroup> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("riskgroups")
     Call<RiskGroup> create(@Body RiskGroup t);
 
-    @PUT("{id}")
-    Call<RiskGroup> update(@Path("id") int id, RiskGroup t);
+    @PUT("riskgroups/{id}")
+    Call<RiskGroup> update(@Path("id") int id, @Body RiskGroup t);
 
-    @DELETE("{id}")
+    @DELETE("riskgroups/{id}")
     Call<RiskGroup> delete(@Path("id") int id);
 
-    @GET("risk/{child}/{group}")
+    @GET("riskgroups/risk/{child}/{group}")
     Call<ChildInRiskGroup> addChildToRiskGroup(@Path("child") int child, @Path("group") int group);
 
 }

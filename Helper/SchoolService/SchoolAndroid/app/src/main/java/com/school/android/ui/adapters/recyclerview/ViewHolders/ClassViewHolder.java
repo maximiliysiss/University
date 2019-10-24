@@ -1,0 +1,31 @@
+package com.school.android.ui.adapters.recyclerview.ViewHolders;
+
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+
+import com.school.android.R;
+import com.school.android.models.network.input.Class;
+
+public class ClassViewHolder extends RecyclerHolder<Class> {
+
+    TextView name;
+
+    public ClassViewHolder(@NonNull View itemView, String modelName) {
+        super(itemView, modelName);
+        name = itemView.findViewById(R.id.name);
+    }
+
+    @Override
+    public void setObject(Class object) {
+        super.setObject(object);
+        name.setText(object.getName());
+    }
+
+    @Override
+    public void onClick() {
+        getRealActivity().openFragment(R.id.navigation_class_element, modelName, object);
+    }
+}

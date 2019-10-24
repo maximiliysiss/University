@@ -56,7 +56,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Marks/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMark(int id, Mark mark)
+        public async Task<ActionResult<Mark>> PutMark(int id, Mark mark)
         {
             using (var userContext = this.GetUserContext())
             {
@@ -80,7 +80,7 @@ namespace SchoolService.Controllers
                     throw;
             }
 
-            return NoContent();
+            return mark;
         }
 
         // POST: api/Marks

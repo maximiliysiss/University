@@ -85,7 +85,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Schedules/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSchedule(int id, Schedule schedule)
+        public async Task<ActionResult<Schedule>> PutSchedule(int id, Schedule schedule)
         {
             if (id != schedule.ID)
             {
@@ -110,7 +110,7 @@ namespace SchoolService.Controllers
                 }
             }
 
-            return NoContent();
+            return schedule;
         }
 
         // POST: api/Schedules

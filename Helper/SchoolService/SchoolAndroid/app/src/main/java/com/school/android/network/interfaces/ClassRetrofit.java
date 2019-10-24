@@ -4,6 +4,7 @@ import com.school.android.models.network.input.Class;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -14,19 +15,22 @@ import retrofit2.http.Path;
 
 public interface ClassRetrofit {
 
-    @GET("")
+    @GET("classes")
     Call<List<Class>> getModels();
 
-    @GET("{id}")
+    @GET("classes/{id}")
     Call<Class> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("classes")
     Call<Class> create(@Body Class t);
 
-    @PUT("{id}")
-    Call<Class> update(@Path("id") int id, Class t);
+    @PUT("classes/{id}")
+    Call<Class> update(@Path("id") int id, @Body Class t);
 
-    @DELETE("{id}")
+    @DELETE("classes/{id}")
     Call<Class> delete(@Path("id") int id);
+
+    @GET("classes/teacher/{id}")
+    Call<ResponseBody> setTeacher(@Path("id") int id);
 
 }

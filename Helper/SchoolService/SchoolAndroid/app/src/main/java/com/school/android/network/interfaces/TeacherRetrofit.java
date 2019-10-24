@@ -13,16 +13,16 @@ import retrofit2.http.Path;
 
 public interface TeacherRetrofit {
 
-    @GET("")
+    @GET("teachers")
     Call<List<Teacher>> getModels();
 
-    @GET("{id}")
+    @GET("teachers/{id}")
     Call<Teacher> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("teachers")
     Call<Teacher> create(@Body Teacher t);
 
-    @PUT("{id}")
-    Call<Teacher> update(@Path("id") int id, Teacher t);
+    @PUT("teachers/{id}")
+    Call<Teacher> update(@Path("id") int id, @Body Teacher t);
 
 }

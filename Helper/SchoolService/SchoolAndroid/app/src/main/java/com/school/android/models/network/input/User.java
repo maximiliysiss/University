@@ -7,31 +7,31 @@ import com.school.android.models.network.FragmentModel;
 public class User implements FragmentModel {
     @SerializedName("id")
     @Expose
-    protected Integer id;
+    protected Integer id = 0;
     @SerializedName("name")
     @Expose
-    protected String name;
+    protected String name = "";
     @SerializedName("surname")
     @Expose
-    protected String surname;
+    protected String surname = "";
     @SerializedName("secondName")
     @Expose
-    protected String secondName;
+    protected String secondName = "";
     @SerializedName("birthday")
     @Expose
-    protected String birthday;
+    protected String birthday = "";
     @SerializedName("userType")
     @Expose
-    protected Integer userType;
+    protected Integer userType = 0;
     @SerializedName("phone")
     @Expose
-    protected String phone;
+    protected String phone = "";
     @SerializedName("passport")
     @Expose
-    protected String passport;
+    protected String passport = "";
     @SerializedName("email")
     @Expose
-    protected String email;
+    protected String email = "";
 
     public String getEmail() {
         return email;

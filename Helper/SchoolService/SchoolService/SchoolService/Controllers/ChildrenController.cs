@@ -41,7 +41,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Children/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutChild(int id, Child child)
+        public async Task<ActionResult<Child>> PutChild(int id, Child child)
         {
             if (id != child.ID)
                 return BadRequest();
@@ -60,7 +60,7 @@ namespace SchoolService.Controllers
                     throw;
             }
 
-            return NoContent();
+            return child;
         }
 
         // GET: api/3/class/3

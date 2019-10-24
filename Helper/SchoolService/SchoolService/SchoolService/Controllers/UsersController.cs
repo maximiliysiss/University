@@ -53,7 +53,7 @@ namespace SchoolService.Controllers
         // PUT: api/Users/5
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin, JobTeacher")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<ActionResult<User>> PutUser(int id, User user)
         {
             if (id != user.ID || user.UserType == UserType.Student || user.UserType == UserType.Teacher)
                 return BadRequest();
@@ -72,7 +72,7 @@ namespace SchoolService.Controllers
                     throw;
             }
 
-            return NoContent();
+            return user;
         }
 
         // POST: api/Users

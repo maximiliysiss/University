@@ -46,7 +46,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/RiskGroups/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRiskGroup(int id, RiskGroup riskGroup)
+        public async Task<ActionResult<RiskGroup>> PutRiskGroup(int id, RiskGroup riskGroup)
         {
             if (id != riskGroup.ID)
             {
@@ -71,7 +71,7 @@ namespace SchoolService.Controllers
                 }
             }
 
-            return NoContent();
+            return riskGroup;
         }
 
         // POST: api/RiskGroups

@@ -7,9 +7,14 @@
         android:title="@string/mark" />
 
     <item
-        android:id="@+id/navigation_superclass"
+        android:id="@+id/navigation_super_class"
         android:icon="@drawable/ic_superclass_black_24dp"
         android:title="@string/superclass" />
+
+    <item
+        android:id="@+id/navigation_classes"
+        android:icon="@drawable/ic_mark_black_24dp"
+        android:title="@string/classes" />
 
     <item
         android:id="@+id/navigation_profile"

@@ -46,8 +46,8 @@ public class App extends Application {
     private static TeacherRetrofit teacherRetrofit;
     private static UserRetrofit userRetrofit;
 
-    private Retrofit createRetrofit(String path, OkHttpClient okHttpClient) {
-        return new Retrofit.Builder().baseUrl(new StringBuilder(getString(R.string.server_url)).append(path).toString())
+    private Retrofit createRetrofit(OkHttpClient okHttpClient) {
+        return new Retrofit.Builder().baseUrl(getString(R.string.server_url))
                 .addConverterFactory(GsonConverterFactory.create(new Gson())).client(okHttpClient).build();
     }
 
@@ -55,44 +55,41 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(new Gson())).baseUrl(new StringBuilder(getString(R.string.server_url)).append("api/auth/").toString()).build();
+        Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(new Gson())).baseUrl(new StringBuilder(getString(R.string.server_url)).append("auth/").toString()).build();
         authRetrofit = retrofit.create(AuthRetrofit.class);
 
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request.Builder builder = chain.request().newBuilder();
-                        String header = null;
-                        retrofit2.Response response = authRetrofit.tryConnect(userContext.accessToken).execute();
-                        if (NetworkUtilities.isSuccess(response.code()))
-                            header = userContext.accessToken;
-                        else {
-                            retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.accessToken, userContext.refreshToken).execute();
-                            if (NetworkUtilities.isSuccess(execute.code())) {
-                                LoginResult loginResult = execute.body();
-                                header = loginResult.getAccessToken();
-                                userContext.accessToken = loginResult.getAccessToken();
-                                userContext.refreshToken = loginResult.getRefreshToken();
-                                userContext.type = loginResult.getUserType();
-                            }
+                .addInterceptor(chain -> {
+                    Request.Builder builder = chain.request().newBuilder();
+                    String header = null;
+                    retrofit2.Response response = authRetrofit.tryConnect(userContext.accessToken).execute();
+                    if (NetworkUtilities.isSuccess(response.code()))
+                        header = userContext.accessToken;
+                    else {
+                        retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.accessToken, userContext.refreshToken).execute();
+                        if (NetworkUtilities.isSuccess(execute.code())) {
+                            LoginResult loginResult = execute.body();
+                            header = loginResult.getAccessToken();
+                            userContext.accessToken = loginResult.getAccessToken();
+                            userContext.refreshToken = loginResult.getRefreshToken();
+                            userContext.type = loginResult.getUserType();
                         }
-
-                        if (header == null)
-                            throw new UnknownHostException("Authorization error");
-
-                        builder.addHeader("Authorization", header);
-                        return chain.proceed(builder.build());
                     }
+
+                    if (header == null)
+                        throw new UnknownHostException("Authorization error");
+
+                    builder.addHeader("Authorization", header);
+                    return chain.proceed(builder.build());
                 }).build();
 
-        classRetrofit = createRetrofit("api/classes/", okHttpClient).create(ClassRetrofit.class);
-        childrenRetrofit = createRetrofit("api/children/", okHttpClient).create(ChildrenRetrofit.class);
-        markRetrofit = createRetrofit("api/marks/", okHttpClient).create(MarkRetrofit.class);
-        riskGroupRetrofit = createRetrofit("api/riskgroups/", okHttpClient).create(RiskGroupRetrofit.class);
-        scheduleRetrofit = createRetrofit("api/schedules/", okHttpClient).create(ScheduleRetrofit.class);
-        teacherRetrofit = createRetrofit("api/teachers/", okHttpClient).create(TeacherRetrofit.class);
-        userRetrofit = createRetrofit("api/users/", okHttpClient).create(UserRetrofit.class);
+        classRetrofit = createRetrofit(okHttpClient).create(ClassRetrofit.class);
+        childrenRetrofit = createRetrofit(okHttpClient).create(ChildrenRetrofit.class);
+        markRetrofit = createRetrofit(okHttpClient).create(MarkRetrofit.class);
+        riskGroupRetrofit = createRetrofit(okHttpClient).create(RiskGroupRetrofit.class);
+        scheduleRetrofit = createRetrofit(okHttpClient).create(ScheduleRetrofit.class);
+        teacherRetrofit = createRetrofit(okHttpClient).create(TeacherRetrofit.class);
+        userRetrofit = createRetrofit(okHttpClient).create(UserRetrofit.class);
     }
 
     public static AuthRetrofit getAuthRetrofit() {

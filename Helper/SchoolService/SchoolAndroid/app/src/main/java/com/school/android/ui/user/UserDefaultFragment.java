@@ -2,13 +2,12 @@ package com.school.android.ui.user;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import androidx.fragment.app.Fragment;
 
 import com.school.android.R;
 import com.school.android.models.network.input.User;
@@ -43,7 +42,7 @@ public class UserDefaultFragment extends ModelFragment<MainActivity, User> {
         View view = getView();
 
         surname = view.findViewById(R.id.surname);
-        name = view.findViewById(R.id.name);
+        name = view.findViewById(R.id.username);
         secondName = view.findViewById(R.id.second_name);
         phone = view.findViewById(R.id.phone);
         passport = view.findViewById(R.id.passport);

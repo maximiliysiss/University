@@ -9,6 +9,11 @@ import com.school.android.ui.activity.ActivityFragmenter;
 
 public abstract class ModelActionFragment<T extends ActivityFragmenter, M extends FragmentModel> extends ModelFragment<T, M> {
 
+    public enum Operation {
+        Save,
+        Add,
+        Delete
+    }
 
     int layoutBase;
 
@@ -25,7 +30,6 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
             action.setOnClickListener(v -> {
                 loadModel();
                 onSave(getModel());
-                toBackBaseFragment();
             });
 
             delete.setVisibility(View.VISIBLE);
@@ -33,7 +37,6 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
             delete.setOnClickListener(v -> {
                 loadModel();
                 onDelete(getModel());
-                toBackBaseFragment();
             });
 
         } else {
@@ -42,9 +45,23 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
             action.setOnClickListener(v -> {
                 loadModel();
                 onAdd(getModel());
-                toBackBaseFragment();
             });
         }
+    }
+
+    public void endOperation(int code, Operation operation, M m) {
+        afterOperation(operation, m);
+        toBackBaseFragment();
+    }
+
+    public void endOperation(int code, M m) {
+        afterOperation(Operation.Add, m);
+        toBackBaseFragment();
+    }
+
+    public void endOperation(M m) {
+        afterOperation(Operation.Add, m);
+        toBackBaseFragment();
     }
 
     public abstract void onSave(M m);
@@ -54,6 +71,10 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
     public abstract void onAdd(M m);
 
     public abstract void loadModel();
+
+    public void afterOperation(Operation operation, M m) {
+
+    }
 
     public void toBackBaseFragment() {
         getRealActivity().openFragment(layoutBase);

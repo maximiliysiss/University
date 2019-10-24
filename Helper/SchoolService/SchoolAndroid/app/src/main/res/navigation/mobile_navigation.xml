@@ -62,4 +62,14 @@
         android:name="com.school.android.ui.workers.WorkerFragment"
         tools:layout="@layout/fragment_worker" />
 
+    <fragment
+        android:id="@+id/navigation_classes"
+        android:name="com.school.android.ui.classes.ClassFragment"
+        tools:layout="@layout/fragment_class" />
+
+    <fragment
+        android:id="@+id/navigation_class_element"
+        android:name="com.school.android.ui.classes.ClassElementFragment"
+        tools:layout="@layout/fragment_class_element" />
+
 </navigation>

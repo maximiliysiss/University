@@ -12,7 +12,7 @@ using SchoolService.Services;
 
 namespace SchoolService.Controllers
 {
-    [Authorize(Roles = "Teacher")]
+    [Authorize(Roles = "Teacher, Admin")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassesController : ControllerBase
@@ -48,7 +48,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Classes/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClass(int id, Class @class)
+        public async Task<ActionResult<Class>> PutClass(int id, Class @class)
         {
             using (var userContext = this.GetUserContext())
             {
@@ -70,7 +70,7 @@ namespace SchoolService.Controllers
                     throw;
             }
 
-            return NoContent();
+            return @class;
         }
 
         // POST: api/Classes
@@ -95,7 +95,7 @@ namespace SchoolService.Controllers
             var teacher = user as Teacher;
             var @class = await _context.Classes.FindAsync(id);
 
-            if (@class == null || (!teacher?.Class.Select(x=>x.ID).Contains(@class.ID) ?? false))
+            if (@class == null || (!teacher?.Class.Select(x => x.ID).Contains(@class.ID) ?? false))
                 return NotFound();
 
             teacher.IsClassWork = teacher.Class.Count <= 1;
@@ -104,6 +104,19 @@ namespace SchoolService.Controllers
             await _context.SaveChangesAsync();
 
             return @class;
+        }
+
+        [HttpGet("teacher/{id}")]
+        public async Task<ActionResult> selectClass(int id)
+        {
+            var teacher = this.GetCurrentUser(_context) as Teacher;
+            var _class = _context.Classes.FirstOrDefault(x => x.ID == id);
+            if (_class == null)
+                return NotFound();
+            _class.Teacher = teacher;
+            _context.Update(_class);
+            await _context.SaveChangesAsync(); 
+            return Ok();
         }
 
         private bool ClassExists(int id)

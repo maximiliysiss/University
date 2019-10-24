@@ -6,7 +6,7 @@ public abstract class ModelContainsFragment<T extends Activity> extends BaseFrag
     public abstract String getModelName();
 
     public String getString(String name) {
-        String pack = getRealActivity().getPackageName();
+        String pack = getActivity().getPackageName();
         int resId = getResources().getIdentifier(name, "string", pack);
         return getString(resId);
     }

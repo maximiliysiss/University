@@ -14,22 +14,22 @@ import retrofit2.http.Path;
 
 public interface ScheduleRetrofit {
 
-    @GET("{id}/facultative")
+    @GET("schedules/{id}/facultative")
     Call<Schedule> toFacultative(@Path("id") int id);
 
-    @GET("")
+    @GET("schedules")
     Call<List<Schedule>> getModels();
 
-    @GET("{id}")
+    @GET("schedules/{id}")
     Call<Schedule> getModel(@Path("id") int id);
 
-    @POST("")
+    @POST("schedules")
     Call<Schedule> create(@Body Schedule t);
 
-    @PUT("{id}")
-    Call<Schedule> update(@Path("id") int id, Schedule t);
+    @PUT("schedules/{id}")
+    Call<Schedule> update(@Path("id") int id, @Body Schedule t);
 
-    @DELETE("{id}")
+    @DELETE("schedules/{id}")
     Call<Schedule> delete(@Path("id") int id);
 
 }

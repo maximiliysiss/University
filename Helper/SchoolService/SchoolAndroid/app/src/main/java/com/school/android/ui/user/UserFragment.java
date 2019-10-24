@@ -31,7 +31,6 @@ public class UserFragment extends ModelContainsFragment<MainActivity> {
     @Override
     public void onStart() {
         super.onStart();
-        Toast.makeText(getContext(), "sdfsdff", Toast.LENGTH_SHORT).show();
         Button button = getView().findViewById(R.id.add);
         button.setOnClickListener(v -> getRealActivity().openFragment(R.id.navigation_users_element, getModelName(), new User()));
     }
