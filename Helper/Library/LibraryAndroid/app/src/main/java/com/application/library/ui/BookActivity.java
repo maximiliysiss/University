@@ -19,7 +19,9 @@ public class BookActivity extends AppCompatActivity {
     Book object;
 
     EditText name;
-    EditText price;
+    EditText author;
+    EditText count;
+    EditText year;
 
     Button action;
     Button delete;
@@ -32,45 +34,54 @@ public class BookActivity extends AppCompatActivity {
         object = (Book) getIntent().getExtras().getSerializable("book");
 
         name = findViewById(R.id.name);
-        price = findViewById(R.id.price);
+        count = findViewById(R.id.count);
+        year = findViewById(R.id.year);
+        author = findViewById(R.id.author);
         delete = findViewById(R.id.delete);
         action = findViewById(R.id.action);
 
         name.setText(object.getName());
-        price.setText(String.valueOf(object.getPrice()));
+        author.setText(object.getAuthor());
+        count.setText(String.valueOf(object.getPagesCount()));
+        year.setText(String.valueOf(object.getYear()));
 
         if (object.getId() == 0) {
             action.setText("Добавить");
             action.setOnClickListener(v -> {
-                loadModel();
-                App.getBookRetrofit().add(object).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
-                    startActivity(new Intent(BookActivity.this, MainActivity.class));
-                }));
+                if (loadModel())
+                    App.getBookRetrofit().add(object).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
+                        startActivity(new Intent(BookActivity.this, MainActivity.class));
+                    }));
             });
         } else {
             action.setText("Изменить");
             action.setOnClickListener(v -> {
-                loadModel();
-                App.getBookRetrofit().update(object.getId(), object).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
-                    startActivity(new Intent(BookActivity.this, MainActivity.class));
-                }));
+                if (loadModel())
+                    App.getBookRetrofit().update(object.getId(), object).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
+                        startActivity(new Intent(BookActivity.this, MainActivity.class));
+                    }));
             });
 
             delete.setVisibility(View.VISIBLE);
         }
     }
 
-    public void loadModel() {
+    public boolean loadModel() {
         String nameString = name.getText().toString().trim();
-        String priceString = price.getText().toString().trim();
+        String authorString = author.getText().toString().trim();
+        String countString = count.getText().toString().trim();
+        String yearString = year.getText().toString().trim();
 
-        if (nameString.length() == 0 || priceString.length() == 0) {
+        if (nameString.length() == 0 || authorString.length() == 0 || countString.length() == 0 || yearString.length() == 0) {
             Toast.makeText(getBaseContext(), "Заполните поля", Toast.LENGTH_SHORT).show();
-            return;
+            return false;
         }
 
         object.setName(nameString);
-        object.setPrice(Double.parseDouble(priceString));
+        object.setYear(Integer.parseInt(yearString));
+        object.setPagesCount(Integer.parseInt(countString));
+        object.setAuthor(authorString);
+        return true;
     }
 
     public void delete(View view) {

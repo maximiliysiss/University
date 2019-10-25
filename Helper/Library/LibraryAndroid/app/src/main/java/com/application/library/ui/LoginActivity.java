@@ -57,12 +57,12 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<LoginResult>(getBaseContext(), x -> {
-            App.setUserContext(new UserContext(x.getAccessToken(), x.getRefreshToken()));
+            App.setUserContext(new UserContext(x.getAccessToken(), x.getRefreshToken(), x.getUserRole()));
             startActivity(new Intent(this, MainActivity.class));
         }).setMessage("Неправильный логин/пароль"));
     }
 
-    public void onlyShow(View view) {
-        startActivity(new Intent(this, MainActivity.class));
+    public void register(View view) {
+        startActivity(new Intent(this, RegisterActivity.class));
     }
 }

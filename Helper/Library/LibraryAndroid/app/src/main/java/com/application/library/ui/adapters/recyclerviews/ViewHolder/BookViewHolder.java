@@ -7,30 +7,39 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.application.library.app.App;
+import com.application.library.network.models.addons.UserRole;
 import com.application.library.network.models.input.Book;
 import com.application.library.ui.BookActivity;
+import com.application.library.ui.BookReadActivity;
 import com.school.library.R;
 
 public class BookViewHolder extends RecyclerViewHolder<Book> {
 
     TextView name;
-    TextView price;
+    TextView author;
+    TextView pageCount;
+    TextView year;
 
     public BookViewHolder(@NonNull View itemView) {
         super(itemView);
 
         name = itemView.findViewById(R.id.name);
-        price = itemView.findViewById(R.id.price);
+        author = itemView.findViewById(R.id.author);
+        pageCount = itemView.findViewById(R.id.count);
+        year = itemView.findViewById(R.id.year);
     }
 
     @Override
     public void onClick() {
 
-        if (App.isAuth()) {
-            Intent intent = new Intent(this.getActivity(), BookActivity.class);
-            intent.putExtra("book", object);
-            getActivity().startActivity(intent);
-        }
+        UserRole userRole = UserRole.values()[App.getUserContext().getUserRole()];
+        Intent intent;
+        if (userRole == UserRole.Admin)
+            intent = new Intent(this.getActivity(), BookActivity.class);
+        else
+            intent = new Intent(this.getActivity(), BookReadActivity.class);
+        intent.putExtra("book", object);
+        getActivity().startActivity(intent);
     }
 
     @Override
@@ -38,6 +47,8 @@ public class BookViewHolder extends RecyclerViewHolder<Book> {
         super.setObject(object);
 
         name.setText(object.getName());
-        price.setText(String.valueOf(object.getPrice()));
+        author.setText(object.getAuthor());
+        pageCount.setText(String.valueOf(object.getPagesCount()));
+        year.setText(String.valueOf(object.getYear()));
     }
 }

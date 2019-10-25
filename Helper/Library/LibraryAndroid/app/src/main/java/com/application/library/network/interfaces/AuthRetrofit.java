@@ -22,4 +22,7 @@ public interface AuthRetrofit {
 
     @POST("login")
     Call<LoginResult> login(@Body LoginModel loginModel);
+
+    @POST("register")
+    Call<LoginResult> register(@Body LoginModel loginModel);
 }

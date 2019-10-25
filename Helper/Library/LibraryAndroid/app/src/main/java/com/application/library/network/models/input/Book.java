@@ -12,9 +12,15 @@ public class Book implements Serializable {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("price")
+    @SerializedName("author")
     @Expose
-    private Double price = 0.0;
+    private String author;
+    @SerializedName("year")
+    @Expose
+    private Integer year = 0;
+    @SerializedName("pagesCount")
+    @Expose
+    private Integer pagesCount = 0;
 
     public Integer getId() {
         return id;
@@ -32,11 +38,28 @@ public class Book implements Serializable {
         this.name = name;
     }
 
-    public Double getPrice() {
-        return price;
+    public String getAuthor() {
+        return author;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setAuthor(String author) {
+        this.author = author;
     }
+
+    public Integer getYear() {
+        return year;
+    }
+
+    public void setYear(Integer year) {
+        this.year = year;
+    }
+
+    public Integer getPagesCount() {
+        return pagesCount;
+    }
+
+    public void setPagesCount(Integer pagesCount) {
+        this.pagesCount = pagesCount;
+    }
+
 }

@@ -43,10 +43,6 @@ public class App extends Application {
         return bookRetrofit;
     }
 
-    public static boolean isAuth() {
-        return getUserContext() != null;
-    }
-
     public static void setUserContext(UserContext userContext) {
         databaseContext.userDao().delete();
         databaseContext.userDao().insert(userContext);
@@ -61,17 +57,17 @@ public class App extends Application {
         if (userContext == null)
             return null;
 
-        FutureTask<UserContext> futureTask = new FutureTask<>(() -> {
+        FutureTask<UserContext> futureTask = new FutureTask<UserContext>(() -> {
             retrofit2.Response response = null;
             try {
                 response = authRetrofit.tryConnect(userContext.getAccessToken()).execute();
                 if (NetworkUtilities.isSuccess(response.code())) {
-                    return new UserContext(userContext.getAccessToken(), userContext.getRefreshToken());
+                    return new UserContext(userContext.getAccessToken(), userContext.getRefreshToken(), userContext.getUserRole());
                 } else {
                     retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.getAccessToken(), userContext.getRefreshToken()).execute();
                     if (NetworkUtilities.isSuccess(execute.code())) {
                         LoginResult loginResult = execute.body();
-                        return new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken());
+                        return new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken(), loginResult.getUserRole());
                     } else
                         return null;
                 }
@@ -107,9 +103,6 @@ public class App extends Application {
                     Request.Builder builder = chain.request().newBuilder();
                     String header = null;
                     UserContext userContext = getUserContext();
-                    if (userContext == null)
-                        return chain.proceed(builder.build());
-
                     retrofit2.Response response = authRetrofit.tryConnect(userContext.getAccessToken()).execute();
                     if (NetworkUtilities.isSuccess(response.code()))
                         header = userContext.getAccessToken();
@@ -118,7 +111,7 @@ public class App extends Application {
                         if (NetworkUtilities.isSuccess(execute.code())) {
                             LoginResult loginResult = execute.body();
                             header = loginResult.getAccessToken();
-                            setUserContext(new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken()));
+                            setUserContext(new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken(), loginResult.getUserRole()));
                         }
                     }
 

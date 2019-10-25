@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.application.library.app.App;
 import com.application.library.network.callbacks.UniversalCallback;
+import com.application.library.network.models.addons.UserRole;
 import com.application.library.network.models.input.Book;
 import com.application.library.ui.adapters.recyclerviews.RecyclerViewAdapter;
 import com.application.library.ui.adapters.recyclerviews.ViewHolder.BookViewHolder;
@@ -24,11 +25,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (!App.isAuth()) {
-            super.onBackPressed();
-            return;
-        }
-
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder.setTitle("Сменить пользователя?")
                 .setPositiveButton("Да", (dialog, which) -> {
@@ -53,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             recyclerView.setAdapter(new RecyclerViewAdapter(x, R.layout.recycler_book, y -> new BookViewHolder(y)));
         }));
 
-        if (App.isAuth())
+        if (UserRole.values()[App.getUserContext().getUserRole()] != UserRole.Admin)
             add.setVisibility(View.INVISIBLE);
 
     }

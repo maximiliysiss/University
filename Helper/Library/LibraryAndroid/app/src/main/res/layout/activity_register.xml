@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.application.library.ui.LoginActivity">
+    tools:context="com.application.library.ui.RegisterActivity">
 
     <LinearLayout
         android:id="@+id/linear"
@@ -12,15 +12,13 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="20dp"
-        android:visibility="invisible">
+        android:padding="20dp">
 
         <EditText
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Логин"
-            android:text="@string/login"
             android:textSize="12pt"></EditText>
 
         <EditText
@@ -29,24 +27,24 @@
             android:layout_height="wrap_content"
             android:hint="Пароль"
             android:inputType="textPassword"
-            android:text="@string/login"
+            android:textSize="12pt"></EditText>
+
+        <EditText
+            android:id="@+id/repeat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Повторить пароль"
+            android:inputType="textPassword"
             android:textSize="12pt"></EditText>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="login"
-            android:text="Войти"
-            android:textSize="10pt"></Button>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:onClick="register"
-            android:text="Регистрация"
+            android:text="Зарегистрироваться"
             android:textSize="10pt"></Button>
-
 
     </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
