@@ -11,4 +11,5 @@
     <string name="point_model">point_model</string>
     <string name="schedule_model">schedule_model</string>
     <string name="title_point">Точки</string>
+    <string name="title_points">Точки</string>
 </resources>

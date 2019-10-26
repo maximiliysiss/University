@@ -1,4 +1,4 @@
-package com.application.autostation.ui.recyclerviews.ViewHolder;
+package com.application.autostation.ui.adapters.recyclerviews.ViewHolder;
 
 import android.app.Activity;
 import android.content.Context;

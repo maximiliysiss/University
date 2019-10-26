@@ -7,7 +7,7 @@
     tools:context=".ui.activities.UserActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/schedule"
+        android:id="@+id/schedules"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 

@@ -9,6 +9,7 @@ import com.application.autostation.app.UserContext.DatabaseContext;
 import com.application.autostation.app.UserContext.UserContext;
 import com.application.autostation.network.interfaces.AuthRetrofit;
 import com.application.autostation.network.interfaces.BuyingsRetrofit;
+import com.application.autostation.network.interfaces.PointRetrofit;
 import com.application.autostation.network.interfaces.ScheduleRetrofit;
 import com.application.autostation.network.models.input.LoginResult;
 import com.application.autostation.utilities.NetworkUtilities;
@@ -29,8 +30,13 @@ public class App extends Application {
     private static AuthRetrofit authRetrofit;
     private static ScheduleRetrofit scheduleRetrofit;
     private static BuyingsRetrofit buyingsRetrofit;
+    private static PointRetrofit pointRetrofit;
 
     private static DatabaseContext databaseContext;
+
+    public static PointRetrofit getPointRetrofit() {
+        return pointRetrofit;
+    }
 
     public static AuthRetrofit getAuthRetrofit() {
         return authRetrofit;
@@ -104,6 +110,8 @@ public class App extends Application {
                     Request.Builder builder = chain.request().newBuilder();
                     String header = null;
                     UserContext userContext = getUserContext();
+                    if (userContext == null)
+                        return chain.proceed(builder.build());
                     retrofit2.Response response = authRetrofit.tryConnect(userContext.getAccessToken()).execute();
                     if (NetworkUtilities.isSuccess(response.code()))
                         header = userContext.getAccessToken();
@@ -125,6 +133,7 @@ public class App extends Application {
 
         scheduleRetrofit = createRetrofit(okHttpClient).create(ScheduleRetrofit.class);
         buyingsRetrofit = createRetrofit(okHttpClient).create(BuyingsRetrofit.class);
+        pointRetrofit = createRetrofit(okHttpClient).create(PointRetrofit.class);
     }
 
     private Retrofit createRetrofit(OkHttpClient okHttpClient) {

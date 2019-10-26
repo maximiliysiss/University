@@ -1,4 +1,4 @@
-package com.application.autostation.ui.recyclerviews;
+package com.application.autostation.ui.adapters.recyclerviews;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.application.library.ui.adapters.recyclerviews.ViewHolder.RecyclerViewHolder;
+import com.application.autostation.ui.adapters.recyclerviews.ViewHolder.RecyclerViewHolder;
 
 import java.util.List;
 

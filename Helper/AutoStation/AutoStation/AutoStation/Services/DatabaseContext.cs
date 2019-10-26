@@ -22,6 +22,8 @@ namespace AutoStation.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Buying>().HasOne(x => x.Schedule).WithMany().OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<Schedule>().HasOne(x => x.To).WithMany().OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Schedule>().HasOne(x => x.From).WithMany().OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<User>().HasData(new User
             {
                 ID = 1,

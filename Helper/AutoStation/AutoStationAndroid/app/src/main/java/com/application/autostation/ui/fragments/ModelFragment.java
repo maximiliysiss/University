@@ -1,14 +1,16 @@
 package com.application.autostation.ui.fragments;
 
+import android.app.Activity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.application.autostation.R;
 import com.application.autostation.ui.models.Model;
 
-public abstract class ModelFragment<T extends Model> extends Fragment {
+public abstract class ModelFragment<T extends Model, A extends Activity> extends Fragment {
 
     T obj;
 
@@ -16,6 +18,10 @@ public abstract class ModelFragment<T extends Model> extends Fragment {
         return obj;
     }
 
+
+    public A getRealActivity() {
+        return (A) getActivity();
+    }
 
     @Override
     public void onStart() {
@@ -36,22 +42,26 @@ public abstract class ModelFragment<T extends Model> extends Fragment {
         if (obj.getId() == 0) {
             action.setText("Добавить");
             action.setOnClickListener(v -> {
-                loadObject();
-                add(obj);
+                if (loadObject())
+                    add(obj);
+                else
+                    Toast.makeText(getContext(), "Заполните поля", Toast.LENGTH_SHORT).show();
             });
         } else {
             delete.setVisibility(View.VISIBLE);
             delete.setOnClickListener(v -> delete(obj.getId()));
             action.setText("Изменить");
             action.setOnClickListener(v -> {
-                loadObject();
-                update(obj);
+                if (loadObject())
+                    update(obj);
+                else
+                    Toast.makeText(getContext(), "Заполните поля", Toast.LENGTH_SHORT).show();
             });
         }
 
     }
 
-    public abstract void loadObject();
+    public abstract boolean loadObject();
 
     public abstract void add(T obj);
 

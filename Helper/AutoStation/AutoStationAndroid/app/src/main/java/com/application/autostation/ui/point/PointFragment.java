@@ -12,19 +12,19 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.application.autostation.R;
+import com.application.autostation.app.App;
+import com.application.autostation.network.callbacks.UniversalCallback;
 import com.application.autostation.network.models.input.Point;
+import com.application.autostation.ui.activities.AdminActivity;
 import com.application.autostation.ui.fragments.ModelFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class PointFragment extends ModelFragment<Point> {
+public class PointFragment extends ModelFragment<Point, AdminActivity> {
 
 
-    public PointFragment() {
-        // Required empty public constructor
-    }
-
+    EditText name;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -35,6 +35,8 @@ public class PointFragment extends ModelFragment<Point> {
     @Override
     public void onStart() {
         super.onStart();
+
+        name = getView().findViewById(R.id.name);
     }
 
     @Override
@@ -43,22 +45,35 @@ public class PointFragment extends ModelFragment<Point> {
     }
 
     @Override
-    public void loadObject() {
+    public boolean loadObject() {
+        String nameString = name.getText().toString().trim();
 
+        if (nameString.length() == 0) {
+            return false;
+        }
+
+        getObj().setName(nameString);
+        return true;
     }
 
     @Override
     public void add(Point obj) {
-
+        App.getPointRetrofit().create(obj).enqueue(new UniversalCallback<>(getContext(), x -> {
+            getRealActivity().openFragment(R.id.navigation_points);
+        }));
     }
 
     @Override
     public void delete(int id) {
-
+        App.getPointRetrofit().delete(id).enqueue(new UniversalCallback<>(getContext(), x -> {
+            getRealActivity().openFragment(R.id.navigation_points);
+        }));
     }
 
     @Override
     public void update(Point obj) {
-
+        App.getPointRetrofit().update(obj.getId(), obj).enqueue(new UniversalCallback<>(getContext(), x -> {
+            getRealActivity().openFragment(R.id.navigation_points);
+        }));
     }
 }

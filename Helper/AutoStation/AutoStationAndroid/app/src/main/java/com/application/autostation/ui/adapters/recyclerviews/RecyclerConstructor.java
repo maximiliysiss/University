@@ -1,4 +1,4 @@
-package com.application.autostation.ui.recyclerviews;
+package com.application.autostation.ui.adapters.recyclerviews;
 
 import android.view.View;
 

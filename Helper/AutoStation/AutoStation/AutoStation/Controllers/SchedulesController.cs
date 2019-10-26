@@ -32,7 +32,7 @@ namespace AutoStation.Controllers
         // PUT: api/Schedules/5
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutSchedule(int id, Schedule schedule)
+        public async Task<ActionResult<Schedule>> PutSchedule(int id, Schedule schedule)
         {
             if (id != schedule.ID)
             {
@@ -57,7 +57,7 @@ namespace AutoStation.Controllers
                 }
             }
 
-            return NoContent();
+            return schedule;
         }
 
         // POST: api/Schedules
@@ -68,7 +68,7 @@ namespace AutoStation.Controllers
             _context.Schedules.Add(schedule);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSchedule", new { id = schedule.ID }, schedule);
+            return schedule;
         }
 
         // DELETE: api/Schedules/5

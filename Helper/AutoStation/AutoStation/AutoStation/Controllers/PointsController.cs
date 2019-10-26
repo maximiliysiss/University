@@ -46,7 +46,7 @@ namespace AutoStation.Controllers
 
         // PUT: api/Points/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPoint(int id, Point point)
+        public async Task<ActionResult<Point>> PutPoint(int id, Point point)
         {
             if (id != point.ID)
             {
@@ -71,7 +71,7 @@ namespace AutoStation.Controllers
                 }
             }
 
-            return NoContent();
+            return point;
         }
 
         // POST: api/Points
