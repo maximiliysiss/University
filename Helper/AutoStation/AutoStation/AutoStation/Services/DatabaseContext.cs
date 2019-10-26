@@ -17,10 +17,15 @@ namespace AutoStation.Services
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Point> Points { get; set; }
         public DbSet<Buying> Buyings { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Buying>().HasOne(x => x.Schedule).WithMany().OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<User>().HasData(new User{
+                Login = "admin",
+                PasswordHash = CryptService.CreateMd5("admin")
+            });
             base.OnModelCreating(modelBuilder);
         }
     }

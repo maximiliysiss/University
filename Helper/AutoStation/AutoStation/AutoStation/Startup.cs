@@ -10,8 +10,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace AutoStation
 {
@@ -28,6 +30,26 @@ namespace AutoStation
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("Default")).UseLazyLoadingProxies());
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "AutoStation" });
+            });
+
+            var settingsAuth = Configuration.GetSection("AuthSettings").Get<AuthorizeSettings>();
+            services.AddSingleton(settingsAuth);
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+                    {
+                        ValidateIssuer = true,
+                        ValidIssuer = settingsAuth.Issuer,
+                        ValidateAudience = true,
+                        ValidAudience = settingsAuth.Audience,
+                        ValidateLifetime = true,
+                        IssuerSigningKey = settingsAuth.SecurityKey
+                    };
+                });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
@@ -45,6 +67,12 @@ namespace AutoStation
                 app.UseHsts();
             }
 
+            app.UseAuthentication();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Library");
+            });
             app.UseHttpsRedirection();
             app.UseMvc();
         }

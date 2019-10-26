@@ -7,11 +7,13 @@ using AutoStation.Services;
 using ClosedXML.Excel;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoStation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class IntegrationController : ControllerBase
     {
         public DatabaseContext context;
