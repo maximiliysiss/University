@@ -24,7 +24,8 @@ namespace Library.Services
             {
                 ID = 1,
                 Login = "admin",
-                PasswordHash = CryptService.CreateMd5("admin")
+                PasswordHash = CryptService.CreateMd5("admin"),
+                UserRole = UserRole.Admin
             });
         }
     }

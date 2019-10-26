@@ -7,6 +7,7 @@ namespace Library.Models.Controllers
 {
     public class TokenResult
     {
+        public UserRole UserRole { get; set; }
         private string accessToken;
         public string AccessToken
         {

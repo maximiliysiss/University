@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace Library.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class BooksController : ControllerBase
     {
@@ -31,7 +32,7 @@ namespace Library.Controllers
 
         // PUT: api/Books/5
         [HttpPut("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Book>> PutBook(int id, Book book)
         {
             if (id != book.ID)
@@ -62,7 +63,7 @@ namespace Library.Controllers
 
         // POST: api/Books
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Book>> PostBook(Book book)
         {
             _context.Books.Add(book);
@@ -73,7 +74,7 @@ namespace Library.Controllers
 
         // DELETE: api/Books/5
         [HttpDelete("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Book>> DeleteBook(int id)
         {
             var book = await _context.Books.FindAsync(id);

@@ -56,7 +56,8 @@ namespace Library.Controllers
             return new TokenResult
             {
                 RefreshToken = user.Token,
-                AccessToken = GenerateToken(user, authorizeSettings.AccessExpiration)
+                AccessToken = GenerateToken(user, authorizeSettings.AccessExpiration),
+                UserRole = user.UserRole
             };
         }
 
@@ -70,7 +71,8 @@ namespace Library.Controllers
             user = new User
             {
                 Login = loginModel.Login,
-                PasswordHash = CryptService.CreateMd5(loginModel.Password)
+                PasswordHash = CryptService.CreateMd5(loginModel.Password),
+                UserRole = UserRole.User
             };
             databaseContext.Add(user);
             databaseContext.SaveChanges();
@@ -96,7 +98,7 @@ namespace Library.Controllers
             databaseContext.Update(user);
             databaseContext.SaveChanges();
 
-            return new TokenResult { AccessToken = newJwt, RefreshToken = user.Token };
+            return new TokenResult { AccessToken = newJwt, RefreshToken = user.Token, UserRole = user.UserRole };
         }
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
