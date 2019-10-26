@@ -22,7 +22,9 @@ namespace AutoStation.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Buying>().HasOne(x => x.Schedule).WithMany().OnDelete(DeleteBehavior.SetNull);
-            modelBuilder.Entity<User>().HasData(new User{
+            modelBuilder.Entity<User>().HasData(new User
+            {
+                ID = 1,
                 Login = "admin",
                 PasswordHash = CryptService.CreateMd5("admin")
             });

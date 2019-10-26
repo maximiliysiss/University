@@ -11,7 +11,9 @@ namespace AutoStation.Models
         public string Time { get; set; }
         public double Distance { get; set; }
         public DayOfWeek DayOfWeek { get; set; }
+        public int FromId { get; set; }
         public virtual Point From { get; set; }
+        public int ToId { get; set; }
         public virtual Point To { get; set; }
         public double Price { get; set; }
     }
