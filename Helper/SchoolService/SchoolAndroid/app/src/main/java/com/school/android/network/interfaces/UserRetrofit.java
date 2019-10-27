@@ -29,4 +29,7 @@ public interface UserRetrofit {
     @DELETE("users/{id}")
     Call<User> delete(@Path("id") int id);
 
+    @GET("users/workers")
+    Call<List<User>> getWorkers();
+
 }

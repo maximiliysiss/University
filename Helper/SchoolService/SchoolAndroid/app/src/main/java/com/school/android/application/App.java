@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.google.gson.Gson;
 import com.school.android.R;
+import com.school.android.models.extension.UserType;
 import com.school.android.models.network.input.LoginResult;
 import com.school.android.network.interfaces.AuthRetrofit;
 import com.school.android.network.interfaces.ChildrenRetrofit;
@@ -49,6 +50,10 @@ public class App extends Application {
     private Retrofit createRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder().baseUrl(getString(R.string.server_url))
                 .addConverterFactory(GsonConverterFactory.create(new Gson())).client(okHttpClient).build();
+    }
+
+    public static UserType getUserType() {
+        return UserType.values()[getUserContext().type];
     }
 
     @Override

@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SchoolAndroid</string>
     <string name="server_url">http://192.168.1.8:5000/api/</string>
-    <string name="user">admin</string>
+    <string name="user">knowledgeteacher</string>
 
     <string name="schedules">Расписание</string>
     <string name="profile">Профиль</string>
@@ -38,4 +38,6 @@
     <string name="add_risk_group">Добавить к риск группе</string>
     <string name="select_risk_group">Выберите риск группу</string>
     <string name="schedule_model">schedule_model</string>
+    <string name="is_change">is_change</string>
+    <string name="only_student">only_student</string>
 </resources>

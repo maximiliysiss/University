@@ -27,6 +27,8 @@ import com.school.android.ui.adapters.spinner.UserTypeSpinnerAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
 import com.school.android.utilities.NetworkUtilities;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
@@ -71,14 +73,22 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         frameLayout = getView().findViewById(R.id.user_frame);
 
         UserType[] userTypes = UserType.values();
+        if (getArguments().getBoolean(getString(R.string.is_change), false)) {
+            ArrayList<UserType> arrayList = (ArrayList<UserType>) Arrays.asList(userTypes).stream().filter(x -> x != UserType.Student).collect(Collectors.toList());
+            userTypes = arrayList.toArray(new UserType[arrayList.size()]);
+        }
+
+        if (getArguments().getBoolean(getString(R.string.only_student), false))
+            spinner.setVisibility(View.INVISIBLE);
 
         UserTypeSpinnerAdapter userTypeSpinnerAdapter = new UserTypeSpinnerAdapter(Arrays.stream(userTypes).collect(Collectors.toList()), getContext());
         spinner.setAdapter(userTypeSpinnerAdapter);
 
+        UserType[] finalUserTypes = userTypes;
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                UserType type = userTypes[position];
+                UserType type = finalUserTypes[position];
                 boolean isChange = type.ordinal() != getModel().getUserType();
                 Fragment fragment = new UserDefaultFragment();
                 setModel(isChange ? new User() : getModel());

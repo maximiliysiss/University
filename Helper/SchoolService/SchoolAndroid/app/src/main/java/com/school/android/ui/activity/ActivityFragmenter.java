@@ -25,4 +25,9 @@ public abstract class ActivityFragmenter extends AppCompatActivity {
         navController.navigate(id, bundle);
     }
 
+    public void openFragment(int id, String name, Serializable serializable, Bundle bundle) {
+        bundle.putSerializable(name, serializable);
+        navController.navigate(id, bundle);
+    }
+
 }

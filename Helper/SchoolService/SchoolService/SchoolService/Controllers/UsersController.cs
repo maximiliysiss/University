@@ -26,7 +26,7 @@ namespace SchoolService.Controllers
 
         // GET: api/Users
         [HttpGet]
-        [Authorize(Roles = "Admin, JobTeacher")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
@@ -48,6 +48,11 @@ namespace SchoolService.Controllers
                 return NotFound();
 
             return user;
+        }
+
+        [HttpGet("workers")]
+        public async Task<ActionResult<List<User>>> GetWorkers(){
+            return await _context.Users.Where(x=>x.UserType!=UserType.Student).ToListAsync();
         }
 
         // PUT: api/Users/5

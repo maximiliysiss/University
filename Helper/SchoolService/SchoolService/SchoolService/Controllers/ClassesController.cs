@@ -12,7 +12,7 @@ using SchoolService.Services;
 
 namespace SchoolService.Controllers
 {
-    [Authorize(Roles = "Teacher, Admin")]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassesController : ControllerBase
@@ -29,7 +29,7 @@ namespace SchoolService.Controllers
         public async Task<ActionResult<IEnumerable<Class>>> GetClasses()
         {
             var userContext = this.GetCurrentUser(_context);
-            if (userContext.UserType == UserType.Admin)
+            if (userContext.UserType != UserType.Teacher)
                 return await _context.Classes.ToListAsync();
             return _context.Teachers.Find(userContext.ID).Class;
         }
@@ -48,6 +48,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Classes/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Class>> PutClass(int id, Class @class)
         {
             using (var userContext = this.GetUserContext())
@@ -75,6 +76,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Classes
         [HttpPost]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Class>> PostClass(Class @class)
         {
             Teacher teacher = this.GetCurrentUser(_context) as Teacher;
@@ -89,6 +91,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Classes/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Class>> DeleteClass(int id)
         {
             var user = this.GetCurrentUser(_context);
@@ -107,6 +110,7 @@ namespace SchoolService.Controllers
         }
 
         [HttpGet("teacher/{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult> selectClass(int id)
         {
             var teacher = this.GetCurrentUser(_context) as Teacher;
@@ -115,7 +119,7 @@ namespace SchoolService.Controllers
                 return NotFound();
             _class.Teacher = teacher;
             _context.Update(_class);
-            await _context.SaveChangesAsync(); 
+            await _context.SaveChangesAsync();
             return Ok();
         }
 

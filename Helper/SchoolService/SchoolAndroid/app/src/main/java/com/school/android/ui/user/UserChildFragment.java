@@ -16,6 +16,7 @@ import android.widget.Spinner;
 
 import com.school.android.R;
 import com.school.android.application.App;
+import com.school.android.models.extension.UserType;
 import com.school.android.models.network.input.ChildInRiskGroup;
 import com.school.android.models.network.input.Children;
 import com.school.android.models.network.input.Class;
@@ -95,6 +96,7 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
 
         toArchive = getView().findViewById(R.id.to_archive);
         addRiskGroup = getView().findViewById(R.id.add_to_risk_group);
+
 
         if (getModel().getId() != 0) {
             toArchive.setOnClickListener(v -> App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {

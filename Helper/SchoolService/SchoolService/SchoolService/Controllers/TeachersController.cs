@@ -25,7 +25,7 @@ namespace SchoolService.Controllers
 
         // GET: api/Teachers
         [HttpGet]
-        [AuthorizeAttribute(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Teacher>>> GetTeachers()
         {
             return await _context.Teachers.ToListAsync();
