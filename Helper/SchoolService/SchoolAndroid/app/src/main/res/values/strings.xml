@@ -37,4 +37,5 @@
     <string name="from_riskgroup">Убрать из группы риска?</string>
     <string name="add_risk_group">Добавить к риск группе</string>
     <string name="select_risk_group">Выберите риск группу</string>
+    <string name="schedule_model">schedule_model</string>
 </resources>

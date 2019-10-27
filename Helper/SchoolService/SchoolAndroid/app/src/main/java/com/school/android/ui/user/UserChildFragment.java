@@ -94,36 +94,41 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
         }));
 
         toArchive = getView().findViewById(R.id.to_archive);
-        toArchive.setOnClickListener(v -> App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
-            getRealActivity().openFragment(R.id.navigation_users);
-        })));
-
-        if (getModel().getIsArchive())
-            toArchive.setText(getString(R.string.from_archive));
-
-
         addRiskGroup = getView().findViewById(R.id.add_to_risk_group);
-        addRiskGroup.setOnClickListener(v -> App.getRiskGroupRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
-            ArrayList<String> names = new ArrayList<>();
-            for (RiskGroup riskGroup : x) {
-                boolean flag = true;
-                for (ChildInRiskGroup group : riskGroup.getChildInRiskGroups()) {
-                    if (group.getChildId() == getModel().getId()) {
-                        flag = false;
-                        break;
+
+        if (getModel().getId() != 0) {
+            toArchive.setOnClickListener(v -> App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
+                getRealActivity().openFragment(R.id.navigation_users);
+            })));
+
+            if (getModel().getIsArchive())
+                toArchive.setText(getString(R.string.from_archive));
+
+            addRiskGroup.setOnClickListener(v -> App.getRiskGroupRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
+                ArrayList<String> names = new ArrayList<>();
+                for (RiskGroup riskGroup : x) {
+                    boolean flag = true;
+                    for (ChildInRiskGroup group : riskGroup.getChildInRiskGroups()) {
+                        if (group.getChildId() == getModel().getId()) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        names.add(riskGroup.getName());
                     }
                 }
-                if (flag) {
-                    names.add(riskGroup.getName());
-                }
-            }
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.select_risk_group)
-                    .setItems(names.toArray(new String[names.size()]), (dialog, which) -> App.getRiskGroupRetrofit().addChildToRiskGroup(getModel().getId(), x.get(which).getId()).enqueue(new UniversalCallback<>(getContext(), z -> {
-                    })));
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.select_risk_group)
+                        .setItems(names.toArray(new String[names.size()]), (dialog, which) -> App.getRiskGroupRetrofit().addChildToRiskGroup(getModel().getId(), x.get(which).getId()).enqueue(new UniversalCallback<>(getContext(), z -> {
+                        })));
 
-            builder.create().show();
-        })));
+                builder.create().show();
+            })));
+        }else{
+            toArchive.setVisibility(View.INVISIBLE);
+            addRiskGroup.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

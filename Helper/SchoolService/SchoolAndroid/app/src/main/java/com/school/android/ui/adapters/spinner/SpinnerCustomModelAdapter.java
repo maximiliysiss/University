@@ -22,4 +22,16 @@ public abstract class SpinnerCustomModelAdapter<T extends FragmentModel> extends
         }
         return 0;
     }
+
+    public int getIndexById(Integer id) {
+
+        if (id == null)
+            return 0;
+
+        for (int i = 0; i < data.size(); i++) {
+            if (id == data.get(i).getId())
+                return i;
+        }
+        return 0;
+    }
 }

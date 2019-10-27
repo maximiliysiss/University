@@ -7,10 +7,13 @@ import com.school.android.models.network.FragmentModel;
 public class Schedule implements FragmentModel {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Integer id = 0;
     @SerializedName("classId")
     @Expose
     private Integer classId;
+    @SerializedName("class")
+    @Expose
+    private Class _class;
     @SerializedName("lessonNumber")
     @Expose
     private Integer lessonNumber;
@@ -25,7 +28,15 @@ public class Schedule implements FragmentModel {
     private Integer dayOfWeek;
     @SerializedName("isFacultative")
     @Expose
-    private Boolean isFacultative;
+    private Boolean isFacultative = false;
+
+    public Class get_class() {
+        return _class;
+    }
+
+    public void set_class(Class _class) {
+        this._class = _class;
+    }
 
     public Integer getId() {
         return id;

@@ -50,31 +50,43 @@
     <fragment
         android:id="@+id/navigation_users_element"
         android:name="com.school.android.ui.user.UserElementFragment"
+        android:label="@string/users"
         tools:layout="@layout/fragment_user_element" />
 
     <fragment
         android:id="@+id/navigation_super_class"
         android:name="com.school.android.ui.superclass.SuperClassFragment"
+        android:label="@string/superclass"
         tools:layout="@layout/fragment_super_class" />
 
     <fragment
         android:id="@+id/navigation_workers"
         android:name="com.school.android.ui.workers.WorkerFragment"
+        android:label="@string/worker"
         tools:layout="@layout/fragment_worker" />
 
     <fragment
         android:id="@+id/navigation_classes"
         android:name="com.school.android.ui.classes.ClassFragment"
+        android:label="@string/classes"
         tools:layout="@layout/fragment_class" />
 
     <fragment
         android:id="@+id/navigation_class_element"
         android:name="com.school.android.ui.classes.ClassElementFragment"
+        android:label="@string/classes"
         tools:layout="@layout/fragment_class_element" />
 
     <fragment
         android:id="@+id/navigation_riskgroups_element"
         android:name="com.school.android.ui.riskgroup.RiskGroupElementFragment"
+        android:label="@string/riskgroup"
         tools:layout="@layout/fragment_risk_group_element" />
+
+    <fragment
+        android:id="@+id/navigation_schedule_element"
+        android:name="com.school.android.ui.schedule.ScheduleElementFragment"
+        android:label="@string/schedules"
+        tools:layout="@layout/fragment_schedule_element" />
 
 </navigation>
