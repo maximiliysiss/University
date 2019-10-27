@@ -38,10 +38,13 @@ public abstract class CustomSpinnerAdapter<T> extends BaseAdapter implements Spi
     }
 
     public int getIndex(T obj) {
+        if (obj == null)
+            return 0;
+
         for (int i = 0; i < data.size(); i++)
-            if (obj.equals(obj))
+            if (data.get(i).equals(obj))
                 return i;
-        return -1;
+        return 0;
     }
 
     @Override
@@ -49,7 +52,7 @@ public abstract class CustomSpinnerAdapter<T> extends BaseAdapter implements Spi
         View view = View.inflate(context, layout, null);
         TextView textView = view.findViewById(R.id.name);
         textView.setText(getText(data.get(position)));
-        return null;
+        return view;
     }
 
     public abstract String getText(T obj);

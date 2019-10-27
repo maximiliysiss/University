@@ -7,10 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.application.autostation.R;
 import com.application.autostation.app.App;
 import com.application.autostation.app.UserContext.UserContext;
+import com.application.autostation.network.callbacks.ActionCallback;
+import com.application.autostation.network.callbacks.UniversalCallback;
+import com.application.autostation.network.models.input.LoginResult;
+import com.application.autostation.network.models.output.LoginModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -21,10 +26,6 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-    }
-
-    public void login(View view) {
         setContentView(R.layout.activity_login);
 
         login = findViewById(R.id.login);
@@ -38,6 +39,21 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             linearLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void login(View view) {
+        String loginString = login.getText().toString().trim();
+        String passwordString = password.getText().toString().trim();
+
+        if (loginString.length() == 0 || passwordString.length() == 0) {
+            Toast.makeText(getBaseContext(), "Заполните поля", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<>(getBaseContext(), loginResult -> {
+            App.setUserContext(new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken()));
+            startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+        }));
     }
 
     public void buyTicket(View view) {

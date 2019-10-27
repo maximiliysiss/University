@@ -9,7 +9,7 @@ public class DayOfWeek {
     private static HashMap<Integer, String> days;
 
     private static HashMap<Integer, String> getDays() {
-        if (days == null)
+        if (days != null)
             return days;
 
         days = new HashMap<>();

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.PhoneNumberFormattingTextWatcher;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -49,6 +50,9 @@ public class PayActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.toString().trim().length() == 0) {
+                    s.append("0");
+                }
                 price.setText(String.valueOf(Integer.parseInt(s.toString()) * schedule.getPrice()));
             }
         });

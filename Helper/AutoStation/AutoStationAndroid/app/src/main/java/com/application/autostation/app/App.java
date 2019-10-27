@@ -69,12 +69,12 @@ public class App extends Application {
             try {
                 response = authRetrofit.tryConnect(userContext.getAccessToken()).execute();
                 if (NetworkUtilities.isSuccess(response.code())) {
-                    return new UserContext(userContext.getAccessToken(), userContext.getRefreshToken(), userContext.getUserRole());
+                    return new UserContext(userContext.getAccessToken(), userContext.getRefreshToken());
                 } else {
                     retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.getAccessToken(), userContext.getRefreshToken()).execute();
                     if (NetworkUtilities.isSuccess(execute.code())) {
                         LoginResult loginResult = execute.body();
-                        return new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken(), loginResult.getUserRole());
+                        return new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken());
                     } else
                         return null;
                 }
@@ -100,7 +100,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        databaseContext = Room.databaseBuilder(getBaseContext(), DatabaseContext.class, getString(R.string.database)).allowMainThreadQueries().build();
+        databaseContext = Room.databaseBuilder(getBaseContext(), DatabaseContext.class, getString(R.string.database)).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(new Gson())).baseUrl(new StringBuilder(getString(R.string.server_url)).append("auth/").toString()).build();
         authRetrofit = retrofit.create(AuthRetrofit.class);
@@ -120,7 +120,7 @@ public class App extends Application {
                         if (NetworkUtilities.isSuccess(execute.code())) {
                             LoginResult loginResult = execute.body();
                             header = loginResult.getAccessToken();
-                            setUserContext(new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken(), loginResult.getUserRole()));
+                            setUserContext(new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken()));
                         }
                     }
 

@@ -14,13 +14,6 @@ public abstract class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
         super(itemView);
 
         this.itemView.setOnClickListener(x -> onClick());
-        this.itemView.setOnLongClickListener(x -> onLongClick());
-    }
-
-    private boolean onLongClick() {
-
-
-        return true;
     }
 
     protected T object;

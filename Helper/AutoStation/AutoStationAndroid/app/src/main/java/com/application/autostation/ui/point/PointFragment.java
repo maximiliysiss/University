@@ -37,6 +37,10 @@ public class PointFragment extends ModelFragment<Point, AdminActivity> {
         super.onStart();
 
         name = getView().findViewById(R.id.name);
+
+        name.setText(getObj().getName());
+
+        generateActions();
     }
 
     @Override

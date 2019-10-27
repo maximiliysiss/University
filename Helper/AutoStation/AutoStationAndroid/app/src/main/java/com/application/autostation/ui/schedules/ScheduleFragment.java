@@ -76,7 +76,7 @@ public class ScheduleFragment extends ModelFragment<Schedule, AdminActivity> {
 
         day.setAdapter(days);
         day.setSelection(days.getIndex(DayOfWeek.getDay(getObj().getDayOfWeek())));
-
+        generateActions();
     }
 
     @Override
@@ -96,7 +96,7 @@ public class ScheduleFragment extends ModelFragment<Schedule, AdminActivity> {
         }
 
         getObj().setDayOfWeek(day.getSelectedItemPosition());
-        getObj().setDistance(Integer.parseInt(distanceString));
+        getObj().setDistance(Double.parseDouble(distanceString));
         getObj().setFrom(null);
         getObj().setFromId(((Point) from.getSelectedItem()).getId());
         getObj().setTo(null);

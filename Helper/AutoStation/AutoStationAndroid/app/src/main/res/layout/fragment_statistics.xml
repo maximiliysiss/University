@@ -7,47 +7,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/from"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
-
-        <Spinner
-            android:id="@+id/to"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
-
-        <Spinner
-            android:id="@+id/day"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
-
-        <EditText
-            android:id="@+id/time"
+        <TextView
+            android:id="@+id/info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Время"
-            android:inputType="time"
-            android:textSize="14pt"></EditText>
+            android:text="Date"
+            android:textAlignment="center"
+            android:textSize="14pt"></TextView>
 
-        <EditText
-            android:id="@+id/price"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Цена"
-            android:inputType="numberDecimal"
-            android:textSize="14pt"></EditText>
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/distance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Расстояние"
-            android:inputType="numberDecimal"
-            android:textSize="14pt"></EditText>
+            <ImageView
+                android:id="@+id/left"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_arrow_black_24dp"></ImageView>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/bar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"></com.github.mikephil.charting.charts.BarChart>
+
+            <ImageView
+                android:id="@+id/right"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:rotation="180"
+                android:src="@drawable/ic_arrow_black_24dp"></ImageView>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

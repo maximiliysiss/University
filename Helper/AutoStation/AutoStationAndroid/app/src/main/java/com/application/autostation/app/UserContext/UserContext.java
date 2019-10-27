@@ -12,16 +12,14 @@ public class UserContext {
 
     String accessToken;
     String refreshToken;
-    Integer userRole;
 
     public UserContext() {
     }
 
     @Ignore
-    public UserContext(String accessToken, String refreshToken, Integer userRole) {
+    public UserContext(String accessToken, String refreshToken) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
-        this.userRole = userRole;
     }
 
     public String getAccessToken() {
@@ -38,13 +36,5 @@ public class UserContext {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
-    }
-
-    public Integer getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(Integer userRole) {
-        this.userRole = userRole;
     }
 }

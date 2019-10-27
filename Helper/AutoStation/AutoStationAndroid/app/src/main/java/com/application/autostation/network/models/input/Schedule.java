@@ -13,10 +13,10 @@ public class Schedule implements Model {
     private String time;
     @SerializedName("distance")
     @Expose
-    private Integer distance;
+    private Double distance = 0.0;
     @SerializedName("dayOfWeek")
     @Expose
-    private Integer dayOfWeek;
+    private Integer dayOfWeek = 0;
     @SerializedName("fromId")
     @Expose
     private Integer fromId;
@@ -31,7 +31,7 @@ public class Schedule implements Model {
     private Integer toId;
     @SerializedName("price")
     @Expose
-    private Double price;
+    private Double price = 0.0;
 
     public Integer getFromId() {
         return fromId;
@@ -65,11 +65,11 @@ public class Schedule implements Model {
         this.time = time;
     }
 
-    public Integer getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public void setDistance(Integer distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
