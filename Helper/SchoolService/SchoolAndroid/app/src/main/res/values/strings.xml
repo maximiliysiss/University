@@ -8,7 +8,7 @@
     <string name="riskgroup">Группы риска</string>
     <string name="mark">Оценки</string>
     <string name="superclass">Мой класс</string>
-    <string name="student">Студенты</string>
+    <string name="student">Учащиеся</string>
     <string name="worker">Работники</string>
     <string name="users">Пользователи</string>
     <string name="archive">Архив</string>
@@ -29,4 +29,12 @@
     <string name="classes">Классы</string>
     <string name="class_model">class</string>
     <string name="not_enter">Заполните поля</string>
+    <string name="from_archive">Убрать из архива?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="to_archive">Отправить в архив</string>
+    <string name="riskgroup_model">riskgroup_model</string>
+    <string name="from_riskgroup">Убрать из группы риска?</string>
+    <string name="add_risk_group">Добавить к риск группе</string>
+    <string name="select_risk_group">Выберите риск группу</string>
 </resources>

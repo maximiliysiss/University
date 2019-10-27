@@ -1,6 +1,8 @@
 package com.school.android.ui.user;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,13 +10,16 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.school.android.R;
 import com.school.android.application.App;
+import com.school.android.models.network.input.ChildInRiskGroup;
 import com.school.android.models.network.input.Children;
 import com.school.android.models.network.input.Class;
+import com.school.android.models.network.input.RiskGroup;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.threadable.Future;
 import com.school.android.threadable.ThreadResult;
@@ -24,7 +29,9 @@ import com.school.android.ui.adapters.spinner.SpinnerCustomAdapter;
 import com.school.android.ui.fragments.ModelFragment;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +49,8 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
     EditText email;
     EditText birthday;
     EditText login;
+    Button toArchive;
+    Button addRiskGroup;
 
     public UserChildFragment() {
         layout = R.layout.fragment_user_child;
@@ -84,6 +93,37 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
             classes.setAdapter(new ClassSpinnerAdapter(x, getContext()));
         }));
 
+        toArchive = getView().findViewById(R.id.to_archive);
+        toArchive.setOnClickListener(v -> App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
+            getRealActivity().openFragment(R.id.navigation_users);
+        })));
+
+        if (getModel().getIsArchive())
+            toArchive.setText(getString(R.string.from_archive));
+
+
+        addRiskGroup = getView().findViewById(R.id.add_to_risk_group);
+        addRiskGroup.setOnClickListener(v -> App.getRiskGroupRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
+            ArrayList<String> names = new ArrayList<>();
+            for (RiskGroup riskGroup : x) {
+                boolean flag = true;
+                for (ChildInRiskGroup group : riskGroup.getChildInRiskGroups()) {
+                    if (group.getChildId() == getModel().getId()) {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    names.add(riskGroup.getName());
+                }
+            }
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.select_risk_group)
+                    .setItems(names.toArray(new String[names.size()]), (dialog, which) -> App.getRiskGroupRetrofit().addChildToRiskGroup(getModel().getId(), x.get(which).getId()).enqueue(new UniversalCallback<>(getContext(), z -> {
+                    })));
+
+            builder.create().show();
+        })));
     }
 
     @Override

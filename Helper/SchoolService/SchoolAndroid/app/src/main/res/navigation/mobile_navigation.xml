@@ -72,4 +72,9 @@
         android:name="com.school.android.ui.classes.ClassElementFragment"
         tools:layout="@layout/fragment_class_element" />
 
+    <fragment
+        android:id="@+id/navigation_riskgroups_element"
+        android:name="com.school.android.ui.riskgroup.RiskGroupElementFragment"
+        tools:layout="@layout/fragment_risk_group_element" />
+
 </navigation>

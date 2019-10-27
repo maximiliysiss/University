@@ -73,6 +73,20 @@
             android:hint="Почта"
             android:inputType="textEmailAddress"></EditText>
 
+        <Button
+            android:id="@+id/to_archive"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/to_archive"
+            android:textSize="10pt"></Button>
+
+        <Button
+            android:id="@+id/add_to_risk_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/add_risk_group"
+            android:textSize="10pt"></Button>
+
     </LinearLayout>
 
 </FrameLayout>
