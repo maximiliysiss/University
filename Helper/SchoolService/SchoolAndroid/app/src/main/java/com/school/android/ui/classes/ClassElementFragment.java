@@ -51,8 +51,8 @@ public class ClassElementFragment extends ModelActionFragment<MainActivity, Clas
     }
 
     @Override
-    public void onDelete(Class aClass) {
-        App.getClassRetrofit().delete(aClass.getId()).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, x) -> endOperation(x)));
+    public void onDelete(int id) {
+        App.getClassRetrofit().delete(id).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, x) -> endOperation(x)));
     }
 
     @Override
@@ -61,8 +61,14 @@ public class ClassElementFragment extends ModelActionFragment<MainActivity, Clas
     }
 
     @Override
-    public void loadModel() {
-        getModel().setName(name.getText().toString().trim());
+    public boolean loadModel() {
+
+        String nameString = name.getText().toString().trim();
+        if (nameString.length() == 0)
+            return false;
+
+        getModel().setName(nameString);
+        return true;
     }
 
     @Override

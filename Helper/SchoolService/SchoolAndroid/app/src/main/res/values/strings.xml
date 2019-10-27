@@ -3,7 +3,7 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
-    <string name="server_url">http://192.168.1.7:5000/api/</string>
+    <string name="server_url">http://192.168.1.8:5000/api/</string>
     <string name="user">Admin</string>
 
     <string name="schedules">Расписание</string>
@@ -31,4 +31,5 @@
     <string name="delete">Удалить</string>
     <string name="classes">Классы</string>
     <string name="class_model">class</string>
+    <string name="not_enter">Заполните поля</string>
 </resources>

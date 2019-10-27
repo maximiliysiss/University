@@ -23,6 +23,7 @@ import com.school.android.network.classes.UniversalCallback;
 import com.school.android.network.classes.UniversalWithCodeCallback;
 import com.school.android.ui.activity.MainActivity;
 import com.school.android.ui.adapters.spinner.SpinnerCustomAdapter;
+import com.school.android.ui.adapters.spinner.UserTypeSpinnerAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
 import com.school.android.utilities.NetworkUtilities;
 
@@ -52,6 +53,13 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         this.getActivity().getSupportFragmentManager().beginTransaction().replace(id, fragment).commit();
     }
 
+    EditText surname;
+    EditText name;
+    EditText secondName;
+    EditText phone;
+    EditText passport;
+    EditText email;
+
     @Override
     public void onStart() {
         super.onStart();
@@ -61,13 +69,8 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
 
         UserType[] userTypes = UserType.values();
 
-        spinner.setAdapter(new SpinnerCustomAdapter<UserType>(Arrays.stream(userTypes).collect(Collectors.toList()), R.layout.spinner_item, getContext()) {
-            @Override
-            protected String getModelName(UserType el) {
-                //return "Hello";
-                return getString(new StringBuilder("enum_").append(el.toString().toLowerCase()).toString());
-            }
-        });
+        UserTypeSpinnerAdapter userTypeSpinnerAdapter = new UserTypeSpinnerAdapter(Arrays.stream(userTypes).collect(Collectors.toList()), getContext());
+        spinner.setAdapter(userTypeSpinnerAdapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -98,21 +101,14 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
 
             }
         });
-        spinner.setSelection(getSpinnerIndex(spinner, UserType.values()[getModel().getUserType()]));
+        spinner.setSelection(userTypeSpinnerAdapter.getIndex(UserType.values()[getModel().getUserType()]));
         generateModelActions(getView());
     }
+
 
     @Override
     public String getModelName() {
         return getString(R.string.user_model);
-    }
-
-    public int getSpinnerIndex(Spinner spinner, UserType userType) {
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i) == userType)
-                return i;
-        }
-        return 0;
     }
 
     @Override
@@ -131,8 +127,8 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
     }
 
     @Override
-    public void onDelete(User user) {
-        App.getUserRetrofit().delete(user.getId());
+    public void onDelete(int id) {
+        App.getUserRetrofit().delete(id).enqueue(new UniversalWithCodeCallback<>(getContext(), (c, v) -> endOperation(c, Operation.Delete, v)));
     }
 
     @Override
@@ -150,15 +146,8 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         }
     }
 
-    EditText surname;
-    EditText name;
-    EditText secondName;
-    EditText phone;
-    EditText passport;
-    EditText email;
-
     @Override
-    public void loadModel() {
+    public boolean loadModel() {
         View view = getView();
 
         surname = view.findViewById(R.id.surname);
@@ -168,13 +157,24 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         passport = view.findViewById(R.id.passport);
         email = view.findViewById(R.id.email);
 
+        String nameString = name.getText().toString().trim();
+        String surnameString = surname.getText().toString().trim();
+        String secondNameString = secondName.getText().toString().trim();
+        String phoneString = phone.getText().toString().trim();
+        String passportString = passport.getText().toString().trim();
+        String emailString = email.getText().toString().trim();
 
-        getModel().setEmail(email.getText().toString().trim());
-        getModel().setName(name.getText().toString().trim());
-        getModel().setSecondName(secondName.getText().toString().trim());
-        getModel().setSurname(surname.getText().toString().trim());
-        getModel().setPhone(phone.getText().toString().trim());
-        getModel().setPassport(passport.getText().toString().trim());
+        if (nameString.length() == 0 || surnameString.length() == 0 || secondNameString.length() == 0 || phoneString.length() == 0 || passportString.length() == 0
+                || emailString.length() == 0) {
+            return false;
+        }
+
+        getModel().setEmail(emailString);
+        getModel().setName(nameString);
+        getModel().setSecondName(secondNameString);
+        getModel().setSurname(surnameString);
+        getModel().setPhone(phoneString);
+        getModel().setPassport(passportString);
 
         switch (UserType.values()[getModel().getUserType()]) {
             case Student: {
@@ -186,6 +186,8 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
                 break;
             }
         }
+
+        return true;
     }
 
     @Override

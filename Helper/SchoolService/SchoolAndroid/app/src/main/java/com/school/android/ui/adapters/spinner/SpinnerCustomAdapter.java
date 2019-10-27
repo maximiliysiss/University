@@ -13,24 +13,24 @@ import java.util.List;
 
 public abstract class SpinnerCustomAdapter<T> extends BaseAdapter implements SpinnerAdapter {
 
-    List<T> list;
-    int itemLayout;
+    List<T> data;
+    int layout;
     Context context;
 
-    public SpinnerCustomAdapter(List<T> list, int itemLayout, Context context) {
-        this.list = list;
-        this.itemLayout = itemLayout;
+    public SpinnerCustomAdapter(List<T> data, int layout, Context context) {
+        this.data = data;
+        this.layout = layout;
         this.context = context;
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        return data.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return list.get(position);
+    public T getItem(int position) {
+        return data.get(position);
     }
 
     @Override
@@ -38,13 +38,23 @@ public abstract class SpinnerCustomAdapter<T> extends BaseAdapter implements Spi
         return position;
     }
 
+    public int getIndex(T obj) {
+        if (obj == null)
+            return 0;
+
+        for (int i = 0; i < data.size(); i++)
+            if (data.get(i).equals(obj))
+                return i;
+        return 0;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = View.inflate(context, itemLayout, null);
+        View view = View.inflate(context, layout, null);
         TextView textView = view.findViewById(R.id.name);
-        textView.setText(getModelName(list.get(position)));
+        textView.setText(getText(data.get(position)));
         return view;
     }
 
-    protected abstract String getModelName(T el);
+    public abstract String getText(T obj);
 }
