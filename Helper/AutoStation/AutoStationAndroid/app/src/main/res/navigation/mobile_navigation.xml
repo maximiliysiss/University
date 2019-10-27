@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_schedules">
+
+    <fragment
+        android:id="@+id/navigation_schedules"
+        android:name="com.application.autostation.ui.schedules.SchedulesFragment"
+        android:label="@string/title_schedule"
+        tools:layout="@layout/fragment_schedules" />
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.application.autostation.ui.schedules.ScheduleFragment"
+        android:label="@string/title_schedule"
+        tools:layout="@layout/fragment_schedule" />
+
+    <fragment
+        android:id="@+id/navigation_statistics"
+        android:name="com.application.autostation.ui.statistics.StatisticsFragment"
+        android:label="@string/title_statistics"
+        tools:layout="@layout/fragment_statistics" />
+
+    <fragment
+        android:id="@+id/navigation_points"
+        android:name="com.application.autostation.ui.point.PointsFragment"
+        android:label="@string/title_points"
+        tools:layout="@layout/fragment_points" />
+
+    <fragment
+        android:id="@+id/navigation_point"
+        android:name="com.application.autostation.ui.point.PointFragment"
+        android:label="@string/title_points"
+        tools:layout="@layout/fragment_point" />
+
+</navigation>
