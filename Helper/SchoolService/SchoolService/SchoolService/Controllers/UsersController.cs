@@ -58,6 +58,7 @@ namespace SchoolService.Controllers
             if (id != user.ID || user.UserType == UserType.Student || user.UserType == UserType.Teacher)
                 return BadRequest();
 
+            user.PasswordHash = CryptService.CreateMD5(user.PasswordHash);
             _context.Entry(user).State = EntityState.Modified;
 
             try

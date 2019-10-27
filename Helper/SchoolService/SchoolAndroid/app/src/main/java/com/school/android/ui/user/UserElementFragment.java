@@ -59,6 +59,9 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
     EditText phone;
     EditText passport;
     EditText email;
+    EditText login;
+    EditText password;
+    EditText birthday;
 
     @Override
     public void onStart() {
@@ -76,16 +79,17 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 UserType type = userTypes[position];
+                boolean isChange = type.ordinal() != getModel().getUserType();
                 Fragment fragment = new UserDefaultFragment();
-                setModel(new User());
+                setModel(isChange ? new User() : getModel());
                 switch (type) {
                     case Teacher:
                         fragment = new UserTeacherFragment();
-                        setModel(new Teacher());
+                        setModel(isChange ? new Teacher() : getModel());
                         break;
                     case Student:
                         fragment = new UserChildFragment();
-                        setModel(new Children());
+                        setModel(isChange ? new Children() : getModel());
                         break;
                 }
 
@@ -156,6 +160,9 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         phone = view.findViewById(R.id.phone);
         passport = view.findViewById(R.id.passport);
         email = view.findViewById(R.id.email);
+        login = view.findViewById(R.id.login);
+        password = view.findViewById(R.id.password);
+        birthday = view.findViewById(R.id.birthday);
 
         String nameString = name.getText().toString().trim();
         String surnameString = surname.getText().toString().trim();
@@ -163,11 +170,18 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         String phoneString = phone.getText().toString().trim();
         String passportString = passport.getText().toString().trim();
         String emailString = email.getText().toString().trim();
+        String loginString = login.getText().toString().trim();
+        String passwordString = password.getText().toString().trim();
+        String birthdayString = birthday.getText().toString().trim();
 
         if (nameString.length() == 0 || surnameString.length() == 0 || secondNameString.length() == 0 || phoneString.length() == 0 || passportString.length() == 0
-                || emailString.length() == 0) {
+                || emailString.length() == 0 || loginString.length() == 0 || passwordString.length() == 0 || birthdayString.length() == 0) {
             return false;
         }
+
+        Spinner classes = getView().findViewById(R.id.current_class);
+        if (classes != null && classes.getCount() == 0)
+            return false;
 
         getModel().setEmail(emailString);
         getModel().setName(nameString);
@@ -175,11 +189,12 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         getModel().setSurname(surnameString);
         getModel().setPhone(phoneString);
         getModel().setPassport(passportString);
+        getModel().setLogin(loginString);
+        getModel().setPasswordHash(passwordString);
+        getModel().setBirthday(birthdayString);
 
         switch (UserType.values()[getModel().getUserType()]) {
             case Student: {
-
-                Spinner classes = getView().findViewById(R.id.current_class);
                 Class aClass = (Class) classes.getSelectedItem();
                 if (aClass.getId() != 0)
                     ((Children) getModel()).setClass_(aClass);

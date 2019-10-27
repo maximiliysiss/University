@@ -32,6 +32,28 @@ public class User implements FragmentModel {
     @SerializedName("email")
     @Expose
     protected String email = "";
+    @SerializedName("passwordHash")
+    @Expose
+    protected String passwordHash = "";
+    @SerializedName("login")
+    @Expose
+    protected String login = "";
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
     public String getEmail() {
         return email;

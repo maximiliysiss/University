@@ -43,6 +43,7 @@ namespace SchoolService.Controllers
             if (id != teacher.ID)
                 return BadRequest();
 
+            teacher.PasswordHash = CryptService.CreateMD5(teacher.PasswordHash);
             _context.Entry(teacher).State = EntityState.Modified;
 
             try

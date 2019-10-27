@@ -21,10 +21,10 @@ public interface UserRetrofit {
     Call<User> getModel(@Path("id") int id);
 
     @POST("users")
-    Call<User> create(@Body User t);
+    Call<User> create(@Body User user);
 
     @PUT("users/{id}")
-    Call<User> update(@Path("id") int id, @Body User t);
+    Call<User> update(@Path("id") int id, @Body User user);
 
     @DELETE("users/{id}")
     Call<User> delete(@Path("id") int id);

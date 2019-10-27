@@ -27,6 +27,9 @@ public class UserDefaultFragment extends ModelFragment<MainActivity, User> {
     EditText phone;
     EditText passport;
     EditText email;
+    EditText birthday;
+    EditText login;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +50,8 @@ public class UserDefaultFragment extends ModelFragment<MainActivity, User> {
         phone = view.findViewById(R.id.phone);
         passport = view.findViewById(R.id.passport);
         email = view.findViewById(R.id.email);
+        birthday = view.findViewById(R.id.birthday);
+        login = view.findViewById(R.id.login);
 
         surname.setText(getModel().getSurname());
         name.setText(getModel().getName());
@@ -54,6 +59,8 @@ public class UserDefaultFragment extends ModelFragment<MainActivity, User> {
         secondName.setText(getModel().getSecondName());
         passport.setText(getModel().getPassport());
         email.setText(getModel().getEmail());
+        login.setText(getModel().getLogin());
+        birthday.setText(getModel().getBirthday());
     }
 
     @Override

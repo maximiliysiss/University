@@ -41,24 +41,6 @@ namespace SchoolService.Controllers
             this.authorize = authorize;
         }
 
-        [HttpGet]
-        public ActionResult<User> AdminCreate()
-        {
-            var admin = new User
-            {
-                Birthday = DateTime.Now,
-                Login = "Admin",
-                Name = "Admin",
-                PasswordHash = CryptService.CreateMD5("Admin"),
-                SecondName = "Admin",
-                UserType = UserType.Admin,
-                Surname = "Admin"
-            };
-            databaseContext.Add(admin);
-            databaseContext.SaveChanges();
-            return admin;
-        }
-
         [HttpPost]
         public ActionResult<AuthToken> Login(LoginModel loginModel)
         {

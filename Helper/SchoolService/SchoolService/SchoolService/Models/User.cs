@@ -21,21 +21,7 @@ namespace SchoolService.Models
     public class User
     {
         public int ID { get; set; }
-        [NotMapped]
-        [JsonProperty("Login")]
-        public string LoginJson
-        {
-            set => Login = value;
-        }
-        [JsonIgnore]
         public string Login { get; set; }
-        [NotMapped]
-        [JsonProperty("PasswordHash")]
-        public string PasswordJson
-        {
-            set => PasswordHash = value;
-        }
-        [JsonIgnore]
         public string PasswordHash { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
@@ -44,6 +30,9 @@ namespace SchoolService.Models
         public UserType UserType { get; set; }
         [JsonIgnore]
         public string Token { get; set; }
+        public string Phone { get; set; }
+        public string Email { get; set; }
+        public string Passport { get; set; }
 
         [JsonIgnoreAttribute]
         [NotMapped]
