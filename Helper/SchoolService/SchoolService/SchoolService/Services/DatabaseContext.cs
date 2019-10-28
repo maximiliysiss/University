@@ -24,6 +24,7 @@ namespace SchoolService.Services
         public DbSet<RiskGroup> RiskGroups { get; set; }
         public DbSet<Mark> Marks { get; set; }
         public DbSet<ChildInRiskGroup> ChildInRiskGroups { get; set; }
+        public DbSet<Lesson> Lessons { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +32,8 @@ namespace SchoolService.Services
             modelBuilder.Entity<Mark>().HasOne(x => x.Teacher).WithMany(x => x.Marks).HasForeignKey(x => x.TeacherId).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Mark>().HasOne(x => x.Child).WithMany(x => x.Marks).HasForeignKey(x => x.ChildId).OnDelete(DeleteBehavior.Restrict);
             modelBuilder.Entity<Schedule>().HasOne(x => x.Class).WithMany().HasForeignKey(x => x.ClassId).OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Schedule>().HasOne(x => x.Lesson).WithMany().HasForeignKey(x => x.LessonId).OnDelete(DeleteBehavior.Restrict);
+
 
             modelBuilder.Entity<User>().HasData(new User
             {

@@ -19,9 +19,20 @@ public class Class implements FragmentModel {
     @SerializedName("teacher")
     @Expose
     private Teacher teacher;
+    @SerializedName("isStart")
+    @Expose
+    private Boolean isStartClass = false;
     @SerializedName("children")
     @Expose
     private List<Children> children = null;
+
+    public Boolean getStartClass() {
+        return isStartClass;
+    }
+
+    public void setStartClass(Boolean startClass) {
+        isStartClass = startClass;
+    }
 
     public Integer getId() {
         return id;

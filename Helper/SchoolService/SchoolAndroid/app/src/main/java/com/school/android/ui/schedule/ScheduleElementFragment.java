@@ -15,12 +15,14 @@ import android.widget.Spinner;
 import com.school.android.R;
 import com.school.android.application.App;
 import com.school.android.models.network.input.Class;
+import com.school.android.models.network.input.Lesson;
 import com.school.android.models.network.input.Schedule;
 import com.school.android.models.network.input.Teacher;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.network.classes.UniversalWithCodeCallback;
 import com.school.android.ui.activity.MainActivity;
 import com.school.android.ui.adapters.spinner.ClassSpinnerAdapter;
+import com.school.android.ui.adapters.spinner.LessonSpinnerAdapter;
 import com.school.android.ui.adapters.spinner.StringSpinnerAdapter;
 import com.school.android.ui.adapters.spinner.TeacherSpinnerAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
@@ -34,7 +36,7 @@ public class ScheduleElementFragment extends ModelActionFragment<MainActivity, S
 
     Spinner teacher;
     Spinner classes;
-    EditText lesson;
+    Spinner lesson;
     Spinner day;
     Spinner number;
     CheckBox facultative;
@@ -52,18 +54,16 @@ public class ScheduleElementFragment extends ModelActionFragment<MainActivity, S
 
     @Override
     public boolean loadModel() {
-        String lessonString = lesson.getText().toString().trim();
 
-        if (lessonString.length() == 0)
-            return false;
-        if (teacher.getCount() == 0 || classes.getCount() == 0 || day.getCount() == 0 || number.getCount() == 0)
+        if (lesson.getCount() == 0 || teacher.getCount() == 0 || classes.getCount() == 0 || day.getCount() == 0 || number.getCount() == 0)
             return false;
 
         getModel().set_class(null);
         getModel().setClassId(((Class) classes.getSelectedItem()).getId());
         getModel().setDayOfWeek(day.getSelectedItemPosition());
         getModel().setIsFacultative(facultative.isChecked());
-        getModel().setLesson(lessonString);
+        getModel().setLesson(null);
+        getModel().setLessonId(((Lesson) lesson.getSelectedItem()).getId());
         getModel().setLessonNumber(number.getSelectedItemPosition());
         getModel().setTeacherId(((Teacher) teacher.getSelectedItem()).getId());
         return true;
@@ -93,7 +93,11 @@ public class ScheduleElementFragment extends ModelActionFragment<MainActivity, S
             classes.setSelection(classSpinnerAdapter.getIndexById(getModel().getClassId()));
         }));
 
-        lesson.setText(getModel().getLesson());
+        App.getLessonRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
+            LessonSpinnerAdapter lessonSpinnerAdapter = new LessonSpinnerAdapter(x, R.layout.spinner_item, getContext());
+            lesson.setAdapter(lessonSpinnerAdapter);
+            lesson.setSelection(lessonSpinnerAdapter.getIndexById(getModel().getLessonId()));
+        }));
 
         StringSpinnerAdapter daySpinner = new StringSpinnerAdapter(DayUtils.getStrings(), R.layout.spinner_item, getContext());
         day.setAdapter(daySpinner);

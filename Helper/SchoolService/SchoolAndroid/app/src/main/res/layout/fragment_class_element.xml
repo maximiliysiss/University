@@ -16,6 +16,12 @@
             android:layout_height="wrap_content"
             android:hint="Название"></EditText>
 
+        <CheckBox
+            android:id="@+id/isStart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Начальный класс"></CheckBox>
+
         <Button
             android:id="@+id/action"
             android:layout_width="match_parent"

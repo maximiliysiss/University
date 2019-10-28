@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SchoolAndroid</string>
-    <string name="server_url">http://192.168.1.8:5000/api/</string>
-    <string name="user">child</string>
+    <string name="server_url">http://192.168.43.226:5000/api/</string>
+    <string name="user">teacher</string>
 
     <string name="schedules">Расписание</string>
     <string name="profile">Профиль</string>
@@ -44,4 +44,6 @@
     <string name="network_error">Ошибка сети</string>
     <string name="sure">Вы уверены</string>
     <string name="back">back</string>
+    <string name="mark_model">mark_model</string>
+    <string name="lesson_model">lesson_model</string>
 </resources>

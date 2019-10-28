@@ -11,7 +11,8 @@ namespace SchoolService.Models
         public int ClassId { get; set; }
         public virtual Class Class { get; set; }
         public int LessonNumber { get; set; }
-        public string Lesson { get; set; }
+        public int LessonId { get; set; }
+        public virtual Lesson Lesson { get; set; }
         public int TeacherId { get; set; }
         public virtual Teacher Teacher { get; set; }
         public DayOfWeek DayOfWeek { get; set; }

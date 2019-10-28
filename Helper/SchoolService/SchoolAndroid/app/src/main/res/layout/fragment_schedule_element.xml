@@ -33,18 +33,17 @@
             android:layout_height="wrap_content"></Spinner>
 
         <CheckBox
+            android:id="@+id/facultative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Факультатив"
-            android:id="@+id/facultative"
             android:textSize="14pt"></CheckBox>
 
-        <EditText
+        <Spinner
             android:id="@+id/lesson"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Урок"
-            android:textSize="14pt"></EditText>
+            android:textSize="14pt"></Spinner>
 
         <Button
             android:id="@+id/action"

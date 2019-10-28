@@ -89,4 +89,10 @@
         android:label="@string/schedules"
         tools:layout="@layout/fragment_schedule_element" />
 
+    <fragment
+        android:id="@+id/navigation_mark_element"
+        android:name="com.school.android.ui.mark.MarkElementFragment"
+        android:label="@string/mark"
+        tools:layout="@layout/fragment_mark_element" />
+
 </navigation>

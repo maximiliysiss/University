@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.school.android.R;
@@ -24,6 +25,7 @@ public class ClassElementFragment extends ModelActionFragment<MainActivity, Clas
 
 
     EditText name;
+    CheckBox isStart;
 
     public ClassElementFragment() {
         super(R.id.navigation_classes);
@@ -40,8 +42,9 @@ public class ClassElementFragment extends ModelActionFragment<MainActivity, Clas
     public void onStart() {
         super.onStart();
         name = getView().findViewById(R.id.name);
+        isStart = getView().findViewById(R.id.isStart);
         name.setText(getModel().getName());
-
+        isStart.setChecked(getModel().getStartClass());
         generateModelActions(getView());
     }
 
@@ -68,6 +71,7 @@ public class ClassElementFragment extends ModelActionFragment<MainActivity, Clas
             return false;
 
         getModel().setName(nameString);
+        getModel().setStartClass(isStart.isChecked());
         return true;
     }
 

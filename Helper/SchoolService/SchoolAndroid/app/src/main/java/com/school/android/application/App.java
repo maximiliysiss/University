@@ -9,6 +9,7 @@ import com.school.android.models.network.input.LoginResult;
 import com.school.android.network.interfaces.AuthRetrofit;
 import com.school.android.network.interfaces.ChildrenRetrofit;
 import com.school.android.network.interfaces.ClassRetrofit;
+import com.school.android.network.interfaces.LessonRetrofit;
 import com.school.android.network.interfaces.MarkRetrofit;
 import com.school.android.network.interfaces.RiskGroupRetrofit;
 import com.school.android.network.interfaces.ScheduleRetrofit;
@@ -46,6 +47,11 @@ public class App extends Application {
     private static ScheduleRetrofit scheduleRetrofit;
     private static TeacherRetrofit teacherRetrofit;
     private static UserRetrofit userRetrofit;
+    private static LessonRetrofit lessonRetrofit;
+
+    public static LessonRetrofit getLessonRetrofit() {
+        return lessonRetrofit;
+    }
 
     private Retrofit createRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder().baseUrl(getString(R.string.server_url))
@@ -95,6 +101,7 @@ public class App extends Application {
         scheduleRetrofit = createRetrofit(okHttpClient).create(ScheduleRetrofit.class);
         teacherRetrofit = createRetrofit(okHttpClient).create(TeacherRetrofit.class);
         userRetrofit = createRetrofit(okHttpClient).create(UserRetrofit.class);
+        lessonRetrofit = createRetrofit(okHttpClient).create(LessonRetrofit.class);
     }
 
     public static AuthRetrofit getAuthRetrofit() {

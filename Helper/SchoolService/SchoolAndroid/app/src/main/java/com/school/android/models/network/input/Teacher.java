@@ -15,6 +15,17 @@ public class Teacher extends User {
     @SerializedName("marks")
     @Expose
     private List<Mark> marks = null;
+    @SerializedName("lessonProfiles")
+    @Expose
+    private List<LessonProfile> lessonProfiles = null;
+
+    public List<LessonProfile> getLessonProfiles() {
+        return lessonProfiles;
+    }
+
+    public void setLessonProfiles(List<LessonProfile> lessonProfiles) {
+        this.lessonProfiles = lessonProfiles;
+    }
 
     public Boolean getIsClassWork() {
         return isClassWork;
