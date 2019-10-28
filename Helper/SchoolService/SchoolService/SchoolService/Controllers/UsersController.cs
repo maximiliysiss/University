@@ -39,9 +39,6 @@ namespace SchoolService.Controllers
         {
             var currentUser = this.GetCurrentUser(_context);
 
-            if (currentUser.UserType != UserType.Admin && currentUser.ID != id)
-                return BadRequest();
-
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)

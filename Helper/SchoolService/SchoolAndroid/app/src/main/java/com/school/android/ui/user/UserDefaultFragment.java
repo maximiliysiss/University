@@ -19,8 +19,6 @@ import com.school.android.ui.fragments.ModelFragment;
  */
 public class UserDefaultFragment extends ModelFragment<MainActivity, User> {
 
-    int layout = R.layout.fragment_user_default;
-
     EditText surname;
     EditText name;
     EditText secondName;
@@ -30,12 +28,15 @@ public class UserDefaultFragment extends ModelFragment<MainActivity, User> {
     EditText birthday;
     EditText login;
 
+    public UserDefaultFragment(int backLayout) {
+        super(backLayout);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(layout, container, false);
+        return inflater.inflate(R.layout.fragment_user_default, container, false);
     }
 
     @Override

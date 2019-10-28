@@ -4,6 +4,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.school.android.R;
+import com.school.android.application.App;
+import com.school.android.models.extension.UserType;
 import com.school.android.models.network.input.Schedule;
 import com.school.android.utilities.LessonUtils;
 
@@ -31,6 +33,7 @@ public class ScheduleExpandableConstructor extends AbstractExpandableConstructor
         className.setText(elem.get_class().getName());
         lesson.setText(elem.getLesson());
         time.setText(LessonUtils.getStrings(elem.getLessonNumber()));
-        v.setOnClickListener(v1 -> getRealActivity(v1).openFragment(R.id.navigation_schedule_element, getActivity(v1).getString(R.string.schedule_model), elem));
+        if (App.getUserType() != UserType.Student)
+            v.setOnClickListener(v1 -> getRealActivity(v1).openFragment(R.id.navigation_schedule_element, getActivity(v1).getString(R.string.schedule_model), elem));
     }
 }

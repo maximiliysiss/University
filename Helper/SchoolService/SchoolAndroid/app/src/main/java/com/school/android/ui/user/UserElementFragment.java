@@ -90,15 +90,15 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 UserType type = finalUserTypes[position];
                 boolean isChange = type.ordinal() != getModel().getUserType();
-                Fragment fragment = new UserDefaultFragment();
+                Fragment fragment = new UserDefaultFragment(backLayout);
                 setModel(isChange ? new User() : getModel());
                 switch (type) {
                     case Teacher:
-                        fragment = new UserTeacherFragment();
+                        fragment = new UserTeacherFragment(backLayout);
                         setModel(isChange ? new Teacher() : getModel());
                         break;
                     case Student:
-                        fragment = new UserChildFragment();
+                        fragment = new UserChildFragment(backLayout);
                         setModel(isChange ? new Children() : getModel());
                         break;
                 }

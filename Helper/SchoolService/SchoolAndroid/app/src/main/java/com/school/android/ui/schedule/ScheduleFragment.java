@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import com.school.android.R;
 import com.school.android.application.App;
+import com.school.android.models.extension.UserType;
 import com.school.android.models.network.input.Schedule;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.activity.MainActivity;
@@ -52,6 +53,9 @@ public class ScheduleFragment extends ModelContainsFragment<MainActivity> {
 
             expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(), new ScheduleExpandableConstructor((HashMap<String, List<Schedule>>) resMap)));
         }));
+
+        if (App.getUserType() == UserType.Student)
+            add.setVisibility(View.INVISIBLE);
     }
 
     @Override

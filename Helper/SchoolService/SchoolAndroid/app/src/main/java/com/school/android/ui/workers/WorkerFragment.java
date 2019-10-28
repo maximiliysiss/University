@@ -43,6 +43,7 @@ public class WorkerFragment extends ModelContainsFragment<MainActivity> {
         add.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
             bundle.putBoolean(getString(R.string.is_change), true);
+            bundle.putInt(getString(R.string.back), R.id.navigation_workers);
             getRealActivity().openFragment(R.id.navigation_users_element, getModelName(), new User(), bundle);
         });
 

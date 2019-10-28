@@ -16,10 +16,8 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
         Delete
     }
 
-    int layoutBase;
-
-    public ModelActionFragment(int layoutBase) {
-        this.layoutBase = layoutBase;
+    public ModelActionFragment(int backLayout) {
+        super(backLayout);
     }
 
     public void generateModelActions(View view) {
@@ -81,6 +79,6 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
     }
 
     public void toBackBaseFragment() {
-        getRealActivity().openFragment(layoutBase);
+        getRealActivity().openFragment(backLayout);
     }
 }

@@ -21,6 +21,7 @@ public class WorkerViewHolder extends UserViewHolder {
     public void onClick() {
         Bundle bundle = new Bundle();
         bundle.putBoolean(getString(R.string.is_change), true);
+        bundle.putInt(getString(R.string.back), R.id.navigation_workers);
         switch (UserType.values()[object.getUserType()]) {
             case Teacher: {
                 Future<Teacher> future = new Future<>(() -> App.getTeacherRetrofit().getModel(object.getId()).execute().body());

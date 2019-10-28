@@ -41,16 +41,15 @@ public class UserTeacherFragment extends ModelFragment<MainActivity, Teacher> {
     EditText birthday;
     EditText login;
 
-
-    public UserTeacherFragment() {
-        layout = R.layout.fragment_user_teacher;
+    public UserTeacherFragment(int backLayout) {
+        super(backLayout);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(layout, container, false);
+        return inflater.inflate(R.layout.fragment_user_teacher, container, false);
     }
 
     @Override

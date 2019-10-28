@@ -15,11 +15,19 @@ public abstract class ModelFragment<T extends ActivityFragmenter, M extends Frag
     M model;
     boolean isEdit;
 
+    protected int backLayout;
+
+    public ModelFragment(int backLayout) {
+        this.backLayout = backLayout;
+    }
+
     @Override
     public void onStart() {
         super.onStart();
         model = (M) getArguments().getSerializable(getModelName());
         isEdit = model.getId() != null && model.getId() != 0;
+
+        backLayout = getArguments().getInt(getString(R.string.back), backLayout);
     }
 
     public M getModel() {

@@ -16,7 +16,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
+    [Authorize]
     public class SchedulesController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -28,7 +28,7 @@ namespace SchoolService.Controllers
 
         // GET: api/Schedules
         [HttpGet]
-        [Authorize(Roles = "Teacher, Student, KnowledgeTeacher, Admin, JobTeacher")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
             Task<List<Schedule>> res = null;
@@ -48,7 +48,9 @@ namespace SchoolService.Controllers
                     break;
                 case UserType.Student:
                     {
-                        var c = _context.Children.Find(user.ID).Class.ID;
+                        var c = _context.Children.Find(user.ID)?.Class?.ID;
+                        if (c == null)
+                            return new List<Schedule>();
                         res = _context.Schedules.Where(x => x.ClassId == c).ToListAsync();
                     }
                     break;
@@ -72,6 +74,7 @@ namespace SchoolService.Controllers
         }
 
         [HttpGet("{id}/facultative")]
+        [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
         public async Task<ActionResult<Schedule>> MakeFacultative(int id)
         {
             var schedule = await _context.Schedules.FirstOrDefaultAsync(x => x.ID == id);
@@ -85,6 +88,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Schedules/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
         public async Task<ActionResult<Schedule>> PutSchedule(int id, Schedule schedule)
         {
             if (id != schedule.ID)
@@ -115,6 +119,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Schedules
         [HttpPost]
+        [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
         public async Task<ActionResult<Schedule>> PostSchedule(Schedule schedule)
         {
             _context.Schedules.Add(schedule);
@@ -125,6 +130,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Schedules/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
         public async Task<ActionResult<Schedule>> DeleteSchedule(int id)
         {
             var schedule = await _context.Schedules.FindAsync(id);

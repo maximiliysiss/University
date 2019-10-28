@@ -27,6 +27,7 @@ import com.school.android.threadable.ThreadResult;
 import com.school.android.ui.activity.MainActivity;
 import com.school.android.ui.adapters.spinner.ClassSpinnerAdapter;
 import com.school.android.ui.adapters.spinner.SpinnerCustomAdapter;
+import com.school.android.ui.dialogs.ChoiceDialog;
 import com.school.android.ui.fragments.ModelFragment;
 
 import java.io.IOException;
@@ -41,7 +42,6 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
 
 
     Spinner classes;
-    int layout;
     EditText surname;
     EditText name;
     EditText secondName;
@@ -53,15 +53,15 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
     Button toArchive;
     Button addRiskGroup;
 
-    public UserChildFragment() {
-        layout = R.layout.fragment_user_child;
+    public UserChildFragment(int backLayout) {
+        super(backLayout);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(layout, container, false);
+        return inflater.inflate(R.layout.fragment_user_child, container, false);
     }
 
     @Override
@@ -99,9 +99,11 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
 
 
         if (getModel().getId() != 0) {
-            toArchive.setOnClickListener(v -> App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
-                getRealActivity().openFragment(R.id.navigation_users);
-            })));
+            toArchive.setOnClickListener(v -> new ChoiceDialog(getContext(), () -> {
+                App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
+                    getRealActivity().openFragment(backLayout);
+                }));
+            }).show());
 
             if (getModel().getIsArchive())
                 toArchive.setText(getString(R.string.from_archive));
@@ -127,8 +129,12 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
 
                 builder.create().show();
             })));
-        }else{
+        } else {
             toArchive.setVisibility(View.INVISIBLE);
+            addRiskGroup.setVisibility(View.INVISIBLE);
+        }
+
+        if (App.getUserType() == UserType.KnowledgeTeacher) {
             addRiskGroup.setVisibility(View.INVISIBLE);
         }
     }

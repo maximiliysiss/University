@@ -32,12 +32,12 @@ namespace SchoolService.Controllers
         }
 
         [HttpGet("{id}")]
-        [AuthorizeAttribute(Roles = "Admin, Teacher")]
+        [Authorize]
         public ActionResult<Teacher> GetTeacher(int id) => RedirectToAction("GetUser", "Users", new { id = id });
 
         // PUT: api/Teachers/5
         [HttpPut("{id}")]
-        [AuthorizeAttribute(Roles = "Admin")]
+        [AuthorizeAttribute(Roles = "Admin, JobTeacher")]
         public async Task<ActionResult<Teacher>> PutTeacher(int id, Teacher teacher)
         {
             if (id != teacher.ID)
@@ -63,7 +63,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Teachers
         [HttpPost]
-        [AuthorizeAttribute(Roles = "Admin")]
+        [AuthorizeAttribute(Roles = "Admin, JobTeacher")]
         public async Task<ActionResult<Teacher>> PostTeacher(Teacher teacher)
         {
             teacher.PasswordHash = CryptService.CreateMD5(teacher.PasswordHash);

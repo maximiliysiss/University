@@ -1,6 +1,7 @@
 package com.school.android.ui.activity;
 
 import android.os.Bundle;
+import android.view.Menu;
 
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,7 +16,6 @@ public class MainActivity extends ActivityFragmenter {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override
@@ -25,10 +25,12 @@ public class MainActivity extends ActivityFragmenter {
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         navView.inflateMenu(MenuFactory.getMenuFactory().create(App.getUserContext().getUser()));
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navView.getMenu()).build();
+        Menu menu = navView.getMenu();
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(menu).build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
+        openFragment(menu.getItem(0).getItemId());
     }
 
 }

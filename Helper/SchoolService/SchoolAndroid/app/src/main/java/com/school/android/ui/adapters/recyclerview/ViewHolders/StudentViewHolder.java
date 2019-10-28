@@ -18,6 +18,7 @@ public class StudentViewHolder extends UserViewHolder {
 
         Bundle bundle = new Bundle();
         bundle.putBoolean(getString(R.string.only_student), true);
+        bundle.putInt(getString(R.string.back), R.id.navigation_students);
         getRealActivity().openFragment(R.id.navigation_users_element, modelName, object, bundle);
     }
 }
