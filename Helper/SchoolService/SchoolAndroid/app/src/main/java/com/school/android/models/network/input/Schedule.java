@@ -22,7 +22,7 @@ public class Schedule implements FragmentModel {
     private Integer lessonId;
     @SerializedName("lesson")
     @Expose
-    private Lesson lesson;
+    private Lesson lesson = null;
     @SerializedName("teacherId")
     @Expose
     private Integer teacherId;

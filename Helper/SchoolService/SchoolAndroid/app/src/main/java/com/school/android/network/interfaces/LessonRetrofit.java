@@ -1,6 +1,7 @@
 package com.school.android.network.interfaces;
 
 import com.school.android.models.network.input.Lesson;
+import com.school.android.models.network.input.LessonProfile;
 import com.school.android.models.network.input.Mark;
 
 import java.util.List;
@@ -29,5 +30,8 @@ public interface LessonRetrofit {
 
     @DELETE("lessons/{id}")
     Call<Lesson> delete(@Path("id") int id);
+
+    @GET("lessons/{id}/{teacherId}")
+    Call<LessonProfile> setLessonProfile(@Path("id") int id, @Path("teacherId") int teacherId);
 
 }

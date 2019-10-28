@@ -40,6 +40,9 @@ public class ClassFragment extends ModelContainsFragment<MainActivity> {
     public void onStart() {
         super.onStart();
 
+        Button toLessons = getView().findViewById(R.id.to_lessons);
+        toLessons.setOnClickListener(v -> getRealActivity().openFragment(R.id.navigation_lessons));
+
         Button button = getView().findViewById(R.id.add);
         button.setOnClickListener(v -> getRealActivity().openFragment(R.id.navigation_class_element, getModelName(), new Class()));
 

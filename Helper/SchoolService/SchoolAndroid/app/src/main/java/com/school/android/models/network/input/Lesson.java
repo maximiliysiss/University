@@ -8,7 +8,7 @@ public class Lesson implements FragmentModel {
     @SerializedName("id")
     @Expose
     private Integer id;
-    @SerializedName("id")
+    @SerializedName("name")
     @Expose
     private String name;
 

@@ -109,7 +109,7 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
                 toArchive.setText(getString(R.string.from_archive));
 
             addRiskGroup.setOnClickListener(v -> App.getRiskGroupRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
-                ArrayList<String> names = new ArrayList<>();
+                ArrayList<RiskGroup> filter = new ArrayList<>();
                 for (RiskGroup riskGroup : x) {
                     boolean flag = true;
                     for (ChildInRiskGroup group : riskGroup.getChildInRiskGroups()) {
@@ -119,12 +119,13 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
                         }
                     }
                     if (flag) {
-                        names.add(riskGroup.getName());
+                        filter.add(riskGroup);
                     }
                 }
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.select_risk_group)
-                        .setItems(names.toArray(new String[names.size()]), (dialog, which) -> App.getRiskGroupRetrofit().addChildToRiskGroup(getModel().getId(), x.get(which).getId()).enqueue(new UniversalCallback<>(getContext(), z -> {
+                        .setItems(filter.stream().map(RiskGroup::getName).collect(Collectors.toList()).toArray(new String[filter.size()]), (dialog, which)
+                                -> App.getRiskGroupRetrofit().addChildToRiskGroup(getModel().getId(), filter.get(which).getId()).enqueue(new UniversalCallback<>(getContext(), z -> {
                         })));
 
                 builder.create().show();

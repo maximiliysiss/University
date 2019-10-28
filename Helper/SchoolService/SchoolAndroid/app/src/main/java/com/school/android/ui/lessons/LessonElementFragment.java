@@ -24,15 +24,18 @@ public class LessonElementFragment extends ModelActionFragment<MainActivity, Les
 
     EditText name;
 
-    public LessonElementFragment(int backLayout) {
-        super(backLayout);
+    public LessonElementFragment() {
+        super(R.id.navigation_lessons);
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
-        name = getView().findViewById(R.id.name)
+        name = getView().findViewById(R.id.name);
+        name.setText(getModel().getName());
+
+        generateModelActions(getView());
     }
 
     @Override
@@ -59,9 +62,10 @@ public class LessonElementFragment extends ModelActionFragment<MainActivity, Les
 
     @Override
     public boolean loadModel() {
-        String nameString;
-
-
+        String nameString = name.getText().toString().trim();
+        if (nameString.length() == 0)
+            return false;
+        getModel().setName(nameString);
         return true;
     }
 

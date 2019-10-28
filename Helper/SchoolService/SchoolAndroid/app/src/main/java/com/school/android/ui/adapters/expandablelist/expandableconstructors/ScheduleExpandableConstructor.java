@@ -31,7 +31,7 @@ public class ScheduleExpandableConstructor extends AbstractExpandableConstructor
         TextView time = v.findViewById(R.id.time);
 
         className.setText(elem.get_class().getName());
-        lesson.setText(elem.getLesson());
+        lesson.setText(elem.getLesson().getName());
         time.setText(LessonUtils.getStrings(elem.getLessonNumber()));
         if (App.getUserType() != UserType.Student)
             v.setOnClickListener(v1 -> getRealActivity(v1).openFragment(R.id.navigation_schedule_element, getActivity(v1).getString(R.string.schedule_model), elem));

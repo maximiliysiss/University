@@ -2,8 +2,9 @@ package com.school.android.models.network.input;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.school.android.models.network.FragmentModel;
 
-public class LessonProfile {
+public class LessonProfile implements FragmentModel {
     @SerializedName("lessonId")
     @Expose
     private Integer lessonId;

@@ -25,6 +25,7 @@ namespace SchoolService.Services
         public DbSet<Mark> Marks { get; set; }
         public DbSet<ChildInRiskGroup> ChildInRiskGroups { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
+        public DbSet<LessonProfile> LessonProfiles {get;set;}
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

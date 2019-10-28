@@ -100,6 +100,29 @@ namespace SchoolService.Controllers
             return lesson;
         }
 
+        [HttpGet("{id}/{teacherId}")]
+        public async Task<ActionResult<LessonProfile>> SetLessonProfile(int id, int teacherId)
+        {
+            Teacher teacher = _context.Teachers.FirstOrDefault(x => x.ID == teacherId);
+            Lesson lesson = _context.Lessons.FirstOrDefault(x => x.ID == id);
+            if (lesson == null || teacher == null)
+                return NotFound();
+            LessonProfile lessonProfile = await _context.LessonProfiles.FirstOrDefaultAsync(x => x.TeacherId == teacherId && x.LessonId == id);
+            if (lessonProfile == null)
+            {
+                lessonProfile = new LessonProfile
+                {
+                    Lesson = lesson,
+                    Teacher = teacher
+                };
+                _context.Add(lessonProfile);
+            }
+            else
+                _context.Remove(lessonProfile);
+            _context.SaveChanges();
+            return lessonProfile;
+        }
+
         private bool LessonExists(int id)
         {
             return _context.Lessons.Any(e => e.ID == id);
