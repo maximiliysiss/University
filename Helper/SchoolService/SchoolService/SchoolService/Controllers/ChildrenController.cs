@@ -13,7 +13,7 @@ namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [AuthorizeAttribute(Roles = "Admin, KnowledgeTeacher")]
+    [Authorize]
     public class ChildrenController : ControllerBase
     {
         private readonly DatabaseContext _context;
@@ -34,6 +34,7 @@ namespace SchoolService.Controllers
         public ActionResult<Teacher> GetChildren(int id) => RedirectToAction("GetUser", "Users", new { id = id });
 
         [HttpGet("archived")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher, Social")]
         public async Task<ActionResult<IEnumerable<Child>>> GetArchived()
         {
             return await _context.Children.Where(x => x.IsArchive).ToListAsync();
@@ -41,6 +42,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Children/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
         public async Task<ActionResult<Child>> PutChild(int id, Child child)
         {
             if (id != child.ID)
@@ -66,6 +68,7 @@ namespace SchoolService.Controllers
 
         // GET: api/3/class/3
         [HttpGet("{id}/class/{class}")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
         public async Task<ActionResult<Child>> ChangeClass(int id, int @class)
         {
             var child = _context.Children.FirstOrDefault(x => x.ID == id);
@@ -82,6 +85,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Children
         [HttpPost]
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
         public async Task<ActionResult<Child>> PostChild(Child child)
         {
             if (_context.Children.Any(x => x.Login == child.Login))
@@ -97,6 +101,7 @@ namespace SchoolService.Controllers
         private bool ChildExists(int id) => _context.Children.Any(e => e.ID == id);
 
         [HttpGet("{id}/archive")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher, Social")]
         public ActionResult<Child> Archive(int id)
         {
             var child = _context.Children.FirstOrDefault(x => x.ID == id);

@@ -7,6 +7,16 @@
         android:title="@string/riskgroup" />
 
     <item
+        android:id="@+id/navigation_archive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="@string/archive" />
+
+    <item
+        android:id="@+id/navigation_students"
+        android:icon="@drawable/ic_students_black_24dp"
+        android:title="@string/student" />
+
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_black_24dp"
         android:title="@string/profile" />

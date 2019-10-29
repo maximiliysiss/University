@@ -30,7 +30,7 @@ public interface ClassRetrofit {
     @DELETE("classes/{id}")
     Call<Class> delete(@Path("id") int id);
 
-    @GET("classes/teacher/{id}")
-    Call<ResponseBody> setTeacher(@Path("id") int id);
+    @GET("classes/teacher/{id}/{teacherId}")
+    Call<ResponseBody> setTeacher(@Path("id") int id, @Path("teacher") int teacherId);
 
 }

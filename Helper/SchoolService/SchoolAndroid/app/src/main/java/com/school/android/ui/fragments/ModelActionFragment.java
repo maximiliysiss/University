@@ -20,6 +20,11 @@ public abstract class ModelActionFragment<T extends ActivityFragmenter, M extend
         super(backLayout);
     }
 
+    public void hideActions() {
+        Button action = getView().findViewById(R.id.action);
+        action.setVisibility(View.INVISIBLE);
+    }
+
     public void generateModelActions(View view) {
         Button action = view.findViewById(R.id.action);
         Button delete = view.findViewById(R.id.delete);

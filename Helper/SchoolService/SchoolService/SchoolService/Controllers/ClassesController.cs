@@ -48,15 +48,9 @@ namespace SchoolService.Controllers
 
         // PUT: api/Classes/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Teacher, Admin")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
         public async Task<ActionResult<Class>> PutClass(int id, Class @class)
         {
-            using (var userContext = this.GetUserContext())
-            {
-                if (id != @class.ID || (!(userContext.User as Teacher)?.Class.Select(x => x.ID).Contains(id) ?? false))
-                    return BadRequest();
-            }
-
             _context.Entry(@class).State = EntityState.Modified;
 
             try
@@ -76,11 +70,12 @@ namespace SchoolService.Controllers
 
         // POST: api/Classes
         [HttpPost]
-        [Authorize(Roles = "Teacher, Admin")]
+        [Authorize(Roles = "KnowledgeTeacher, Admin")]
         public async Task<ActionResult<Class>> PostClass(Class @class)
         {
-            Teacher teacher = this.GetCurrentUser(_context) as Teacher;
-            @class.TeacherId = teacher.ID;
+            var teacher = _context.Teachers.FirstOrDefault(x => x.ID == @class.TeacherId);
+            if (teacher == null)
+                return NotFound();
             teacher.IsClassWork = true;
             _context.Update(teacher);
             _context.Classes.Add(@class);
@@ -91,33 +86,31 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Classes/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Teacher, Admin")]
+        [Authorize(Roles = "KnowledgeTeacher, Admin")]
         public async Task<ActionResult<Class>> DeleteClass(int id)
         {
-            var user = this.GetCurrentUser(_context);
-            var teacher = user as Teacher;
             var @class = await _context.Classes.FindAsync(id);
-
-            if (@class == null || (!teacher?.Class.Select(x => x.ID).Contains(@class.ID) ?? false))
+            if (@class == null)
                 return NotFound();
 
-            teacher.IsClassWork = teacher.Class.Count <= 1;
+            @class.Teacher.IsClassWork = @class.Teacher.Class.Count - 1 > 0;
+
             _context.Classes.Remove(@class);
-            _context.Update(teacher);
+            _context.Update(@class.Teacher);
             await _context.SaveChangesAsync();
 
             return @class;
         }
 
-        [HttpGet("teacher/{id}")]
-        [Authorize(Roles = "Teacher, Admin")]
-        public async Task<ActionResult> selectClass(int id)
+        [HttpGet("teacher/{id}/{teacherId}")]
+        [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]
+        public async Task<ActionResult> selectClass(int id, int teacherId)
         {
-            var teacher = this.GetCurrentUser(_context) as Teacher;
             var _class = _context.Classes.FirstOrDefault(x => x.ID == id);
-            if (_class == null)
+            var teacher = _context.Teachers.FirstOrDefault(x => x.ID == teacherId);
+            if (_class == null || teacher == null)
                 return NotFound();
-            _class.Teacher = teacher;
+            _class.TeacherId = teacherId;
             _context.Update(_class);
             await _context.SaveChangesAsync();
             return Ok();

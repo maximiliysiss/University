@@ -2,11 +2,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_schedules"
-        android:icon="@drawable/ic_schedule_black_24dp"
-        android:title="@string/schedules" />
-
-    <item
         android:id="@+id/navigation_workers"
         android:icon="@drawable/ic_worker_black_24dp"
         android:title="@string/worker" />

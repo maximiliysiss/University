@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.school.android.R;
 import com.school.android.application.App;
+import com.school.android.models.extension.UserType;
 import com.school.android.models.network.input.Children;
 import com.school.android.models.network.input.User;
 import com.school.android.network.classes.UniversalCallback;
@@ -52,6 +53,9 @@ public class StudentFragment extends ModelContainsFragment<MainActivity> {
         App.getChildrenRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
             recyclerView.setAdapter(new RecyclerViewAdapter(x, R.layout.recycler_user, y -> new StudentViewHolder(y, getModelName())));
         }));
+
+        if (App.getUserType() == UserType.Social)
+            add.setVisibility(View.INVISIBLE);
     }
 
     @Override

@@ -46,8 +46,8 @@ namespace SchoolService.Controllers
 
         // PUT: api/Lessons/5
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> PutLesson(int id, Lesson lesson)
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
+        public async Task<ActionResult<Lesson>> PutLesson(int id, Lesson lesson)
         {
             if (id != lesson.ID)
             {
@@ -72,12 +72,12 @@ namespace SchoolService.Controllers
                 }
             }
 
-            return NoContent();
+            return lesson;
         }
 
         // POST: api/Lessons
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
         public async Task<ActionResult<Lesson>> PostLesson(Lesson lesson)
         {
             _context.Lessons.Add(lesson);
@@ -88,7 +88,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Lessons/5
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, KnowledgeTeacher")]
         public async Task<ActionResult<Lesson>> DeleteLesson(int id)
         {
             var lesson = await _context.Lessons.FindAsync(id);

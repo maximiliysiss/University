@@ -7,18 +7,21 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UniversalWithCodeCallback<T> implements Callback<T> {
+public class UniversalWithCodeCallback<T> extends BaseResult<T> {
 
-    Context context;
     CallbackActionWithCode<T> callbackAction;
 
     public UniversalWithCodeCallback(Context context, CallbackActionWithCode<T> callbackAction) {
-        this.context = context;
+        super(context);
         this.callbackAction = callbackAction;
     }
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+        super.onResponse(call, response);
+        if (isWorked())
+            return;
+
         if (response.body() != null)
             callbackAction.process(response.code(), response.body());
         else

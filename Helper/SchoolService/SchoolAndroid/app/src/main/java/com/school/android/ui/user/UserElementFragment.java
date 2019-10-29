@@ -116,7 +116,10 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
             }
         });
         spinner.setSelection(userTypeSpinnerAdapter.getIndex(UserType.values()[getModel().getUserType()]));
-        generateModelActions(getView());
+        if (App.getUserType() != UserType.Social)
+            generateModelActions(getView());
+        else
+            hideActions();
     }
 
 
@@ -230,7 +233,7 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
             Spinner classes = getView().findViewById(R.id.current_class);
             Class aClass = (Class) classes.getSelectedItem();
             if (aClass.getId() != 0)
-                App.getClassRetrofit().setTeacher(aClass.getId());
+                App.getClassRetrofit().setTeacher(aClass.getId(), getModel().getId());
         }
     }
 }

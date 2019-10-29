@@ -8,16 +8,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EmptyResult<T> implements Callback<T> {
-
-    Context context;
+public class EmptyResult<T> extends BaseResult<T> {
 
     public EmptyResult(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
+        super.onResponse(call, response);
     }
 
     @Override
