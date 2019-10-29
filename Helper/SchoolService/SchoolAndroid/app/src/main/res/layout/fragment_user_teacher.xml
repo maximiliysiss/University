@@ -73,16 +73,16 @@
             android:hint="Почта"
             android:inputType="textEmailAddress"></EditText>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/profiles"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
-
         <Button
             android:id="@+id/addPosition"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Добавить позицию"></Button>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profiles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

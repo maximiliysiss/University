@@ -52,6 +52,7 @@ public class UserTeacherFragment extends ModelFragment<MainActivity, Teacher> {
     EditText birthday;
     EditText login;
     RecyclerView profiles;
+    private boolean withoutStudent;
 
     public UserTeacherFragment(int backLayout) {
         super(backLayout);
@@ -69,6 +70,7 @@ public class UserTeacherFragment extends ModelFragment<MainActivity, Teacher> {
         super.onStart();
 
         View view = getView();
+        this.withoutStudent = getArguments().getBoolean(getString(R.string.without_student), false);
 
         Button addToProfile = getView().findViewById(R.id.addPosition);
         addToProfile.setOnClickListener(v -> App.getLessonRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
@@ -77,7 +79,7 @@ public class UserTeacherFragment extends ModelFragment<MainActivity, Teacher> {
             for (Lesson lesson : x) {
                 boolean flag = true;
                 for (LessonProfile lessonProfile : getModel().getLessonProfiles()) {
-                    if (lesson.getId() == lessonProfile.getLessonId()) {
+                    if (lesson.getId().equals(lessonProfile.getLessonId())) {
                         flag = false;
                         break;
                     }
@@ -87,10 +89,12 @@ public class UserTeacherFragment extends ModelFragment<MainActivity, Teacher> {
             }
 
             AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.add_position)
-                    .setItems(strings.stream().map(Lesson::getName).collect(Collectors.toList()).toArray(new String[strings.size()]), (dialog, which) -> App.getLessonRetrofit().setLessonProfile(strings.get(which).getId(), getModel().getId())
-                            .enqueue(new UniversalCallback<>(getContext(), z -> {
-                                getRealActivity().openFragment(R.id.navigation_users);
-                            })));
+                    .setItems(strings.stream().map(Lesson::getName).collect(Collectors.toList()).toArray(new String[strings.size()]), (dialog, which) -> {
+                        App.getLessonRetrofit().setLessonProfile(strings.get(which).getId(), getModel().getId())
+                                .enqueue(new UniversalCallback<>(getContext(), z -> {
+                                    getRealActivity().openFragment(backLayout);
+                                }));
+                    });
             builder.create().show();
         })));
 
@@ -115,12 +119,17 @@ public class UserTeacherFragment extends ModelFragment<MainActivity, Teacher> {
         birthday.setText(getModel().getBirthday());
 
 
-        profiles.setAdapter(new RecyclerViewAdapter(getModel().getLessonProfiles(), R.layout.recycler_lesson, v -> new TeacherProfileViewHolder(v, getString(R.string.lesson_model), getModel().getId())));
+        profiles.setAdapter(new RecyclerViewAdapter(getModel().getLessonProfiles(), R.layout.recycler_lesson,
+                v -> new TeacherProfileViewHolder(v, getString(R.string.lesson_model), getModel().getId(), withoutStudent,backLayout)));
 
         classes = getView().findViewById(R.id.current_class);
         App.getClassRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
             classes.setAdapter(new ClassSpinnerAdapter(x, getContext()));
         }));
+
+        if (!isEdit()) {
+            addToProfile.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

@@ -18,7 +18,6 @@ import com.school.android.models.network.input.User;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.activity.MainActivity;
 import com.school.android.ui.adapters.recyclerview.RecyclerViewAdapter;
-import com.school.android.ui.adapters.recyclerview.ViewHolders.UserViewHolder;
 import com.school.android.ui.adapters.recyclerview.ViewHolders.WorkerViewHolder;
 import com.school.android.ui.fragments.ModelContainsFragment;
 
@@ -42,7 +41,7 @@ public class WorkerFragment extends ModelContainsFragment<MainActivity> {
         Button add = getView().findViewById(R.id.add);
         add.setOnClickListener(v -> {
             Bundle bundle = new Bundle();
-            bundle.putBoolean(getString(R.string.is_change), true);
+            bundle.putBoolean(getString(R.string.without_student), true);
             bundle.putInt(getString(R.string.back), R.id.navigation_workers);
             getRealActivity().openFragment(R.id.navigation_users_element, getModelName(), new User(), bundle);
         });

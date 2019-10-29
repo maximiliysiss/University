@@ -19,15 +19,12 @@ import com.school.android.models.network.input.Children;
 import com.school.android.models.network.input.Class;
 import com.school.android.models.network.input.Teacher;
 import com.school.android.models.network.input.User;
-import com.school.android.network.classes.UniversalCallback;
 import com.school.android.network.classes.UniversalWithCodeCallback;
 import com.school.android.ui.activity.MainActivity;
-import com.school.android.ui.adapters.spinner.SpinnerCustomAdapter;
 import com.school.android.ui.adapters.spinner.UserTypeSpinnerAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
 import com.school.android.utilities.NetworkUtilities;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -40,6 +37,7 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
 
     FrameLayout frameLayout;
     Spinner spinner;
+    private boolean withoutStudent;
 
     public UserElementFragment() {
         super(R.id.navigation_users);
@@ -73,7 +71,8 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         frameLayout = getView().findViewById(R.id.user_frame);
 
         UserType[] userTypes = UserType.values();
-        if (getArguments().getBoolean(getString(R.string.is_change), false)) {
+        this.withoutStudent = getArguments().getBoolean(getString(R.string.without_student), false);
+        if (withoutStudent) {
             ArrayList<UserType> arrayList = (ArrayList<UserType>) Arrays.asList(userTypes).stream().filter(x -> x != UserType.Student).collect(Collectors.toList());
             userTypes = arrayList.toArray(new UserType[arrayList.size()]);
         }
@@ -105,6 +104,7 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
 
                 getModel().setUserType(type.ordinal());
                 Bundle bundle = new Bundle();
+                bundle.putBoolean(getString(R.string.without_student), withoutStudent);
                 bundle.putSerializable(getModelName(), getModel());
                 fragment.setArguments(bundle);
                 openFragment(R.id.user_frame, fragment);

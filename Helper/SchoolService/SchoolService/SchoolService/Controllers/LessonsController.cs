@@ -12,7 +12,7 @@ using SchoolService.Services;
 namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [ApiController]
     public class LessonsController : ControllerBase
     {
@@ -46,6 +46,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Lessons/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> PutLesson(int id, Lesson lesson)
         {
             if (id != lesson.ID)
@@ -76,6 +77,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Lessons
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Lesson>> PostLesson(Lesson lesson)
         {
             _context.Lessons.Add(lesson);
@@ -86,6 +88,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Lessons/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Lesson>> DeleteLesson(int id)
         {
             var lesson = await _context.Lessons.FindAsync(id);
@@ -101,6 +104,7 @@ namespace SchoolService.Controllers
         }
 
         [HttpGet("{id}/{teacherId}")]
+        [Authorize(Roles = "Admin, JobTeacher")]
         public async Task<ActionResult<LessonProfile>> SetLessonProfile(int id, int teacherId)
         {
             Teacher teacher = _context.Teachers.FirstOrDefault(x => x.ID == teacherId);

@@ -1,6 +1,7 @@
 package com.school.android.network.interfaces;
 
 import com.school.android.models.network.input.LoginResult;
+import com.school.android.models.network.output.ChangeUser;
 import com.school.android.models.network.output.LoginModel;
 
 import okhttp3.ResponseBody;
@@ -20,4 +21,7 @@ public interface AuthRetrofit {
 
     @GET("refresh")
     public Call<LoginResult> refresh(@Header("token") String token, @Header("refresh") String refresh);
+
+    @POST("changepassword")
+    public Call<ResponseBody> changeUser(@Body ChangeUser changeUser);
 }

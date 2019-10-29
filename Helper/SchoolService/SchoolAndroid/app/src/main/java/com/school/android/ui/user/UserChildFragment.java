@@ -98,7 +98,7 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
         addRiskGroup = getView().findViewById(R.id.add_to_risk_group);
 
 
-        if (getModel().getId() != 0) {
+        if (isEdit()) {
             toArchive.setOnClickListener(v -> new ChoiceDialog(getContext(), () -> {
                 App.getChildrenRetrofit().archive(getModel().getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
                     getRealActivity().openFragment(backLayout);
@@ -113,7 +113,7 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
                 for (RiskGroup riskGroup : x) {
                     boolean flag = true;
                     for (ChildInRiskGroup group : riskGroup.getChildInRiskGroups()) {
-                        if (group.getChildId() == getModel().getId()) {
+                        if (group.getChildId().equals(getModel().getId())) {
                             flag = false;
                             break;
                         }

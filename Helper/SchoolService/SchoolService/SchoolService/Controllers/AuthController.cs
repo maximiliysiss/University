@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using SchoolService.Models;
 using SchoolService.Models.Controllers;
 using SchoolService.Services;
+using SchoolService.Extensions;
 
 namespace SchoolService.Controllers
 {
@@ -61,6 +62,22 @@ namespace SchoolService.Controllers
                 UserType = loginUser.UserType,
                 Id = loginUser.ID
             };
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult ChangePassword(ChangeUser changeUser)
+        {
+            var user = this.GetCurrentUser(databaseContext);
+            if (user.PasswordHash != CryptService.CreateMD5(changeUser.PasswordConfirm))
+                return BadRequest();
+            if (!string.IsNullOrEmpty(changeUser.Login))
+                user.Login = changeUser.Login;
+            if (!string.IsNullOrEmpty(changeUser.Password))
+                user.PasswordHash = CryptService.CreateMD5(changeUser.Password);
+            databaseContext.Update(user);
+            databaseContext.SaveChanges();
+            return Ok();
         }
 
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)

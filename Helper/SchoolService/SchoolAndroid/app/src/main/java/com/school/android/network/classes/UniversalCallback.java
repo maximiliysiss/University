@@ -21,13 +21,18 @@ public class UniversalCallback<T> implements Callback<T> {
         this.callbackAction = callbackAction;
     }
 
+    public UniversalCallback(Context context, CallbackEmptyAction callbackEmptyAction) {
+        this.context = context;
+        this.callbackAction = object -> callbackEmptyAction.action();
+    }
+
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         if (response.body() != null)
             callbackAction.process(response.body());
         else if (response.code() == 401 || response.code() == 403)
             Toast.makeText(context, context.getString(R.string.authorize_error), Toast.LENGTH_SHORT).show();
-        else if (response.code() >= 400 && response.code() < 600)
+        else if (response.code() >= 400)
             Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
     }
 
