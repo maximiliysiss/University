@@ -35,4 +35,7 @@ public interface ChildrenRetrofit {
     @GET("children/{id}/archive")
     Call<Children> archive(@Path("id") int id);
 
+    @GET("children/{id}/class/{class}")
+    Call<Children> setClass(@Path("id") int id, @Path("class") int classId);
+
 }

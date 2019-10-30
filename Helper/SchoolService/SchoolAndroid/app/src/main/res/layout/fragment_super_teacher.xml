@@ -3,11 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.superclass.SuperClassFragment">
+    tools:context=".ui.mark.SuperTeacherFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/classes"
+
+    <ExpandableListView
+        android:id="@+id/marks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent"></ExpandableListView>
 
 </FrameLayout>

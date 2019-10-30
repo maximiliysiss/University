@@ -1,6 +1,7 @@
 package com.school.android.network.interfaces;
 
 import com.school.android.models.network.input.Class;
+import com.school.android.models.network.input.Mark;
 
 import java.util.List;
 
@@ -32,5 +33,8 @@ public interface ClassRetrofit {
 
     @GET("classes/teacher/{id}/{teacherId}")
     Call<ResponseBody> setTeacher(@Path("id") int id, @Path("teacher") int teacherId);
+
+    @GET("classes/{id}/marks")
+    Call<List<Mark>> getClassMarks(@Path("id") int id);
 
 }

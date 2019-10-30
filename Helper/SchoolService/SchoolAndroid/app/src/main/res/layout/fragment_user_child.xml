@@ -87,6 +87,13 @@
             android:text="@string/add_risk_group"
             android:textSize="10pt"></Button>
 
+        <Button
+            android:id="@+id/select_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/select_class"
+            android:textSize="10pt"></Button>
+
     </LinearLayout>
 
 </FrameLayout>

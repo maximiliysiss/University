@@ -126,4 +126,8 @@ public class User implements FragmentModel {
     public void setUserType(Integer userType) {
         this.userType = userType;
     }
+
+    public String getFullName(){
+        return surname + " " + name + " " + secondName;
+    }
 }

@@ -31,7 +31,7 @@ namespace SchoolService.Controllers
             var userContext = this.GetCurrentUser(_context);
             if (userContext.UserType != UserType.Teacher)
                 return await _context.Classes.ToListAsync();
-            return _context.Teachers.Find(userContext.ID).Class;
+            return _context.Classes.Where(x => x.TeacherId == userContext.ID).ToList();
         }
 
         // GET: api/Classes/5
@@ -44,6 +44,11 @@ namespace SchoolService.Controllers
             if (@class == null || (userContext.UserType == UserType.Teacher && !_context.Teachers.Find(userContext.ID).Class.Select(x => x.ID).Contains(id)))
                 return NotFound();
             return @class;
+        }
+
+        [HttpGet("{id}/marks")]
+        public ActionResult<List<Mark>> GetClassMarks(int id){
+            return _context.Marks.Where(x=>x.Schedule.ClassId==id).ToList();
         }
 
         // PUT: api/Classes/5

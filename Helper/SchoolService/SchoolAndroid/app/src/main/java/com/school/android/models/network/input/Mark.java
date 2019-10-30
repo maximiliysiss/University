@@ -17,12 +17,23 @@ public class Mark implements FragmentModel {
     @SerializedName("childId")
     @Expose
     private Integer childId;
+    @SerializedName("child")
+    @Expose
+    private Children child;
     @SerializedName("scheduleId")
     @Expose
     private Integer scheduleId;
     @SerializedName("schedule")
     @Expose
     private Schedule schedule;
+
+    public Children getChild() {
+        return child;
+    }
+
+    public void setChild(Children child) {
+        this.child = child;
+    }
 
     public Integer getId() {
         return id;

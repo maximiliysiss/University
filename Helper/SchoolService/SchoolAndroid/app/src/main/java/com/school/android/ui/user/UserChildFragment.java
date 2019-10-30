@@ -52,6 +52,7 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
     EditText login;
     Button toArchive;
     Button addRiskGroup;
+    Button selectClass;
 
     public UserChildFragment(int backLayout) {
         super(backLayout);
@@ -78,6 +79,7 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
         email = view.findViewById(R.id.email);
         birthday = view.findViewById(R.id.birthday);
         login = view.findViewById(R.id.login);
+        selectClass = view.findViewById(R.id.select_class);
 
         surname.setText(getModel().getSurname());
         name.setText(getModel().getName());
@@ -130,13 +132,35 @@ public class UserChildFragment extends ModelFragment<MainActivity, Children> {
 
                 builder.create().show();
             })));
+
+            selectClass.setOnClickListener(v -> App.getClassRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
+                ArrayList<Class> classes;
+                if (getModel().getClass_() == null)
+                    classes = (ArrayList<Class>) x;
+                else
+                    classes = (ArrayList<Class>) x.stream().filter(c -> c.getId() != getModel().getClass_().getId()).collect(Collectors.toList());
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext()).setTitle(R.string.select_class)
+                        .setItems(classes.stream().map(Class::getName).collect(Collectors.toList()).toArray(new String[classes.size()]),
+                                (dialog, which) -> App.getChildrenRetrofit().setClass(getModel().getId(), classes.get(which).getId()).enqueue(new UniversalCallback<>(getContext(), z -> {
+                                    getRealActivity().openFragment(R.id.navigation_users_element, getModelName(), z, getArguments());
+                                })));
+
+                builder.create().show();
+            })));
+
         } else {
             toArchive.setVisibility(View.INVISIBLE);
             addRiskGroup.setVisibility(View.INVISIBLE);
+            selectClass.setVisibility(View.INVISIBLE);
         }
 
         if (App.getUserType() == UserType.KnowledgeTeacher) {
             addRiskGroup.setVisibility(View.INVISIBLE);
+        }
+
+        if (App.getUserType() != UserType.Admin && App.getUserType() != UserType.KnowledgeTeacher) {
+            selectClass.setVisibility(View.INVISIBLE);
         }
     }
 

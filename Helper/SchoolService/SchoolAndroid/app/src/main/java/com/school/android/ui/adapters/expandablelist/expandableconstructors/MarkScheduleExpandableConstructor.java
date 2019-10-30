@@ -6,17 +6,19 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.school.android.R;
+import com.school.android.models.network.input.Class;
+import com.school.android.models.network.input.Lesson;
 import com.school.android.models.network.input.Mark;
 import com.school.android.ui.adapters.expandablelist.ExpandableListAdapter;
 
 import java.util.HashMap;
 import java.util.List;
 
-public class MarkScheduleExpandableConstructor extends AbstractExpandableConstructor<String, HashMap<String, List<Mark>>> {
+public class MarkScheduleExpandableConstructor extends AbstractExpandableConstructor<String, HashMap<Lesson, List<Mark>>> {
 
     Context context;
 
-    public MarkScheduleExpandableConstructor(HashMap<String, List<HashMap<String, List<Mark>>>> hashMap, Context context) {
+    public MarkScheduleExpandableConstructor(HashMap<String, List<HashMap<Lesson, List<Mark>>>> hashMap, Context context) {
         super(hashMap, R.layout.expandable_header, R.layout.expandable_expandable);
         this.context = context;
     }
@@ -28,7 +30,7 @@ public class MarkScheduleExpandableConstructor extends AbstractExpandableConstru
     }
 
     @Override
-    public void constructChild(View v, HashMap<String, List<Mark>> elem, int index, int childIndex) {
+    public void constructChild(View v, HashMap<Lesson, List<Mark>> elem, int index, int childIndex) {
         ExpandableListView expandableListView = v.findViewById(R.id.expanable);
         expandableListView.setAdapter(new ExpandableListAdapter<>(context, new MarkScheduleInnerExpandableConstructor(elem, context)));
     }
