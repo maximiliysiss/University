@@ -35,5 +35,10 @@ public class MarkScheduleInnerExpandableConstructor extends AbstractExpandableCo
         TextView mark = v.findViewById(R.id.mark);
         fio.setText(elem.getChild().getFullName());
         mark.setText(elem.getMarkReal());
+        v.setOnClickListener(v1 -> MarkScheduleInnerExpandableConstructor.this.onClick(elem));
+    }
+
+    protected void onClick(Mark mark) {
+
     }
 }

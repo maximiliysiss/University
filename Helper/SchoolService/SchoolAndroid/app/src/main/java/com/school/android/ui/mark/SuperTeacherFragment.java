@@ -18,7 +18,9 @@ import com.school.android.models.network.input.Lesson;
 import com.school.android.models.network.input.Mark;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.activity.MainActivity;
+import com.school.android.ui.adapters.expandablelist.ExpandableListAdapter;
 import com.school.android.ui.adapters.expandablelist.expandableconstructors.MarkScheduleExpandableConstructor;
+import com.school.android.ui.adapters.expandablelist.expandableconstructors.SuperMarkScheduleExpandableConstructor;
 import com.school.android.ui.fragments.ModelContainsFragment;
 import com.school.android.utilities.DayUtils;
 
@@ -52,10 +54,23 @@ public class SuperTeacherFragment extends ModelContainsFragment<MainActivity> {
         classId = getArguments().getInt(getString(R.string.mark_model), 0);
         expandableListView = getView().findViewById(R.id.marks);
         if (classId > 0) {
-            App.getClassRetrofit().getClassMarks(classId).enqueue(new UniversalCallback<List<Mark>>(getContext(), x -> {
-                List<LessonWithMarks> lessonWithMarks = x.stream().collect(groupingBy(z -> z.getSchedule().getLesson())).entrySet().stream().map(z -> new LessonWithMarks(z.getKey(), z.getValue()))
-                        .collect(Collectors.toList());
-                 
+            App.getClassRetrofit().getClassMarks(classId).enqueue(new UniversalCallback<>(getContext(), x -> {
+                Map<String, List<Mark>> byDays = x.stream().collect(groupingBy(m -> DayUtils.getName(m.getSchedule().getDayOfWeek())));
+                Map<String, List<List<Mark>>> data = new HashMap<>();
+
+                byDays.forEach((k, v) -> {
+
+                    List<List<Mark>> rec = new ArrayList<>();
+                    Map<Lesson, List<Mark>> groupByLesson = v.stream().collect(groupingBy(m -> m.getSchedule().getLesson()));
+                    groupByLesson.forEach((ki, li) -> {
+                        rec.add(li);
+                    });
+                    data.put(k, rec);
+                });
+
+                expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(),
+                        new MarkScheduleExpandableConstructor((HashMap<String, List<List<Mark>>>) data, getContext(),
+                                (d, c) -> new SuperMarkScheduleExpandableConstructor(d, c))));
             }));
         }
     }
