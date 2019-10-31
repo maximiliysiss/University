@@ -11,6 +11,7 @@ import com.application.autostation.network.interfaces.AuthRetrofit;
 import com.application.autostation.network.interfaces.BuyingsRetrofit;
 import com.application.autostation.network.interfaces.PointRetrofit;
 import com.application.autostation.network.interfaces.ScheduleRetrofit;
+import com.application.autostation.network.interfaces.UserRetrofit;
 import com.application.autostation.network.models.input.LoginResult;
 import com.application.autostation.utilities.NetworkUtilities;
 import com.google.gson.Gson;
@@ -31,8 +32,13 @@ public class App extends Application {
     private static ScheduleRetrofit scheduleRetrofit;
     private static BuyingsRetrofit buyingsRetrofit;
     private static PointRetrofit pointRetrofit;
+    private static UserRetrofit userRetrofit;
 
     private static DatabaseContext databaseContext;
+
+    public static UserRetrofit getUserRetrofit() {
+        return userRetrofit;
+    }
 
     public static PointRetrofit getPointRetrofit() {
         return pointRetrofit;
@@ -134,6 +140,7 @@ public class App extends Application {
         scheduleRetrofit = createRetrofit(okHttpClient).create(ScheduleRetrofit.class);
         buyingsRetrofit = createRetrofit(okHttpClient).create(BuyingsRetrofit.class);
         pointRetrofit = createRetrofit(okHttpClient).create(PointRetrofit.class);
+        userRetrofit = createRetrofit(okHttpClient).create(UserRetrofit.class);
     }
 
     private Retrofit createRetrofit(OkHttpClient okHttpClient) {

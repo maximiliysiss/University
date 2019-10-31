@@ -49,7 +49,7 @@ namespace AutoStation.Controllers
         [HttpGet("statistic")]
         [Authorize]
         public List<Statistics> Statistics(int month, int year) => _context.Buyings.Where(x => x.DateTime.Month == month && x.DateTime.Year == year)
-                                    .GroupBy(x => x.DateTime).Select(x => new Statistics
+                                    .GroupBy(x => x.DateTime.Date).Select(x => new Statistics
                                     {
                                         Name = x.First().HistorySchedule,
                                         Sum = x.Sum(y => y.Sum),

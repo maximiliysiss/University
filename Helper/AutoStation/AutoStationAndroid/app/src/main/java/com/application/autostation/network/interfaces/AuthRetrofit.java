@@ -1,6 +1,8 @@
 package com.application.autostation.network.interfaces;
 
 import com.application.autostation.network.models.input.LoginResult;
+import com.application.autostation.network.models.input.User;
+import com.application.autostation.network.models.output.ChangeUser;
 import com.application.autostation.network.models.output.LoginModel;
 
 import okhttp3.ResponseBody;

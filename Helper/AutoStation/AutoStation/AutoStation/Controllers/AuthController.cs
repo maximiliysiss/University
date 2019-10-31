@@ -115,6 +115,38 @@ namespace AutoStation.Controllers
             return principal;
         }
 
+        [HttpPost]
+        [Authorize]
+        public ActionResult UserChange(UserChange userChange)
+        {
+            var idClaim = this.User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultNameClaimType);
+            if (idClaim == null)
+                return NotFound();
+            var user = databaseContext.Users.FirstOrDefault(x => x.Login == idClaim.Value);
+            if (user == null || user.PasswordHash != CryptService.CreateMd5(userChange.PasswordConfirm))
+                return BadRequest();
+            if (!string.IsNullOrEmpty(userChange.Login))
+                user.Login = userChange.Login;
+            if (!string.IsNullOrEmpty(userChange.Password))
+                user.PasswordHash = CryptService.CreateMd5(userChange.Password);
+            databaseContext.Update(user);
+            databaseContext.SaveChanges();
+            return Ok();
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<User> CurrentUser()
+        {
+            var idClaim = this.User.Claims.FirstOrDefault(x => x.Type == ClaimsIdentity.DefaultNameClaimType);
+            if (idClaim == null)
+                return NotFound();
+            var user = databaseContext.Users.FirstOrDefault(x => x.Login == idClaim.Value);
+            if (user == null)
+                return BadRequest();
+            return user;
+        }
+
         [Authorize]
         [HttpGet]
         public ActionResult Try() => Ok();

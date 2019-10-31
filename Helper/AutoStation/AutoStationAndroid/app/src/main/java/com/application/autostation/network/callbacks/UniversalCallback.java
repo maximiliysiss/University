@@ -18,6 +18,11 @@ public class UniversalCallback<T> implements Callback<T> {
         this.actionCallback = actionCallback;
     }
 
+    public UniversalCallback(Context context, ActionEmptyCallback actionEmptyCallback){
+        this.context = context;
+        this.actionCallback = t -> actionEmptyCallback.action();
+    }
+
     public UniversalCallback<T> setMessage(String message) {
         this.message = message;
         return this;

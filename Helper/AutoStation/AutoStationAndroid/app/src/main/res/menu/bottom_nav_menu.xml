@@ -16,4 +16,9 @@
         android:icon="@drawable/ic_statistics_black_24dp"
         android:title="@string/title_statistics" />
 
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_arrow_black_24dp"
+        android:title="@string/title_profile"></item>
+
 </menu>
