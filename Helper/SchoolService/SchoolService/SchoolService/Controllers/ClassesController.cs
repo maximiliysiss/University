@@ -47,8 +47,12 @@ namespace SchoolService.Controllers
         }
 
         [HttpGet("{id}/marks")]
-        public ActionResult<List<Mark>> GetClassMarks(int id){
-            return _context.Marks.Where(x=>x.Schedule.ClassId==id).ToList();
+        public ActionResult<List<Mark>> GetClassMarks(int id)
+        {
+            return _context.Marks.FromSql(@"select m.* from Marks m
+                                            left join Schedules on m.ScheduleId = Schedules.ID
+                                            where Schedules.ClassId = @id
+                                            order by Schedules.DayOfWeek, Schedules.LessonNumber", id).ToList();
         }
 
         // PUT: api/Classes/5
