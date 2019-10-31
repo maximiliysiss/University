@@ -50,10 +50,10 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<>(getBaseContext(), loginResult -> {
+        App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<LoginResult>(getBaseContext(), loginResult -> {
             App.setUserContext(new UserContext(loginResult.getAccessToken(), loginResult.getRefreshToken()));
             startActivity(new Intent(LoginActivity.this, AdminActivity.class));
-        }));
+        }).setMessage("Неправильный логин/пароль"));
     }
 
     public void buyTicket(View view) {
