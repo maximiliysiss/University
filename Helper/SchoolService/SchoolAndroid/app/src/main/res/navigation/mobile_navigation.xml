@@ -107,4 +107,11 @@
         android:label="@string/lesson"
         tools:layout="@layout/fragment_lesson_element" />
 
+    <fragment
+        android:id="@+id/navigation_super_class_element"
+        android:name="com.school.android.ui.mark.SuperTeacherFragment"
+        android:label="@string/classes"
+        tools:layout="@layout/fragment_super_teacher" />
+
+
 </navigation>

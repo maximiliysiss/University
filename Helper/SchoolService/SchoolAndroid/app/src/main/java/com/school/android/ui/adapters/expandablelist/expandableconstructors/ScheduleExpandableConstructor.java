@@ -11,10 +11,11 @@ import com.school.android.utilities.LessonUtils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScheduleExpandableConstructor extends AbstractExpandableConstructor<String, Schedule> {
 
-    public ScheduleExpandableConstructor(HashMap<String, List<Schedule>> hashMap) {
+    public ScheduleExpandableConstructor(Map<String, List<Schedule>> hashMap) {
         super(hashMap, R.layout.expandable_header, R.layout.expandable_content_schedule);
     }
 

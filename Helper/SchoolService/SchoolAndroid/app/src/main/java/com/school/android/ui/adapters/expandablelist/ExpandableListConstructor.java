@@ -4,12 +4,13 @@ import android.view.View;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface ExpandableListConstructor<T, T1> {
     List<T> getHeaders();
 
     /*Получить Child элементы в виде HashMap*/
-    HashMap<T, List<T1>> getChildren();
+    Map<T, List<T1>> getChildren();
 
     /*Создать заголовок*/
     void constructGroup(View v, T elem, int index);

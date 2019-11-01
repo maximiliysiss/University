@@ -12,12 +12,13 @@ import com.school.android.models.network.input.Schedule;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MarkScheduleInnerExpandableConstructor extends AbstractExpandableConstructor<Lesson, Mark> {
 
     Context context;
 
-    public MarkScheduleInnerExpandableConstructor(HashMap<Lesson, List<Mark>> hashMap, Context context) {
+    public MarkScheduleInnerExpandableConstructor(Map<Lesson, List<Mark>> hashMap, Context context) {
         super(hashMap, R.layout.expandable_header, R.layout.expandable_content_mark);
         this.context = context;
     }

@@ -7,7 +7,8 @@ import com.school.android.models.network.input.Mark;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface MarkInnerConstructor {
-    MarkScheduleInnerExpandableConstructor constructor(HashMap<Lesson, List<Mark>> hashMap, Context context);
+    MarkScheduleInnerExpandableConstructor constructor(Map<Lesson, List<Mark>> hashMap, Context context);
 }

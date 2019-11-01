@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.school.android.R;
 import com.school.android.application.App;
@@ -23,11 +24,14 @@ import com.school.android.ui.adapters.expandablelist.expandableconstructors.Mark
 import com.school.android.ui.adapters.expandablelist.expandableconstructors.SuperMarkScheduleExpandableConstructor;
 import com.school.android.ui.fragments.ModelContainsFragment;
 import com.school.android.utilities.DayUtils;
+import com.school.android.utilities.MarkUtilities;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
@@ -53,24 +57,17 @@ public class SuperTeacherFragment extends ModelContainsFragment<MainActivity> {
 
         classId = getArguments().getInt(getString(R.string.mark_model), 0);
         expandableListView = getView().findViewById(R.id.marks);
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+                Toast.makeText(v.getContext(), "Test " + childPosition, Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
         if (classId > 0) {
             App.getClassRetrofit().getClassMarks(classId).enqueue(new UniversalCallback<>(getContext(), x -> {
-                Map<String, List<Mark>> byDays = x.stream().collect(groupingBy(m -> DayUtils.getName(m.getSchedule().getDayOfWeek())));
-                Map<String, List<List<Mark>>> data = new HashMap<>();
-
-                byDays.forEach((k, v) -> {
-
-                    List<List<Mark>> rec = new ArrayList<>();
-                    Map<Lesson, List<Mark>> groupByLesson = v.stream().collect(groupingBy(m -> m.getSchedule().getLesson()));
-                    groupByLesson.forEach((ki, li) -> {
-                        rec.add(li);
-                    });
-                    data.put(k, rec);
-                });
-
                 expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(),
-                        new MarkScheduleExpandableConstructor((HashMap<String, List<List<Mark>>>) data, getContext(),
-                                (d, c) -> new SuperMarkScheduleExpandableConstructor(d, c))));
+                        new MarkScheduleExpandableConstructor(MarkUtilities.getData(x), (d, c) -> new SuperMarkScheduleExpandableConstructor(d, c))));
             }));
         }
     }

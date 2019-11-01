@@ -51,7 +51,7 @@ namespace SchoolService.Controllers
         {
             return _context.Marks.FromSql(@"select m.* from Marks m
                                             left join Schedules on m.ScheduleId = Schedules.ID
-                                            where Schedules.ClassId = @id
+                                            where Schedules.ClassId = {0}
                                             order by Schedules.DayOfWeek, Schedules.LessonNumber", id).ToList();
         }
 

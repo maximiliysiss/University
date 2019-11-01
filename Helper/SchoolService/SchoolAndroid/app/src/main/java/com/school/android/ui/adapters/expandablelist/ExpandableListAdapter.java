@@ -8,6 +8,7 @@ import android.widget.BaseExpandableListAdapter;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExpandableListAdapter<T, T1, Card extends ExpandableListConstructor<T, T1>> extends BaseExpandableListAdapter {
 
@@ -18,7 +19,7 @@ public class ExpandableListAdapter<T, T1, Card extends ExpandableListConstructor
     /**
      * Данные
      */
-    private HashMap<T, List<T1>> data;
+    private Map<T, List<T1>> data;
     /**
      * Заголовки
      */
@@ -145,6 +146,7 @@ public class ExpandableListAdapter<T, T1, Card extends ExpandableListConstructor
             convertView = layoutInflater.inflate(card.getChildLayout(), null);
         }
         card.constructChild(convertView, element, groupPosition, childPosition);
+        parent.invalidate();
         return convertView;
     }
 

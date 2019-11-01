@@ -10,16 +10,17 @@ import com.school.android.ui.adapters.expandablelist.ExpandableListConstructor;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractExpandableConstructor<T, T1> implements ExpandableListConstructor<T, T1> {
 
-    protected HashMap<T, List<T1>> hashMap;
+    protected Map<T, List<T1>> hashMap;
 
     protected int groupLayout;
     protected int childLayout;
 
-    public AbstractExpandableConstructor(HashMap<T, List<T1>> hashMap, int groupLayout, int childLayout) {
+    public AbstractExpandableConstructor(Map<T, List<T1>> hashMap, int groupLayout, int childLayout) {
         this.hashMap = hashMap;
         this.groupLayout = groupLayout;
         this.childLayout = childLayout;
@@ -31,7 +32,7 @@ public abstract class AbstractExpandableConstructor<T, T1> implements Expandable
     }
 
     @Override
-    public HashMap<T, List<T1>> getChildren() {
+    public Map<T, List<T1>> getChildren() {
         return hashMap;
     }
 
