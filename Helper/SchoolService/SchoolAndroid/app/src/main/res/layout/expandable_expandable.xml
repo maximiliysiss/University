@@ -4,8 +4,8 @@
     android:layout_height="wrap_content">
 
     <ExpandableListView
-        android:id="@+id/expanable"
+        android:id="@+id/expandable"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ExpandableListView>
+        android:layout_height="match_parent"></ExpandableListView>
 
 </RelativeLayout>

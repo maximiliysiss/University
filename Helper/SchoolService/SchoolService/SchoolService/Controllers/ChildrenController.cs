@@ -66,6 +66,9 @@ namespace SchoolService.Controllers
             return child;
         }
 
+        [HttpGet("class/{id}")]
+        public ActionResult<List<Child>> GetChildByClass(int id) => _context.Children.Where(x => x.Class.ID == id).ToList();
+
         // GET: api/3/class/3
         [HttpGet("{id}/class/{class}")]
         [Authorize(Roles = "Admin, KnowledgeTeacher")]

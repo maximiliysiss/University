@@ -57,13 +57,6 @@ public class SuperTeacherFragment extends ModelContainsFragment<MainActivity> {
 
         classId = getArguments().getInt(getString(R.string.mark_model), 0);
         expandableListView = getView().findViewById(R.id.marks);
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Toast.makeText(v.getContext(), "Test " + childPosition, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
         if (classId > 0) {
             App.getClassRetrofit().getClassMarks(classId).enqueue(new UniversalCallback<>(getContext(), x -> {
                 expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(),

@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
@@ -31,5 +32,8 @@ public interface ScheduleRetrofit {
 
     @DELETE("schedules/{id}")
     Call<Schedule> delete(@Path("id") int id);
+
+    @GET("schedules/class/{day}/{class}")
+    Call<List<Schedule>> getScheduleByClassAndDay(@Path("day") int day, @Path("class") int _class);
 
 }

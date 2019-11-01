@@ -128,6 +128,9 @@ namespace SchoolService.Controllers
             return CreatedAtAction("GetSchedule", new { id = schedule.ID }, schedule);
         }
 
+        [HttpGet("class/{day}/{class}")]
+        public ActionResult<List<Schedule>> GetScheduleByDayAndClass(int day, int @class)=>_context.Schedules.Where(x=>(int)x.DayOfWeek==day && x.ClassId == @class).ToList();
+
         // DELETE: api/Schedules/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "KnowledgeTeacher, Admin, JobTeacher")]

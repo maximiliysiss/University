@@ -37,4 +37,6 @@ public interface ClassRetrofit {
     @GET("classes/{id}/marks")
     Call<List<Mark>> getClassMarks(@Path("id") int id);
 
+    @GET("classes/day/{day}")
+    Call<List<Class>> getClassByDay(@Path("day") int day);
 }

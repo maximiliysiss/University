@@ -3,6 +3,7 @@ package com.school.android.utilities;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class DayUtils {
 
@@ -25,6 +26,15 @@ public class DayUtils {
 
     public static String getName(Integer integer) {
         return getDays().get(integer);
+    }
+
+    public static Integer getId(String name) {
+        AtomicReference<Integer> id = new AtomicReference<>(0);
+        getDays().forEach((k, v) -> {
+            if (name == v)
+                id.set(k);
+        });
+        return id.get();
     }
 
     public static List<String> getStrings() {

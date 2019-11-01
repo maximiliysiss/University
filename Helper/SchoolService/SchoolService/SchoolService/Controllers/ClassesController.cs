@@ -77,6 +77,10 @@ namespace SchoolService.Controllers
             return @class;
         }
 
+        [HttpGet("day/{day}")]
+        [Authorize]
+        public ActionResult<List<Class>> GetClassByDay(int day) => _context.Schedules.Where(x => (int)x.DayOfWeek == day).Select(x => x.Class).Distinct().ToList();
+
         // POST: api/Classes
         [HttpPost]
         [Authorize(Roles = "KnowledgeTeacher, Admin")]
