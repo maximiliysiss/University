@@ -6,6 +6,8 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.widget.Spinner;
 
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,12 +50,18 @@ public abstract class SpinnerObserver extends Spinner implements Observable, Obs
     }
 
     @Override
-    public void RemoveObserver(Observer observer) {
+    public void removeObserver(Observer observer) {
         observerList.remove(observer);
     }
 
     @Override
     public void notifyObservers() {
         observerList.forEach(x -> x.notify(this));
+    }
+
+    @Override
+    public void setOnItemSelectedListener(@Nullable OnItemSelectedListener listener) {
+        super.setOnItemSelectedListener(listener);
+        notifyObservers();
     }
 }

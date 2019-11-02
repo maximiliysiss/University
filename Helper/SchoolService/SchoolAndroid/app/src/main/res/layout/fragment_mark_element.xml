@@ -8,35 +8,37 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp">
 
-        <Spinner
+        <com.school.android.ui.spinner.DaySpinner
             android:id="@+id/day"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.DaySpinner>
 
-        <Spinner
+        <com.school.android.ui.spinner.ClassSpinner
             android:id="@+id/class_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.ClassSpinner>
 
-        <Spinner
+        <com.school.android.ui.spinner.LessonSpinner
             android:id="@+id/lesson"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.LessonSpinner>
 
-        <Spinner
+        <com.school.android.ui.spinner.StudentSpinner
             android:id="@+id/student"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></Spinner>
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.StudentSpinner>
 
         <EditText
             android:id="@+id/mark"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Оценка"
             android:inputType="numberSigned"
             android:paddingLeft="15dp"
-            android:text="Оценка"
             android:textSize="14pt"></EditText>
 
     </LinearLayout>

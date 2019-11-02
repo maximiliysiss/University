@@ -16,7 +16,13 @@ import com.school.android.application.App;
 import com.school.android.models.network.input.Mark;
 import com.school.android.network.classes.UniversalWithCodeCallback;
 import com.school.android.ui.activity.MainActivity;
+import com.school.android.ui.adapters.spinner.StringSpinnerAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
+import com.school.android.ui.spinner.ClassSpinner;
+import com.school.android.ui.spinner.DaySpinner;
+import com.school.android.ui.spinner.LessonSpinner;
+import com.school.android.ui.spinner.StudentSpinner;
+import com.school.android.utilities.DayUtils;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,10 +31,10 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
 
 
     EditText mark;
-    Spinner className;
-    Spinner day;
-    Spinner student;
-    Spinner lesson;
+    ClassSpinner className;
+    DaySpinner day;
+    StudentSpinner student;
+    LessonSpinner lesson;
 
     public MarkElementFragment() {
         super(R.id.navigation_marks);
@@ -39,6 +45,26 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_mark_element, container, false);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        mark = getView().findViewById(R.id.mark);
+        className = getView().findViewById(R.id.class_name);
+        day = getView().findViewById(R.id.day);
+        student = getView().findViewById(R.id.student);
+        lesson = getView().findViewById(R.id.lesson);
+
+        className.addObserver(day);
+        lesson.addObserver(className);
+        lesson.setDaySpinner(day);
+        student.addObserver(className);
+
+        day.setAdapter(new StringSpinnerAdapter(DayUtils.getStrings(), R.layout.spinner_item, getContext()));
+
+        generateModelActions(getView());
     }
 
     @Override

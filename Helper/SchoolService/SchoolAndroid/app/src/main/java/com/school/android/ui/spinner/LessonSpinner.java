@@ -5,7 +5,14 @@ import android.content.res.Resources;
 import android.util.AttributeSet;
 import android.widget.Spinner;
 
+import com.school.android.application.App;
+import com.school.android.models.network.input.Class;
+import com.school.android.models.network.input.Schedule;
+import com.school.android.network.classes.UniversalCallback;
+import com.school.android.ui.adapters.spinner.ScheduleSpinnerAdapter;
 import com.school.android.utilities.DayUtils;
+
+import java.util.List;
 
 public class LessonSpinner extends SpinnerObserver {
 
@@ -49,7 +56,9 @@ public class LessonSpinner extends SpinnerObserver {
             Class aClass = (Class) ((Spinner) observable).getSelectedItem();
             Integer day = DayUtils.getId(daySpinner.getSelectedItem().toString());
 
-
+            App.getScheduleRetrofit().getScheduleByClassAndDay(day, aClass.getId()).enqueue(new UniversalCallback<List<Schedule>>(getContext(), x -> {
+                setAdapter(new ScheduleSpinnerAdapter(x, getContext()));
+            }));
         }
     }
 }

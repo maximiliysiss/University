@@ -7,7 +7,7 @@ import android.widget.Spinner;
 
 import androidx.annotation.Nullable;
 
-public class DaySpinner extends AbstractSpinner {
+public class DaySpinner extends SpinnerObserver {
     public DaySpinner(Context context) {
         super(context);
     }
@@ -40,5 +40,9 @@ public class DaySpinner extends AbstractSpinner {
     public void setOnItemSelectedListener(@Nullable OnItemSelectedListener listener) {
         super.setOnItemSelectedListener(listener);
         this.notifyObservers();
+    }
+
+    @Override
+    public void notify(Observable observable) {
     }
 }
