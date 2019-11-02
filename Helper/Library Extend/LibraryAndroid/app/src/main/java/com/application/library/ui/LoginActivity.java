@@ -16,18 +16,32 @@ import com.application.library.network.callbacks.UniversalCallback;
 import com.application.library.network.models.input.LoginResult;
 import com.application.library.network.models.output.LoginModel;
 
+/**
+ * Форма входа
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * Поля ввода
+     */
     EditText login;
     EditText password;
     public LinearLayout linearLayout;
 
 
+    /**
+     * Нельзя надать кнопку назад
+     */
     @Override
     public void onBackPressed() {
 
     }
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +51,14 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         linearLayout = findViewById(R.id.linear);
 
+        /**
+         * Попробуем авторизироваться
+         */
         UserContext res = App.tryLogin();
+        /**
+         * Если окей, то просто откроем форму
+         * иначе предлагаем ввести данные
+         */
         if (res != null) {
             App.setUserContext(res);
             startActivity(new Intent(this, MainActivity.class));
@@ -46,6 +67,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Авторизация
+     *
+     * @param view
+     */
     public void login(View view) {
 
         String loginString = login.getText().toString().trim();
@@ -62,6 +88,10 @@ public class LoginActivity extends AppCompatActivity {
         }).setMessage("Неправильный логин/пароль"));
     }
 
+    /**
+     * Кнопка регистрация
+     * @param view
+     */
     public void register(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
     }

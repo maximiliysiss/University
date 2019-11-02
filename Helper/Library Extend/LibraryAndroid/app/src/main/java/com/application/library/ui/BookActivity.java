@@ -14,22 +14,42 @@ import com.application.library.app.App;
 import com.application.library.network.callbacks.UniversalCallback;
 import com.application.library.network.models.input.Book;
 
+/**
+ * Форма для книг
+ */
 public class BookActivity extends AppCompatActivity {
 
+    /**
+     * Книга
+     */
     Book object;
 
+    /**
+     * Вводы для полей
+     */
     EditText name;
     EditText author;
     EditText price;
 
+    /**
+     * Кнопки действия
+     */
     Button action;
     Button delete;
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_book);
 
+        /**
+         * Получить книгу, с которой работаем
+         */
         object = (Book) getIntent().getExtras().getSerializable("book");
 
         name = findViewById(R.id.name);
@@ -42,6 +62,9 @@ public class BookActivity extends AppCompatActivity {
         author.setText(object.getAuthor());
         price.setText(String.valueOf(object.getPrice()));
 
+        /**
+         * Если == 0, то это новая книга
+         */
         if (object.getId() == 0) {
             action.setText("Добавить");
             action.setOnClickListener(v -> {
@@ -63,6 +86,11 @@ public class BookActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Загрузим книгу с формы, получим данные с EditView
+     *
+     * @return
+     */
     public boolean loadModel() {
         String nameString = name.getText().toString().trim();
         String authorString = author.getText().toString().trim();
@@ -79,6 +107,11 @@ public class BookActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Удаление
+     *
+     * @param view
+     */
     public void delete(View view) {
         App.getBookRetrofit().delete(object.getId()).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
             startActivity(new Intent(this, MainActivity.class));

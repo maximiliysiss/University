@@ -4,19 +4,40 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Информация о пользователе
+ */
 @Entity
 public class UserContext {
 
+    /**
+     * ID
+     */
     @PrimaryKey(autoGenerate = true)
     int id;
 
+    /**
+     * Токен для доступа
+     */
     String accessToken;
+    /**
+     * Токен для обновления токенов (он хранится намного долго)
+     */
     String refreshToken;
+    /**
+     * Роль пользователя
+     */
     Integer userRole;
 
     public UserContext() {
     }
 
+    /**
+     * Конструктор
+     * @param accessToken
+     * @param refreshToken
+     * @param userRole
+     */
     @Ignore
     public UserContext(String accessToken, String refreshToken, Integer userRole) {
         this.accessToken = accessToken;

@@ -11,11 +11,17 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Controllers
 {
+    /// <summary>
+    /// Контроллер для книг
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
     public class BooksController : ControllerBase
     {
+        /// <summary>
+        /// Подключение к БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public BooksController(DatabaseContext context)
@@ -89,6 +95,11 @@ namespace Library.Controllers
             return book;
         }
 
+        /// <summary>
+        /// Существует ли книга
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool BookExists(int id)
         {
             return _context.Books.Any(e => e.ID == id);

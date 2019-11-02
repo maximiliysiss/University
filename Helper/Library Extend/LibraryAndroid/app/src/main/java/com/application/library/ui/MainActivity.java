@@ -18,11 +18,23 @@ import com.application.library.network.models.input.Book;
 import com.application.library.ui.adapters.recyclerviews.RecyclerViewAdapter;
 import com.application.library.ui.adapters.recyclerviews.ViewHolder.BookViewHolder;
 
+/**
+ * Форма для отображения книг
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Вывод списка
+     */
     RecyclerView recyclerView;
+    /**
+     * Кнопка добавить
+     */
     Button add;
 
+    /**
+     * При нажатии назад - спросить о смене пользователя
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -36,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,15 +62,26 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.books);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        /**
+         * Загрузим книги
+         */
         App.getBookRetrofit().getBooks().enqueue(new UniversalCallback<>(getBaseContext(), x -> {
             recyclerView.setAdapter(new RecyclerViewAdapter(x, R.layout.recycler_book, y -> new BookViewHolder(y)));
         }));
 
+        /**
+         * Если админ, то дадим возможность добавлять
+         */
         if (UserRole.values()[App.getUserContext().getUserRole()] != UserRole.Admin)
             add.setVisibility(View.INVISIBLE);
 
     }
 
+    /**
+     * Кнопка добавить
+     *
+     * @param view
+     */
     public void add(View view) {
         Intent intent = new Intent(this, BookActivity.class);
         intent.putExtra("book", new Book());

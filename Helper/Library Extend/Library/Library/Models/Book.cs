@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Library.Models
 {
+    /// <summary>
+    /// Книга
+    /// </summary>
     public class Book
     {
         public int ID { get; set; }

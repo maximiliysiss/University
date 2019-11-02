@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Library
 {
+    /// <summary>
+    /// Класс сервера
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -35,7 +38,7 @@ namespace Library
 
             var settingsAuth = Configuration.GetSection("AuthSettings").Get<AuthorizeSettings>();
             services.AddSingleton(settingsAuth);
-
+            // Добавим авторизацию
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
@@ -48,7 +51,7 @@ namespace Library
                         IssuerSigningKey = settingsAuth.SecurityKey
                     };
                 });
-
+            // Добавим БД
             services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("Default")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }

@@ -15,11 +15,20 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Library.Controllers
 {
+    /// <summary>
+    /// Контроллер для авторизации
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
+        /// <summary>
+        /// Подключение к БД
+        /// </summary>
         DatabaseContext databaseContext;
+        /// <summary>
+        /// Настройки для авторизации
+        /// </summary>
         AuthorizeSettings authorizeSettings;
 
         public AuthController(DatabaseContext databaseContext, AuthorizeSettings authorizeSettings)
@@ -28,6 +37,12 @@ namespace Library.Controllers
             this.authorizeSettings = authorizeSettings;
         }
 
+        /// <summary>
+        /// Создание токена для пользователя на количество дней
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="days"></param>
+        /// <returns></returns>
         private string GenerateToken(User user, int days)
         {
             var now = DateTime.Now;
@@ -41,6 +56,11 @@ namespace Library.Controllers
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
+        /// <summary>
+        /// Логин
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<TokenResult> Login(LoginModel loginModel)
         {
@@ -61,6 +81,11 @@ namespace Library.Controllers
             };
         }
 
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<TokenResult> Register(LoginModel loginModel)
         {
@@ -80,6 +105,10 @@ namespace Library.Controllers
             return Login(loginModel);
         }
 
+        /// <summary>
+        /// Обновить токены
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<TokenResult> Refresh()
         {
@@ -101,6 +130,11 @@ namespace Library.Controllers
             return new TokenResult { AccessToken = newJwt, RefreshToken = user.Token, UserRole = user.UserRole };
         }
 
+        /// <summary>
+        /// Получить данные из токена
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
@@ -121,6 +155,10 @@ namespace Library.Controllers
             return principal;
         }
 
+        /// <summary>
+        /// Попытка проверить авторизацию
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult Try() => Ok();
