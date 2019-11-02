@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_schedules"
+        android:icon="@drawable/ic_schedule_black_24dp"
+        android:title="@string/schedules" />
+
+    <item
+        android:id="@+id/navigation_users"
+        android:icon="@drawable/ic_users_black_24dp"
+        android:title="@string/users" />
+
+    <item
+        android:id="@+id/navigation_classes"
+        android:icon="@drawable/ic_mark_black_24dp"
+        android:title="@string/classes" />
+
+    <item
+        android:id="@+id/navigation_archive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="@string/archive" />
+
+    <item
+        android:id="@+id/navigation_riskgroups"
+        android:icon="@drawable/ic_riskgroup_black_24dp"
+        android:title="@string/riskgroup" />
+
+</menu>

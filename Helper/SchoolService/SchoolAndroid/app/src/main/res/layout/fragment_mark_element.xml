@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.mark.MarkElementFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <com.school.android.ui.spinner.DaySpinner
+            android:id="@+id/day"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.DaySpinner>
+
+        <com.school.android.ui.spinner.ClassSpinner
+            android:id="@+id/class_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.ClassSpinner>
+
+        <com.school.android.ui.spinner.LessonSpinner
+            android:id="@+id/lesson"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.LessonSpinner>
+
+        <com.school.android.ui.spinner.StudentSpinner
+            android:id="@+id/student"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></com.school.android.ui.spinner.StudentSpinner>
+
+        <EditText
+            android:id="@+id/mark"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Оценка"
+            android:inputType="numberSigned"
+            android:paddingLeft="15dp"
+            android:textSize="14pt"></EditText>
+
+        <Button
+            android:id="@+id/action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Action"></Button>
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:visibility="invisible"></Button>
+
+    </LinearLayout>
+
+</FrameLayout>

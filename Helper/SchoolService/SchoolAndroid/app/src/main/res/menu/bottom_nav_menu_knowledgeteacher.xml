@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_schedules"
+        android:icon="@drawable/ic_schedule_black_24dp"
+        android:title="@string/schedules" />
+
+    <item
+        android:id="@+id/navigation_lessons"
+        android:icon="@drawable/ic_schedule_black_24dp"
+        android:title="@string/lesson" />
+
+    <item
+        android:id="@+id/navigation_classes"
+        android:icon="@drawable/ic_superclass_black_24dp"
+        android:title="@string/classes" />
+
+    <item
+        android:id="@+id/navigation_students"
+        android:icon="@drawable/ic_students_black_24dp"
+        android:title="@string/student" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_profile_black_24dp"
+        android:title="@string/profile" />
+
+</menu>

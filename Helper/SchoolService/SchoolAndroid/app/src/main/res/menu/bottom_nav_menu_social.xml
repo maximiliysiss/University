@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_riskgroups"
+        android:icon="@drawable/ic_riskgroup_black_24dp"
+        android:title="@string/riskgroup" />
+
+    <item
+        android:id="@+id/navigation_archive"
+        android:icon="@drawable/ic_archive_black_24dp"
+        android:title="@string/archive" />
+
+    <item
+        android:id="@+id/navigation_students"
+        android:icon="@drawable/ic_students_black_24dp"
+        android:title="@string/student" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_profile_black_24dp"
+        android:title="@string/profile" />
+
+</menu>

@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_profile">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.school.android.ui.profile.ProfileFragment"
+        android:label="@string/profile"
+        tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_schedules"
+        android:name="com.school.android.ui.schedule.ScheduleFragment"
+        android:label="@string/schedules"
+        tools:layout="@layout/fragment_schedule" />
+
+    <fragment
+        android:id="@+id/navigation_marks"
+        android:name="com.school.android.ui.mark.MarkFragment"
+        android:label="@string/mark"
+        tools:layout="@layout/fragment_mark" />
+
+    <fragment
+        android:id="@+id/navigation_archive"
+        android:name="com.school.android.ui.archive.ArchiveFragment"
+        android:label="@string/archive"
+        tools:layout="@layout/fragment_archive" />
+
+    <fragment
+        android:id="@+id/navigation_riskgroups"
+        android:name="com.school.android.ui.riskgroup.RiskGroupFragment"
+        android:label="@string/riskgroup"
+        tools:layout="@layout/fragment_risk_group" />
+
+    <fragment
+        android:id="@+id/navigation_students"
+        android:name="com.school.android.ui.student.StudentFragment"
+        android:label="@string/student"
+        tools:layout="@layout/fragment_student" />
+
+    <fragment
+        android:id="@+id/navigation_users"
+        android:name="com.school.android.ui.user.UserFragment"
+        android:label="@string/users"
+        tools:layout="@layout/fragment_user" />
+
+    <fragment
+        android:id="@+id/navigation_users_element"
+        android:name="com.school.android.ui.user.UserElementFragment"
+        android:label="@string/users"
+        tools:layout="@layout/fragment_user_element" />
+
+    <fragment
+        android:id="@+id/navigation_super_class"
+        android:name="com.school.android.ui.superclass.SuperClassFragment"
+        android:label="@string/superclass"
+        tools:layout="@layout/fragment_super_class" />
+
+    <fragment
+        android:id="@+id/navigation_workers"
+        android:name="com.school.android.ui.workers.WorkerFragment"
+        android:label="@string/worker"
+        tools:layout="@layout/fragment_worker" />
+
+    <fragment
+        android:id="@+id/navigation_classes"
+        android:name="com.school.android.ui.classes.ClassFragment"
+        android:label="@string/classes"
+        tools:layout="@layout/fragment_class" />
+
+    <fragment
+        android:id="@+id/navigation_class_element"
+        android:name="com.school.android.ui.classes.ClassElementFragment"
+        android:label="@string/classes"
+        tools:layout="@layout/fragment_class_element" />
+
+    <fragment
+        android:id="@+id/navigation_riskgroups_element"
+        android:name="com.school.android.ui.riskgroup.RiskGroupElementFragment"
+        android:label="@string/riskgroup"
+        tools:layout="@layout/fragment_risk_group_element" />
+
+    <fragment
+        android:id="@+id/navigation_schedule_element"
+        android:name="com.school.android.ui.schedule.ScheduleElementFragment"
+        android:label="@string/schedules"
+        tools:layout="@layout/fragment_schedule_element" />
+
+    <fragment
+        android:id="@+id/navigation_mark_element"
+        android:name="com.school.android.ui.mark.MarkElementFragment"
+        android:label="@string/mark"
+        tools:layout="@layout/fragment_mark_element" />
+
+    <fragment
+        android:id="@+id/navigation_lessons"
+        android:name="com.school.android.ui.lessons.LessonsFragment"
+        android:label="@string/lesson"
+        tools:layout="@layout/fragment_lessons" />
+
+    <fragment
+        android:id="@+id/navigation_lesson_element"
+        android:name="com.school.android.ui.lessons.LessonElementFragment"
+        android:label="@string/lesson"
+        tools:layout="@layout/fragment_lesson_element" />
+
+    <fragment
+        android:id="@+id/navigation_super_class_element"
+        android:name="com.school.android.ui.mark.SuperTeacherFragment"
+        android:label="@string/classes"
+        tools:layout="@layout/fragment_super_teacher" />
+
+
+</navigation>

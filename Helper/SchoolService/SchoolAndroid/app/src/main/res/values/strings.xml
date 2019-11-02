@@ -1,0 +1,54 @@
+<resources>
+    <string name="app_name">SchoolAndroid</string>
+    <string name="server_url">http://192.168.1.8:5000/api/</string>
+    <string name="user">teacher</string>
+
+    <string name="schedules">Расписание</string>
+    <string name="profile">Профиль</string>
+    <string name="riskgroup">Группы риска</string>
+    <string name="mark">Оценки</string>
+    <string name="superclass">Мой класс</string>
+    <string name="student">Учащиеся</string>
+    <string name="worker">Работники</string>
+    <string name="users">Пользователи</string>
+    <string name="archive">Архив</string>
+    <string name="not_login_password">Введите логин/пароль</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="user_model">user</string>
+    <string name="enum_admin">Админ</string>
+    <string name="enum_social">Соц. работник</string>
+    <string name="enum_knowledgeteacher">KnowledgeTeacher</string>
+    <string name="enum_jobteacher">JobTeacher</string>
+    <string name="enum_teacher">Учитель</string>
+    <string name="enum_student">Ученик</string>
+    <string name="edit">Изменить</string>
+    <string name="add">Добавить</string>
+    <string name="delete">Удалить</string>
+    <string name="classes">Классы</string>
+    <string name="class_model">class</string>
+    <string name="not_enter">Заполните поля</string>
+    <string name="from_archive">Убрать из архива?</string>
+    <string name="no">Нет</string>
+    <string name="yes">Да</string>
+    <string name="to_archive">Отправить в архив</string>
+    <string name="riskgroup_model">riskgroup_model</string>
+    <string name="from_riskgroup">Убрать из группы риска?</string>
+    <string name="add_risk_group">Добавить к риск группе</string>
+    <string name="select_risk_group">Выберите риск группу</string>
+    <string name="schedule_model">schedule_model</string>
+    <string name="without_student">is_change</string>
+    <string name="only_student">only_student</string>
+    <string name="authorize_error">Ошибка авторизации</string>
+    <string name="network_error">Ошибка сети</string>
+    <string name="sure">Вы уверены</string>
+    <string name="back">back</string>
+    <string name="mark_model">mark_model</string>
+    <string name="lesson_model">lesson_model</string>
+    <string name="lesson">Уроки</string>
+    <string name="delete_profile">Удалить позицию?</string>
+    <string name="add_position">Добавить позицию?</string>
+    <string name="set_password">Введите пароль</string>
+    <string name="select_class">Изменить класс</string>
+</resources>
