@@ -10,28 +10,56 @@ import androidx.fragment.app.Fragment;
 import com.application.autostation.R;
 import com.application.autostation.ui.models.Model;
 
+/**
+ * Фрагмент для модели
+ * @param <T>
+ * @param <A>
+ */
 public abstract class ModelFragment<T extends Model, A extends Activity> extends Fragment {
 
+    /**
+     * Модель
+     */
     T obj;
 
+    /**
+     * Получить объект
+     * @return
+     */
     public T getObj() {
         return obj;
     }
 
-
+    /**
+     * Получить форму
+     * @return
+     */
     public A getRealActivity() {
         return (A) getActivity();
     }
 
+    /**
+     * Старт формы
+     */
     @Override
     public void onStart() {
         super.onStart();
 
+        /**
+         * Получить объект
+         */
         obj = (T) getArguments().getSerializable(getModelName());
     }
 
+    /**
+     * Получить название модели
+     * @return
+     */
     public abstract String getModelName();
 
+    /**
+     * Сгенерировать действия Добавить/Удалить/Изменить
+     */
     public void generateActions() {
 
         View view = getView();
@@ -61,11 +89,27 @@ public abstract class ModelFragment<T extends Model, A extends Activity> extends
 
     }
 
+    /**
+     * Загрузить объект с формы
+     * @return
+     */
     public abstract boolean loadObject();
 
+    /**
+     * Добавить
+     * @param obj
+     */
     public abstract void add(T obj);
 
+    /**
+     * Удалить
+     * @param id
+     */
     public abstract void delete(int id);
 
+    /**
+     * Изменить
+     * @param obj
+     */
     public abstract void update(T obj);
 }

@@ -10,8 +10,14 @@ import com.application.autostation.network.models.input.Schedule;
 import com.application.autostation.ui.activities.AdminActivity;
 import com.application.autostation.utilities.DayOfWeek;
 
+/**
+ * Описание элемента RecyclerView маршрута
+ */
 public class ScheduleViewHolder extends RecyclerViewHolder<Schedule> {
 
+    /**
+     * Поля
+     */
     TextView from;
     TextView to;
     TextView price;
@@ -30,11 +36,18 @@ public class ScheduleViewHolder extends RecyclerViewHolder<Schedule> {
         day = itemView.findViewById(R.id.day);
     }
 
+    /**
+     * Обработка нажатия
+     */
     @Override
     public void onClick() {
         ((AdminActivity) getActivity()).openFragment(R.id.navigation_schedule, getString(R.string.schedule_model), object);
     }
 
+    /**
+     * Заполнение объекта
+     * @param object
+     */
     @Override
     public void setObject(Schedule object) {
         super.setObject(object);

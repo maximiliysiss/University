@@ -12,12 +12,21 @@ import com.application.autostation.ui.models.Model;
 
 import java.util.List;
 
+/**
+ * Адаптер для выпадающего списка с моделью
+ * @param <T>
+ */
 public abstract class CustomModelSpinnerAdapter<T extends Model> extends CustomSpinnerAdapter<T> {
 
     public CustomModelSpinnerAdapter(List<T> data, int layout, Context context) {
         super(data, layout, context);
     }
 
+    /**
+     * Получить индекс
+     * @param obj
+     * @return
+     */
     @Override
     public int getIndex(T obj) {
         if (obj == null)

@@ -11,10 +11,16 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AutoStation.Controllers
 {
+    /// <summary>
+    /// Расписание
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class SchedulesController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public SchedulesController(DatabaseContext context)
@@ -23,6 +29,10 @@ namespace AutoStation.Controllers
         }
 
         // GET: api/Schedules
+        /// <summary>
+        /// Получить список
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Schedule>>> GetSchedules()
         {
@@ -30,6 +40,12 @@ namespace AutoStation.Controllers
         }
 
         // PUT: api/Schedules/5
+        /// <summary>
+        /// Изменить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="schedule"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Authorize]
         public async Task<ActionResult<Schedule>> PutSchedule(int id, Schedule schedule)
@@ -61,6 +77,11 @@ namespace AutoStation.Controllers
         }
 
         // POST: api/Schedules
+        /// <summary>
+        /// Добавить
+        /// </summary>
+        /// <param name="schedule"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<Schedule>> PostSchedule(Schedule schedule)
@@ -72,6 +93,11 @@ namespace AutoStation.Controllers
         }
 
         // DELETE: api/Schedules/5
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize]
         public async Task<ActionResult<Schedule>> DeleteSchedule(int id)
@@ -88,6 +114,11 @@ namespace AutoStation.Controllers
             return schedule;
         }
 
+        /// <summary>
+        /// Существует ли
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool ScheduleExists(int id)
         {
             return _context.Schedules.Any(e => e.ID == id);

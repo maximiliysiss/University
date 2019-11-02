@@ -11,11 +11,17 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AutoStation.Controllers
 {
+    /// <summary>
+    /// Точик
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class PointsController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public PointsController(DatabaseContext context)
@@ -24,6 +30,10 @@ namespace AutoStation.Controllers
         }
 
         // GET: api/Points
+        /// <summary>
+        /// Получить список
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Point>>> GetPoints()
         {
@@ -31,6 +41,11 @@ namespace AutoStation.Controllers
         }
 
         // GET: api/Points/5
+        /// <summary>
+        /// Получить точку
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Point>> GetPoint(int id)
         {
@@ -45,6 +60,12 @@ namespace AutoStation.Controllers
         }
 
         // PUT: api/Points/5
+        /// <summary>
+        /// Изменить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="point"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<Point>> PutPoint(int id, Point point)
         {
@@ -75,6 +96,11 @@ namespace AutoStation.Controllers
         }
 
         // POST: api/Points
+        /// <summary>
+        /// Добавить
+        /// </summary>
+        /// <param name="point"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Point>> PostPoint(Point point)
         {
@@ -85,6 +111,11 @@ namespace AutoStation.Controllers
         }
 
         // DELETE: api/Points/5
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Point>> DeletePoint(int id)
         {
@@ -100,6 +131,11 @@ namespace AutoStation.Controllers
             return point;
         }
 
+        /// <summary>
+        /// Существует ли точка
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool PointExists(int id)
         {
             return _context.Points.Any(e => e.ID == id);

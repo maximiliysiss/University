@@ -3,6 +3,9 @@ package com.application.autostation.network.models.input;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Пользователь
+ */
 public class User {
     @SerializedName("login")
     @Expose

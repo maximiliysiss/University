@@ -11,9 +11,22 @@ import com.application.autostation.R;
 
 import java.util.List;
 
+/**
+ * Адаптер выпадающего списка
+ * @param <T>
+ */
 public abstract class CustomSpinnerAdapter<T> extends BaseAdapter implements SpinnerAdapter {
+    /**
+     * Данные
+     */
     List<T> data;
+    /**
+     * В каком формате выводить
+     */
     int layout;
+    /**
+     * Контекст
+     */
     Context context;
 
     public CustomSpinnerAdapter(List<T> data, int layout, Context context) {
@@ -22,21 +35,40 @@ public abstract class CustomSpinnerAdapter<T> extends BaseAdapter implements Spi
         this.context = context;
     }
 
+    /**
+     * Получить количетсов
+     * @return
+     */
     @Override
     public int getCount() {
         return data.size();
     }
 
+    /**
+     * Получить элемент
+     * @param position
+     * @return
+     */
     @Override
     public T getItem(int position) {
         return data.get(position);
     }
 
+    /**
+     * Получить ID элемента
+     * @param position
+     * @return
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
 
+    /**
+     * Получить индекс
+     * @param obj
+     * @return
+     */
     public int getIndex(T obj) {
         if (obj == null)
             return 0;
@@ -47,6 +79,13 @@ public abstract class CustomSpinnerAdapter<T> extends BaseAdapter implements Spi
         return 0;
     }
 
+    /**
+     * Получить представление
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = View.inflate(context, layout, null);
@@ -55,5 +94,10 @@ public abstract class CustomSpinnerAdapter<T> extends BaseAdapter implements Spi
         return view;
     }
 
+    /**
+     * Получить строку для вывода
+     * @param obj
+     * @return
+     */
     public abstract String getText(T obj);
 }

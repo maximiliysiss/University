@@ -6,8 +6,16 @@ import java.util.List;
 
 public class DayOfWeek {
 
+    /**
+     * Дни
+     */
     private static HashMap<Integer, String> days;
 
+    /**
+     * Получить дни
+     *
+     * @return
+     */
     private static HashMap<Integer, String> getDays() {
         if (days != null)
             return days;
@@ -23,10 +31,21 @@ public class DayOfWeek {
         return days;
     }
 
+    /**
+     * Получить день по ID
+     *
+     * @param integer
+     * @return
+     */
     public static String getDay(Integer integer) {
         return getDays().get(integer);
     }
 
+    /**
+     * Получить только строки
+     *
+     * @return
+     */
     public static List<String> getAllString() {
         List<String> list = new ArrayList<>();
         HashMap<Integer, String> data = getDays();

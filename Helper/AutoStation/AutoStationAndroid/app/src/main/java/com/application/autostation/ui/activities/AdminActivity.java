@@ -17,10 +17,19 @@ import androidx.navigation.ui.NavigationUI;
 
 import java.io.Serializable;
 
+/**
+ * Форма админа
+ */
 public class AdminActivity extends AppCompatActivity {
 
+    /**
+     * Контроллер для перехода на другой фрагмент
+     */
     NavController navController;
 
+    /**
+     * При нажатии назад - сменить пользователя?
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle("Сменить пользователя?")
@@ -37,6 +46,11 @@ public class AdminActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,17 +58,29 @@ public class AdminActivity extends AppCompatActivity {
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_schedules, R.id.navigation_statistics, R.id.navigation_points)
+                R.id.navigation_schedules, R.id.navigation_points, R.id.navigation_profile)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    /**
+     * Открыть фрагмент
+     *
+     * @param id
+     */
     public void openFragment(int id) {
         navController.navigate(id);
     }
 
+    /**
+     * Открыть фрагмент с моделью
+     *
+     * @param id
+     * @param name
+     * @param serializable
+     */
     public void openFragment(int id, String name, Serializable serializable) {
         Bundle bundle = new Bundle();
         bundle.putSerializable(name, serializable);

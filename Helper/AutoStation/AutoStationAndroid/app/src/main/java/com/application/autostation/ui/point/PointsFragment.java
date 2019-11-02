@@ -24,6 +24,10 @@ import com.application.autostation.ui.adapters.recyclerviews.ViewHolder.PointVie
 /**
  * A simple {@link Fragment} subclass.
  */
+
+/**
+ * Фрагмент для вывода списка точек
+ */
 public class PointsFragment extends ModelContainsFragment<AdminActivity> {
 
     @Override
@@ -33,6 +37,9 @@ public class PointsFragment extends ModelContainsFragment<AdminActivity> {
         return inflater.inflate(R.layout.fragment_points, container, false);
     }
 
+    /**
+     * Запуска фрагмента
+     */
     @Override
     public void onStart() {
         super.onStart();

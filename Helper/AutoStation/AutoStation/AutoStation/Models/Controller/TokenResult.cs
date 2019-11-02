@@ -1,5 +1,8 @@
 namespace AutoStation.Models.Controller
 {
+    /// <summary>
+    /// Результат входа
+    /// </summary>
     public class TokenResult
     {
         private string accessToken;

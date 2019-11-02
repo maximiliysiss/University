@@ -18,27 +18,50 @@ import com.application.autostation.network.callbacks.UniversalCallback;
 import com.application.autostation.network.models.input.Buying;
 import com.application.autostation.network.models.input.Schedule;
 
+/**
+ * Форма оплаты
+ */
 public class PayActivity extends AppCompatActivity {
 
+    /**
+     * Поля
+     */
     EditText card;
     EditText count;
+    /**
+     * Расписание
+     */
     Schedule schedule;
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
     }
 
+    /**
+     * Запуск формы
+     */
     @Override
     protected void onStart() {
         super.onStart();
 
+        /**
+         * Получим расписание
+         */
         schedule = (Schedule) getIntent().getExtras().getSerializable(getString(R.string.schedule_model));
 
         TextView price = findViewById(R.id.price);
         card = findViewById(R.id.card);
         count = findViewById(R.id.count);
+        /**
+         * Когда меняем количество, то меняем и сумму
+         */
         count.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -59,10 +82,18 @@ public class PayActivity extends AppCompatActivity {
         count.setText("1");
     }
 
+    /**
+     * Нельзя вернуться назад
+     */
     @Override
     public void onBackPressed() {
     }
 
+    /**
+     * Нажатие кнопки оплата
+     *
+     * @param view
+     */
     public void pay(View view) {
         String cardString = card.getText().toString().trim();
         String countString = count.getText().toString().trim();
@@ -82,6 +113,11 @@ public class PayActivity extends AppCompatActivity {
         }));
     }
 
+    /**
+     * Нажатие кнопки назад
+     *
+     * @param view
+     */
     public void cancel(View view) {
         startActivity(new Intent(this, UserActivity.class));
     }

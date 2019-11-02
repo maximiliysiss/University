@@ -4,6 +4,9 @@ import com.application.autostation.ui.models.Model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+/**
+ * Расписание
+ */
 public class Schedule implements Model {
     @SerializedName("id")
     @Expose

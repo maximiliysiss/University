@@ -9,10 +9,22 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 
+/**
+ * Изменение пользователя
+ */
 public interface UserRetrofit {
+    /**
+     * Изменить пользователя
+     * @param changeUser
+     * @return
+     */
     @POST("auth/userchange")
     Call<ResponseBody> changeUser(@Body ChangeUser changeUser);
 
+    /**
+     * Получить пользователя
+     * @return
+     */
     @GET("auth/currentuser")
     Call<User> getUser();
 }

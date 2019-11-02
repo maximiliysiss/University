@@ -19,6 +19,9 @@ import com.application.autostation.ui.fragments.ModelContainsFragment;
 import com.application.autostation.ui.adapters.recyclerviews.RecyclerViewAdapter;
 import com.application.autostation.ui.adapters.recyclerviews.ViewHolder.ScheduleViewHolder;
 
+/**
+ * Вывод списка расписания
+ */
 public class SchedulesFragment extends ModelContainsFragment<AdminActivity> {
 
 

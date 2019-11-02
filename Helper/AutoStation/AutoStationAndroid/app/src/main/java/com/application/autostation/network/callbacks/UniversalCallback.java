@@ -7,10 +7,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Универсальный обработчик для запроса к серверу
+ * @param <T>
+ */
 public class UniversalCallback<T> implements Callback<T> {
 
     Context context;
+    /**
+     * Действие над результатом
+     */
     ActionCallback<T> actionCallback;
+    /**
+     * Сообщение, если нет тела в результате
+     */
     String message;
 
     public UniversalCallback(Context context, ActionCallback<T> actionCallback) {
@@ -28,6 +38,11 @@ public class UniversalCallback<T> implements Callback<T> {
         return this;
     }
 
+    /**
+     * Что-то получили от сервера
+     * @param call
+     * @param response
+     */
     @Override
     public void onResponse(Call<T> call, Response<T> response) {
         if (response.body() != null) {
@@ -38,6 +53,11 @@ public class UniversalCallback<T> implements Callback<T> {
         }
     }
 
+    /**
+     * Ошибочка работа
+     * @param call
+     * @param t
+     */
     @Override
     public void onFailure(Call<T> call, Throwable t) {
         Toast.makeText(context, t.getMessage(), Toast.LENGTH_SHORT).show();

@@ -12,10 +12,16 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AutoStation.Controllers
 {
+    /// <summary>
+    /// Покупки
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class BuyingsController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public BuyingsController(DatabaseContext context)
@@ -24,6 +30,10 @@ namespace AutoStation.Controllers
         }
 
         // GET: api/Buyings
+        /// <summary>
+        /// Получить покупки
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<Buying>>> GetBuyings()
@@ -32,6 +42,11 @@ namespace AutoStation.Controllers
         }
 
         // POST: api/Buyings
+        /// <summary>
+        /// Добавить покупки
+        /// </summary>
+        /// <param name="buying"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Buying>> PostBuying(Buying buying)
         {
@@ -45,15 +60,5 @@ namespace AutoStation.Controllers
 
             return buying;
         }
-
-        [HttpGet("statistic")]
-        [Authorize]
-        public List<Statistics> Statistics(int month, int year) => _context.Buyings.Where(x => x.DateTime.Month == month && x.DateTime.Year == year)
-                                    .GroupBy(x => x.DateTime.Date).Select(x => new Statistics
-                                    {
-                                        Name = x.First().HistorySchedule,
-                                        Sum = x.Sum(y => y.Sum),
-                                        Day = x.First().DateTime.Day
-                                    }).OrderBy(x=>x.Day).ToList();
     }
 }

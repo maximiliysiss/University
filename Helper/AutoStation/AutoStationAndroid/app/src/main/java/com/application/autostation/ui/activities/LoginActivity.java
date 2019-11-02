@@ -17,12 +17,25 @@ import com.application.autostation.network.callbacks.UniversalCallback;
 import com.application.autostation.network.models.input.LoginResult;
 import com.application.autostation.network.models.output.LoginModel;
 
+/**
+ * Форма входа
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * Поля
+     */
     EditText login;
     EditText password;
+    /**
+     * Контейнер для полей
+     */
     public LinearLayout linearLayout;
 
+    /**
+     * Создание формы
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +45,9 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         linearLayout = findViewById(R.id.linear);
 
+        /**
+         * Попытка войти
+         */
         UserContext res = App.tryLogin();
         if (res != null) {
             App.setUserContext(res);
@@ -41,6 +57,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Логин
+     * @param view
+     */
     public void login(View view) {
         String loginString = login.getText().toString().trim();
         String passwordString = password.getText().toString().trim();
@@ -56,6 +76,10 @@ public class LoginActivity extends AppCompatActivity {
         }).setMessage("Неправильный логин/пароль"));
     }
 
+    /**
+     * Купить билеты
+     * @param view
+     */
     public void buyTicket(View view) {
         startActivity(new Intent(this, UserActivity.class));
     }

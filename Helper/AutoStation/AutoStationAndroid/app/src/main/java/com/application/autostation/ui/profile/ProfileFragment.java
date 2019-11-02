@@ -22,13 +22,11 @@ import com.application.autostation.ui.activities.AdminActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+/**
+ * Фрагмент профиля
+ */
 public class ProfileFragment extends Fragment {
-
-
-    public ProfileFragment() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +35,9 @@ public class ProfileFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }
 
+    /**
+     * Старт фрагмента
+     */
     @Override
     public void onStart() {
         super.onStart();
@@ -49,6 +50,9 @@ public class ProfileFragment extends Fragment {
             login.setText(x.getLogin());
         }));
 
+        /**
+         * Кнопка изменить
+         */
         Button change = getView().findViewById(R.id.change);
         change.setOnClickListener(v -> {
             String passwordString = repeat.getText().toString().trim();

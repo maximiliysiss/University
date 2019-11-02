@@ -11,11 +11,20 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace AutoStation.Controllers
 {
+    /// <summary>
+    /// Контроллер авторизации
+    /// </summary>
     [ApiController]
     [Route("api/[controller]/[action]")]
     public class AuthController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         DatabaseContext databaseContext;
+        /// <summary>
+        /// Настройки авториазции
+        /// </summary>
         AuthorizeSettings authorizeSettings;
 
         public AuthController(DatabaseContext databaseContext, AuthorizeSettings authorizeSettings)
@@ -24,6 +33,12 @@ namespace AutoStation.Controllers
             this.authorizeSettings = authorizeSettings;
         }
 
+        /// <summary>
+        /// Сгенерировать токен
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="days"></param>
+        /// <returns></returns>
         private string GenerateToken(User user, int days)
         {
             var now = DateTime.Now;
@@ -37,6 +52,11 @@ namespace AutoStation.Controllers
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
+        /// <summary>
+        /// Логин
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<TokenResult> Login(LoginModel loginModel)
         {
@@ -56,24 +76,10 @@ namespace AutoStation.Controllers
             };
         }
 
-        [HttpPost]
-        public ActionResult<TokenResult> Register(LoginModel loginModel)
-        {
-            var user = databaseContext.Users.FirstOrDefault(x => x.Login == loginModel.Login);
-            if (user != null)
-                return BadRequest();
-
-            user = new User
-            {
-                Login = loginModel.Login,
-                PasswordHash = CryptService.CreateMd5(loginModel.Password)
-            };
-            databaseContext.Add(user);
-            databaseContext.SaveChanges();
-
-            return Login(loginModel);
-        }
-
+        /// <summary>
+        /// Обновить токены
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult<TokenResult> Refresh()
         {
@@ -95,6 +101,11 @@ namespace AutoStation.Controllers
             return new TokenResult { AccessToken = newJwt, RefreshToken = user.Token };
         }
 
+        /// <summary>
+        /// Получить информацию из токена
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
         {
             var tokenValidationParameters = new TokenValidationParameters
@@ -115,6 +126,11 @@ namespace AutoStation.Controllers
             return principal;
         }
 
+        /// <summary>
+        /// Изменить пользователя
+        /// </summary>
+        /// <param name="userChange"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize]
         public ActionResult UserChange(UserChange userChange)
@@ -134,6 +150,10 @@ namespace AutoStation.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// Получить текущего пользователя
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Authorize]
         public ActionResult<User> CurrentUser()
@@ -147,6 +167,10 @@ namespace AutoStation.Controllers
             return user;
         }
 
+        /// <summary>
+        /// Проверка авторизации
+        /// </summary>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         public ActionResult Try() => Ok();

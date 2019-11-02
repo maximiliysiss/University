@@ -8,6 +8,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Базовый класс для элементов RecyclerView
+ * @param <T>
+ */
 public abstract class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
 
     public RecyclerViewHolder(@NonNull View itemView) {
@@ -16,12 +20,23 @@ public abstract class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
         this.itemView.setOnClickListener(x -> onClick());
     }
 
+    /**
+     * Объект
+     */
     protected T object;
 
+    /**
+     * Установить объект
+     * @param object
+     */
     public void setObject(T object) {
         this.object = object;
     }
 
+    /**
+     * Получить форму
+     * @return
+     */
     protected Activity getActivity() {
         Context context = itemView.getContext();
         while (context instanceof ContextWrapper) {
@@ -33,9 +48,17 @@ public abstract class RecyclerViewHolder<T> extends RecyclerView.ViewHolder {
         return null;
     }
 
+    /**
+     * Получить строку
+     * @param id
+     * @return
+     */
     public String getString(int id) {
         return itemView.getContext().getString(id);
     }
 
+    /**
+     * Обработка нажатия
+     */
     public abstract void onClick();
 }

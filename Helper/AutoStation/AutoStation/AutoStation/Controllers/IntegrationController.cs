@@ -11,11 +11,17 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace AutoStation.Controllers
 {
+    /// <summary>
+    /// Интеграция
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
     public class IntegrationController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         public DatabaseContext context;
 
         public IntegrationController(DatabaseContext context)
@@ -23,6 +29,11 @@ namespace AutoStation.Controllers
             this.context = context;
         }
 
+        /// <summary>
+        /// Загрузить Excel документ
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<List<Schedule>>> UploadSchedule([FromForm]IFormFile file)
         {

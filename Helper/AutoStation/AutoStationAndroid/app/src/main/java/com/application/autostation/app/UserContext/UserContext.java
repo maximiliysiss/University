@@ -4,13 +4,22 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+/**
+ * Контекст пользователя
+ */
 @Entity
 public class UserContext {
 
     @PrimaryKey(autoGenerate = true)
     int id;
 
+    /**
+     * Токен доступа
+     */
     String accessToken;
+    /**
+     * Токен обновления
+     */
     String refreshToken;
 
     public UserContext() {

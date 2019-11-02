@@ -4,6 +4,11 @@ namespace AutoStation.Services
 {
     public class CryptService
     {
+        /// <summary>
+        /// Получить хэш MD5
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string CreateMd5(string input)
         {
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())

@@ -17,6 +17,9 @@ using Swashbuckle.AspNetCore.Swagger;
 
 namespace AutoStation
 {
+    /// <summary>
+    /// Класс сервера
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)

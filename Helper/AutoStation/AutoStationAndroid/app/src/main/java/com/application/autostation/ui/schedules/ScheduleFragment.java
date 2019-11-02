@@ -26,8 +26,15 @@ import com.application.autostation.utilities.DayOfWeek;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+/**
+ * Фрагмент расписания
+ */
 public class ScheduleFragment extends ModelFragment<Schedule, AdminActivity> {
 
+    /**
+     * Поля
+     */
     Spinner from;
     Spinner to;
     EditText price;
@@ -42,6 +49,9 @@ public class ScheduleFragment extends ModelFragment<Schedule, AdminActivity> {
         return inflater.inflate(R.layout.fragment_schedule, container, false);
     }
 
+    /**
+     * Старт фрагмента
+     */
     @Override
     public void onStart() {
         super.onStart();

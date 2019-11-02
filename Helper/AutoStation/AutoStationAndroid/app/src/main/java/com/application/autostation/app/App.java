@@ -26,8 +26,14 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Базовый класс для приложения
+ */
 public class App extends Application {
 
+    /**
+     * Подключение к БД
+     */
     private static AuthRetrofit authRetrofit;
     private static ScheduleRetrofit scheduleRetrofit;
     private static BuyingsRetrofit buyingsRetrofit;
@@ -56,15 +62,27 @@ public class App extends Application {
         return buyingsRetrofit;
     }
 
+    /**
+     * Установить нового пользователя
+     * @param userContext
+     */
     public static void setUserContext(UserContext userContext) {
         databaseContext.userDao().delete();
         databaseContext.userDao().insert(userContext);
     }
 
+    /**
+     * Получить пользователя из БД
+     * @return
+     */
     public static UserContext getUserContext() {
         return databaseContext.userDao().getUser();
     }
 
+    /**
+     * Попытка авторизоваться
+     * @return
+     */
     public static UserContext tryLogin() {
         UserContext userContext = getUserContext();
         if (userContext == null)
@@ -73,10 +91,16 @@ public class App extends Application {
         FutureTask<UserContext> futureTask = new FutureTask<UserContext>(() -> {
             retrofit2.Response response = null;
             try {
+                /**
+                 * Попытка подключиться
+                 */
                 response = authRetrofit.tryConnect(userContext.getAccessToken()).execute();
                 if (NetworkUtilities.isSuccess(response.code())) {
                     return new UserContext(userContext.getAccessToken(), userContext.getRefreshToken());
                 } else {
+                    /**
+                     * Обновить токен
+                     */
                     retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.getAccessToken(), userContext.getRefreshToken()).execute();
                     if (NetworkUtilities.isSuccess(execute.code())) {
                         LoginResult loginResult = execute.body();
@@ -98,30 +122,54 @@ public class App extends Application {
         return null;
     }
 
+    /**
+     * Выйти
+     */
     public static void signOut() {
         databaseContext.userDao().delete();
     }
 
+    /**
+     * Создание приложения
+     */
     @Override
     public void onCreate() {
         super.onCreate();
 
+        /**
+         * Создание подключения к БД
+         */
         databaseContext = Room.databaseBuilder(getBaseContext(), DatabaseContext.class, getString(R.string.database)).fallbackToDestructiveMigration().allowMainThreadQueries().build();
 
+        /**
+         * Подключение к авторизации
+         */
         Retrofit retrofit = new Retrofit.Builder().addConverterFactory(GsonConverterFactory.create(new Gson())).baseUrl(new StringBuilder(getString(R.string.server_url)).append("auth/").toString()).build();
         authRetrofit = retrofit.create(AuthRetrofit.class);
 
+        /**
+         * Создание интерсептора для добавления информации об авторизации к заголовку
+         */
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .addInterceptor(chain -> {
                     Request.Builder builder = chain.request().newBuilder();
                     String header = null;
                     UserContext userContext = getUserContext();
+                    /**
+                     * Если пользователя нету
+                     */
                     if (userContext == null)
                         return chain.proceed(builder.build());
+                    /**
+                     * Попытка подключиться
+                     */
                     retrofit2.Response response = authRetrofit.tryConnect(userContext.getAccessToken()).execute();
                     if (NetworkUtilities.isSuccess(response.code()))
                         header = userContext.getAccessToken();
                     else {
+                        /**
+                         * Обновим токены
+                         */
                         retrofit2.Response<LoginResult> execute = authRetrofit.refresh(userContext.getAccessToken(), userContext.getRefreshToken()).execute();
                         if (NetworkUtilities.isSuccess(execute.code())) {
                             LoginResult loginResult = execute.body();
@@ -143,6 +191,11 @@ public class App extends Application {
         userRetrofit = createRetrofit(okHttpClient).create(UserRetrofit.class);
     }
 
+    /**
+     * Создание подклчения к серверу
+     * @param okHttpClient
+     * @return
+     */
     private Retrofit createRetrofit(OkHttpClient okHttpClient) {
         return new Retrofit.Builder().baseUrl(getString(R.string.server_url))
                 .addConverterFactory(GsonConverterFactory.create(new Gson())).client(okHttpClient).build();

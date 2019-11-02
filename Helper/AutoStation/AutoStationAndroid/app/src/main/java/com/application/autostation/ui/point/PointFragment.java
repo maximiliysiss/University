@@ -21,9 +21,16 @@ import com.application.autostation.ui.fragments.ModelFragment;
 /**
  * A simple {@link Fragment} subclass.
  */
+
+/**
+ * Фрагмент точки
+ */
 public class PointFragment extends ModelFragment<Point, AdminActivity> {
 
 
+    /**
+     * Поле
+     */
     EditText name;
 
     @Override
@@ -32,6 +39,9 @@ public class PointFragment extends ModelFragment<Point, AdminActivity> {
         return inflater.inflate(R.layout.fragment_point, container, false);
     }
 
+    /**
+     * Старт фрагмента
+     */
     @Override
     public void onStart() {
         super.onStart();

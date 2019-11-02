@@ -1,8 +1,20 @@
 package com.application.autostation.network.models.output;
 
+/**
+ * Изменить пользователя
+ */
 public class ChangeUser {
+    /**
+     * Логин
+     */
     String login;
+    /**
+     * Новый пароль
+     */
     String password;
+    /**
+     * Старый пароль
+     */
     String passwordConfirm;
 
     public ChangeUser(String login, String password, String passwordConfirm) {

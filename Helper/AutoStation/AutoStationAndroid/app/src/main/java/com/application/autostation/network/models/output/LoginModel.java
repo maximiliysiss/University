@@ -1,5 +1,8 @@
 package com.application.autostation.network.models.output;
 
+/**
+ * Моедль для входа
+ */
 public class LoginModel {
     String login;
     String password;

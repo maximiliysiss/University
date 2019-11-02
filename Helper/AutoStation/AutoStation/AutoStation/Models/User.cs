@@ -6,6 +6,9 @@ using Newtonsoft.Json;
 
 namespace AutoStation.Models
 {
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
         [JsonIgnore]
