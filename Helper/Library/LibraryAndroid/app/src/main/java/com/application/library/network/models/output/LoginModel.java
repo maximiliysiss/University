@@ -1,5 +1,8 @@
 package com.application.library.network.models.output;
 
+/**
+ * Модель для входа
+ */
 public class LoginModel {
     String login;
     String password;

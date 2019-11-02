@@ -7,16 +7,26 @@ using System.Threading.Tasks;
 
 namespace Library.Models
 {
+    /// <summary>
+    /// Роли
+    /// </summary>
     public enum UserRole
     {
         Admin,
         User
     }
 
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
         public int ID { get; set; }
         public string Login { get; set; }
+        /// <summary>
+        /// Хэш пароля
+        /// </summary>
+        /// <value></value>
         public string PasswordHash { get; set; }
         public UserRole UserRole { get; set; }
         public string Token { get; set; }

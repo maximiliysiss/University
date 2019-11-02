@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Library.Models.Controllers
 {
+    /// <summary>
+    /// Модель для входа
+    /// </summary>
     public class LoginModel
     {
         public string Login { get; set; }

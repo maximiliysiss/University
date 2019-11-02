@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Книга
+ */
 public class Book implements Serializable {
     @SerializedName("id")
     @Expose

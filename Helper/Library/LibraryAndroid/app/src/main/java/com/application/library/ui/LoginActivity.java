@@ -16,18 +16,35 @@ import com.application.library.network.models.input.LoginResult;
 import com.application.library.network.models.output.LoginModel;
 import com.school.library.R;
 
+/**
+ * Форма логина
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * Поля
+     */
     EditText login;
     EditText password;
+    /**
+     * Контейнер для полей
+     */
     public LinearLayout linearLayout;
 
 
+    /**
+     * Назад нельзя листать
+     */
     @Override
     public void onBackPressed() {
 
     }
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +54,9 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
         linearLayout = findViewById(R.id.linear);
 
+        /**
+         * Попытка авторизоваться сразу
+         */
         UserContext res = App.tryLogin();
         if (res != null) {
             App.setUserContext(res);
@@ -46,6 +66,11 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Кнопка логин
+     *
+     * @param view
+     */
     public void login(View view) {
 
         String loginString = login.getText().toString().trim();
@@ -62,6 +87,11 @@ public class LoginActivity extends AppCompatActivity {
         }).setMessage("Неправильный логин/пароль"));
     }
 
+    /**
+     * Кнопка зарегистрироваться
+     *
+     * @param view
+     */
     public void register(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
     }

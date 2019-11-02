@@ -11,11 +11,17 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Library.Controllers
 {
+    /// <summary>
+    /// Книги
+    /// </summary>
     [Route("api/[controller]")]
     [Authorize]
     [ApiController]
     public class BooksController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public BooksController(DatabaseContext context)
@@ -24,6 +30,10 @@ namespace Library.Controllers
         }
 
         // GET: api/Books
+        /// <summary>
+        /// Получить книги
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Book>>> GetBooks()
         {
@@ -31,6 +41,12 @@ namespace Library.Controllers
         }
 
         // PUT: api/Books/5
+        /// <summary>
+        /// Изменить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="book"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Book>> PutBook(int id, Book book)
@@ -62,6 +78,11 @@ namespace Library.Controllers
         }
 
         // POST: api/Books
+        /// <summary>
+        /// Добавить
+        /// </summary>
+        /// <param name="book"></param>
+        /// <returns></returns>
         [HttpPost]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Book>> PostBook(Book book)
@@ -73,6 +94,11 @@ namespace Library.Controllers
         }
 
         // DELETE: api/Books/5
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<Book>> DeleteBook(int id)
@@ -89,6 +115,11 @@ namespace Library.Controllers
             return book;
         }
 
+        /// <summary>
+        /// Существует ли книга
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool BookExists(int id)
         {
             return _context.Books.Any(e => e.ID == id);

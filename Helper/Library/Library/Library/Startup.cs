@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace Library
 {
+    /// <summary>
+    /// Класс сервера
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)

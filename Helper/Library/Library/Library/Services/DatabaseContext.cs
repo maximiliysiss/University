@@ -8,18 +8,32 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
+    /// <summary>
+    /// БД
+    /// </summary>
     public class DatabaseContext : DbContext
     {
         public DatabaseContext(DbContextOptions options) : base(options)
         {
         }
-
+        /// <summary>
+        /// Пользователи
+        /// </summary>
+        /// <value></value>
         public DbSet<User> Users { get; set; }
+        /// <summary>
+        /// Книги
+        /// </summary>
+        /// <value></value>
         public DbSet<Book> Books { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            /// <summary>
+            /// Добавим сразу админа
+            /// </summary>
+            /// <value></value>
             modelBuilder.Entity<User>().HasData(new User
             {
                 ID = 1,

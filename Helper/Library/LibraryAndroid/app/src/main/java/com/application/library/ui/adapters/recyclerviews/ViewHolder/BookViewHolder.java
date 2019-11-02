@@ -13,8 +13,14 @@ import com.application.library.ui.BookActivity;
 import com.application.library.ui.BookReadActivity;
 import com.school.library.R;
 
+/**
+ * Описание элемента RecyclerView для Книг
+ */
 public class BookViewHolder extends RecyclerViewHolder<Book> {
 
+    /**
+     * Поля для отображения
+     */
     TextView name;
     TextView author;
     TextView pageCount;
@@ -29,11 +35,17 @@ public class BookViewHolder extends RecyclerViewHolder<Book> {
         year = itemView.findViewById(R.id.year);
     }
 
+    /**
+     * Обработка нажатия
+     */
     @Override
     public void onClick() {
 
         UserRole userRole = UserRole.values()[App.getUserContext().getUserRole()];
         Intent intent;
+        /**
+         * Если админ, то открыть для изменения, иначе просмотр
+         */
         if (userRole == UserRole.Admin)
             intent = new Intent(this.getActivity(), BookActivity.class);
         else
@@ -42,6 +54,10 @@ public class BookViewHolder extends RecyclerViewHolder<Book> {
         getActivity().startActivity(intent);
     }
 
+    /**
+     * Заполнить поля объектом
+     * @param object
+     */
     @Override
     public void setObject(Book object) {
         super.setObject(object);

@@ -14,18 +14,34 @@ import com.application.library.network.callbacks.UniversalCallback;
 import com.application.library.network.models.input.Book;
 import com.school.library.R;
 
+/**
+ * Форма книги
+ */
 public class BookActivity extends AppCompatActivity {
 
+    /**
+     * Книга
+     */
     Book object;
 
+    /**
+     * Поля
+     */
     EditText name;
     EditText author;
     EditText count;
     EditText year;
 
+    /**
+     * Действия
+     */
     Button action;
     Button delete;
 
+    /**
+     * Создание книги
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +61,9 @@ public class BookActivity extends AppCompatActivity {
         count.setText(String.valueOf(object.getPagesCount()));
         year.setText(String.valueOf(object.getYear()));
 
+        /**
+         * Если ID == 0, то это новая книга
+         */
         if (object.getId() == 0) {
             action.setText("Добавить");
             action.setOnClickListener(v -> {
@@ -66,6 +85,10 @@ public class BookActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Получение модели из полей с формы
+     * @return
+     */
     public boolean loadModel() {
         String nameString = name.getText().toString().trim();
         String authorString = author.getText().toString().trim();
@@ -84,6 +107,10 @@ public class BookActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Удалить
+     * @param view
+     */
     public void delete(View view) {
         App.getBookRetrofit().delete(object.getId()).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
             startActivity(new Intent(this, MainActivity.class));

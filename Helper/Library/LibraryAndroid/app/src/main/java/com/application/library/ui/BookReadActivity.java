@@ -14,15 +14,28 @@ import com.application.library.network.callbacks.UniversalCallback;
 import com.application.library.network.models.input.Book;
 import com.school.library.R;
 
+/**
+ * Форма для просмотра книги
+ */
 public class BookReadActivity extends AppCompatActivity {
 
+    /**
+     * Книга
+     */
     Book object;
 
+    /**
+     * Поля
+     */
     TextView name;
     TextView author;
     TextView count;
     TextView year;
 
+    /**
+     * Создание формы
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

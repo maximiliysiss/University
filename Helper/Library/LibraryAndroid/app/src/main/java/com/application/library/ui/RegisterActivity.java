@@ -14,19 +14,35 @@ import com.application.library.network.callbacks.UniversalCallback;
 import com.application.library.network.models.output.LoginModel;
 import com.school.library.R;
 
+/**
+ * Форма регистрации
+ */
 public class RegisterActivity extends AppCompatActivity {
 
+    /**
+     * Создание формы
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
     }
 
+    /**
+     * Кнопка регистрации
+     *
+     * @param view
+     */
     public void register(View view) {
         EditText login = findViewById(R.id.login);
         EditText password = findViewById(R.id.password);
         EditText repeat = findViewById(R.id.repeat);
 
+        /**
+         * Получить данные с ввода
+         */
         String loginString = login.getText().toString().trim();
         String passwordString = password.getText().toString().trim();
         String repeatString = repeat.getText().toString().trim();

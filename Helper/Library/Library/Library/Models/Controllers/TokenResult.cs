@@ -5,20 +5,30 @@ using System.Threading.Tasks;
 
 namespace Library.Models.Controllers
 {
+    /// <summary>
+    /// Результат входа
+    /// </summary>
     public class TokenResult
     {
+        /// <summary>
+        /// Роль
+        /// </summary>
+        /// <value></value>
         public UserRole UserRole { get; set; }
         private string accessToken;
+        /// <summary>
+        /// Доступ
+        /// </summary>
+        /// <value></value>
         public string AccessToken
         {
             get => $"Bearer {accessToken}";
             set => accessToken = value;
         }
-        private string refreshToken;
-        public string RefreshToken
-        {
-            get => $"Bearer {refreshToken}";
-            set => refreshToken = value;
-        }
+        /// <summary>
+        /// Токен обновления
+        /// </summary>
+        /// <value></value>
+        public string RefreshToken { get; set; }
     }
 }
