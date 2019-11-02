@@ -11,6 +11,7 @@ import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.adapters.spinner.ClassSpinnerAdapter;
 import com.school.android.utilities.DayUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClassSpinner extends SpinnerObserver {

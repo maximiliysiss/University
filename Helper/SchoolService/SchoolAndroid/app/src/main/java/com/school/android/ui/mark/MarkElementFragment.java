@@ -57,10 +57,10 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
         student = getView().findViewById(R.id.student);
         lesson = getView().findViewById(R.id.lesson);
 
-        className.addObserver(day);
-        lesson.addObserver(className);
+        day.addObserver(className);
+        className.addObserver(lesson);
+        className.addObserver(student);
         lesson.setDaySpinner(day);
-        student.addObserver(className);
 
         day.setAdapter(new StringSpinnerAdapter(DayUtils.getStrings(), R.layout.spinner_item, getContext()));
 

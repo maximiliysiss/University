@@ -41,6 +41,19 @@
             android:paddingLeft="15dp"
             android:textSize="14pt"></EditText>
 
+        <Button
+            android:id="@+id/action"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Action"></Button>
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete"
+            android:visibility="invisible"></Button>
+
     </LinearLayout>
 
 </FrameLayout>

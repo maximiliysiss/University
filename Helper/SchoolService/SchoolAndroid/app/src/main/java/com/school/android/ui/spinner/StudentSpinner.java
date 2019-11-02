@@ -11,6 +11,7 @@ import com.school.android.models.network.input.Class;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.adapters.spinner.ChildrenSpinnerAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudentSpinner extends SpinnerObserver {
@@ -46,7 +47,13 @@ public class StudentSpinner extends SpinnerObserver {
     public void notify(Observable observable) {
         if (observable instanceof ClassSpinner) {
             Class aClass = (Class) ((Spinner) observable).getSelectedItem();
-            App.getChildrenRetrofit().getChildrenByClass(aClass.getId()).enqueue(new UniversalCallback<List<Children>>(getContext(), x -> {
+
+            if (aClass == null) {
+                setAdapter(new ChildrenSpinnerAdapter(new ArrayList<>(), getContext()));
+                return;
+            }
+
+            App.getChildrenRetrofit().getChildrenByClass(aClass.getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ChildrenSpinnerAdapter(x, getContext()));
             }));
         }

@@ -37,12 +37,6 @@ public class DaySpinner extends SpinnerObserver {
     }
 
     @Override
-    public void setOnItemSelectedListener(@Nullable OnItemSelectedListener listener) {
-        super.setOnItemSelectedListener(listener);
-        this.notifyObservers();
-    }
-
-    @Override
     public void notify(Observable observable) {
     }
 }

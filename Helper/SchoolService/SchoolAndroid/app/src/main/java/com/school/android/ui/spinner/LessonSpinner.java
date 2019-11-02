@@ -12,6 +12,7 @@ import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.adapters.spinner.ScheduleSpinnerAdapter;
 import com.school.android.utilities.DayUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LessonSpinner extends SpinnerObserver {
@@ -55,6 +56,11 @@ public class LessonSpinner extends SpinnerObserver {
         if (observable instanceof ClassSpinner) {
             Class aClass = (Class) ((Spinner) observable).getSelectedItem();
             Integer day = DayUtils.getId(daySpinner.getSelectedItem().toString());
+
+            if (aClass == null) {
+                setAdapter(new ScheduleSpinnerAdapter(new ArrayList<>(), getContext()));
+                return;
+            }
 
             App.getScheduleRetrofit().getScheduleByClassAndDay(day, aClass.getId()).enqueue(new UniversalCallback<List<Schedule>>(getContext(), x -> {
                 setAdapter(new ScheduleSpinnerAdapter(x, getContext()));
