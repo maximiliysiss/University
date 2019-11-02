@@ -38,7 +38,7 @@ public class BookViewHolder extends RecyclerViewHolder<Book> {
     public BookViewHolder(@NonNull View itemView) {
         super(itemView);
 
-        name = itemView.findViewById(R.id.name);
+        name = itemView.findViewById(R.id.book_name);
         author = itemView.findViewById(R.id.author);
         price = itemView.findViewById(R.id.price);
     }

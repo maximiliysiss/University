@@ -52,7 +52,7 @@ public class BookActivity extends AppCompatActivity {
          */
         object = (Book) getIntent().getExtras().getSerializable("book");
 
-        name = findViewById(R.id.name);
+        name = findViewById(R.id.book_name);
         price = findViewById(R.id.price);
         author = findViewById(R.id.author);
         delete = findViewById(R.id.delete);
