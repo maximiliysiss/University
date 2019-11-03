@@ -17,6 +17,7 @@ import java.util.List;
 public abstract class SpinnerObserver extends Spinner implements Observable, Observer {
 
     List<Observer> observerList = new ArrayList<>();
+    boolean flag = false;
 
     private void registerLogic() {
         this.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -82,9 +83,17 @@ public abstract class SpinnerObserver extends Spinner implements Observable, Obs
         observerList.forEach(x -> x.notify(this));
     }
 
+    public void notifyObservers(boolean flag) {
+        this.flag = flag;
+        observerList.forEach(x -> x.notify(this));
+    }
+
+
     @Override
     public void setOnItemSelectedListener(@Nullable OnItemSelectedListener listener) {
         super.setOnItemSelectedListener(listener);
-        notifyObservers();
+        if (!flag)
+            notifyObservers();
+        flag = false;
     }
 }

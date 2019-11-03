@@ -49,6 +49,7 @@ public class ClassSpinner extends SpinnerObserver {
             Integer dayInteger = DayUtils.getId(((Spinner) observable).getSelectedItem().toString());
             App.getClassRetrofit().getClassByDay(dayInteger).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ClassSpinnerAdapter(x, getContext()));
+                this.notifyObservers(true);
             }));
         }
     }

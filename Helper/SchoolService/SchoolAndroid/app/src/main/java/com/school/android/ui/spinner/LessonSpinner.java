@@ -59,11 +59,13 @@ public class LessonSpinner extends SpinnerObserver {
 
             if (aClass == null) {
                 setAdapter(new ScheduleSpinnerAdapter(new ArrayList<>(), getContext()));
+                this.notifyObservers(true);
                 return;
             }
 
             App.getScheduleRetrofit().getScheduleByClassAndDay(day, aClass.getId()).enqueue(new UniversalCallback<List<Schedule>>(getContext(), x -> {
                 setAdapter(new ScheduleSpinnerAdapter(x, getContext()));
+                this.notifyObservers(true);
             }));
         }
     }

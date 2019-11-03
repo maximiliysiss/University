@@ -50,11 +50,13 @@ public class StudentSpinner extends SpinnerObserver {
 
             if (aClass == null) {
                 setAdapter(new ChildrenSpinnerAdapter(new ArrayList<>(), getContext()));
+                this.notifyObservers(true);
                 return;
             }
 
             App.getChildrenRetrofit().getChildrenByClass(aClass.getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ChildrenSpinnerAdapter(x, getContext()));
+                this.notifyObservers(true);
             }));
         }
     }
