@@ -21,10 +21,10 @@ import java.util.List;
 
 public class LessonSpinner extends SpinnerModelObserver<Schedule> {
 
-    DayCalendar daySpinner;
+    int classId;
 
-    public void setDaySpinner(DayCalendar daySpinner) {
-        this.daySpinner = daySpinner;
+    public void setClassId(int classId) {
+        this.classId = classId;
     }
 
     public LessonSpinner(Context context) {
@@ -57,17 +57,10 @@ public class LessonSpinner extends SpinnerModelObserver<Schedule> {
 
     @Override
     public void notify(Observable observable) {
-        if (observable instanceof ClassSpinner) {
-            Class aClass = (Class) ((Spinner) observable).getSelectedItem();
-            CustomDate customDate = daySpinner.getCustomDate();
+        if (observable instanceof DayCalendar) {
+            CustomDate customDate = ((DayCalendar) observable).getCustomDate();
 
-            if (aClass == null) {
-                setAdapter(new ScheduleSpinnerAdapter(new ArrayList<>(), getContext()));
-                this.notifyObservers(true);
-                return;
-            }
-
-            App.getScheduleRetrofit().getScheduleByClassAndDay(customDate.getDayOfWeek(), aClass.getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
+            App.getScheduleRetrofit().getScheduleByClassAndDay(customDate.getDayOfWeek(), classId).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ScheduleSpinnerAdapter(x, getContext()));
                 trySetData();
                 this.notifyObservers(true);

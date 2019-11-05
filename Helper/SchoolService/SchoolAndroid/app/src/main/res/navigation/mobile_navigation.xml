@@ -119,5 +119,11 @@
         android:label="@string/mark"
         tools:layout="@layout/fragment_marks" />
 
+    <fragment
+        android:id="@+id/navigation_marks_student"
+        android:name="com.school.android.ui.mark.StudentMarkFragment"
+        android:label="@string/mark"
+        tools:layout="@layout/fragment_marks" />
+
 
 </navigation>

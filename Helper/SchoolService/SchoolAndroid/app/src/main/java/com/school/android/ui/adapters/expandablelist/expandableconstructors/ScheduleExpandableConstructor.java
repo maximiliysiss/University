@@ -6,23 +6,25 @@ import android.widget.TextView;
 import com.school.android.R;
 import com.school.android.application.App;
 import com.school.android.models.extension.UserType;
+import com.school.android.models.network.input.Lesson;
 import com.school.android.models.network.input.Schedule;
+import com.school.android.utilities.DayUtils;
 import com.school.android.utilities.LessonUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ScheduleExpandableConstructor extends AbstractExpandableConstructor<String, Schedule> {
+public class ScheduleExpandableConstructor extends AbstractExpandableConstructor<Integer, Schedule> {
 
-    public ScheduleExpandableConstructor(Map<String, List<Schedule>> hashMap) {
+    public ScheduleExpandableConstructor(Map<Integer, List<Schedule>> hashMap) {
         super(hashMap, R.layout.expandable_header, R.layout.expandable_content_schedule);
     }
 
     @Override
-    public void constructGroup(View v, String elem, int index) {
+    public void constructGroup(View v, Integer elem, int index) {
         TextView name = v.findViewById(R.id.name);
-        name.setText(elem);
+        name.setText(DayUtils.getName(elem));
     }
 
     @Override

@@ -22,7 +22,7 @@ public class CustomDate {
     }
 
     public void parse(String str) {
-        String[] parts = str.split(".");
+        String[] parts = str.split("\\.");
         year = Integer.parseInt(parts[0]);
         month = Integer.parseInt(parts[1]);
         day = Integer.parseInt(parts[2]);

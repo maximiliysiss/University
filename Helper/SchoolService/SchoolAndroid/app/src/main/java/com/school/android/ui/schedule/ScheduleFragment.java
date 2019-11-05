@@ -20,6 +20,7 @@ import com.school.android.ui.adapters.expandablelist.ExpandableListAdapter;
 import com.school.android.ui.adapters.expandablelist.expandableconstructors.ScheduleExpandableConstructor;
 import com.school.android.ui.fragments.ModelContainsFragment;
 import com.school.android.utilities.DayUtils;
+import com.school.android.utilities.ScheduleUtilities;
 
 import java.util.Comparator;
 import java.util.HashMap;
@@ -42,17 +43,8 @@ public class ScheduleFragment extends ModelContainsFragment<MainActivity> {
         Button add = getView().findViewById(R.id.add);
         add.setOnClickListener(v -> getRealActivity().openFragment(R.id.navigation_schedule_element, getModelName(), new Schedule()));
         ExpandableListView expandableListView = getView().findViewById(R.id.schedules);
-        App.getScheduleRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
-
-            Map<Integer, List<Schedule>> map = x.stream().collect(groupingBy(Schedule::getDayOfWeek));
-            Map<String, List<Schedule>> resMap = new HashMap<>();
-            map.forEach((k, v) -> {
-                v.sort((o1, o2) -> o1.getLessonNumber().compareTo(o2.getClassId()));
-                resMap.put(DayUtils.getName(k), v);
-            });
-
-            expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(), new ScheduleExpandableConstructor((HashMap<String, List<Schedule>>) resMap)));
-        }));
+        App.getScheduleRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x ->
+                expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(), new ScheduleExpandableConstructor(ScheduleUtilities.sort(x))))));
 
         if (App.getUserType() == UserType.Student)
             add.setVisibility(View.INVISIBLE);

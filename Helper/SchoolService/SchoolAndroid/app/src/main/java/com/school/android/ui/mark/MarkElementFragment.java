@@ -2,29 +2,30 @@ package com.school.android.ui.mark;
 
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import androidx.fragment.app.Fragment;
 
 import com.school.android.R;
 import com.school.android.application.App;
 import com.school.android.models.network.input.Children;
 import com.school.android.models.network.input.Mark;
 import com.school.android.models.network.input.Schedule;
+import com.school.android.network.classes.UniversalCallback;
 import com.school.android.network.classes.UniversalWithCodeCallback;
 import com.school.android.ui.activity.MainActivity;
+import com.school.android.ui.adapters.spinner.ChildrenSpinnerAdapter;
 import com.school.android.ui.fragments.ModelActionFragment;
-import com.school.android.ui.spinner.ClassSpinner;
 import com.school.android.ui.spinner.DayCalendar;
 import com.school.android.ui.spinner.LessonSpinner;
-import com.school.android.ui.spinner.StudentSpinner;
 import com.school.android.utilities.CustomDate;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,10 +34,10 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
 
 
     EditText mark;
-    ClassSpinner className;
     DayCalendar day;
-    StudentSpinner student;
+    Spinner student;
     LessonSpinner lesson;
+    private int classId;
 
     public MarkElementFragment() {
         super(R.id.navigation_marks);
@@ -54,28 +55,31 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
         super.onStart();
 
         mark = getView().findViewById(R.id.mark);
-        className = getView().findViewById(R.id.class_name);
+        this.classId = getArguments().getInt(getString(R.string.class_model));
         day = getView().findViewById(R.id.day);
         student = getView().findViewById(R.id.student);
         lesson = getView().findViewById(R.id.lesson);
+        lesson.setClassId(classId);
+
+        App.getChildrenRetrofit().getChildrenByClass(classId).enqueue(new UniversalCallback<>(getContext(), x -> {
+            ChildrenSpinnerAdapter childrenSpinnerAdapter = new ChildrenSpinnerAdapter(x, getContext());
+            student.setAdapter(childrenSpinnerAdapter);
+            student.setSelection(childrenSpinnerAdapter.getIndex(getModel().getChild()));
+        }));
 
         if (getModel().getId() != 0) {
-            className.setObject(getModel().getSchedule().get_class());
             lesson.setObject(getModel().getSchedule());
-            student.setObject(getModel().getChild());
             mark.setText(String.valueOf(getModel().getMarkReal()));
         }
 
-        day.addObserver(className);
-        className.addObserver(lesson);
-        className.addObserver(student);
-        lesson.setDaySpinner(day);
+        day.addObserver(lesson);
 
         if (getModel().getId() != 0) {
             CustomDate customDate = new CustomDate(getModel().getDateJson());
             day.setDate(customDate.toCalendar().getTime().getTime());
         } else
             day.setDate(Calendar.getInstance().getTime().getTime());
+
         day.setCustomDate(new CustomDate(day.getDate()));
         day.notifyObservers();
         generateModelActions(getView());
@@ -98,7 +102,7 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
 
     @Override
     public boolean loadModel() {
-        if (className.getCount() == 0 || lesson.getCount() == 0 || student.getCount() == 0)
+        if (lesson.getCount() == 0 || student.getCount() == 0)
             return false;
         String markString = mark.getText().toString().trim();
         if (markString.length() == 0)
@@ -120,5 +124,12 @@ public class MarkElementFragment extends ModelActionFragment<MainActivity, Mark>
     @Override
     public String getModelName() {
         return getString(R.string.mark_model);
+    }
+
+    @Override
+    public void toBackBaseFragment() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(getString(R.string.class_model), classId);
+        getRealActivity().openFragment(R.id.navigation_marks, bundle);
     }
 }

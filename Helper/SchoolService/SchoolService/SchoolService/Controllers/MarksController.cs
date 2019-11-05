@@ -13,7 +13,7 @@ using SchoolService.Services;
 namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize(Roles = "Teacher, Admin")]
+    [Authorize]
     [ApiController]
     public class MarksController : ControllerBase
     {
@@ -45,8 +45,11 @@ namespace SchoolService.Controllers
         {
             var user = this.GetCurrentUser(_context);
             var date = new DateTime(year, month, day);
+            if (user.UserType != UserType.Student)
+                return await _context.Marks.Where(x => x.Date.Date == date && x.Schedule.ClassId == id
+                                                    && x.Schedule.TeacherId == user.ID).ToListAsync();
             return await _context.Marks.Where(x => x.Date.Date == date && x.Schedule.ClassId == id
-                                                && x.Schedule.TeacherId == user.ID).ToListAsync();
+                    && x.ChildId == user.ID).ToListAsync();
         }
 
         [HttpGet("myclass/{id}")]
@@ -73,6 +76,7 @@ namespace SchoolService.Controllers
 
         // PUT: api/Marks/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Mark>> PutMark(int id, Mark mark)
         {
             _context.Entry(mark).State = EntityState.Modified;
@@ -94,6 +98,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Marks
         [HttpPost]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Mark>> PostMark(Mark mark)
         {
             mark.TeacherId = this.GetCurrentUser(_context).ID;
@@ -105,6 +110,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Marks/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Mark>> DeleteMark(int id)
         {
             var mark = await _context.Marks.FindAsync(id);

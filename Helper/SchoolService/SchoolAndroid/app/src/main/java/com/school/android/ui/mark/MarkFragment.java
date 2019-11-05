@@ -39,8 +39,12 @@ public class MarkFragment extends ModelContainsFragment<MainActivity> {
 
         CalendarView calendarView = getView().findViewById(R.id.calendar);
         Button add = getView().findViewById(R.id.add);
-        classId = getArguments().getInt(getString(R.string.mark_model), -1);
-        add.setOnClickListener(v -> getRealActivity().openFragment(R.id.navigation_mark_element, getModelName(), new Mark()));
+        classId = getArguments().getInt(getString(R.string.class_model), -1);
+        add.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt(getString(R.string.class_model), classId);
+            getRealActivity().openFragment(R.id.navigation_mark_element, getModelName(), new Mark(), bundle);
+        });
         expandableListView = getView().findViewById(R.id.marks);
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> loadData(year, month, dayOfMonth));
 
@@ -55,7 +59,8 @@ public class MarkFragment extends ModelContainsFragment<MainActivity> {
         App.getMarkRetrofit().getMarks(classId, year, month + 1, dayOfMonth).enqueue(new UniversalCallback<>(getContext(), x -> {
             expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(), new MarkExpandableConstructor(
                     x.stream().collect(Collectors.groupingBy(z -> z.getSchedule().getLesson().getId())).entrySet().stream()
-                            .collect(Collectors.toMap(z -> z.getValue().get(0).getSchedule().getLesson().getName(), z -> z.getValue()))
+                            .collect(Collectors.toMap(z -> z.getValue().get(0).getSchedule().getLesson().getName(), z -> z.getValue())),
+                    classId
             )));
         }));
     }

@@ -48,7 +48,7 @@ public class SuperTeacherFragment extends ModelContainsFragment<MainActivity> {
         super.onStart();
 
         calendarView = getView().findViewById(R.id.calendar);
-        classId = getArguments().getInt(getString(R.string.mark_model), 0);
+        classId = getClassId();
         expandableListView = getView().findViewById(R.id.marks);
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             loadList(year, month, dayOfMonth);
@@ -67,6 +67,10 @@ public class SuperTeacherFragment extends ModelContainsFragment<MainActivity> {
                             .collect(toMap(z -> z.getValue().get(0).getSchedule().getLesson().getName(), z -> z.getValue()));
                     expandableListView.setAdapter(new ExpandableListAdapter<>(getContext(), new SuperMarkExpandableConstructor(map)));
                 }));
+    }
+
+    public int getClassId(){
+        return getArguments().getInt(getString(R.string.mark_model), 0);
     }
 
     @Override
