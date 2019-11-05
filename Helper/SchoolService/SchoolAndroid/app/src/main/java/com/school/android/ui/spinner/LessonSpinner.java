@@ -3,23 +3,27 @@ package com.school.android.ui.spinner;
 import android.content.Context;
 import android.content.res.Resources;
 import android.util.AttributeSet;
+import android.widget.CalendarView;
 import android.widget.Spinner;
 
 import com.school.android.application.App;
 import com.school.android.models.network.input.Class;
+import com.school.android.models.network.input.Lesson;
 import com.school.android.models.network.input.Schedule;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.adapters.spinner.ScheduleSpinnerAdapter;
+import com.school.android.utilities.CustomDate;
 import com.school.android.utilities.DayUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
-public class LessonSpinner extends SpinnerObserver {
+public class LessonSpinner extends SpinnerModelObserver<Schedule> {
 
-    Spinner daySpinner;
+    DayCalendar daySpinner;
 
-    public void setDaySpinner(Spinner daySpinner) {
+    public void setDaySpinner(DayCalendar daySpinner) {
         this.daySpinner = daySpinner;
     }
 
@@ -55,7 +59,7 @@ public class LessonSpinner extends SpinnerObserver {
     public void notify(Observable observable) {
         if (observable instanceof ClassSpinner) {
             Class aClass = (Class) ((Spinner) observable).getSelectedItem();
-            Integer day = DayUtils.getId(daySpinner.getSelectedItem().toString());
+            CustomDate customDate = daySpinner.getCustomDate();
 
             if (aClass == null) {
                 setAdapter(new ScheduleSpinnerAdapter(new ArrayList<>(), getContext()));
@@ -63,8 +67,9 @@ public class LessonSpinner extends SpinnerObserver {
                 return;
             }
 
-            App.getScheduleRetrofit().getScheduleByClassAndDay(day, aClass.getId()).enqueue(new UniversalCallback<List<Schedule>>(getContext(), x -> {
+            App.getScheduleRetrofit().getScheduleByClassAndDay(customDate.getDayOfWeek(), aClass.getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ScheduleSpinnerAdapter(x, getContext()));
+                trySetData();
                 this.notifyObservers(true);
             }));
         }

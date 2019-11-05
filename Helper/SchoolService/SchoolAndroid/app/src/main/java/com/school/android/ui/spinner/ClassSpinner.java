@@ -9,12 +9,10 @@ import com.school.android.application.App;
 import com.school.android.models.network.input.Class;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.adapters.spinner.ClassSpinnerAdapter;
+import com.school.android.utilities.CustomDate;
 import com.school.android.utilities.DayUtils;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class ClassSpinner extends SpinnerObserver {
+public class ClassSpinner extends SpinnerModelObserver<Class> {
     public ClassSpinner(Context context) {
         super(context);
     }
@@ -45,10 +43,12 @@ public class ClassSpinner extends SpinnerObserver {
 
     @Override
     public void notify(Observable observable) {
-        if (observable instanceof DaySpinner) {
-            Integer dayInteger = DayUtils.getId(((Spinner) observable).getSelectedItem().toString());
-            App.getClassRetrofit().getClassByDay(dayInteger).enqueue(new UniversalCallback<>(getContext(), x -> {
+        if (observable instanceof DayCalendar) {
+            DayCalendar dayCalendar = (DayCalendar) observable;
+            CustomDate customDate = dayCalendar.getCustomDate();
+            App.getClassRetrofit().getClassByDay(customDate.getDayOfWeek()).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ClassSpinnerAdapter(x, getContext()));
+                trySetData();
                 this.notifyObservers(true);
             }));
         }

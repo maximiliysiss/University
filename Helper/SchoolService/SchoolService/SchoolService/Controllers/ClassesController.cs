@@ -46,13 +46,13 @@ namespace SchoolService.Controllers
             return @class;
         }
 
-        [HttpGet("{id}/marks")]
-        public ActionResult<List<Mark>> GetClassMarks(int id)
+        [HttpGet("teacher/{id}")]
+        public ActionResult<List<Class>> GetTeacherClass(int id)
         {
-            return _context.Marks.FromSql(@"select m.* from Marks m
-                                            left join Schedules on m.ScheduleId = Schedules.ID
-                                            where Schedules.ClassId = {0}
-                                            order by Schedules.DayOfWeek, Schedules.LessonNumber", id).ToList();
+            var user = this.GetCurrentUser(_context);
+            var classes = _context.Classes.Where(x => x.TeacherId == id && x.IsStart).ToList();
+            classes.AddRange(_context.Schedules.Where(x => x.TeacherId == id).Select(x => x.Class).Distinct());
+            return classes.Distinct().ToList();
         }
 
         // PUT: api/Classes/5

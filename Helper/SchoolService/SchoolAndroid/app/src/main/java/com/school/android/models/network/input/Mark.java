@@ -7,10 +7,10 @@ import com.school.android.models.network.FragmentModel;
 public class Mark implements FragmentModel {
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private Integer id = 0;
     @SerializedName("markReal")
     @Expose
-    private Integer markReal;
+    private Integer markReal = 0;
     @SerializedName("teacherId")
     @Expose
     private Integer teacherId;
@@ -26,6 +26,17 @@ public class Mark implements FragmentModel {
     @SerializedName("schedule")
     @Expose
     private Schedule schedule;
+    @SerializedName("dateJson")
+    @Expose
+    private String dateJson;
+
+    public String getDateJson() {
+        return dateJson;
+    }
+
+    public void setDateJson(String dateJson) {
+        this.dateJson = dateJson;
+    }
 
     public Children getChild() {
         return child;

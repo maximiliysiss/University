@@ -14,7 +14,7 @@ import com.school.android.ui.adapters.spinner.ChildrenSpinnerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StudentSpinner extends SpinnerObserver {
+public class StudentSpinner extends SpinnerModelObserver<Children> {
     public StudentSpinner(Context context) {
         super(context);
     }
@@ -56,6 +56,7 @@ public class StudentSpinner extends SpinnerObserver {
 
             App.getChildrenRetrofit().getChildrenByClass(aClass.getId()).enqueue(new UniversalCallback<>(getContext(), x -> {
                 setAdapter(new ChildrenSpinnerAdapter(x, getContext()));
+                trySetData();
                 this.notifyObservers(true);
             }));
         }
