@@ -1,5 +1,8 @@
 package com.school.android.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 
@@ -16,6 +19,10 @@ public class MainActivity extends ActivityFragmenter {
 
     @Override
     public void onBackPressed() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this).setTitle(R.string.change_user)
+                .setNegativeButton(R.string.no, (dialog, which) -> {
+                }).setPositiveButton(R.string.yes, (dialog, which) -> startActivity(new Intent(MainActivity.this, LoginActivity.class)));
+        builder.create().show();
     }
 
     @Override
