@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace CarRepair.Services
 {
+    /// <summary>
+    /// База данных
+    /// </summary>
     public class DatabaseContext : DbContext
     {
         public DatabaseContext(DbContextOptions options) : base(options)

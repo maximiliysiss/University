@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CarRepair.Controllers
 {
+    /// <summary>
+    /// Контроллер для услуг
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ServicesController : ControllerBase
@@ -22,6 +25,10 @@ namespace CarRepair.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Получить услуги
+        /// </summary>
+        /// <returns></returns>
         // GET: api/Services
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Service>>> GetServices()
@@ -29,6 +36,11 @@ namespace CarRepair.Controllers
             return await _context.Services.ToListAsync();
         }
 
+        /// <summary>
+        /// Получить услугу по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: api/Services/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Service>> GetService(int id)
@@ -43,6 +55,12 @@ namespace CarRepair.Controllers
             return service;
         }
 
+        /// <summary>
+        /// Изменить услугу
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="service"></param>
+        /// <returns></returns>
         // PUT: api/Services/5
         [HttpPut("{id}")]
         [Authorize]
@@ -74,6 +92,11 @@ namespace CarRepair.Controllers
             return service;
         }
 
+        /// <summary>
+        /// Добавить услугу
+        /// </summary>
+        /// <param name="service"></param>
+        /// <returns></returns>
         // POST: api/Services
         [HttpPost]
         [Authorize]
@@ -85,6 +108,11 @@ namespace CarRepair.Controllers
             return CreatedAtAction("GetService", new { id = service.ID }, service);
         }
 
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // DELETE: api/Services/5
         [HttpDelete("{id}")]
         [Authorize]
