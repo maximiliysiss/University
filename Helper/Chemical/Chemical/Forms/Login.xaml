@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Chemical.Forms"
         mc:Ignorable="d"
-        Title="Login" Height="450" Width="800">
+        Title="Вход" Height="450" Width="800">
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -21,6 +21,6 @@
         <TextBox Name="login" Grid.Row="1" Width="400px" FontSize="14pt"></TextBox>
         <Label Grid.Row="2" HorizontalAlignment="Center" FontSize="14pt">Пароль</Label>
         <PasswordBox Name="password" Grid.Row="3" Width="400px" FontSize="14pt"></PasswordBox>
-        <Button Click="LoginClick" Grid.Row="5" Width="400px" FontSize="14pt">Логин</Button>
+        <Button Click="LoginClick" Grid.Row="5" Width="400px" FontSize="14pt">Вход</Button>
     </Grid>
 </Window>

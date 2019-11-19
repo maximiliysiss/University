@@ -13,6 +13,7 @@ namespace Chemical.Models
         Techolog
     }
 
+    [Serializable]
     public class User
     {
         public int ID { get; set; }

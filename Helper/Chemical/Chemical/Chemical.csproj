@@ -38,6 +38,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.6\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
@@ -307,6 +313,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Extensions\Attributes\DisplayGridName.cs" />
+    <Compile Include="Extensions\Attributes\HideColumn.cs" />
+    <Compile Include="Extensions\Extensions.cs" />
+    <Compile Include="Forms\Controls\Models\BaseModelListControl.xaml.cs">
+      <DependentUpon>BaseModelListControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\Models\List\MaterialInStockList.cs" />
+    <Compile Include="Forms\Controls\Models\List\PlanList.cs" />
+    <Compile Include="Forms\Controls\Models\List\RawMaterialList.cs" />
+    <Compile Include="Forms\Controls\Models\BaseModelControl.cs" />
+    <Compile Include="Forms\Controls\Models\List\StockList.cs" />
+    <Compile Include="Forms\Controls\Models\Model\MaterialInStockControlContent.xaml.cs">
+      <DependentUpon>MaterialInStockControlContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\Models\Model\PlanControl.xaml.cs">
+      <DependentUpon>PlanControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\Models\Model\RawMaterialControl.xaml.cs">
+      <DependentUpon>RawMaterialControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\Models\Model\StockControl.xaml.cs">
+      <DependentUpon>StockControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Controls\ProWorkerControl.xaml.cs">
       <DependentUpon>ProWorkerControl.xaml</DependentUpon>
     </Compile>
@@ -316,11 +345,57 @@
     <Compile Include="Forms\Controls\TechnologControl.xaml.cs">
       <DependentUpon>TechnologControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20191117141344_Init.cs" />
+    <Compile Include="Migrations\20191117141344_Init.designer.cs">
+      <DependentUpon>20191117141344_Init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20191117174639_Update.cs" />
+    <Compile Include="Migrations\20191117174639_Update.designer.cs">
+      <DependentUpon>20191117174639_Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20191117182731_Stock.cs" />
+    <Compile Include="Migrations\20191117182731_Stock.designer.cs">
+      <DependentUpon>20191117182731_Stock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20191117190208_U.cs" />
+    <Compile Include="Migrations\20191117190208_U.designer.cs">
+      <DependentUpon>20191117190208_U.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20191117200526_New.cs" />
+    <Compile Include="Migrations\20191117200526_New.designer.cs">
+      <DependentUpon>20191117200526_New.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
+    <Compile Include="Models\Plan.cs" />
+    <Compile Include="Models\RawMaterial.cs" />
+    <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Services\CryptService.cs" />
     <Compile Include="Services\DatabaseContext.cs" />
     <Compile Include="Services\ChemicalNinjectModule.cs" />
     <Compile Include="Services\ILoginService.cs" />
+    <Compile Include="UIElements\DateTimeSqlPicker.cs" />
+    <Compile Include="UIElements\NumericBox.cs" />
+    <Page Include="Forms\Controls\Models\BaseModelListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Controls\Models\Model\MaterialInStockControlContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Controls\Models\Model\PlanControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Controls\Models\Model\RawMaterialControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Controls\Models\Model\StockControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Controls\ProWorkerControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

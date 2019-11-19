@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chemical.Forms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +28,13 @@ namespace Chemical
             this.control = control;
             InitializeComponent();
             this.Content = this.control;
+
+            this.Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            new Login().Show();
         }
     }
 }

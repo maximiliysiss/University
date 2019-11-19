@@ -7,6 +7,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TabControl>
+            <TabItem Name="RawMaterial" Header="Сырье">
+
+            </TabItem>
+            <TabItem Name="Plan" Header="План выпуска">
+
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

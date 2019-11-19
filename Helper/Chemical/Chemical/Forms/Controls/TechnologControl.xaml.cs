@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Chemical.Forms.Controls.Models.List;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,8 @@ namespace Chemical.Forms.Controls
         public TechnologControl()
         {
             InitializeComponent();
+            RawMaterial.Content = new RawMaterialList();
+            Plan.Content = new PlanList();
         }
     }
 }

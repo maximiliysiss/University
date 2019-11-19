@@ -38,21 +38,28 @@ namespace Chemical.Forms
             }
 
             UserControl control = null;
+            string name = string.Empty;
 
             switch (loginRes.UserRole)
             {
                 case Models.UserRole.Storage:
                     control = new StorageControl();
+                    name = "Ответсвенный за хранение";
                     break;
                 case Models.UserRole.ProWorker:
                     control = new ProWorkerControl();
+                    name = "Прораб";
                     break;
                 case Models.UserRole.Techolog:
                     control = new TechnologControl();
+                    name = "Технолог";
                     break;
             }
 
-            new MainWindow(control).ShowDialog();
+            var wnd = new MainWindow(control);
+            wnd.Title = name;
+            wnd.Show();
+            Close();
         }
     }
 }
