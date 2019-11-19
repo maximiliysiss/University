@@ -20,6 +20,10 @@ namespace CarRepair.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<User>().HasData(
+                new User { ID = 1, Login = "admin", PasswordHash = CryptService.CreateMD5("admin") }
+            );
         }
     }
 }

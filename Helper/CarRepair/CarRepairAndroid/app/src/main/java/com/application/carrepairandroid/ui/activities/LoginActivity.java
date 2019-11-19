@@ -1,4 +1,4 @@
-package com.school.android.ui.activity;
+package com.application.carrepairandroid.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,13 +8,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.school.android.R;
-import com.school.android.application.App;
-import com.school.android.application.UserContext;
-import com.school.android.models.network.input.LoginResult;
-import com.school.android.models.network.output.LoginModel;
-import com.school.android.network.classes.CallbackAction;
-import com.school.android.network.classes.UniversalCallback;
+import com.application.carrepairandroid.R;
+import com.application.carrepairandroid.application.App;
+import com.application.carrepairandroid.application.UserContext.UserContext;
+import com.application.carrepairandroid.network.callbacks.UniversalCallback;
+import com.application.carrepairandroid.network.models.output.LoginModel;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -45,9 +43,12 @@ public class LoginActivity extends AppCompatActivity {
 
         App.getAuthRetrofit().login(new LoginModel(login, password)).enqueue(new UniversalCallback<>(this,
                 object -> {
-                    App.setUserContext(new UserContext(object.getRefreshToken(), object.getAccessToken(),
-                            object.getUserType(), object.getId()));
+                    App.setUserContext(new UserContext(object.getAccessToken(),object.getRefreshToken()));
                     startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 }));
+    }
+
+    public void toNext(View view) {
+        startActivity(new Intent(this, MainActivity.class));
     }
 }

@@ -42,7 +42,6 @@ namespace CarRepair.Services
         /// Симметричный ключ
         /// </summary>
         /// <returns></returns>
-        [JsonIgnore]
         public SymmetricSecurityKey SecurityKey => new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Key));
     }
 }

@@ -46,7 +46,7 @@ namespace CarRepair.Controllers
         // PUT: api/Services/5
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> PutService(int id, Service service)
+        public async Task<ActionResult<Service>> PutService(int id, Service service)
         {
             if (id != service.ID)
             {
@@ -71,7 +71,7 @@ namespace CarRepair.Controllers
                 }
             }
 
-            return NoContent();
+            return service;
         }
 
         // POST: api/Services
