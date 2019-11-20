@@ -13,7 +13,7 @@ using SchoolService.Services;
 namespace SchoolService.Controllers
 {
     [Route("api/[controller]")]
-    [AuthorizeAttribute(Roles = "Teacher")]
+    [Authorize]
     [ApiController]
     public class MarksController : ControllerBase
     {
@@ -40,6 +40,26 @@ namespace SchoolService.Controllers
             return await _context.Marks.Where(x => x.TeacherId == Teacher.ID).ToListAsync();
         }
 
+        [HttpGet("class/{id}")]
+        public async Task<ActionResult<List<Mark>>> GetMarksByDate(int id, int day, int month, int year)
+        {
+            var user = this.GetCurrentUser(_context);
+            var date = new DateTime(year, month, day);
+            if (user.UserType != UserType.Student)
+                return await _context.Marks.Where(x => x.Date.Date == date && x.Schedule.ClassId == id
+                                                    && x.Schedule.TeacherId == user.ID).ToListAsync();
+            return await _context.Marks.Where(x => x.Date.Date == date && x.Schedule.ClassId == id
+                    && x.ChildId == user.ID).ToListAsync();
+        }
+
+        [HttpGet("myclass/{id}")]
+        public async Task<ActionResult<List<Mark>>> GetMyClassMarksByDate(int id, int day, int month, int year)
+        {
+            var user = this.GetCurrentUser(_context);
+            var date = new DateTime(year, month, day);
+            return await _context.Marks.Where(x => x.Schedule.ClassId == id && x.Date.Date == date).ToListAsync();
+        }
+
         // GET: api/Marks/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Mark>> GetMark(int id)
@@ -56,16 +76,9 @@ namespace SchoolService.Controllers
 
         // PUT: api/Marks/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Mark>> PutMark(int id, Mark mark)
         {
-            using (var userContext = this.GetUserContext())
-            {
-                var markClass = userContext.DatabaseContext.Marks.FirstOrDefault(x => x.ID == id)?.Schedule?.Class;
-                if (id != mark.ID || !(userContext.User as Teacher).Class.Select(x => x.ID).Contains(markClass.ID))
-                    return BadRequest();
-                mark.TeacherId = userContext.User.ID;
-            }
-
             _context.Entry(mark).State = EntityState.Modified;
 
             try
@@ -85,6 +98,7 @@ namespace SchoolService.Controllers
 
         // POST: api/Marks
         [HttpPost]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Mark>> PostMark(Mark mark)
         {
             mark.TeacherId = this.GetCurrentUser(_context).ID;
@@ -96,6 +110,7 @@ namespace SchoolService.Controllers
 
         // DELETE: api/Marks/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Teacher, Admin")]
         public async Task<ActionResult<Mark>> DeleteMark(int id)
         {
             var mark = await _context.Marks.FindAsync(id);

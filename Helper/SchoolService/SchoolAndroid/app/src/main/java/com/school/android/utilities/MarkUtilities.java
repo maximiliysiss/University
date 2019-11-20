@@ -23,16 +23,7 @@ public class MarkUtilities {
 
             if (byDays.containsKey(k)) {
                 List<List<Mark>> rec = new ArrayList<>();
-                Map<Integer, List<Mark>> groupByLesson = byDays.get(k).stream().collect(groupingBy(m -> m.getSchedule().getId()));
-                groupByLesson.forEach((ki, li) -> {
-                    li.sort((o1, o2) -> o1.getSchedule().getLessonNumber().compareTo(o2.getSchedule().getLessonNumber()));
-                    rec.add(li);
-                });
-                rec.sort((o1, o2) -> {
-                    Mark m1 = o1.get(0);
-                    Mark m2 = o2.get(0);
-                    return m1.getSchedule().getLessonNumber().compareTo(m2.getSchedule().getLessonNumber());
-                });
+                rec.add(byDays.get(k));
                 data.put(k, rec);
             } else
                 data.put(k, new ArrayList<>());

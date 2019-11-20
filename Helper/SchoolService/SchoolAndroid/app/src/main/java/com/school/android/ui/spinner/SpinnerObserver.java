@@ -14,9 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressLint("AppCompatCustomView")
-public abstract class SpinnerObserver extends Spinner implements Observable, Observer {
+public abstract class SpinnerObserver<T> extends Spinner implements Observable, Observer {
 
     List<Observer> observerList = new ArrayList<>();
+    protected boolean flag = false;
+    protected T obj;
 
     private void registerLogic() {
         this.setOnItemSelectedListener(new OnItemSelectedListener() {
@@ -30,6 +32,10 @@ public abstract class SpinnerObserver extends Spinner implements Observable, Obs
 
             }
         });
+    }
+
+    public void setObject(T t) {
+        this.obj = t;
     }
 
     public SpinnerObserver(Context context) {
@@ -82,9 +88,17 @@ public abstract class SpinnerObserver extends Spinner implements Observable, Obs
         observerList.forEach(x -> x.notify(this));
     }
 
+    public void notifyObservers(boolean flag) {
+        this.flag = flag;
+        observerList.forEach(x -> x.notify(this));
+    }
+
+
     @Override
     public void setOnItemSelectedListener(@Nullable OnItemSelectedListener listener) {
         super.setOnItemSelectedListener(listener);
-        notifyObservers();
+        if (!flag)
+            notifyObservers();
+        flag = false;
     }
 }

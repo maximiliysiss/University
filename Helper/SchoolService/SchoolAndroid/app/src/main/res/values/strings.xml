@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">SchoolAndroid</string>
-    <string name="server_url">http://192.168.1.8:5000/api/</string>
-    <string name="user">teacher</string>
+    <string name="server_url">http://192.168.1.2:5000/api/</string>
+    <string name="user">knowledgeteacher</string>
 
     <string name="schedules">Расписание</string>
     <string name="profile">Профиль</string>
@@ -51,4 +51,6 @@
     <string name="add_position">Добавить позицию?</string>
     <string name="set_password">Введите пароль</string>
     <string name="select_class">Изменить класс</string>
+    <string name="change_user">Сменить пользователя?</string>
+    <string name="not_found">404 not found</string>
 </resources>

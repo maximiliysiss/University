@@ -2,11 +2,24 @@ package com.school.android.ui.fragments;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.school.android.R;
 import com.school.android.models.network.FragmentModel;
 import com.school.android.ui.activity.ActivityFragmenter;
+import com.school.android.ui.adapters.recyclerview.RecyclerViewAdapter;
+import com.school.android.ui.adapters.recyclerview.RecyclerViewAdapterConstructor;
+import com.school.android.ui.adapters.recyclerview.ViewHolders.RecyclerHolder;
+import com.school.android.ui.callbacks.FilterAction;
+import com.school.android.ui.callbacks.TextWatcherCallback;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
 
 public abstract class ModelActionFragment<T extends ActivityFragmenter, M extends FragmentModel> extends ModelFragment<T, M> {
 

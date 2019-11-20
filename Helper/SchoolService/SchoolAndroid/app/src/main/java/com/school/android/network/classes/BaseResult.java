@@ -28,6 +28,9 @@ public abstract class BaseResult<T> implements Callback<T> {
         if (response.code() == 401 || response.code() == 403) {
             Toast.makeText(context, context.getString(R.string.authorize_error), Toast.LENGTH_SHORT).show();
             isWorked = true;
+        } else if (response.code() == 404) {
+            Toast.makeText(context, context.getString(R.string.not_found), Toast.LENGTH_SHORT).show();
+            isWorked = true;
         } else if (response.code() >= 400) {
             Toast.makeText(context, context.getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             isWorked = true;

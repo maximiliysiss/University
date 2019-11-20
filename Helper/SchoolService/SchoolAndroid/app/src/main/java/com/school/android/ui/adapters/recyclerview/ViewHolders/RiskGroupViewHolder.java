@@ -27,4 +27,5 @@ public class RiskGroupViewHolder extends RecyclerHolder<RiskGroup> {
     public void onClick() {
         getRealActivity().openFragment(R.id.navigation_riskgroups_element, modelName, object);
     }
+
 }

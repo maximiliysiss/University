@@ -19,7 +19,9 @@ import com.school.android.models.network.input.User;
 import com.school.android.network.classes.UniversalCallback;
 import com.school.android.ui.activity.MainActivity;
 import com.school.android.ui.adapters.recyclerview.RecyclerViewAdapter;
+import com.school.android.ui.adapters.recyclerview.RecyclerViewAdapterConstructor;
 import com.school.android.ui.adapters.recyclerview.ViewHolders.UserViewHolder;
+import com.school.android.ui.callbacks.FilterAction;
 import com.school.android.ui.fragments.BaseFragment;
 import com.school.android.ui.fragments.ModelContainsFragment;
 
@@ -42,6 +44,10 @@ public class UserFragment extends ModelContainsFragment<MainActivity> {
 
         RecyclerView recyclerView = getView().findViewById(R.id.users);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        setOnSearchReaction(recyclerView, App.getUserRetrofit().getModels(), (filter, model) -> model.getFullName().toLowerCase().contains(filter),
+                new RecyclerViewAdapterConstructor<>(R.layout.recycler_user, y -> new UserViewHolder(y, getModelName())));
+
         App.getUserRetrofit().getModels().enqueue(new UniversalCallback<>(getContext(), x -> {
             recyclerView.setAdapter(new RecyclerViewAdapter(x, R.layout.recycler_user, y -> new UserViewHolder(y, getModelName())));
         }));

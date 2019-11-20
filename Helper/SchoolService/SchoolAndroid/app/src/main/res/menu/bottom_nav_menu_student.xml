@@ -7,6 +7,11 @@
         android:title="@string/schedules" />
 
     <item
+        android:id="@+id/navigation_marks_student"
+        android:icon="@drawable/ic_mark_black_24dp"
+        android:title="@string/mark" />
+
+    <item
         android:id="@+id/navigation_profile"
         android:icon="@drawable/ic_profile_black_24dp"
         android:title="@string/profile" />

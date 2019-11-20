@@ -5,55 +5,66 @@
     android:layout_height="match_parent"
     tools:context=".ui.mark.MarkElementFragment">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="15dp">
+        android:layout_height="match_parent">
 
-        <com.school.android.ui.spinner.DaySpinner
-            android:id="@+id/day"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.school.android.ui.spinner.DaySpinner>
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-        <com.school.android.ui.spinner.ClassSpinner
-            android:id="@+id/class_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.school.android.ui.spinner.ClassSpinner>
+            <com.school.android.ui.spinner.DayCalendar
+                android:id="@+id/day"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"></com.school.android.ui.spinner.DayCalendar>
 
-        <com.school.android.ui.spinner.LessonSpinner
-            android:id="@+id/lesson"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.school.android.ui.spinner.LessonSpinner>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:orientation="vertical">
 
-        <com.school.android.ui.spinner.StudentSpinner
-            android:id="@+id/student"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></com.school.android.ui.spinner.StudentSpinner>
+                <com.school.android.ui.spinner.LessonSpinner
+                    android:id="@+id/lesson"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></com.school.android.ui.spinner.LessonSpinner>
 
-        <EditText
-            android:id="@+id/mark"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Оценка"
-            android:inputType="numberSigned"
-            android:paddingLeft="15dp"
-            android:textSize="14pt"></EditText>
+                <Spinner
+                    android:id="@+id/student"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"></Spinner>
 
-        <Button
-            android:id="@+id/action"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Action"></Button>
+                <EditText
+                    android:id="@+id/mark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Оценка"
+                    android:inputType="numberSigned"
+                    android:paddingLeft="15dp"
+                    android:textSize="14pt"></EditText>
 
-        <Button
-            android:id="@+id/delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            android:visibility="invisible"></Button>
+                <Button
+                    android:id="@+id/action"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Action"></Button>
 
-    </LinearLayout>
+                <Button
+                    android:id="@+id/delete"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Delete"
+                    android:visibility="invisible"></Button>
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </FrameLayout>

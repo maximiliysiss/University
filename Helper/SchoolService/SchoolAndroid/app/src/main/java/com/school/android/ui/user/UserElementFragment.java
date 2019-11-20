@@ -209,8 +209,11 @@ public class UserElementFragment extends ModelActionFragment<MainActivity, User>
         switch (UserType.values()[getModel().getUserType()]) {
             case Student: {
                 Class aClass = (Class) classes.getSelectedItem();
-                if (aClass.getId() != 0)
-                    ((Children) getModel()).setClass_(aClass);
+                if (aClass.getId() != 0) {
+                    Children children = (Children) getModel();
+                    children.setClassId(aClass.getId());
+                    children.setClass_(null);
+                }
                 break;
             }
         }

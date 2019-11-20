@@ -48,6 +48,7 @@ public class UserViewHolder extends RecyclerHolder<User> {
         }
     }
 
+
     @Override
     public void setObject(User object) {
         super.setObject(object);
