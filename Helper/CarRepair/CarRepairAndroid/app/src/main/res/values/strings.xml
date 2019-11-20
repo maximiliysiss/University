@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">CarRepairAndroid</string>
+    <string name="server_url">http://192.168.1.2:5000/api/</string>
+    <string name="user">admin</string>
+    <string name="not_login_password">Заполните поля</string>
+    <string name="name">Название</string>
+    <string name="price">Цена</string>
+    <string name="model_service">model_service</string>
+    <string name="action">Создать</string>
+    <string name="delete">Удалить</string>
+    <string name="create">Создать</string>
+    <string name="update">Сохранить</string>
+    <string name="db_car">db_car</string>
+</resources>
