@@ -14,8 +14,14 @@ import com.application.carrepairandroid.application.UserContext.UserContext;
 import com.application.carrepairandroid.network.callbacks.UniversalCallback;
 import com.application.carrepairandroid.network.models.output.LoginModel;
 
+/**
+ * Форма входа
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * Поля ввода
+     */
     EditText loginTextView;
     EditText passwordTextView;
 
@@ -28,10 +34,17 @@ public class LoginActivity extends AppCompatActivity {
         passwordTextView = findViewById(R.id.password);
     }
 
+    /**
+     * Нельзя листать назад
+     */
     @Override
     public void onBackPressed() {
     }
 
+    /**
+     * Кнопка входа
+     * @param view
+     */
     public void login(View view) {
         String login = loginTextView.getText().toString().trim();
         String password = passwordTextView.getText().toString().trim();
@@ -48,6 +61,10 @@ public class LoginActivity extends AppCompatActivity {
                 }));
     }
 
+    /**
+     * Просто просмотр
+     * @param view
+     */
     public void toNext(View view) {
         startActivity(new Intent(this, MainActivity.class));
     }

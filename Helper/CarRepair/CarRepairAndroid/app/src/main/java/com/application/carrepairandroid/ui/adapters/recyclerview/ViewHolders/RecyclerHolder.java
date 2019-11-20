@@ -8,23 +8,26 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+/**
+ * Обработчик карточки для RecyclerView
+ * @param <T>
+ */
 public abstract class RecyclerHolder<T> extends RecyclerView.ViewHolder {
 
     public RecyclerHolder(@NonNull View itemView, String modelName) {
         super(itemView);
 
         this.itemView.setOnClickListener(x -> onClick());
-        this.itemView.setOnLongClickListener(x -> onLongClick());
         this.modelName = modelName;
     }
 
-    private boolean onLongClick() {
-
-
-        return true;
-    }
-
+    /**
+     * Объект
+     */
     protected T object;
+    /**
+     * Название модели
+     */
     protected String modelName;
 
     public void setObject(T object) {

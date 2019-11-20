@@ -13,8 +13,14 @@ import com.application.carrepairandroid.application.App;
 import com.application.carrepairandroid.network.models.input.Service;
 import com.application.carrepairandroid.ui.activities.ServiceActivity;
 
+/**
+ * Карточка услуги
+ */
 public class ServiceViewHolder extends RecyclerHolder<Service> {
 
+    /**
+     * Поля
+     */
     TextView name;
     TextView price;
 
@@ -24,6 +30,9 @@ public class ServiceViewHolder extends RecyclerHolder<Service> {
         price = itemView.findViewById(R.id.price);
     }
 
+    /**
+     * Нажатие
+     */
     @Override
     public void onClick() {
         if (App.getUserContext() != null) {
@@ -33,6 +42,10 @@ public class ServiceViewHolder extends RecyclerHolder<Service> {
         }
     }
 
+    /**
+     * Загрузка модели на форму
+     * @param object
+     */
     @Override
     public void setObject(Service object) {
         super.setObject(object);

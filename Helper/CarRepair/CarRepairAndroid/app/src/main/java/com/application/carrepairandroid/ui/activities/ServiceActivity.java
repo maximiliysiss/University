@@ -14,10 +14,19 @@ import com.application.carrepairandroid.network.callbacks.CallbackAction;
 import com.application.carrepairandroid.network.callbacks.UniversalCallback;
 import com.application.carrepairandroid.network.models.input.Service;
 
+/**
+ * Форма услуги
+ */
 public class ServiceActivity extends AppCompatActivity {
 
+    /**
+     * Услуга
+     */
     Service service;
 
+    /**
+     * Поля
+     */
     EditText name;
     EditText price;
 
@@ -26,6 +35,9 @@ public class ServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_service);
 
+        /**
+         * Получить из intent услуги, с которой работаем
+         */
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             service = (Service) bundle.getSerializable(getString(R.string.model_service));
@@ -37,6 +49,9 @@ public class ServiceActivity extends AppCompatActivity {
         name.setText(service.getName());
         price.setText(String.valueOf(service.getPrice()));
 
+        /**
+         * Если для изменения то одно, если для добавления, то другое
+         */
         Button action = findViewById(R.id.action);
         if (service.getId() != null) {
             action.setText(R.string.update);
@@ -58,11 +73,18 @@ public class ServiceActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Получим модель с формы
+     */
     public void loadModel() {
         service.setName(name.getText().toString().trim());
         service.setPrice(Integer.parseInt(price.getText().toString().trim()));
     }
 
+    /**
+     * Удаление
+     * @param view
+     */
     public void delete(View view) {
         App.getServiceRetrofit().delete(service.getId()).enqueue(new UniversalCallback<>(getBaseContext(),
                 body -> startActivity(new Intent(ServiceActivity.this, MainActivity.class))));

@@ -20,10 +20,16 @@ import com.application.carrepairandroid.ui.adapters.recyclerview.ViewHolders.Ser
 
 import java.util.List;
 
+/**
+ * Форма вывода услуг
+ */
 public class MainActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
 
+    /**
+     * Если пользователь вошел, то предложить выйти, иначе просто перейти к форме входа
+     */
     @Override
     public void onBackPressed() {
 
@@ -63,6 +69,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Кнопка создать
+     * @param view
+     */
     public void add(View view) {
         Intent intent = new Intent(this, ServiceActivity.class);
         intent.putExtra(getString(R.string.model_service), new Service());

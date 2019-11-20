@@ -20,8 +20,14 @@ import okhttp3.Request;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Класс приложения
+ */
 public class App extends Application {
 
+    /**
+     * Подключение к БД
+     */
     private static DatabaseContext databaseContext;
 
     public static UserContext getUserContext() {
@@ -33,6 +39,9 @@ public class App extends Application {
         databaseContext.userDao().insert(userContext);
     }
 
+    /**
+     * Подключение к серверу
+     */
     private static AuthRetrofit authRetrofit;
 
     private static ServiceRetrofit serviceRetrofit;

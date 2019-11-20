@@ -7,6 +7,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * Обработчик запроса по сети
+ * @param <T>
+ */
 public class UniversalCallback<T> implements Callback<T> {
     CallbackAction<T> callbackAction;
 

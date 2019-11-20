@@ -12,10 +12,24 @@ import com.application.carrepairandroid.ui.adapters.recyclerview.ViewHolders.Rec
 
 import java.util.List;
 
+/**
+ * Адаптер для RecyclerView
+ * @param <T>
+ * @param <Card>
+ */
 public class RecyclerViewAdapter<T, Card extends RecyclerHolder<T>> extends RecyclerView.Adapter<Card> {
 
+    /**
+     * Данные
+     */
     List<T> list;
+    /**
+     * Layout
+     */
     int layoutItem;
+    /**
+     * Создание карточки
+     */
     RecyclerViewConstructor<Card> cardRecyclerViewConstructor;
 
     public RecyclerViewAdapter(List<T> list, int layoutItem, RecyclerViewConstructor<Card> cardRecyclerViewConstructor) {
@@ -24,6 +38,12 @@ public class RecyclerViewAdapter<T, Card extends RecyclerHolder<T>> extends Recy
         this.cardRecyclerViewConstructor = cardRecyclerViewConstructor;
     }
 
+    /**
+     * Создание карточки
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public Card onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,6 +51,11 @@ public class RecyclerViewAdapter<T, Card extends RecyclerHolder<T>> extends Recy
         return cardRecyclerViewConstructor.getView(view);
     }
 
+    /**
+     * Привязка данных
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(@NonNull Card holder, int position) {
         holder.setObject(list.get(position));

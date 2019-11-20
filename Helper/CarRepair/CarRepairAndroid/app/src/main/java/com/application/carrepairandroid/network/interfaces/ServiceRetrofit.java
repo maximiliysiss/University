@@ -12,19 +12,39 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+/**
+ * Подключение к серверу об услугах
+ */
 public interface ServiceRetrofit {
+    /**
+     * Получить услуги
+     * @return
+     */
     @GET("services")
     Call<List<Service>> getModels();
 
-    @GET("services/{id}")
-    Call<Service> getModel(@Path("id") int id);
-
+    /**
+     * Добавить услугу
+     * @param t
+     * @return
+     */
     @POST("services")
     Call<Service> create(@Body Service t);
 
+    /**
+     * Изменить
+     * @param id
+     * @param t
+     * @return
+     */
     @PUT("services/{id}")
     Call<Service> update(@Path("id") int id, @Body Service t);
 
+    /**
+     * Удалить
+     * @param id
+     * @return
+     */
     @DELETE("services/{id}")
     Call<Service> delete(@Path("id") int id);
 
