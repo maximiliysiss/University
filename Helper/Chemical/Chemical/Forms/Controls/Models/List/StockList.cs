@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Chemical.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Форма списка складов
+    /// </summary>
     public class StockList : BaseModelListControl
     {
         protected override void AddNew() => Open(new Stock());

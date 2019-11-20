@@ -8,6 +8,9 @@ using System.Windows.Documents;
 
 namespace Chemical.Models
 {
+    /// <summary>
+    /// Сырье
+    /// </summary>
     [Serializable]
     public class RawMaterial
     {

@@ -12,21 +12,36 @@ using System.Threading.Tasks;
 
 namespace Chemical.Services
 {
+    /// <summary>
+    /// Подключение к БД
+    /// </summary>
     public class DatabaseContext : DbContext
     {
         public string ConnectionString { get; set; }
         private bool isCustomCreate;
 
+        /// <summary>
+        /// Для создания в контейнере
+        /// </summary>
+        /// <param name="dbString"></param>
         public DatabaseContext(string dbString)
         {
             ConnectionString = dbString;
             isCustomCreate = true;
         }
 
+        /// <summary>
+        /// Для генерации миграций
+        /// </summary>
+        /// <param name="options"></param>
         public DatabaseContext(DbContextOptions options) : base(options)
         {
         }
 
+        /// <summary>
+        /// Конфигурация
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -34,12 +49,19 @@ namespace Chemical.Services
                 optionsBuilder.UseSqlServer(ConnectionString);
         }
 
+        /// <summary>
+        /// Таблицы
+        /// </summary>
         public DbSet<User> Users { get; set; }
         public DbSet<Plan> Plans { get; set; }
         public DbSet<RawMaterial> RawMaterials { get; set; }
         public DbSet<MaterialInStock> MaterialInStocks { get; set; }
         public DbSet<Stock> Stocks { get; set; }
 
+        /// <summary>
+        /// Добавление пользователей
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -52,7 +74,9 @@ namespace Chemical.Services
         }
     }
 
-
+    /// <summary>
+    /// Для миграций
+    /// </summary>
     public class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
         public DatabaseContext CreateDbContext(string[] args)

@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace Chemical.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Для создания / редактирования складов
+    /// </summary>
     public class StockControl : BaseModelControl<Stock>
     {
         public StockControl(Stock obj) : base(obj, new StockControlContent(obj))

@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace Chemical.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Для создания / редактирования сырья
+    /// </summary>
     public class RawMaterialControl : BaseModelControl<RawMaterial>
     {
         public RawMaterialControl(RawMaterial obj) : base(obj, new RawMaterialControlContent(obj))

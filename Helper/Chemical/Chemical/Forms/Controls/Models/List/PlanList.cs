@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Chemical.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Форма списка планов
+    /// </summary>
     public class PlanList : BaseModelListControl
     {
         protected override void AddNew() => Open(new Plan());

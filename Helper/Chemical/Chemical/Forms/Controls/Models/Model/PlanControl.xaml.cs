@@ -17,6 +17,9 @@ using System.Windows.Shapes;
 
 namespace Chemical.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Для создания / редактирования планов
+    /// </summary>
     public class PlanControl : BaseModelControl<Plan>
     {
         public PlanControl(Plan obj) : base(obj, new PlanControlContent(obj))

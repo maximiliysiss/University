@@ -6,8 +6,14 @@ using System.Windows.Controls;
 
 namespace Chemical.Extensions
 {
+    /// <summary>
+    /// Расширение для DataGrid, чтобы скрывать колонки + устанавливать имена колонок
+    /// </summary>
     public static class DataGridExtension
     {
+        /// <summary>
+        /// Проперти, по которому будет применяться логика к элементу
+        /// </summary>
         public static readonly DependencyProperty HideAnnotatedColumnsProperty = DependencyProperty.RegisterAttached(
            "HideAnnotatedColumns",
            typeof(bool),

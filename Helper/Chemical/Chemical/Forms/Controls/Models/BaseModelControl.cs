@@ -9,12 +9,25 @@ using System.Windows.Controls;
 
 namespace Chemical.Forms.Controls.Models
 {
+    /// <summary>
+    /// Окно для создания / редактирования
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public abstract class BaseModelControl<T> : Window
     {
+        /// <summary>
+        /// Подключение к БД
+        /// </summary>
         protected DatabaseContext databaseContext = App.ChemicalModules.Resolve<DatabaseContext>();
 
+        /// <summary>
+        /// Кнопки
+        /// </summary>
         public Button Action;
         public Button DeleteBtn;
+        /// <summary>
+        /// Таблица
+        /// </summary>
         public Grid InnerContent;
 
         public BaseModelControl(T obj, UserControl content)
@@ -47,10 +60,17 @@ namespace Chemical.Forms.Controls.Models
             this.InnerContent.Children.Add(content);
         }
 
+        /// <summary>
+        /// Пред действие
+        /// </summary>
+        /// <param name="obj"></param>
         protected virtual void PrevAction(T obj)
         {
         }
 
+        /// <summary>
+        /// Создание формы
+        /// </summary>
         private void InitializeComponent()
         {
             Grid grid = new Grid();
@@ -76,8 +96,18 @@ namespace Chemical.Forms.Controls.Models
             this.Content = grid;
         }
 
+        /// <summary>
+        /// Форма для изменения?
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public abstract bool IsEdit(T obj);
 
+        /// <summary>
+        /// Кнопка удаления
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteClick(object sender, RoutedEventArgs e)
         {
             databaseContext.Remove(DataContext);

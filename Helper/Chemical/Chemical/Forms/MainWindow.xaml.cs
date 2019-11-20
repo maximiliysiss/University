@@ -17,12 +17,16 @@ using System.Windows.Shapes;
 namespace Chemical
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Главное окно для пользователя
     /// </summary>
     public partial class MainWindow : Window
     {
         private readonly UserControl control;
 
+        /// <summary>
+        /// Старт окна
+        /// </summary>
+        /// <param name="control"></param>
         public MainWindow(UserControl control)
         {
             this.control = control;
@@ -32,6 +36,11 @@ namespace Chemical
             this.Closing += MainWindow_Closing;
         }
 
+        /// <summary>
+        /// При выходе открыть форму входа
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             new Login().Show();

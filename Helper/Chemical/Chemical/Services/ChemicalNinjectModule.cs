@@ -11,21 +11,43 @@ using System.Threading.Tasks;
 
 namespace Chemical.Services
 {
+    /// <summary>
+    /// Модуль для доступа к контейнеру
+    /// </summary>
     public class ChemicalModules
     {
+        /// <summary>
+        /// Контейнер
+        /// </summary>
         private readonly StandardKernel standardKernel;
 
+        /// <summary>
+        /// Инициализация
+        /// </summary>
         public ChemicalModules()
         {
             standardKernel = new StandardKernel();
             standardKernel.Load(Assembly.GetExecutingAssembly());
         }
 
+        /// <summary>
+        /// Получить данные из контейнера
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
         public T Resolve<T>() => standardKernel.Get<T>();
 
+        /// <summary>
+        /// Добавить контекст
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="dbString"></param>
         public void AddDbContext<T>(string dbString) where T : DbContext => standardKernel.Bind<T>().To<T>().WithConstructorArgument(typeof(string), dbString);
     }
 
+    /// <summary>
+    /// Инициализация контейнера
+    /// </summary>
     public class ChemicalNinjectModule : NinjectModule
     {
         public override void Load()

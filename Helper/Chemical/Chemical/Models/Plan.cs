@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Chemical.Models
 {
+    /// <summary>
+    /// План
+    /// </summary>
     [Serializable]
     public class Plan
     {

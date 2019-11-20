@@ -4,13 +4,22 @@ using System.Linq;
 
 namespace Chemical.Services
 {
+    /// <summary>
+    /// Сервис авторизации
+    /// </summary>
     public interface ILoginService
     {
         User LoginAttempt(string login, string password);
     }
 
+    /// <summary>
+    /// Сервис авторизации
+    /// </summary>
     public class LoginService : ILoginService
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext databaseContext;
 
         public LoginService(DatabaseContext databaseContext)
@@ -18,6 +27,12 @@ namespace Chemical.Services
             this.databaseContext = databaseContext;
         }
 
+        /// <summary>
+        /// Попытка получить пользователя
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         public User LoginAttempt(string login, string password)
         {
             try

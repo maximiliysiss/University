@@ -17,10 +17,13 @@ using System.Windows.Shapes;
 namespace Chemical.Forms
 {
     /// <summary>
-    /// Interaction logic for Login.xaml
+    /// Форма логина
     /// </summary>
     public partial class Login : Window
     {
+        /// <summary>
+        /// Сервис авторизации
+        /// </summary>
         public ILoginService loginService = App.ChemicalModules.Resolve<ILoginService>();
 
         public Login()
@@ -28,6 +31,11 @@ namespace Chemical.Forms
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Кнопка Вход
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void LoginClick(object sender, RoutedEventArgs e)
         {
             var loginRes = loginService.LoginAttempt(login.Text.Trim(), password.Password.Trim());

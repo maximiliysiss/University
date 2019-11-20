@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace Chemical.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Форма списка сырья на складах
+    /// </summary>
     public class MaterialInStockList : BaseModelListControl
     {
         public int ID { get; set; }

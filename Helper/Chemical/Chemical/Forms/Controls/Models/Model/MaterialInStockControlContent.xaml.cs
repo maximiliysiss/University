@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 
 namespace Chemical.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Для создания / редактирования сырья на складе
+    /// </summary>
     public class MaterialOnStockControl : BaseModelControl<MaterialInStock>
     {
         public MaterialOnStockControl(MaterialInStock obj) : base(obj, new MaterialInStockControlContent(obj))

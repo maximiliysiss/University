@@ -11,6 +11,9 @@ using System.Windows;
 
 namespace Chemical.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Форма список сырья
+    /// </summary>
     public class RawMaterialList : BaseModelListControl
     {
         protected override void AddNew() => new RawMaterialControl(new Chemical.Models.RawMaterial()).ShowDialog();

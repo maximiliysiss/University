@@ -10,6 +10,9 @@ using System.Windows.Media.Media3D;
 
 namespace Chemical.Models
 {
+    /// <summary>
+    /// Склад
+    /// </summary>
     [Serializable]
     public class Stock
     {
@@ -21,6 +24,9 @@ namespace Chemical.Models
         public override string ToString() => Name;
     }
 
+    /// <summary>
+    /// Сырье на складе
+    /// </summary>
     [Serializable]
     public class MaterialInStock
     {

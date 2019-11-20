@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chemical.Extensions.Attributes
 {
+    /// <summary>
+    /// Аттрибут для правильного отображения названия колонки
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DisplayGridName : System.Attribute
     {
@@ -14,6 +17,9 @@ namespace Chemical.Extensions.Attributes
             Name = name;
         }
 
+        /// <summary>
+        /// Название
+        /// </summary>
         public string Name { get; set; }
     }
 }

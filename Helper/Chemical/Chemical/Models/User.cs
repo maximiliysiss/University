@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Chemical.Models
 {
+    /// <summary>
+    /// Роли
+    /// </summary>
     public enum UserRole
     {
         Storage,
@@ -13,6 +16,9 @@ namespace Chemical.Models
         Techolog
     }
 
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     [Serializable]
     public class User
     {

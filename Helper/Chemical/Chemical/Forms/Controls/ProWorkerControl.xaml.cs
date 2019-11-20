@@ -20,11 +20,13 @@ using System.Windows.Shapes;
 namespace Chemical.Forms.Controls
 {
     /// <summary>
-    /// Interaction logic for ProWorker.xaml
+    /// Форма прораба
     /// </summary>
     public partial class ProWorkerControl : UserControl
     {
-
+        /// <summary>
+        /// Подключение к БД
+        /// </summary>
         private DatabaseContext db = App.ChemicalModules.Resolve<DatabaseContext>();
 
         public ProWorkerControl()
@@ -33,11 +35,19 @@ namespace Chemical.Forms.Controls
             Refresh();
         }
 
+        /// <summary>
+        /// Обновить
+        /// </summary>
         public void Refresh()
         {
             GridPlans.ItemsSource = db.Plans.Where(x => !x.IsExercised).Include(x => x.Material).Include(x => x.Stock).ToList();
         }
 
+        /// <summary>
+        /// Двойной клик по строке
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Row_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             var res = MessageBox.Show("План выполнен?", "Решение", MessageBoxButton.YesNo);
