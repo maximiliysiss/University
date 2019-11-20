@@ -22,6 +22,7 @@ public class LessonViewHolder extends RecyclerHolder<Lesson> {
         getRealActivity().openFragment(R.id.navigation_lesson_element, modelName, object);
     }
 
+
     @Override
     public void setObject(Lesson object) {
         super.setObject(object);

@@ -2,10 +2,16 @@ package com.school.android.models.network.input;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.school.android.models.extension.UserType;
 
 import java.util.List;
 
 public class Teacher extends User {
+
+    public Teacher() {
+        userType = UserType.Teacher.ordinal();
+    }
+
     @SerializedName("isClassWork")
     @Expose
     private Boolean isClassWork;

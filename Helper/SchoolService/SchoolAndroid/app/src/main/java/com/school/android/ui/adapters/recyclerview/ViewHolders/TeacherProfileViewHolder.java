@@ -45,6 +45,7 @@ public class TeacherProfileViewHolder extends RecyclerHolder<LessonProfile> {
         builder.create().show();
     }
 
+
     @Override
     public void setObject(LessonProfile object) {
         super.setObject(object);

@@ -28,4 +28,5 @@ public class ClassViewHolder extends RecyclerHolder<Class> {
     public void onClick() {
         getRealActivity().openFragment(R.id.navigation_class_element, modelName, object);
     }
+
 }
