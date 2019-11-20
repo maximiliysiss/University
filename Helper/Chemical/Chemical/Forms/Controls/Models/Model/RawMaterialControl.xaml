@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Chemical.Forms.Controls.Models.Model.RawMaterialControlContent"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:my="clr-namespace:Chemical.Forms.Controls.Models"
+        xmlns:dg="clr-namespace:Chemical.Extensions"
+        mc:Ignorable="d" Height="200" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" FontSize="14pt" HorizontalAlignment="Center"  VerticalAlignment="Center">Название</Label>
+        <TextBox Text="{Binding Name}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" FontSize="14pt"></TextBox>
+        <DataGrid dg:DataGridExtension.HideAnnotatedColumns="True"  ItemsSource="{Binding MaterialInStocks}" Name="Storages" Grid.Row="1" Grid.ColumnSpan="2" IsReadOnly="True"></DataGrid>
+
+    </Grid>
+</UserControl>
