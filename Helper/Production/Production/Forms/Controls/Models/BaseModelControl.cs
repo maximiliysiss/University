@@ -23,12 +23,14 @@ namespace Production.Forms.Controls.Models
         /// <summary>
         /// Кнопки
         /// </summary>
-        public Button Action;
-        public Button DeleteBtn;
+        protected Button Action;
+        protected Button DeleteBtn;
         /// <summary>
         /// Таблица
         /// </summary>
-        public Grid InnerContent;
+        protected Grid InnerContent;
+        protected bool prevValidate;
+        private bool successSave = true;
 
         public BaseModelControl(T obj, UserControl content)
         {
@@ -37,44 +39,60 @@ namespace Production.Forms.Controls.Models
             this.Height = content.Height + 150;
             InitializeComponent();
 
-            Action.Click += (s, e) => PrevAction(obj);
+            Action.Click += (s, e) => prevValidate = PrevAction(obj);
 
             if (IsEdit(obj))
             {
                 Action.Content = "Изменить";
-                Action.Click += (s, e) => databaseContext.Update(obj);
+                Action.Click += (s, e) => { if (prevValidate) databaseContext.Update(obj); };
             }
             else
             {
                 this.DeleteBtn.Visibility = Visibility.Hidden;
                 Action.Content = "Добавить";
-                Action.Click += (s, e) => databaseContext.Add(obj);
+                Action.Click += (s, e) => { if (prevValidate) databaseContext.Add(obj); };
             }
 
             Action.Click += (s, e) =>
             {
-                databaseContext.SaveChanges();
+                try
+                {
+                    databaseContext.SaveChanges();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                    successSave = false;
+                }
+            };
+
+            Action.Click += (s, e) =>
+            {
+                if (successSave)
+                    PostAction(obj);
                 Close();
             };
 
             this.InnerContent.Children.Add(content);
         }
 
+        protected virtual void PostAction(T obj) { }
+
         /// <summary>
         /// Пред действие
         /// </summary>
         /// <param name="obj"></param>
-        protected virtual void PrevAction(T obj)
-        {
-        }
+        protected virtual bool PrevAction(T obj) => true;
 
         /// <summary>
         /// Создание формы
         /// </summary>
         private void InitializeComponent()
         {
-            Grid grid = new Grid();
-            grid.Margin = new Thickness(10);
+            Grid grid = new Grid
+            {
+                Margin = new Thickness(10)
+            };
             grid.RowDefinitions.Add(new RowDefinition());
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40) });
             grid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(40) });

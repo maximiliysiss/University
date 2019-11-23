@@ -17,6 +17,7 @@ namespace Production
     {
         private static ProductionModule productionModule;
         public static ProductionModule ProductionModule => productionModule;
+        public static DatabaseContext Db => productionModule.Resolve<DatabaseContext>();
 
         private readonly IConfigurationRoot configuration;
 

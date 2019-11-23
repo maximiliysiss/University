@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ninject;
+using Ninject.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,5 +39,16 @@ namespace Production.Services
         /// <typeparam name="T"></typeparam>
         /// <param name="dbString"></param>
         public void AddDbContext<T>(string dbString) where T : DbContext => standardKernel.Bind<T>().To<T>().WithConstructorArgument(typeof(string), dbString);
+    }
+
+    /// <summary>
+    /// Инициализация контейнера
+    /// </summary>
+    public class ChemicalNinjectModule : NinjectModule
+    {
+        public override void Load()
+        {
+            Bind<ILoginService>().To<LoginService>();
+        }
     }
 }

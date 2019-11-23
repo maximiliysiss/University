@@ -1,4 +1,5 @@
-﻿using Production.Forms.Controls.Models.List;
+﻿using Production.Models;
+using Production.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,20 +12,21 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Production.Forms.Controls
+namespace Production.Forms.Controls.Models.Model
 {
     /// <summary>
-    /// Interaction logic for AdminControl.xaml
+    /// Interaction logic for ViewScheduleControl.xaml
     /// </summary>
-    public partial class AdminControl : UserControl
+    public partial class ViewScheduleControl : Window
     {
-        public AdminControl()
+        public ViewScheduleControl(Schedule schedule)
         {
+            var db = App.ProductionModule.Resolve<DatabaseContext>();
             InitializeComponent();
-            Users.Content = new UserList();
+            this.Details.ItemsSource = db.Details.ToList();
+            this.DataContext = schedule;
         }
     }
 }

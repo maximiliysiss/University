@@ -16,14 +16,18 @@ namespace Production.Models
 
     public class User
     {
+        public User()
+        {
+        }
+
+        public User(User user)
+        {
+            this.Login = user.Login;
+        }
+
         public int ID { get; set; }
         public string Login { get; set; }
         public string PasswordHash { get; set; }
         public UserRole UserRole { get; set; }
-    }
-
-    public class Worker : User
-    {
-        public Team Team { get; set; }
     }
 }

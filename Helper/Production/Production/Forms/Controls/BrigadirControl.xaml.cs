@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Production.Forms.Controls.Models.List;
+using Production.Forms.Controls.Models.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +24,9 @@ namespace Production.Forms.Controls
         public BrigadirControl()
         {
             InitializeComponent();
+            this.Fails.Content = new FailList();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e) => new AddDetail().ShowDialog();
     }
 }

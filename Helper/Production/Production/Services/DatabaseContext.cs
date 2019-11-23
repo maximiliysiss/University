@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Dapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Production.Models;
 using System;
@@ -6,13 +7,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Production.Services
 {
     public class DatabaseContext : DbContext
     {
         public string ConnectionString { get; set; }
-        private bool isCustomCreate;
+        private readonly bool isCustomCreate;
 
         /// <summary>
         /// Для создания в контейнере
@@ -36,8 +38,8 @@ namespace Production.Services
         public DbSet<Detail> Details { get; set; }
         public DbSet<FailDetail> FailDetails { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
-        public DbSet<Worker> Workers { get; set; }
         public DbSet<Team> Teams { get; set; }
+        public DbSet<UserInTeam> UserInTeams { get; set; }
 
         /// <summary>
         /// Конфигурация
@@ -61,9 +63,32 @@ namespace Production.Services
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, UserRole = UserRole.Brigadir, Login = "Brigadir", PasswordHash = CryptService.CreateMD5("Brigadir") },
                 new User { ID = 2, UserRole = UserRole.Admin, Login = "Admin", PasswordHash = CryptService.CreateMD5("Admin") },
-                new User { ID = 2, UserRole = UserRole.Worker, Login = "Worker", PasswordHash = CryptService.CreateMD5("Worker") },
-                new User { ID = 3, UserRole = UserRole.Director, Login = "Director", PasswordHash = CryptService.CreateMD5("Director") }
+                new User { ID = 3, UserRole = UserRole.Director, Login = "Director", PasswordHash = CryptService.CreateMD5("Director") },
+                new User { ID = 4, UserRole = UserRole.Worker, Login = "Worker", PasswordHash = CryptService.CreateMD5("Worker") },
+                new User { ID = 5, UserRole = UserRole.Worker, Login = "Worker1", PasswordHash = CryptService.CreateMD5("Worker1") }
             );
+
+            modelBuilder.Entity<UserInTeam>().HasOne(x => x.Worker).WithMany().OnDelete(DeleteBehavior.Restrict);
+        }
+
+        public bool Execute(string script, object args = null)
+        {
+            try
+            {
+                using (var connection = Database.GetDbConnection())
+                {
+                    if (args != null)
+                        connection.Execute(script, args);
+                    else
+                        connection.Execute(script);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+            return true;
         }
     }
 

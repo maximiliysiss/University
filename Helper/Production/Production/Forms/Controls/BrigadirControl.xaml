@@ -4,8 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Production.Forms.Controls"
-        mc:Ignorable="d" Height="450" Width="800">
+        mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
+        <TabControl>
+            <TabItem Header="Брак" Name="Fails"></TabItem>
+            <TabItem Header="Действия">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
 
+                    <Button Click="Button_Click">Добавить сделанные детали</Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </UserControl>
