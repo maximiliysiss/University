@@ -28,6 +28,12 @@ namespace Production.Forms.Controls.Models.Model
         }
 
         public override bool IsEdit(Team obj) => obj.ID != 0;
+
+        protected override bool PrevAction(Team obj)
+        {
+            obj.Brigadir = null;
+            return base.PrevAction(obj);
+        }
     }
 
 

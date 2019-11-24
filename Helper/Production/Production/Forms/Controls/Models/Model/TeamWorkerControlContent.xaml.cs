@@ -19,6 +19,7 @@ namespace Production.Forms.Controls.Models.Model
         protected override bool PrevAction(UserInTeam obj)
         {
             obj.Team = null;
+            obj.Worker = null;
             return true;
         }
     }

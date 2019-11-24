@@ -14,6 +14,11 @@ namespace Production.Forms.Controls.Models.Model
 
         public override bool IsEdit(Schedule obj) => obj.ID != 0;
 
+        protected override bool PrevAction(Schedule obj)
+        {
+            obj.Detail = null;
+            return true;
+        }
     }
 
     /// <summary>
@@ -28,7 +33,7 @@ namespace Production.Forms.Controls.Models.Model
             this.Details.ItemsSource = db.Details.ToList();
             this.DataContext = schedule;
             if (schedule.ID != 0)
-                this.offer.Visibility = db.Details.Find(schedule.ID).Count >= schedule.Count ? Visibility.Visible : Visibility.Hidden;
+                this.offer.Visibility = db.Details.Find(schedule.DetailId).Count >= schedule.Count ? Visibility.Visible : Visibility.Hidden;
         }
 
         private void Offer_Click(object sender, RoutedEventArgs e)
