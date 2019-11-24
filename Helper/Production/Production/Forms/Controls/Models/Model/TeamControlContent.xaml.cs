@@ -23,6 +23,10 @@ namespace Production.Forms.Controls.Models.Model
         {
         }
 
+        public TeamControl(Team obj, UserControl content) : base(obj, content)
+        {
+        }
+
         public override bool IsEdit(Team obj) => obj.ID != 0;
     }
 

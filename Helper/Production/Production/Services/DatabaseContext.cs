@@ -40,6 +40,7 @@ namespace Production.Services
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<UserInTeam> UserInTeams { get; set; }
+        public DbSet<MakedDetail> MakedDetails { get; set; }
 
         /// <summary>
         /// Конфигурация

@@ -1,4 +1,5 @@
-﻿using Production.Forms.Controls.Models.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Production.Forms.Controls.Models.Model;
 using Production.Models;
 using Production.Services;
 using System;
@@ -13,7 +14,7 @@ namespace Production.Forms.Controls.Models.List
     {
         protected override void AddNew() => Open(new Schedule());
 
-        protected override List<object> Load() => App.ProductionModule.Resolve<DatabaseContext>().Schedules.Where(x => !x.Executed).Cast<object>().ToList();
+        protected override List<object> Load() => App.ProductionModule.Resolve<DatabaseContext>().Schedules.Include(x => x.Detail).Where(x => !x.Executed).Cast<object>().ToList();
 
         protected override void Open(object obj) => new ScheduleControl(obj as Schedule).ShowDialog();
     }
@@ -27,8 +28,20 @@ namespace Production.Forms.Controls.Models.List
 
         protected override void AddNew() { }
 
-        protected override List<object> Load() => App.ProductionModule.Resolve<DatabaseContext>().Schedules.Where(x => x.Executed).Cast<object>().ToList();
+        protected override List<object> Load() => App.ProductionModule.Resolve<DatabaseContext>().Schedules.Include(x => x.Detail).Where(x => x.Executed).Cast<object>().ToList();
 
         protected override void Open(object obj) => new ViewScheduleControl(obj as Schedule).ShowDialog();
+    }
+
+    public class WorkerPlans : ScheduleList
+    {
+        public WorkerPlans()
+        {
+            this.Add.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        protected override void AddNew() { }
+
+        protected override void Open(object obj) { }
     }
 }

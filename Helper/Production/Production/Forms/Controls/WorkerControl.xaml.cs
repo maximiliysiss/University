@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Production.Forms.Controls.Models.List;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,9 @@ namespace Production.Forms.Controls
         public WorkerControl()
         {
             InitializeComponent();
+            this.Fails.Content = new WorkerFailList();
+            this.Plans.Content = new WorkerPlans();
+            this.Teams.Content = new WorkerTeamList(App.user);
         }
     }
 }

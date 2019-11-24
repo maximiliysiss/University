@@ -37,7 +37,7 @@ namespace Production.Services
         {
             try
             {
-                return databaseContext.Users.FirstOrDefault(x => x.Login == login && x.PasswordHash == CryptService.CreateMD5(password));
+                return App.user = databaseContext.Users.FirstOrDefault(x => x.Login == login && x.PasswordHash == CryptService.CreateMD5(password));
             }
             catch (Exception)
             {

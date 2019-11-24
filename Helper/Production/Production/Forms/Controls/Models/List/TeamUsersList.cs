@@ -12,7 +12,7 @@ namespace Production.Forms.Controls.Models.List
 {
     public class TeamUsersList : BaseModelListControl
     {
-        private Team team;
+        private readonly Team team;
 
         public TeamUsersList(Team team)
         {
@@ -21,8 +21,18 @@ namespace Production.Forms.Controls.Models.List
 
         protected override void AddNew() => Open(new UserInTeam { TeamId = team.ID, Team = team });
 
-        protected override List<object> Load() => App.Db.UserInTeams.Include(x => x.Team).Where(x => x.TeamId == team.ID).Cast<object>().ToList();
+        protected override List<object> Load() => App.Db.UserInTeams.Include(x => x.Worker).Include(x => x.Team).Where(x => x.TeamId == team.ID).Cast<object>().ToList();
 
         protected override void Open(object obj) => new TeamWorkerControl(obj as UserInTeam).ShowDialog();
+    }
+
+    public class WorkerTeamUsersList : TeamUsersList
+    {
+        public WorkerTeamUsersList(Team team) : base(team)
+        {
+            this.Add.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        protected override void Open(object obj) { }
     }
 }

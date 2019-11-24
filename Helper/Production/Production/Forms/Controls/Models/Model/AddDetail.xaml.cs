@@ -29,9 +29,11 @@ namespace Production.Forms.Controls.Models.Model
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             var detail = (Detail)Details.SelectedItem;
-            detail.Count += int.Parse(Count.Text);
+            int count = int.Parse(Count.Text);
+            detail.Count += count;
             var db = App.Db;
             db.Entry(detail).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            db.Add(new MakedDetail { DetailName = detail.Name, Count = count });
             db.SaveChanges();
             Close();
         }

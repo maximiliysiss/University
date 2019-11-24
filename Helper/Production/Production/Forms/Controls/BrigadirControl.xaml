@@ -8,6 +8,8 @@
     <Grid>
         <TabControl>
             <TabItem Header="Брак" Name="Fails"></TabItem>
+            <TabItem Header="Сделанные детали" Name="Maked"></TabItem>
+            <TabItem Header="Бригады" Name="Teams"></TabItem>
             <TabItem Header="Действия">
                 <Grid>
                     <Grid.RowDefinitions>

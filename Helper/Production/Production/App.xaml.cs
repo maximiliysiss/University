@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Production.Models;
 using Production.Services;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,7 @@ namespace Production
         private static ProductionModule productionModule;
         public static ProductionModule ProductionModule => productionModule;
         public static DatabaseContext Db => productionModule.Resolve<DatabaseContext>();
+        public static User user;
 
         private readonly IConfigurationRoot configuration;
 

@@ -41,6 +41,12 @@
     <Reference Include="Dapper, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dapper.2.0.30\lib\net461\Dapper.dll</HintPath>
     </Reference>
+    <Reference Include="MaterialDesignColors, Version=1.2.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignColors.1.2.0\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf, Version=2.6.0.325, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MaterialDesignThemes.2.6.0\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.6.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.6\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
     </Reference>
@@ -312,6 +318,7 @@
     </Compile>
     <Compile Include="Forms\Controls\Models\List\DetailList.cs" />
     <Compile Include="Forms\Controls\Models\List\FailList.cs" />
+    <Compile Include="Forms\Controls\Models\List\MakedDetailList.cs" />
     <Compile Include="Forms\Controls\Models\List\ScheduleList.cs" />
     <Compile Include="Forms\Controls\Models\List\TeamList.cs" />
     <Compile Include="Forms\Controls\Models\List\TeamUsersList.cs" />
@@ -340,6 +347,7 @@
     <Compile Include="Forms\Controls\Models\Model\ViewScheduleControl.xaml.cs">
       <DependentUpon>ViewScheduleControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Controls\Models\Model\WorkerTeamControlContent.cs" />
     <Compile Include="Forms\Controls\WorkerControl.xaml.cs">
       <DependentUpon>WorkerControl.xaml</DependentUpon>
     </Compile>
@@ -353,6 +361,10 @@
     <Compile Include="Migrations\20191123205037_Update.cs" />
     <Compile Include="Migrations\20191123205037_Update.designer.cs">
       <DependentUpon>20191123205037_Update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\20191124153404_UpdsteMaked.cs" />
+    <Compile Include="Migrations\20191124153404_UpdsteMaked.designer.cs">
+      <DependentUpon>20191124153404_UpdsteMaked.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Models\Detail.cs" />

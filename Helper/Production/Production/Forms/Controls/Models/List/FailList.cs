@@ -16,4 +16,11 @@ namespace Production.Forms.Controls.Models.List
 
         protected override void Open(object obj) => new FailControl(obj as FailDetail).ShowDialog();
     }
+
+    public class WorkerFailList : FailList
+    {
+        protected override void AddNew() { }
+
+        protected override void Open(object obj) { }
+    }
 }
