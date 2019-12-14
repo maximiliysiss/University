@@ -1,4 +1,5 @@
-﻿using Production.Forms.Controls.Models.List;
+﻿using Production.Extensions;
+using Production.Forms.Controls.Models.List;
 using Production.Models;
 using System;
 using System.Collections.Generic;
@@ -28,12 +29,6 @@ namespace Production.Forms.Controls.Models.Model
         }
 
         public override bool IsEdit(Team obj) => obj.ID != 0;
-
-        protected override bool PrevAction(Team obj)
-        {
-            obj.Brigadir = null;
-            return base.PrevAction(obj);
-        }
     }
 
 
@@ -50,8 +45,8 @@ namespace Production.Forms.Controls.Models.Model
                 this.UsersIn.Visibility = Visibility.Visible;
                 this.UsersIn.Children.Add(new TeamUsersList(team));
             }
-            var db = App.Db;
-            this.Users.ItemsSource = db.Users.Where(x => x.UserRole == UserRole.Brigadir).ToList();
+            if (team.Brigadir != null)
+                this.Users.ItemsSource = team.Brigadir.ToList();
             this.DataContext = team;
         }
     }

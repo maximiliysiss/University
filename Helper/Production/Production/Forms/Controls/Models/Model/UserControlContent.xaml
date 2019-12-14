@@ -25,6 +25,7 @@
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
         <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Column="0">Роль</Label>
@@ -33,5 +34,13 @@
         <Label Grid.Row="2" FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">Пароль</Label>
         <TextBox Grid.Row="1" Text="{Binding Login}" Grid.Column="1" VerticalAlignment="Center" FontSize="14pt"></TextBox>
         <TextBox Grid.Row="2" Text="{Binding Path=PasswordHash, Mode=OneWayToSource}" Grid.Column="1" VerticalAlignment="Center" FontSize="14pt"></TextBox>
+        <Grid Name="Team" Grid.ColumnSpan="2" Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">Бригада</Label>
+            <ComboBox Grid.Column="1" Name="Teams" SelectedValuePath="ID" DisplayMemberPath="Name" SelectedValue="{Binding TeamId}" FontSize="14pt"></ComboBox>
+        </Grid>
     </Grid>
 </UserControl>

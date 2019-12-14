@@ -72,8 +72,8 @@ namespace Production.Forms
             {
                 Title = name
             };
-            wnd.Show();
             Close();
+            wnd.Show();
         }
     }
 }

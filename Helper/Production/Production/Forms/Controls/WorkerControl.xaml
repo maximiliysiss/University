@@ -7,8 +7,8 @@
         mc:Ignorable="d" Height="450" Width="800">
     <Grid>
         <TabControl>
-            <TabItem Header="Брак" Name="Fails"></TabItem>
-            <TabItem Header="План" Name="Plans"></TabItem>
+            <TabItem Header="Отчеты" Name="Reports">
+            </TabItem>
             <TabItem Header="Бригады" Name="Teams"></TabItem>
         </TabControl>
     </Grid>

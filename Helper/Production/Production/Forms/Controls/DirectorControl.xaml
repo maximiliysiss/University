@@ -10,8 +10,7 @@
         <TabControl>
             <TabItem Name="Users" Header="Пользователи"></TabItem>
             <TabItem Name="Details" Header="Детали"></TabItem>
-            <TabItem Name="Schedules" Header="Расписание"></TabItem>
-            <TabItem Name="ArchiveSchedules" Header="Расписание(Архив)"></TabItem>
+            <TabItem Name="Schedules" Header="График работ"></TabItem>
             <TabItem Name="Teams" Header="Бригады"></TabItem>
         </TabControl>
     </Grid>

@@ -24,11 +24,8 @@ namespace Production.Forms.Controls
         public BrigadirControl()
         {
             InitializeComponent();
-            this.Fails.Content = new FailList();
-            this.Maked.Content = new MakedDetailList();
             this.Teams.Content = new UserTeamList(App.user);
+            this.DayPlans.Content = new DayPlanList();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e) => new AddDetail().ShowDialog();
     }
 }

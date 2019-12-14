@@ -14,9 +14,8 @@ namespace Production.Forms.Controls
             InitializeComponent();
             Users.Content = new UserList();
             Details.Content = new DetailList();
-            Schedules.Content = new ScheduleList();
             Teams.Content = new TeamList();
-            ArchiveSchedules.Content = new ArchiveScheduleList();
+            Schedules.Content = new ScheduleList();
         }
     }
 }

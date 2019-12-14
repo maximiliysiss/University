@@ -36,11 +36,11 @@ namespace Production.Services
 
         public DbSet<User> Users { get; set; }
         public DbSet<Detail> Details { get; set; }
-        public DbSet<FailDetail> FailDetails { get; set; }
+        public DbSet<Report> Reports { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Team> Teams { get; set; }
         public DbSet<UserInTeam> UserInTeams { get; set; }
-        public DbSet<MakedDetail> MakedDetails { get; set; }
+        public DbSet<DayPlan> DayPlans { get; set; }
 
         /// <summary>
         /// Конфигурация
@@ -68,6 +68,8 @@ namespace Production.Services
                 new User { ID = 4, UserRole = UserRole.Worker, Login = "Worker", PasswordHash = CryptService.CreateMD5("Worker") },
                 new User { ID = 5, UserRole = UserRole.Worker, Login = "Worker1", PasswordHash = CryptService.CreateMD5("Worker1") }
             );
+
+            modelBuilder.Entity<Team>().HasData(new Team { ID = 1, Name = "Бригада" });
 
             modelBuilder.Entity<UserInTeam>().HasOne(x => x.Worker).WithMany().OnDelete(DeleteBehavior.Restrict);
         }
@@ -101,7 +103,7 @@ namespace Production.Services
         public DatabaseContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-JVSJ3QJ\SQLEXPRESS;Initial Catalog=production;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-06B1B3A\SQLEXPRESS;Initial Catalog=production.api;Integrated Security=True");
 
             return new DatabaseContext(optionsBuilder.Options);
         }

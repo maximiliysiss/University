@@ -21,7 +21,7 @@
         <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="1">Бригадир</Label>
 
         <TextBox Text="{Binding Name}" VerticalAlignment="Center" FontSize="14pt" Grid.Row="0" Grid.Column="1"></TextBox>
-        <ComboBox Name="Users" SelectedValuePath="ID" DisplayMemberPath="Login" SelectedValue="{Binding BrigadirId}" VerticalAlignment="Center" FontSize="14pt" Grid.Row="1" Grid.Column="1"></ComboBox>
+        <ComboBox IsReadOnly="True" Name="Users" SelectedValuePath="ID" DisplayMemberPath="Login" SelectedValue="{Binding BrigadirId}" VerticalAlignment="Center" FontSize="14pt" Grid.Row="1" Grid.Column="1"></ComboBox>
 
         <Grid Visibility="Hidden" Name="UsersIn" Grid.Row="2" Grid.ColumnSpan="2"></Grid>
     </Grid>

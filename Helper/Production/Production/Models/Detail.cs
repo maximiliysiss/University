@@ -13,8 +13,6 @@ namespace Production.Models
         public int ID { get; set; }
         [DisplayGridName("Название")]
         public string Name { get; set; }
-        [DisplayGridName("Общее количество")]
-        public int Count { get; set; }
         public override string ToString() => Name;
     }
 }

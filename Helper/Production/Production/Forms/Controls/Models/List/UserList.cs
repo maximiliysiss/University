@@ -1,4 +1,5 @@
-﻿using Production.Forms.Controls.Models.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using Production.Forms.Controls.Models.Model;
 using Production.Models;
 using Production.Services;
 using System;
@@ -13,7 +14,7 @@ namespace Production.Forms.Controls.Models.List
     {
         protected override void AddNew() => Open(new User());
 
-        protected override List<object> Load() => App.ProductionModule.Resolve<DatabaseContext>().Users.Cast<object>().ToList();
+        protected override List<object> Load() => App.Db.Users.Include(x => x.Team).Cast<object>().ToList();
 
         protected override void Open(object obj) => new UsersControl(obj as User).ShowDialog();
     }

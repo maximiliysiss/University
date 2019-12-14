@@ -28,7 +28,7 @@ namespace Production.Forms.Controls.Models.List
             this.Add.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        protected override List<object> Load() => App.Db.Teams.Include(x => x.Brigadir).Where(x => x.BrigadirId == brigadir.ID).Cast<object>().ToList();
+        protected override List<object> Load() => App.Db.Teams.Include(x => x.Brigadir).Where(x => x.Brigadir.ID == brigadir.ID).Cast<object>().ToList();
     }
 
     public class WorkerTeamList : TeamList
@@ -41,8 +41,8 @@ namespace Production.Forms.Controls.Models.List
             this.Add.Visibility = System.Windows.Visibility.Hidden;
         }
 
-        protected override List<object> Load() => App.Db.UserInTeams.Include(x => x.Team).Where(x => x.WorkerId == worker.ID).Select(x => x.Team).Include(x=>x.Brigadir).Cast<object>().ToList();
+        protected override List<object> Load() => App.Db.UserInTeams.Where(x => x.WorkerId == worker.ID).Select(x => x.Team).Include(x=>x.Brigadir).Cast<object>().ToList();
 
-        protected override void Open(object obj) => new WorkerTeamControl(obj as Team).ShowDialog();
+        protected override void Open(object obj) { }
     }
 }
