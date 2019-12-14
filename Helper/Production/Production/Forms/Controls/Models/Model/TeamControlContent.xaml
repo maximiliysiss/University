@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Production.Forms.Controls.Models.Model.TeamControlContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Production.Forms.Controls.Models.Model"
+             mc:Ignorable="d" 
+             Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="0">Название</Label>
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="1">Бригадир</Label>
+
+        <TextBox Text="{Binding Name}" VerticalAlignment="Center" FontSize="14pt" Grid.Row="0" Grid.Column="1"></TextBox>
+        <TextBlock Name="Users" Text="{Binding Brigadir.Login}" VerticalAlignment="Center" FontSize="14pt" Grid.Row="1" Grid.Column="1"></TextBlock>
+
+        <Grid Visibility="Hidden" Name="UsersIn" Grid.Row="2" Grid.ColumnSpan="2"></Grid>
+    </Grid>
+</UserControl>

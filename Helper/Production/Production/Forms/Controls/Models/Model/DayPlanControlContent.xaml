@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="Production.Forms.Controls.Models.Model.DayPlanControlContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Production.Forms.Controls.Models.Model"
+             mc:Ignorable="d" 
+             Height="150" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Деталь</Label>
+        <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Количество</Label>
+        <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">План</Label>
+
+        <ComboBox Name="Details" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" SelectedValuePath="ID" DisplayMemberPath="Name" SelectedValue="{Binding DetailId}"></ComboBox>
+        <TextBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Count}"></TextBox>
+        <ComboBox Name="Schedules" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" SelectedValuePath="ID" SelectedValue="{Binding ScheduleId}"></ComboBox>
+    </Grid>
+</UserControl>
