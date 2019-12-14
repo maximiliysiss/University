@@ -26,6 +26,7 @@ namespace Production.Forms.Controls
             InitializeComponent();
             this.Teams.Content = new UserTeamList(App.user);
             this.DayPlans.Content = new DayPlanList();
+            this.Reports.Content = new BrigadirReportList();
         }
     }
 }

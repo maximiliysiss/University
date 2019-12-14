@@ -13,7 +13,7 @@ namespace Production.Forms.Controls.Models.List
     {
         protected override void AddNew() => Open(new Detail());
 
-        protected override List<object> Load() => App.ProductionModule.Resolve<DatabaseContext>().Details.Cast<object>().ToList();
+        protected override List<object> Load() => App.Db.Details.Cast<object>().ToList();
 
         protected override void Open(object obj) => new DetailControl(obj as Detail).ShowDialog();
     }

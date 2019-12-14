@@ -9,6 +9,7 @@
         <TabControl>
             <TabItem Header="План на день" Name="DayPlans"></TabItem>
             <TabItem Header="Бригады" Name="Teams"></TabItem>
+            <TabItem Header="Отчеты" Name="Reports"></TabItem>
         </TabControl>
     </Grid>
 </UserControl>

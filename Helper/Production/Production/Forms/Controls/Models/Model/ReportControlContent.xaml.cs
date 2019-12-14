@@ -24,6 +24,12 @@ namespace Production.Forms.Controls.Models.Model
         }
 
         public override bool IsEdit(Report obj) => obj.ID != 0;
+
+        protected override bool PrevAction(Report obj)
+        {
+            obj.UserId = App.user.ID;
+            return base.PrevAction(obj);
+        }
     }
 
     /// <summary>

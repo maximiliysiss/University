@@ -45,8 +45,6 @@ namespace Production.Forms.Controls.Models.Model
                 this.UsersIn.Visibility = Visibility.Visible;
                 this.UsersIn.Children.Add(new TeamUsersList(team));
             }
-            if (team.Brigadir != null)
-                this.Users.ItemsSource = team.Brigadir.ToList();
             this.DataContext = team;
         }
     }

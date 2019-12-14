@@ -359,6 +359,10 @@
     <Compile Include="Migrations\20191213224248_Update.designer.cs">
       <DependentUpon>20191213224248_Update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\20191214163557_AddUser.cs" />
+    <Compile Include="Migrations\20191214163557_AddUser.designer.cs">
+      <DependentUpon>20191214163557_AddUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Models\DayPlan.cs" />
     <Compile Include="Models\Detail.cs" />
