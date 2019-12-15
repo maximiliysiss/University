@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TabControl>
+            <TabItem Name="Boxes" Header="Свободные боксы"></TabItem>
+            <TabItem Name="Rent" Header="Аренда"></TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

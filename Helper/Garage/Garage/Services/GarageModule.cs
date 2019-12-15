@@ -43,11 +43,12 @@ namespace Garage.Services
     /// <summary>
     /// Инициализация контейнера
     /// </summary>
-    public class ChemicalNinjectModule : NinjectModule
+    public class GarageNinjectModule : NinjectModule
     {
         public override void Load()
         {
             Bind<ILoginService>().To<LoginService>();
+            Bind<UserWindowService>().To<UserWindowService>();
         }
     }
 }

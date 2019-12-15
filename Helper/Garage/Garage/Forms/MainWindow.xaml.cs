@@ -36,9 +36,6 @@ namespace Garage.Forms
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            new Login().Show();
-        }
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e) => new Login().Show();
     }
 }

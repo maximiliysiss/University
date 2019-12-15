@@ -11,6 +11,7 @@ namespace Garage.Forms
     public partial class Login : Window
     {
         public ILoginService loginService = App.ProductionModule.Resolve<ILoginService>();
+        public UserWindowService userWindow = App.ProductionModule.Resolve<UserWindowService>();
 
         public Login()
         {
@@ -31,25 +32,16 @@ namespace Garage.Forms
                 return;
             }
 
-            UserControl control = null;
-            string name = string.Empty;
-
-            switch (loginRes.UserRole)
-            {
-                case Models.UserRole.User:
-                    control = new UsersControl();
-                    break;
-                case Models.UserRole.HomeKeeper:
-                    control = new HomeKeeperControl();
-                    break;
-            }
-
-            var wnd = new MainWindow(control)
-            {
-                Title = name
-            };
+            var wnd = userWindow.OpenUserWindow(loginRes.UserRole);
             Close();
             wnd.Show();
+        }
+
+        private void RegisterClick(object sender, RoutedEventArgs e)
+        {
+            var reg = new Register();
+            Close();
+            reg.Show();
         }
     }
 }

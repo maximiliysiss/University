@@ -15,13 +15,12 @@ namespace Garage
         public static DatabaseContext Db => productionModule.Resolve<DatabaseContext>();
         public static User user;
 
-        private static readonly IConfigurationRoot configuration;
+        private static IConfigurationRoot configuration;
         public static IConfigurationRoot Configuration => configuration;
-
-        static App() => configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true).Build();
 
         public App()
         {
+            configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true).Build();
             productionModule = new GarageModule();
             productionModule.AddDbContext<DatabaseContext>(configuration.GetConnectionString("Default"));
         }

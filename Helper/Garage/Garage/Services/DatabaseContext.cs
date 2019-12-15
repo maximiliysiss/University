@@ -14,28 +14,32 @@ namespace Garage.Services
         private readonly bool isContaniner;
         private readonly string connectionString;
 
-        protected DatabaseContext(string connectionString)
+        public DatabaseContext(string dbString)
         {
             isContaniner = true;
-            this.connectionString = connectionString;
+            this.connectionString = dbString;
         }
 
         public DatabaseContext(DbContextOptions options) : base(options)
         {
-            isContaniner = false;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
             if (isContaniner)
-                optionsBuilder.UseSqlServer(connectionString);
+                optionsBuilder.UseSqlServer(connectionString).UseLazyLoadingProxies();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Rent>().HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<User>().HasData(
+                new User { ID = 1, Login = "User", PasswordHash = CryptService.CreateMD5("User"), UserRole = UserRole.User },
+                new User { ID = 2, Login = "Home", PasswordHash = CryptService.CreateMD5("Home"), UserRole = UserRole.HomeKeeper }
+            );
         }
 
         public DbSet<User> Users { get; set; }

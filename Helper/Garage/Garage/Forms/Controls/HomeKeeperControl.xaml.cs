@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using Garage.Forms.Controls.Models.List;
+using System.Windows.Controls;
 
 namespace Garage.Forms.Controls
 {
@@ -10,6 +11,8 @@ namespace Garage.Forms.Controls
         public HomeKeeperControl()
         {
             InitializeComponent();
+            this.Boxes.Content = new BoxesList();
+            this.Actions.Content = new ActionList();
         }
     }
 }

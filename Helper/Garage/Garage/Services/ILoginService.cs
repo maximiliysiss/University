@@ -41,7 +41,7 @@ namespace Garage.Services
                 user = new User { Login = login.Trim(), PasswordHash = CryptService.CreateMD5(password.Trim()) };
                 databaseContext.Add(user);
                 databaseContext.SaveChanges();
-                return user;
+                return App.user = user;
             }
             catch (Exception)
             {
