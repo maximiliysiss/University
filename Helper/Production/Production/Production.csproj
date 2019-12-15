@@ -351,17 +351,9 @@
     <Compile Include="Forms\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20191213164024_Init.cs" />
-    <Compile Include="Migrations\20191213164024_Init.designer.cs">
-      <DependentUpon>20191213164024_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20191213224248_Update.cs" />
-    <Compile Include="Migrations\20191213224248_Update.designer.cs">
-      <DependentUpon>20191213224248_Update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20191214163557_AddUser.cs" />
-    <Compile Include="Migrations\20191214163557_AddUser.designer.cs">
-      <DependentUpon>20191214163557_AddUser.cs</DependentUpon>
+    <Compile Include="Migrations\20191215102738_Init.cs" />
+    <Compile Include="Migrations\20191215102738_Init.designer.cs">
+      <DependentUpon>20191215102738_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Models\DayPlan.cs" />
