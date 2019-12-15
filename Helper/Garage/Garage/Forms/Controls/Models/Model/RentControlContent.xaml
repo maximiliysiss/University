@@ -1,0 +1,56 @@
+﻿<Window x:Class="Garage.Forms.Controls.Models.Model.RentControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Garage.Forms.Controls.Models.Model"
+             mc:Ignorable="d" 
+             Height="250" Width="400">
+    <Grid Name="MainGrid" Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60px"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Click="Rent_Click" Height="60px" Name="Rent" Grid.Column="0">Арендовать</Button>
+            <Button Click="EndRent_Click" Height="60px" Name="EndRent" Grid.Column="1">
+                <TextBlock Text="Закончить аренду" TextWrapping="Wrap" TextAlignment="Center"/>
+            </Button>
+            <Button Height="60px" Name="Action" Grid.Column="2"></Button>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+
+            <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Адрес</Label>
+            <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Ширина</Label>
+            <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">Высота</Label>
+            <Label Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center">Цена</Label>
+
+            <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Box.Address, Mode=OneTime}"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Box.Width, Mode=OneTime}"></TextBlock>
+            <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Box.Height, Mode=OneTime}"></TextBlock>
+            <TextBlock Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Box.Price, Mode=OneTime}"></TextBlock>
+        </Grid>
+    </Grid>
+</Window>
