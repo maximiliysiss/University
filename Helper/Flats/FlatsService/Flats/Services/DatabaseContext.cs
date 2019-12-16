@@ -18,7 +18,7 @@ namespace Flats.Services
 
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, Login = "Admin", PasswordHash = CryptService.GetMd5Hash("Admin"), UserType = UserType.Admin },
-                new User { ID = 1, Login = "User", PasswordHash = CryptService.GetMd5Hash("User"), UserType = UserType.User }
+                new User { ID = 2, Login = "User", PasswordHash = CryptService.GetMd5Hash("User"), UserType = UserType.User }
             );
         }
     }

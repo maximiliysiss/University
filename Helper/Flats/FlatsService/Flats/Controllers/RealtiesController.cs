@@ -44,7 +44,7 @@ namespace Flats.Controllers
 
         // PUT: api/Realties/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRealty(int id, Realty realty)
+        public async Task<ActionResult<Realty>> PutRealty(int id, Realty realty)
         {
             if (id != realty.ID)
             {
@@ -69,7 +69,7 @@ namespace Flats.Controllers
                 }
             }
 
-            return NoContent();
+            return realty;
         }
 
         // POST: api/Realties

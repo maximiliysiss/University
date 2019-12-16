@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Flats.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -18,23 +18,23 @@ namespace Flats.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(LoginRegisterModel loginModel)
+        public ActionResult<LoginResult> Login(LoginRegisterModel loginModel)
         {
             var user = databaseContext.Users.FirstOrDefault(x => x.Login == loginModel.Login && x.PasswordHash == CryptService.GetMd5Hash(loginModel.Password));
             if (user == null)
                 return NotFound();
-            return Ok();
+            return new LoginResult { Role = user.UserType };
         }
 
         [HttpPost]
-        public ActionResult Register(LoginRegisterModel registerModel)
+        public ActionResult<LoginResult> Register(LoginRegisterModel registerModel)
         {
             var user = databaseContext.Users.FirstOrDefault(x => x.Login == registerModel.Login);
             if (user != null)
                 return BadRequest();
-            databaseContext.Add(new User { Login = registerModel.Login, PasswordHash = CryptService.GetMd5Hash(registerModel.Password), UserType = UserType.User });
+            databaseContext.Add(user = new User { Login = registerModel.Login, PasswordHash = CryptService.GetMd5Hash(registerModel.Password), UserType = UserType.User });
             databaseContext.SaveChanges();
-            return Ok();
+            return new LoginResult { Role = user.UserType }; ;
         }
     }
 }
