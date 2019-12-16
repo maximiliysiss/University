@@ -27,6 +27,11 @@ namespace Garage.Forms
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RegisterClick(object sender, RoutedEventArgs e)
         {
             var loginString = login.Text.Trim();

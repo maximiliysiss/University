@@ -20,38 +20,42 @@ namespace Garage.Forms.Controls.Models.Model
             this.Rent.Visibility = obj.ID == 0 ? Visibility.Visible : Visibility.Collapsed;
             this.EndRent.Visibility = this.Action.Visibility = obj.ID != 0 && obj.EndDate == null ? Visibility.Visible : Visibility.Collapsed;
 
+            // получим последнее действие
             var lastAction = db.Actions.OrderByDescending(x => x.DateTime).FirstOrDefault();
+            // если нету или In
             if ((lastAction?.ActionType ?? ActionType.In) == ActionType.In)
             {
                 Action.Content = "Выехать";
-                Action.Click += Action_Out_Click;
+                Action.Click += (s, e) => HandlerAction(ActionType.Out);
             }
             else
             {
                 Action.Content = "Въехать";
-                Action.Click += Action_In_Click;
+                Action.Click += (s, e) => HandlerAction(ActionType.In);
             }
 
+            // Если история, то скрываем действия
             if (obj.EndDate != null)
                 MainGrid.RowDefinitions.RemoveAt(0);
         }
 
-        private void Action_In_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// Действие над действием
+        /// </summary>
+        /// <param name="actionType"></param>
+        private void HandlerAction(ActionType actionType)
         {
-            var action = new Garage.Models.Action { ActionType = ActionType.In, RentId = (this.DataContext as Rent).ID };
+            var action = new Garage.Models.Action { ActionType = actionType, RentId = (this.DataContext as Rent).ID };
             db.Add(action);
             db.SaveChanges();
             Close();
         }
 
-        private void Action_Out_Click(object sender, RoutedEventArgs e)
-        {
-            var action = new Garage.Models.Action { ActionType = ActionType.Out, RentId = (this.DataContext as Rent).ID };
-            db.Add(action);
-            db.SaveChanges();
-            Close();
-        }
-
+        /// <summary>
+        /// Арендовать
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Rent_Click(object sender, RoutedEventArgs e)
         {
             var rent = this.DataContext as Rent;
@@ -62,6 +66,11 @@ namespace Garage.Forms.Controls.Models.Model
             Close();
         }
 
+        /// <summary>
+        /// Отказ от аренды
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EndRent_Click(object sender, RoutedEventArgs e)
         {
             var rent = this.DataContext as Rent;

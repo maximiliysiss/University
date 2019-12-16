@@ -9,15 +9,30 @@ using System.Text;
 
 namespace Garage.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Список боксов
+    /// </summary>
     public class BoxesList : BaseModelListControl
     {
+        /// <summary>
+        /// Добавить
+        /// </summary>
         protected override void AddNew() => Open(new Box());
-
+        /// <summary>
+        /// Загрзить из БД
+        /// </summary>
+        /// <returns></returns>
         protected override List<object> Load() => App.Db.Boxes.Include(x => x.Rents).Cast<object>().ToList();
-
+        /// <summary>
+        /// Открыть
+        /// </summary>
+        /// <param name="obj"></param>
         protected override void Open(object obj) => new BoxesControl(obj as Box).ShowDialog();
     }
 
+    /// <summary>
+    /// Боксы для пользователя
+    /// </summary>
     public class UserBoxesList : BoxesList
     {
         public UserBoxesList()
@@ -35,8 +50,14 @@ namespace Garage.Forms.Controls.Models.List
         }
     }
 
+    /// <summary>
+    /// Арендованные боксы пользователя
+    /// </summary>
     public class UserOwnBoxesList : UserBoxesList
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         DatabaseContext db = App.Db;
 
         protected override List<object> Load() => db.Rents.Include(x => x.Box).Where(x => x.UserId == App.user.ID).Cast<object>().ToList();

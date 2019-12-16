@@ -37,6 +37,11 @@ namespace Garage.Forms
             wnd.Show();
         }
 
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RegisterClick(object sender, RoutedEventArgs e)
         {
             var reg = new Register();

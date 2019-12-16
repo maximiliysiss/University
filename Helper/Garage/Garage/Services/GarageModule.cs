@@ -9,6 +9,9 @@ using System.Text;
 
 namespace Garage.Services
 {
+    /// <summary>
+    /// Модуль для IOC контейнера
+    /// </summary>
     public class GarageModule
     {
         /// <summary>

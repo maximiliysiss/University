@@ -9,6 +9,9 @@ using System.Windows.Controls;
 
 namespace Garage.Services
 {
+    /// <summary>
+    /// Сервис для выбора окна для пользователя
+    /// </summary>
     public class UserWindowService
     {
         public Window OpenUserWindow(UserRole userRole)

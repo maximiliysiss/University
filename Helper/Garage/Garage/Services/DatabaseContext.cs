@@ -9,9 +9,18 @@ using System.Text;
 
 namespace Garage.Services
 {
+    /// <summary>
+    /// БД
+    /// </summary>
     public class DatabaseContext : DbContext
     {
+        /// <summary>
+        /// Запуск через контейнер или нет
+        /// </summary>
         private readonly bool isContaniner;
+        /// <summary>
+        /// Строка подключения
+        /// </summary>
         private readonly string connectionString;
 
         public DatabaseContext(string dbString)
@@ -24,6 +33,10 @@ namespace Garage.Services
         {
         }
 
+        /// <summary>
+        /// Создание подключения
+        /// </summary>
+        /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -31,6 +44,10 @@ namespace Garage.Services
                 optionsBuilder.UseSqlServer(connectionString).UseLazyLoadingProxies();
         }
 
+        /// <summary>
+        /// Создание моделей
+        /// </summary>
+        /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -42,13 +59,18 @@ namespace Garage.Services
             );
         }
 
+        /// <summary>
+        /// Таблицы
+        /// </summary>
         public DbSet<User> Users { get; set; }
         public DbSet<Box> Boxes { get; set; }
         public DbSet<Models.Action> Actions { get; set; }
         public DbSet<Rent> Rents { get; set; }
     }
 
-
+    /// <summary>
+    /// Для создания миграций
+    /// </summary>
     public class DatabaseContextFactory : IDesignTimeDbContextFactory<DatabaseContext>
     {
         public DatabaseContext CreateDbContext(string[] args)

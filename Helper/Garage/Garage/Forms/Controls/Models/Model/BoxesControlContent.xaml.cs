@@ -5,6 +5,9 @@ using System.Windows.Controls;
 
 namespace Garage.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма бокса
+    /// </summary>
     public class BoxesControl : BaseModelControl<Box>
     {
         public BoxesControl(Box obj) : base(obj, new BoxesControlContent(obj))
@@ -27,6 +30,11 @@ namespace Garage.Forms.Controls.Models.Model
             this.DataContext = obj;
         }
 
+        /// <summary>
+        /// Удалить аренду пользователя (для админа)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DeleteUserRent(object sender, System.Windows.RoutedEventArgs e)
         {
             var boxRent = (this.DataContext as Box).Rent;

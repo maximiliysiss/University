@@ -4,6 +4,11 @@ namespace Garage.Services
 {
     public class CryptService
     {
+        /// <summary>
+        /// Получить хэш
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string CreateMD5(string input)
         {
             // Use input string to calculate MD5 hash

@@ -4,9 +4,24 @@ using System.Linq;
 
 namespace Garage.Services
 {
+    /// <summary>
+    /// Сервис авторизации
+    /// </summary>
     public interface ILoginService
     {
+        /// <summary>
+        /// Автторизация
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         User LoginAttempt(string login, string password);
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         User Register(string login, string password);
     }
 
