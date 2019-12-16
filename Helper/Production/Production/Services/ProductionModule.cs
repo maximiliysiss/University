@@ -44,7 +44,7 @@ namespace Production.Services
     /// <summary>
     /// Инициализация контейнера
     /// </summary>
-    public class ChemicalNinjectModule : NinjectModule
+    public class ProductionlNinjectModule : NinjectModule
     {
         public override void Load()
         {

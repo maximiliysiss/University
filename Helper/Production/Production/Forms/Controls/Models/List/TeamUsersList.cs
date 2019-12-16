@@ -10,6 +10,9 @@ using System.Windows;
 
 namespace Production.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Список пользователей в бригаде
+    /// </summary>
     public class TeamUsersList : BaseModelListControl
     {
         private readonly Team team;
@@ -24,15 +27,5 @@ namespace Production.Forms.Controls.Models.List
         protected override List<object> Load() => App.Db.UserInTeams.Include(x => x.Worker).Include(x => x.Team).Where(x => x.TeamId == team.ID).Cast<object>().ToList();
 
         protected override void Open(object obj) => new TeamWorkerControl(obj as UserInTeam).ShowDialog();
-    }
-
-    public class WorkerTeamUsersList : TeamUsersList
-    {
-        public WorkerTeamUsersList(Team team) : base(team)
-        {
-            this.Add.Visibility = System.Windows.Visibility.Hidden;
-        }
-
-        protected override void Open(object obj) { }
     }
 }

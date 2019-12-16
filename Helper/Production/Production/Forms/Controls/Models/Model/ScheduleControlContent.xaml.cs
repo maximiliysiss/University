@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма расписания
+    /// </summary>
     public class ScheduleControl : BaseModelControl<Schedule>
     {
         public ScheduleControl(Schedule obj) : base(obj, new ScheduleControlContent(obj))

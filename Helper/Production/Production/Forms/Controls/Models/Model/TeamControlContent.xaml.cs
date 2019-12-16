@@ -18,6 +18,9 @@ using System.Windows.Shapes;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма бригады
+    /// </summary>
     public class TeamControl : BaseModelControl<Team>
     {
         public TeamControl(Team obj) : base(obj, new TeamControlContent(obj))

@@ -7,6 +7,9 @@ using System.Windows.Controls;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Список пользователей
+    /// </summary>
     public class UsersControl : BaseModelControl<User>
     {
         public UsersControl(User obj) : base(obj, new UserControlContent(obj as User))
@@ -47,11 +50,21 @@ namespace Production.Forms.Controls.Models.Model
             this.Loaded += UserControlContent_Loaded;
         }
 
+        /// <summary>
+        /// Загрузка формы
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UserControlContent_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             this.RoleUser.SelectionChanged += RoleUser_SelectionChanged;
         }
 
+        /// <summary>
+        /// Изменения роли
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RoleUser_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var user = DataContext as User;

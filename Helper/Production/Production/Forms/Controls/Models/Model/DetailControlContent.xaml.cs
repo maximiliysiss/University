@@ -16,6 +16,9 @@ using System.Windows.Shapes;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма детали
+    /// </summary>
     public class DetailControl : BaseModelControl<Detail>
     {
         public DetailControl(Detail obj) : base(obj, new DetailControlContent(obj))

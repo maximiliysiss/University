@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма работника в бригаде
+    /// </summary>
     public class TeamWorkerControl : BaseModelControl<UserInTeam>
     {
         public TeamWorkerControl(UserInTeam obj) : base(obj, new TeamWorkerControlContent(obj))

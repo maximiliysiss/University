@@ -15,6 +15,9 @@ namespace Production.Models
         Worker
     }
 
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
         public User()

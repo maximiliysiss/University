@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace Production.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Список пользователей
+    /// </summary>
     public class UserList : BaseModelListControl
     {
         protected override void AddNew() => Open(new User());

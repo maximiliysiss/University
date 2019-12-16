@@ -5,12 +5,20 @@ using System.Windows.Controls;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма плана на день
+    /// </summary>
     public class DayPlanControl : BaseModelControl<DayPlan>
     {
         public DayPlanControl(DayPlan obj) : base(obj, new DayPlanControlContent(obj))
         {
         }
 
+        /// <summary>
+        /// Форма для изменения
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool IsEdit(DayPlan obj) => obj.ID != 0;
     }
 

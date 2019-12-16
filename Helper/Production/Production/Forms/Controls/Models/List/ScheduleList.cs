@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Production.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// План деталей
+    /// </summary>
     public class ScheduleList : BaseModelListControl
     {
         protected override void AddNew() => Open(new Schedule());

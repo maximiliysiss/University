@@ -17,6 +17,9 @@ using System.Windows.Shapes;
 
 namespace Production.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма отчета
+    /// </summary>
     public class ReportControl : BaseModelControl<Report>
     {
         public ReportControl(Report obj) : base(obj, new ReportControlContent(obj))
@@ -25,6 +28,11 @@ namespace Production.Forms.Controls.Models.Model
 
         public override bool IsEdit(Report obj) => obj.ID != 0;
 
+        /// <summary>
+        /// Пред действие перед действием с БД
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         protected override bool PrevAction(Report obj)
         {
             obj.UserId = App.user.ID;

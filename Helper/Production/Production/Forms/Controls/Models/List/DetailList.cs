@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Production.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Детали
+    /// </summary>
     public class DetailList : BaseModelListControl
     {
         protected override void AddNew() => Open(new Detail());

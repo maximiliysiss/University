@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Production.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Бригады (список)
+    /// </summary>
     public class TeamList : BaseModelListControl
     {
         protected override void AddNew() => Open(new Team());
@@ -18,6 +21,9 @@ namespace Production.Forms.Controls.Models.List
         protected override void Open(object obj) => new TeamControl(obj as Team).ShowDialog();
     }
 
+    /// <summary>
+    /// Бригады для бригадира (нельзя добавлять)
+    /// </summary>
     public class UserTeamList : TeamList
     {
         readonly User brigadir;
@@ -31,6 +37,9 @@ namespace Production.Forms.Controls.Models.List
         protected override List<object> Load() => App.Db.Teams.Include(x => x.Brigadir).Where(x => x.Brigadir.ID == brigadir.ID).Cast<object>().ToList();
     }
 
+    /// <summary>
+    /// Бригады для рабочих (список)
+    /// </summary>
     public class WorkerTeamList : TeamList
     {
         private readonly User worker;

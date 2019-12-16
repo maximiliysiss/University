@@ -16,11 +16,22 @@ namespace Production
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// IOC контейнер
+        /// </summary>
         private static ProductionModule productionModule;
         public static ProductionModule ProductionModule => productionModule;
+        /// <summary>
+        /// БД
+        /// </summary>
         public static DatabaseContext Db => productionModule.Resolve<DatabaseContext>();
+        /// <summary>
+        /// Текущий пользователь
+        /// </summary>
         public static User user;
-
+        /// <summary>
+        /// Конфигурация
+        /// </summary>
         private readonly IConfigurationRoot configuration;
 
         public App()
