@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">FlatsAndroid</string>
+    <string name="server_url">http://192.168.1.3:5000/api/</string>
+    <string name="user">Admin</string>
+</resources>
