@@ -15,14 +15,24 @@ import com.application.flatsandroid.network.callbacks.ActionCallback;
 import com.application.flatsandroid.network.callbacks.UniversalCallback;
 import com.application.flatsandroid.network.models.input.Realty;
 
+/**
+ * Форма недвижимости
+ */
 public class RealtyActivity extends AppCompatActivity {
 
+    /**
+     * Поля и модель
+     */
     private Realty model;
     EditText name;
     EditText price;
     EditText address;
 
 
+    /**
+     * Создание
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +65,10 @@ public class RealtyActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Обработчик всех действий изменений/добавлений
+     * @param action
+     */
     public void handler(ActionCallback<Realty> action) {
         if (loadAndValidateModel()) {
             action.process(model);
@@ -62,6 +76,10 @@ public class RealtyActivity extends AppCompatActivity {
             Toast.makeText(getBaseContext(), "Заполните поля", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Загрузить с формы модель и проверить ее
+     * @return
+     */
     public boolean loadAndValidateModel() {
         model.setAddress(address.getText().toString().trim());
         model.setName(name.getText().toString().trim());
@@ -69,6 +87,10 @@ public class RealtyActivity extends AppCompatActivity {
         return model.getAddress().length() != 0 && model.getName().length() != 0;
     }
 
+    /**
+     * Удалить
+     * @param view
+     */
     public void delete(View view) {
         App.getRealtyService().delete(model.getId()).enqueue(new UniversalCallback<>(getBaseContext(),
                 x -> startActivity(new Intent(this, MainActivity.class))));

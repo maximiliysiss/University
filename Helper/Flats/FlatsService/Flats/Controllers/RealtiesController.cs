@@ -10,10 +10,16 @@ using Flats.Services;
 
 namespace Flats.Controllers
 {
+    /// <summary>
+    /// Контроллер для недвижимости
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class RealtiesController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public RealtiesController(DatabaseContext context)
@@ -21,14 +27,21 @@ namespace Flats.Controllers
             _context = context;
         }
 
-        // GET: api/Realties
+        /// <summary>
+        /// Получить список
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Realty>>> GetRealties()
         {
             return await _context.Realties.ToListAsync();
         }
 
-        // GET: api/Realties/5
+        /// <summary>
+        /// Получить элемент по ID
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Realty>> GetRealty(int id)
         {
@@ -42,7 +55,12 @@ namespace Flats.Controllers
             return realty;
         }
 
-        // PUT: api/Realties/5
+        /// <summary>
+        /// Изменить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="realty"></param>
+        /// <returns></returns>
         [HttpPut("{id}")]
         public async Task<ActionResult<Realty>> PutRealty(int id, Realty realty)
         {
@@ -72,7 +90,11 @@ namespace Flats.Controllers
             return realty;
         }
 
-        // POST: api/Realties
+        /// <summary>
+        /// Добавить
+        /// </summary>
+        /// <param name="realty"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult<Realty>> PostRealty(Realty realty)
         {
@@ -82,7 +104,11 @@ namespace Flats.Controllers
             return CreatedAtAction("GetRealty", new { id = realty.ID }, realty);
         }
 
-        // DELETE: api/Realties/5
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Realty>> DeleteRealty(int id)
         {
@@ -98,6 +124,11 @@ namespace Flats.Controllers
             return realty;
         }
 
+        /// <summary>
+        /// Проверка на существование недвижимости
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private bool RealtyExists(int id)
         {
             return _context.Realties.Any(e => e.ID == id);

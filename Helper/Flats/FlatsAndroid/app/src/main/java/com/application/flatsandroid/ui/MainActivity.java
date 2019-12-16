@@ -16,10 +16,21 @@ import com.application.flatsandroid.network.models.input.Realty;
 import com.application.flatsandroid.ui.adapters.recyclerview.RecyclerViewAdapter;
 import com.application.flatsandroid.ui.adapters.recyclerview.ViewHolder.RealtyViewHolder;
 
+/**
+ * Форма списка
+ */
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Список
+     */
     RecyclerView recyclerView;
 
+    /**
+     * Создание
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +45,15 @@ public class MainActivity extends AppCompatActivity {
         Button add = findViewById(R.id.add);
 
         if (App.getRole() == 1)
-            add.setVisibility(View.INVISIBLE);
+            add.setVisibility(View.GONE);
 
     }
 
+    /**
+     * Кнопка добавить новый
+     *
+     * @param view
+     */
     public void addNew(View view) {
         Intent intent = new Intent(this, RealtyActivity.class);
         intent.putExtra("model", new Realty());

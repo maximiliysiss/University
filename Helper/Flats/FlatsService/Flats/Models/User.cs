@@ -1,11 +1,17 @@
 ﻿namespace Flats.Models
 {
+    /// <summary>
+    /// Тип пользователя
+    /// </summary>
     public enum UserType
     {
         Admin,
         User
     }
 
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
         public int ID { get; set; }

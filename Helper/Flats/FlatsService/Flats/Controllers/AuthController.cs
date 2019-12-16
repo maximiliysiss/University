@@ -6,10 +6,16 @@ using System.Linq;
 
 namespace Flats.Controllers
 {
+    /// <summary>
+    /// Контроллер авторизации
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext databaseContext;
 
         public AuthController(DatabaseContext databaseContext)
@@ -17,6 +23,11 @@ namespace Flats.Controllers
             this.databaseContext = databaseContext;
         }
 
+        /// <summary>
+        /// Авторизация
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<LoginResult> Login(LoginRegisterModel loginModel)
         {
@@ -26,6 +37,11 @@ namespace Flats.Controllers
             return new LoginResult { Role = user.UserType };
         }
 
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="registerModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult<LoginResult> Register(LoginRegisterModel registerModel)
         {

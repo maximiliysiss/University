@@ -14,15 +14,28 @@ import com.application.flatsandroid.network.callbacks.UniversalCallback;
 import com.application.flatsandroid.network.models.input.LoginResult;
 import com.application.flatsandroid.network.models.output.LoginRegisterModel;
 
+/**
+ * Форма авторизации
+ */
 public class LoginActivity extends AppCompatActivity {
 
+    /**
+     * Поля
+     */
     EditText login;
     EditText password;
 
+    /**
+     * Нельзя ходить назад
+     */
     @Override
     public void onBackPressed() {
     }
 
+    /**
+     * Создание
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,10 +45,18 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.password);
     }
 
+    /**
+     * Кнопка Зарегистрироваться
+     * @param view
+     */
     public void register(View view) {
         startActivity(new Intent(this, RegisterActivity.class));
     }
 
+    /**
+     * Кнопка входа
+     * @param view
+     */
     public void login(View view) {
         String loginString = login.getText().toString().trim();
         String passwordString = password.getText().toString().trim();

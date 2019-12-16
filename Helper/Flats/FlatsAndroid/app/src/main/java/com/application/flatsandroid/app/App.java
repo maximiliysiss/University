@@ -10,10 +10,22 @@ import com.google.gson.Gson;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Приложение
+ */
 public class App extends Application {
 
+    /**
+     * Сервис авторизации
+     */
     private static AuthService authService;
+    /**
+     * Сервис недвижимости
+     */
     private static RealtyService realtyService;
+    /**
+     * Текущая роль пользователя
+     */
     private static Integer role;
 
     public static Integer getRole() {
@@ -32,6 +44,9 @@ public class App extends Application {
         return realtyService;
     }
 
+    /**
+     * Создание приложения
+     */
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,6 +54,12 @@ public class App extends Application {
         realtyService = createRetrofit("").create(RealtyService.class);
     }
 
+    /**
+     * Создать ретрофит модель
+     *
+     * @param baseUrl
+     * @return
+     */
     private Retrofit createRetrofit(String baseUrl) {
         return new Retrofit.Builder().baseUrl(getString(R.string.server_url) + baseUrl)
                 .addConverterFactory(GsonConverterFactory.create(new Gson())).build();

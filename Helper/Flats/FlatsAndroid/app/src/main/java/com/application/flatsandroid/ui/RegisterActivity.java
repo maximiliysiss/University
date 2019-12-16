@@ -14,12 +14,23 @@ import com.application.flatsandroid.network.callbacks.UniversalCallback;
 import com.application.flatsandroid.network.models.input.LoginResult;
 import com.application.flatsandroid.network.models.output.LoginRegisterModel;
 
+/**
+ * Форма регистрация
+ */
 public class RegisterActivity extends AppCompatActivity {
 
+    /**
+     * Поля
+     */
     EditText login;
     EditText password;
     EditText confirm;
 
+    /**
+     * Создание
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +41,11 @@ public class RegisterActivity extends AppCompatActivity {
         confirm = findViewById(R.id.confirm);
     }
 
+    /**
+     * Кнопка регистрации
+     *
+     * @param view
+     */
     public void register(View view) {
         String loginString = login.getText().toString().trim();
         String passwordString = password.getText().toString().trim();

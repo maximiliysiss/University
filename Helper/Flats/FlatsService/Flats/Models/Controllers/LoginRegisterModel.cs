@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Flats.Models.Controllers
 {
+    /// <summary>
+    /// Модель для входа и регистрации
+    /// </summary>
     public class LoginRegisterModel
     {
         public string Login { get; set; }

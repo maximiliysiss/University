@@ -1,5 +1,8 @@
 package com.application.flatsandroid.network.models.output;
 
+/**
+ * Форма входа
+ */
 public class LoginRegisterModel {
     private String login;
     private String password;

@@ -11,8 +11,14 @@ import com.application.flatsandroid.app.App;
 import com.application.flatsandroid.network.models.input.Realty;
 import com.application.flatsandroid.ui.RealtyActivity;
 
+/**
+ * Обработчик для карточки для списка
+ */
 public class RealtyViewHolder extends RecyclerViewHolder<Realty> {
 
+    /**
+     * Поля
+     */
     TextView name;
     TextView address;
     TextView price;
@@ -25,6 +31,9 @@ public class RealtyViewHolder extends RecyclerViewHolder<Realty> {
         price = itemView.findViewById(R.id.price);
     }
 
+    /**
+     * При клике
+     */
     @Override
     public void onClick() {
         if (App.getRole() == 1)
@@ -35,6 +44,10 @@ public class RealtyViewHolder extends RecyclerViewHolder<Realty> {
         getActivity().startActivity(intent);
     }
 
+    /**
+     * Заполнение объектом
+     * @param object
+     */
     @Override
     public void setObject(Realty object) {
         super.setObject(object);

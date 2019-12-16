@@ -1,5 +1,8 @@
 ﻿namespace Flats.Models
 {
+    /// <summary>
+    /// Недвижимость
+    /// </summary>
     public class Realty
     {
         public int ID { get; set; }

@@ -4,6 +4,11 @@ namespace Flats.Services
 {
     public class CryptService
     {
+        /// <summary>
+        /// Получить хэш от строки
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static string GetMd5Hash(string input)
         {
             // Use input string to calculate MD5 hash

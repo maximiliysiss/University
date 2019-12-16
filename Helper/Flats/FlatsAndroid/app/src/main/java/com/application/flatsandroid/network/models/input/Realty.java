@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 
+/**
+ * Недвижимость
+ */
 public class Realty implements Serializable {
     @SerializedName("id")
     @Expose
