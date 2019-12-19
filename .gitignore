@@ -9,3 +9,5 @@ packages/
 .gradle/
 .idea/
 build/
+Debug/
+Release/
