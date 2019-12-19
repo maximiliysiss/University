@@ -57,6 +57,8 @@ namespace Chemical.Services
         public DbSet<RawMaterial> RawMaterials { get; set; }
         public DbSet<MaterialInStock> MaterialInStocks { get; set; }
         public DbSet<Stock> Stocks { get; set; }
+        public DbSet<Detail> Details { get; set; }
+        public DbSet<DetailMaterial> DetailMaterials { get; set; }
 
         /// <summary>
         /// Добавление пользователей
@@ -82,7 +84,7 @@ namespace Chemical.Services
         public DatabaseContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DatabaseContext>();
-            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-JVSJ3QJ\SQLEXPRESS;Initial Catalog=chemical;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-06B1B3A\SQLEXPRESS;Initial Catalog=chemical.api;Integrated Security=True");
 
             return new DatabaseContext(optionsBuilder.Options);
         }

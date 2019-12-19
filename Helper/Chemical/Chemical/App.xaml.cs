@@ -11,6 +11,7 @@ namespace Chemical
     {
         private static ChemicalModules chemicalModules;
         public static ChemicalModules ChemicalModules => chemicalModules;
+        public static DatabaseContext Db => chemicalModules.Resolve<DatabaseContext>();
 
         private readonly IConfigurationRoot configuration;
 

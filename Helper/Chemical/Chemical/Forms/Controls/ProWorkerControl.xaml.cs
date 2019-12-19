@@ -1,4 +1,5 @@
-﻿using Chemical.Models;
+﻿using Chemical.Forms.Controls.Models.List;
+using Chemical.Models;
 using Chemical.Services;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -33,6 +34,7 @@ namespace Chemical.Forms.Controls
         {
             InitializeComponent();
             Refresh();
+            this.Detail.Content = new DetailReadOnlyList();
         }
 
         /// <summary>

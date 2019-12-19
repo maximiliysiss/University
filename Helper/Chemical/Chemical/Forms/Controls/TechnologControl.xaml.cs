@@ -13,6 +13,7 @@ namespace Chemical.Forms.Controls
             InitializeComponent();
             RawMaterial.Content = new RawMaterialList();
             Plan.Content = new PlanList();
+            Detail.Content = new DetailList();
         }
     }
 }

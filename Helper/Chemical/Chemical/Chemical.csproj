@@ -319,11 +319,19 @@
     <Compile Include="Forms\Controls\Models\BaseModelListControl.xaml.cs">
       <DependentUpon>BaseModelListControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Forms\Controls\Models\List\DetailList.cs" />
+    <Compile Include="Forms\Controls\Models\List\DetailMaterialList.cs" />
     <Compile Include="Forms\Controls\Models\List\MaterialInStockList.cs" />
     <Compile Include="Forms\Controls\Models\List\PlanList.cs" />
     <Compile Include="Forms\Controls\Models\List\RawMaterialList.cs" />
     <Compile Include="Forms\Controls\Models\BaseModelControl.cs" />
     <Compile Include="Forms\Controls\Models\List\StockList.cs" />
+    <Compile Include="Forms\Controls\Models\Model\DetailControlContent.xaml.cs">
+      <DependentUpon>DetailControlContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Controls\Models\Model\DetailMaterialControlContent.xaml.cs">
+      <DependentUpon>DetailMaterialControlContent.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Forms\Controls\Models\Model\MaterialInStockControlContent.xaml.cs">
       <DependentUpon>MaterialInStockControlContent.xaml</DependentUpon>
     </Compile>
@@ -345,27 +353,12 @@
     <Compile Include="Forms\Controls\TechnologControl.xaml.cs">
       <DependentUpon>TechnologControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20191117141344_Init.cs" />
-    <Compile Include="Migrations\20191117141344_Init.designer.cs">
-      <DependentUpon>20191117141344_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20191117174639_Update.cs" />
-    <Compile Include="Migrations\20191117174639_Update.designer.cs">
-      <DependentUpon>20191117174639_Update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20191117182731_Stock.cs" />
-    <Compile Include="Migrations\20191117182731_Stock.designer.cs">
-      <DependentUpon>20191117182731_Stock.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20191117190208_U.cs" />
-    <Compile Include="Migrations\20191117190208_U.designer.cs">
-      <DependentUpon>20191117190208_U.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\20191117200526_New.cs" />
-    <Compile Include="Migrations\20191117200526_New.designer.cs">
-      <DependentUpon>20191117200526_New.cs</DependentUpon>
+    <Compile Include="Migrations\20191219214758_Init.cs" />
+    <Compile Include="Migrations\20191219214758_Init.designer.cs">
+      <DependentUpon>20191219214758_Init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
+    <Compile Include="Models\Detail.cs" />
     <Compile Include="Models\Plan.cs" />
     <Compile Include="Models\RawMaterial.cs" />
     <Compile Include="Models\Stock.cs" />
@@ -377,6 +370,14 @@
     <Compile Include="UIElements\DateTimeSqlPicker.cs" />
     <Compile Include="UIElements\NumericBox.cs" />
     <Page Include="Forms\Controls\Models\BaseModelListControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Controls\Models\Model\DetailControlContent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Controls\Models\Model\DetailMaterialControlContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -449,7 +450,6 @@
     <None Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

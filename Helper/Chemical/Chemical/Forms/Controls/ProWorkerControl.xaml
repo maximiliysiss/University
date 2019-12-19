@@ -18,6 +18,8 @@
                     </DataGrid.Resources>
                 </DataGrid>
             </TabItem>
+            <TabItem Name="Detail" Header="Изделия">
+            </TabItem>
         </TabControl>
     </Grid>
 </UserControl>
