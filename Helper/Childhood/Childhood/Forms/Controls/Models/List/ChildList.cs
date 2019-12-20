@@ -23,4 +23,11 @@ namespace Childhood.Forms.Controls.Models.List
 
         protected override void Open(object obj) => new TutorChildControl(obj as Child).ShowDialog();
     }
+
+    public class ParentChildList : ChildList
+    {
+        protected override List<object> Load() => App.Db.Children.Where(x => x.DaddyId == App.user.ID || x.MomId == App.user.ID).Cast<object>().ToList();
+
+        protected override void Open(object obj) => {}
+    }
 }
