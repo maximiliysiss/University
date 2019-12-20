@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Childhood.Forms.Controls.Models.Model"
         mc:Ignorable="d"
-        Title="ParentChildControl" Height="450" Width="800">
+        xmlns:dg="clr-namespace:Childhood.Extensions"
+        Title="ParentChildControl" Height="400" Width="800">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">ФИО</Label>
+            <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">День рождения</Label>
+            <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Адрес</Label>
+
+            <TextBlock Grid.Row="0" Text="{Binding FIO}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Birthday}"></TextBlock>
+            <TextBlock Grid.Row="2" Text="{Binding Address}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBlock>
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Группа</Label>
+            <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Мама</Label>
+            <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Папа</Label>
+
+            <TextBlock Grid.Row="0" VerticalAlignment="Center" Grid.Column="1" Name="Groups" Text="{Binding Group}"></TextBlock>
+            <TextBlock Grid.Row="1" VerticalAlignment="Center" Grid.Column="1" Name="Mom" Text="{Binding Mom}"></TextBlock>
+            <TextBlock Grid.Row="2" VerticalAlignment="Center" Grid.Column="1" Name="Daddy" Text="{Binding Daddy}" ></TextBlock>
+        </Grid>
+
+        <DataGrid IsReadOnly="True" dg:DataGridExtension.HideAnnotatedColumns="True"  Name="Checks" Grid.Row="1" Grid.ColumnSpan="2"></DataGrid>
     </Grid>
 </Window>

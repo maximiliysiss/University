@@ -7,6 +7,10 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TabControl>
+            <TabItem Header="Дети" Name="Children"></TabItem>
+            <TabItem Header="Мероприятия" Name="AddActions"></TabItem>
+            <TabItem Header="Информация" Name="Information"></TabItem>
+        </TabControl>    
     </Grid>
 </UserControl>

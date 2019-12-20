@@ -13,6 +13,9 @@
     <Compile Update="Forms\Controls\Models\BaseModelListControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\Controls\Models\List\InformationList.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Controls\Models\Model\AddActionControlContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -20,9 +23,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\Controls\Models\Model\GroupControlContent.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Forms\Controls\Models\Model\ParentChildControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="Forms\Controls\Models\Model\TutorChildControl.xaml.cs">
@@ -51,6 +51,9 @@
     <Page Update="Forms\Controls\Models\BaseModelListControl.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Forms\Controls\Models\List\InformationList.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Forms\Controls\Models\Model\AddActionControlContent.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -58,9 +61,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Controls\Models\Model\GroupControlContent.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Forms\Controls\Models\Model\ParentChildControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Controls\Models\Model\TutorChildControl.xaml">

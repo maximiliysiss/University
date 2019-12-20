@@ -45,4 +45,13 @@ namespace Childhood.Forms.Controls.Models.List
             context.SaveChanges();
         }
     }
+
+    public class InformationReadOnlyList : InformationList
+    {
+        public InformationReadOnlyList()
+        {
+            Save.Visibility = Visibility.Collapsed;
+            Menu.IsReadOnly = true;
+        }
+    }
 }

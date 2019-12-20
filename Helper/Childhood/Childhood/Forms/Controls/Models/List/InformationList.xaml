@@ -15,7 +15,7 @@
                         <RowDefinition Height="50px"></RowDefinition>
                     </Grid.RowDefinitions>
                     <RichTextBox Name="Menu"></RichTextBox>
-                    <Button Click="SaveMenu" Grid.Row="1">Сохранить</Button>
+                    <Button Name="Save" Click="SaveMenu" Grid.Row="1">Сохранить</Button>
                 </Grid>
             </TabItem>
         </TabControl>

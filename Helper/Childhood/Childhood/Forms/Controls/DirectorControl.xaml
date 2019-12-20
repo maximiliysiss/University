@@ -11,6 +11,8 @@
             <TabItem Header="Пользователи" Name="Users"></TabItem>
             <TabItem Header="Группы" Name="Groups"></TabItem>
             <TabItem Header="Дети" Name="Child"></TabItem>
+            <TabItem Header="Дополнительные занятия" Name="AddActions"></TabItem>
+            <TabItem Header="Информация" Name="Information"></TabItem>
         </TabControl>
     </Grid>
 </UserControl>

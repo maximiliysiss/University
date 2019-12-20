@@ -28,6 +28,6 @@ namespace Childhood.Forms.Controls.Models.List
     {
         protected override List<object> Load() => App.Db.Children.Where(x => x.DaddyId == App.user.ID || x.MomId == App.user.ID).Cast<object>().ToList();
 
-        protected override void Open(object obj) => {}
+        protected override void Open(object obj) => new ParentChildControl(obj as Child).ShowDialog();
     }
 }

@@ -25,6 +25,8 @@ namespace Childhood.Forms.Controls
             Users.Content = new UsersList();
             Groups.Content = new GroupList();
             Child.Content = new ChildList();
+            Information.Content = new InformationList();
+            AddActions.Content = new AddActionsList();
         }
     }
 }
