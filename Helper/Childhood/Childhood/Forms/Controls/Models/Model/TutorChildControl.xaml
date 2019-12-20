@@ -1,0 +1,46 @@
+﻿<Window x:Class="Childhood.Forms.Controls.Models.Model.TutorChildControl"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Childhood.Forms.Controls.Models.Model"
+        mc:Ignorable="d"
+        Title="TutorChildControl" Height="300" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">ФИО</Label>
+        <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">День рождения</Label>
+        <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Адрес</Label>
+        <Label Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Группа</Label>
+        <Label Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Мама</Label>
+        <Label Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Папа</Label>
+
+        <TextBlock Grid.Row="0" Text="{Binding FIO}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Birthday}"></TextBlock>
+        <TextBlock Grid.Row="2" Text="{Binding Address}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBlock>
+        <TextBlock Grid.Row="3" VerticalAlignment="Center" Grid.Column="1" Name="Groups" Text="{Binding Group}"></TextBlock>
+        <TextBlock Grid.Row="4" VerticalAlignment="Center" Grid.Column="1" Name="Mom" Text="{Binding Mom}"></TextBlock>
+        <TextBlock Grid.Row="5" VerticalAlignment="Center" Grid.Column="1" Name="Daddy" Text="{Binding Daddy}" ></TextBlock>
+
+        <Grid Grid.Row="6" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Button Name="Action" FontSize="14pt"></Button>
+        </Grid>
+    </Grid>
+</Window>
