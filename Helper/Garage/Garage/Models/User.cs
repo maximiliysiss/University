@@ -17,7 +17,7 @@ namespace Garage.Models
         public int ID { get; set; }
         [DisplayGridName("Логин")]
         public string Login { get; set; }
-        [HideColumn]
+        [DisplayGridName("Хэш пароля")]
         public string PasswordHash { get; set; }
         [HideColumn]
         public UserRole UserRole { get; set; } = UserRole.User;
