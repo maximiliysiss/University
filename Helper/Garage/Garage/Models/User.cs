@@ -1,7 +1,4 @@
 ﻿using Garage.Extensions.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Garage.Models
 {
@@ -18,8 +15,11 @@ namespace Garage.Models
     {
         [HideColumn]
         public int ID { get; set; }
+        [DisplayGridName("Логин")]
         public string Login { get; set; }
+        [HideColumn]
         public string PasswordHash { get; set; }
+        [HideColumn]
         public UserRole UserRole { get; set; } = UserRole.User;
         public override string ToString() => Login;
     }

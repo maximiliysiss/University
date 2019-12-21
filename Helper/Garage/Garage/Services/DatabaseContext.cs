@@ -51,7 +51,6 @@ namespace Garage.Services
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Rent>().HasOne(x => x.User).WithMany().OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>().HasData(
                 new User { ID = 1, Login = "User", PasswordHash = CryptService.CreateMD5("User"), UserRole = UserRole.User },

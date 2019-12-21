@@ -10,6 +10,7 @@
         <TabControl>
             <TabItem Name="Boxes" Header="Боксы"></TabItem>
             <TabItem Name="Actions" Header="Въезд/Выезд"></TabItem>
+            <TabItem Name="Users" Header="Пользователи"></TabItem>
         </TabControl>   
     </Grid>
 </UserControl>

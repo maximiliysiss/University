@@ -19,6 +19,9 @@
     <Compile Update="Forms\Controls\Models\Model\RentControlContent.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Forms\Controls\Models\Model\UsersControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Forms\Controls\UserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -43,6 +46,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Controls\Models\Model\RentControlContent.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Forms\Controls\Models\Model\UsersControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Forms\Controls\UserControl.xaml">

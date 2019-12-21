@@ -12,6 +12,7 @@ namespace Garage.Forms.Controls
         {
             InitializeComponent();
             this.Boxes.Content = new BoxesList();
+            this.Users.Content = new UserList();
             this.Actions.Content = new ActionList();
         }
     }
