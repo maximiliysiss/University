@@ -4,6 +4,9 @@ using System.Windows.Controls;
 
 namespace Childhood.Forms.Controls.Models.Model
 {
+    /// <summary>
+    /// Форма группы
+    /// </summary>
     public class GroupControl : BaseModelControl<Group>
     {
         public GroupControl(Group obj) : base(obj, new GroupControlContent(obj))
@@ -21,6 +24,7 @@ namespace Childhood.Forms.Controls.Models.Model
         public GroupControlContent(Group obj)
         {
             InitializeComponent();
+            // Список воспитателей
             this.Tutor.ItemsSource = App.Db.Users.Where(x => x.UserType == UserType.Tutor).ToList(); ;
             this.DataContext = obj;
         }

@@ -8,6 +8,9 @@ using System.Windows.Controls;
 
 namespace Childhood.Extensions
 {
+    /// <summary>
+    /// Расширения для DataGrid
+    /// </summary>
     public static class DataGridExtension
     {
         public static readonly DependencyProperty HideAnnotatedColumnsProperty = DependencyProperty.RegisterAttached(

@@ -5,6 +5,9 @@ using System.Text;
 
 namespace Childhood.Models
 {
+    /// <summary>
+    /// Группа
+    /// </summary>
     public class Group
     {
         [HideColumn]

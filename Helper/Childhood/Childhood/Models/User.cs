@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Childhood.Models
 {
+    /// <summary>
+    /// Тип пользователя
+    /// </summary>
     public enum UserType
     {
         [Description("Директор")]
@@ -16,6 +19,9 @@ namespace Childhood.Models
         Parent
     }
 
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
         [HideColumn]

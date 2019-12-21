@@ -22,6 +22,9 @@ namespace Childhood.Forms.Controls.Models
         protected Grid InnerContent;
         protected bool prevValidate;
         private bool successSave = true;
+        /// <summary>
+        /// Пользовательский контрол
+        /// </summary>
         private readonly UserControl userContent;
 
         public BaseModelControl(T obj, UserControl content)
@@ -69,6 +72,9 @@ namespace Childhood.Forms.Controls.Models
             this.InnerContent.Children.Add(content);
         }
 
+        /// <summary>
+        /// Получить форму внутри
+        /// </summary>
         protected UserControl UserControl => userContent;
 
         protected virtual void PostAction(T obj) { }

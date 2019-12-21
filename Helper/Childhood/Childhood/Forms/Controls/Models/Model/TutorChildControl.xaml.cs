@@ -5,7 +5,7 @@ using System.Windows;
 namespace Childhood.Forms.Controls.Models.Model
 {
     /// <summary>
-    /// Interaction logic for TutorChildControl.xaml
+    /// Форма ребенка для воспитателя
     /// </summary>
     public partial class TutorChildControl : Window
     {
@@ -28,6 +28,10 @@ namespace Childhood.Forms.Controls.Models.Model
             this.DataContext = child;
         }
 
+        /// <summary>
+        /// Обработка изменения положения ребенка в садике
+        /// </summary>
+        /// <param name="in"></param>
         private void Handler(CheckType @in)
         {
             var child = this.DataContext as Child;

@@ -1,12 +1,6 @@
 ﻿using Childhood.Models;
 using Childhood.Services;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Childhood
@@ -16,11 +10,20 @@ namespace Childhood
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// IOC контейнер
+        /// </summary>
         private static ChildhoodModule childhoodModule;
         public static ChildhoodModule ChildhoodModule => childhoodModule;
+        /// <summary>
+        /// БД
+        /// </summary>
         public static DatabaseContext Db => childhoodModule.Resolve<DatabaseContext>();
         public static User user;
 
+        /// <summary>
+        /// Конфигурация
+        /// </summary>
         private static IConfigurationRoot configuration;
         public static IConfigurationRoot Configuration => configuration;
 

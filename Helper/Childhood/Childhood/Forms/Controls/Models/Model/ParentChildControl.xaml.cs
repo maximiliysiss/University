@@ -4,7 +4,7 @@ using System.Windows;
 namespace Childhood.Forms.Controls.Models.Model
 {
     /// <summary>
-    /// Interaction logic for ParentChildControl.xaml
+    /// Форма ребенка для родителей
     /// </summary>
     public partial class ParentChildControl : Window
     {

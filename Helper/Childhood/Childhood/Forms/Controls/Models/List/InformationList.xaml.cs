@@ -9,11 +9,17 @@ using Childhood.Services;
 namespace Childhood.Forms.Controls.Models.List
 {
     /// <summary>
-    /// Interaction logic for InformationList.xaml
+    /// Вкладка информация
     /// </summary>
     public partial class InformationList : UserControl
     {
+        /// <summary>
+        /// Список информаций
+        /// </summary>
         private List<Information> informations;
+        /// <summary>
+        /// БД
+        /// </summary>
         private DatabaseContext context = App.Db;
 
         public InformationList()
@@ -22,6 +28,9 @@ namespace Childhood.Forms.Controls.Models.List
             Reload();
         }
 
+        /// <summary>
+        /// Перезагрузить информацию
+        /// </summary>
         private void Reload()
         {
             informations = App.Db.Information.ToList();
@@ -29,6 +38,11 @@ namespace Childhood.Forms.Controls.Models.List
             Menu.SetText(informations.FirstOrDefault(x => x.Name.ToLower() == "menu")?.Description);
         }
 
+        /// <summary>
+        /// Сохранить меню
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SaveMenu(object sender, RoutedEventArgs e)
         {
             var setting = informations.FirstOrDefault(x => x.Name.ToLower() == "menu");
@@ -46,6 +60,9 @@ namespace Childhood.Forms.Controls.Models.List
         }
     }
 
+    /// <summary>
+    /// Информация, но только для чтения
+    /// </summary>
     public class InformationReadOnlyList : InformationList
     {
         public InformationReadOnlyList()

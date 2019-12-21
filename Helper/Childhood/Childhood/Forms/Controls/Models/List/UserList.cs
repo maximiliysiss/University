@@ -7,6 +7,9 @@ using System.Text;
 
 namespace Childhood.Forms.Controls.Models.List
 {
+    /// <summary>
+    /// Список пользователей
+    /// </summary>
     public class UsersList : BaseModelListControl
     {
         protected override void AddNew() => Open(new User());

@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Childhood.Extensions.Attributes
 {
+    /// <summary>
+    /// Аттрибут для отображения имени колонки
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public class DisplayGridName : System.Attribute
     {

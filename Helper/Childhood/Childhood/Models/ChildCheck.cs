@@ -4,12 +4,18 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Childhood.Models
 {
+    /// <summary>
+    /// Состояние ребенка
+    /// </summary>
     public enum CheckType
     {
         In,
         Out
     }
 
+    /// <summary>
+    /// Состояние ребенка
+    /// </summary>
     public class ChildCheck
     {
         [HideColumn]

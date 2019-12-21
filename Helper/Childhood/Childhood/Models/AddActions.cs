@@ -2,6 +2,9 @@
 
 namespace Childhood.Models
 {
+    /// <summary>
+    /// Дополнительные занятия
+    /// </summary>
     public class AddActions
     {
         [HideColumn]

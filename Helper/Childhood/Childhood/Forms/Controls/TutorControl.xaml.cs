@@ -4,7 +4,7 @@ using System.Windows.Controls;
 namespace Childhood.Forms.Controls
 {
     /// <summary>
-    /// Interaction logic for TutorControl.xaml
+    /// Форма воспитателя
     /// </summary>
     public partial class TutorControl : UserControl
     {

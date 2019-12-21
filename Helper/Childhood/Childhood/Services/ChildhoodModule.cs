@@ -45,7 +45,7 @@ namespace Childhood.Services
     /// <summary>
     /// Инициализация контейнера
     /// </summary>
-    public class GarageNinjectModule : NinjectModule
+    public class ChildhoodNinjectModule : NinjectModule
     {
         public override void Load()
         {

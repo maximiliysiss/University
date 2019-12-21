@@ -11,6 +11,11 @@ namespace Childhood.Services
 {
     public class UserWindowService
     {
+        /// <summary>
+        /// Получить окно для польвателя по роли
+        /// </summary>
+        /// <param name="userRole"></param>
+        /// <returns></returns>
         public Window OpenUserWindow(UserType userRole)
         {
             UserControl control = null;

@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Childhood.Models
 {
+    /// <summary>
+    /// Ребенок
+    /// </summary>
     public class Child
     {
         [HideColumn]
