@@ -23,13 +23,31 @@ Vector2D::Vector2D(Vector2D vec1, Vector2D vec2)
 
 void Vector2D::rotate(Vector2D center, float angle)
 {
-	angle = angle * 3.14f / 180.0f;
+	//angle = angle * 3.14f / 180.0f;
 	Vector2D t(center, *this);
 	float xt = t.x;
 	t.x = xt * cos(angle) - t.y * sin(angle);
 	t.y = xt * sin(angle) + t.y * cos(angle);
 	this->x = center.x + t.x;
 	this->y = center.y + t.y;
+}
+
+void Vector2D::rotate(Vector2D center, float cos, float sin)
+{
+	Vector2D t(center, *this);
+	float xt = t.x;
+	t.x = xt * cos - t.y * sin;
+	t.y = xt * sin + t.y * cos;
+	this->x = center.x + t.x;
+	this->y = center.y + t.y;
+}
+
+float Vector2D::cosAngleBetween(Vector2D vec) {
+	return this->scalar(vec) / (this->length() * vec.length());
+}
+
+float Vector2D::scalar(Vector2D vec) {
+	return this->x * vec.x + this->y * vec.y;
 }
 
 void Vector2D::normalize()

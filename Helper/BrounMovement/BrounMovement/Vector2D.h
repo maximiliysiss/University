@@ -11,6 +11,9 @@ struct Vector2D
 	Vector2D(Vector2D vec1, Vector2D vec2);
 
 	void rotate(Vector2D center, float angle);
+	void rotate(Vector2D center, float cos, float sin);
+	float cosAngleBetween(Vector2D vec);
+	float scalar(Vector2D vec);
 	void normalize();
 	float length();
 

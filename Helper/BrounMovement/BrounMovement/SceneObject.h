@@ -19,12 +19,11 @@ public:
 	virtual void collisionAction(const SceneObject&);
 	virtual bool isCollision(const SceneObject&);
 
-	SceneObject(const SceneObject&) = delete;
-	SceneObject(SceneObject&&) = delete;
-	SceneObject& operator=(const SceneObject& sc) = delete;
-	SceneObject& operator=(SceneObject&& sc) = delete;
-
 	virtual ~SceneObject() {}
+
+	inline void setVelocity(Vector2D velocity) {
+		this->velocity = velocity;
+	}
 protected:
 	Vector2D velocity;
 	Vector2D startPos;
