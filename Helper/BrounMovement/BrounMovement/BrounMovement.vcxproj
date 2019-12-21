@@ -125,11 +125,15 @@
   <ItemGroup>
     <ClCompile Include="GravitySystem.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MetaApplicationInfo.cpp" />
+    <ClCompile Include="Partical.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GravitySystem.h" />
+    <ClInclude Include="MetaApplicationInfo.h" />
+    <ClInclude Include="Partical.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Vector2D.h" />
@@ -138,7 +142,8 @@
     <ResourceCompile Include="BrounMovement.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Resources\partical.png" />
+    <Image Include="..\Resources\background.bmp" />
+    <Image Include="..\Resources\partical.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
