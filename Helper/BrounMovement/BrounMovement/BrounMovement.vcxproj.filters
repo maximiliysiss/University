@@ -27,10 +27,10 @@
     <ClCompile Include="GravitySystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Partical.cpp">
+    <ClCompile Include="MetaApplicationInfo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="MetaApplicationInfo.cpp">
+    <ClCompile Include="Partical.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

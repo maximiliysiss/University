@@ -10,7 +10,7 @@ struct Vector2D
 	Vector2D(float x1, float y1, float x2, float y2);
 	Vector2D(Vector2D vec1, Vector2D vec2);
 
-	void rotate(Vector2D center, float angle);
+	void rotate(float angle);
 	void rotate(Vector2D center, float cos, float sin);
 	float cosAngleBetween(Vector2D vec);
 	float scalar(Vector2D vec);

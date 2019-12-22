@@ -16,7 +16,7 @@ public:
 	virtual void movement();
 	virtual void setPosition(Vector2D vec);
 	virtual void paint(HDC hdc);
-	virtual void collisionAction(const SceneObject&);
+	virtual void collisionAction(const SceneObject*);
 	virtual bool isCollision(const SceneObject&);
 
 	virtual ~SceneObject() {}
@@ -24,6 +24,11 @@ public:
 	inline void setVelocity(Vector2D velocity) {
 		this->velocity = velocity;
 	}
+
+	inline int getWidth() const { return bm_info.bmWidth; }
+	inline int getHeight() const { return bm_info.bmHeight; }
+	inline Vector2D getCenter() const { return center; }
+	inline Vector2D getVelocity() const { return velocity; }
 protected:
 	Vector2D velocity;
 	Vector2D startPos;

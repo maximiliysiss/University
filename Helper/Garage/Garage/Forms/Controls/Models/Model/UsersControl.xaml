@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Garage.Forms.Controls.Models.Model"
         mc:Ignorable="d"
+        xmlns:dg="clr-namespace:Garage.Extensions"
         Title="UsersControl" Height="450" Width="800">
     <Grid Name="MainGrid" Margin="20px">
         <Grid.ColumnDefinitions>
@@ -22,6 +23,6 @@
         <TextBlock Grid.Column="1" Text="{Binding Login}" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt"></TextBlock>
         <Button Grid.Row="1" Grid.ColumnSpan="2" Click="Delete">Удалить</Button>
 
-        <DataGrid IsReadOnly="True" Name="Actions" Grid.Row="2" Grid.ColumnSpan="2"></DataGrid>
+        <DataGrid dg:DataGridExtension.HideAnnotatedColumns="True" IsReadOnly="True" Name="Actions" Grid.Row="2" Grid.ColumnSpan="2"></DataGrid>
     </Grid>
 </Window>

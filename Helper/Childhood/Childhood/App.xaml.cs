@@ -9,7 +9,7 @@ namespace Childhood
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
-    {
+    { 
         /// <summary>
         /// IOC контейнер
         /// </summary>

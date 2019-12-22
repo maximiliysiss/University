@@ -23,77 +23,85 @@ HBITMAP backGround;
 HWND createWindow();
 LRESULT CALLBACK loop(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 void paintFrame(PAINTSTRUCT& ps);
+void freeResources();
 
 std::list<SceneObject*> sceneObjects;
+float* mass = nullptr;
 
 int main() {
 	srand((UINT)time(0));
 	std::cout << "Hello! It's program Broun Movement" << std::endl;
-	float* mass = nullptr;
 	try {
-		std::cout << "Enter count of partical: ";
-		int n;  std::cin >> n;
-		if (n == 0)
-			throw std::exception("No have paricals");
-		mass = new float[n] {0};
-		for (int i = 0; i < n; ++i) {
-			std::cout << "Mass of partiacal #" << i + 1 << ": ";
-			std::cin >> mass[i];
-		}
-
-		std::cout << std::endl << "End of init data\n" << "Start create simulation\n";
-
-		backGround = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BG));
-
-		HWND hwnd = createWindow();
-
-		RECT wndRect;
-		GetClientRect(hwnd, &wndRect);
-
-		std::cout << "Create particals\n";
-
-		const int offsetSize = 13;
-		const int colSize = wndRect.right / offsetSize;
-		const int rowSize = wndRect.bottom / offsetSize;
-		MetaApplicationInfo::getInstance().setSize(wndRect.right, wndRect.bottom);
-		const int size = colSize * rowSize;
-		int* matrixScreen = new int[size] { 0 };
-		std::fill(matrixScreen, matrixScreen + (n > size ? size : n), 1);
-		std::random_shuffle(matrixScreen, matrixScreen + size);
-		for (int i = 0, k = 0; i < size; i++) {
-			if (matrixScreen[i]) {
-				std::cout << "#" << k + 1 << " " << (i % colSize) * offsetSize << " " << (i / colSize) * offsetSize << std::endl;
-				sceneObjects.push_back(new Partical(IDB_PART, Vector2D((float)(i % colSize) * offsetSize, (float)(i / colSize) * offsetSize), mass[k++]));
+		while (true) {
+			std::cout << "Enter count of partical: ";
+			int n;  std::cin >> n;
+			if (n == 0)
+				break;
+			mass = new float[n] {0};
+			for (int i = 0; i < n; ++i) {
+				std::cout << "Mass of partiacal #" << i + 1 << ": ";
+				std::cin >> mass[i];
 			}
-		}
 
-		delete[] matrixScreen;
+			//for (int i = 0; i < n; ++i) {
+			//	mass[i] = rand() % 10;
+			//}
 
-		std::cout << "End create particals\n";
+			std::cout << std::endl << "End of init data\n" << "Start create simulation\n";
 
-		ShowWindow(hwnd, SW_SHOW);
-		UpdateWindow(hwnd);
-		MSG msg; // Сообщение
-		while (GetMessage(&msg, 0, 0, 0))
-		{
-			if (!IsDialogMessage(hwnd, &msg))
+			backGround = LoadBitmap(GetModuleHandle(NULL), MAKEINTRESOURCE(IDB_BG));
+
+			HWND hwnd = createWindow();
+
+			RECT wndRect;
+			GetClientRect(hwnd, &wndRect);
+
+			std::cout << "Create particals\n";
+
+			auto grSystem = GravitySystem::getInstance();
+
+			const int offsetSize = 13;
+			const int colSize = wndRect.right / offsetSize;
+			const int rowSize = wndRect.bottom / offsetSize;
+			MetaApplicationInfo::getInstance().setSize(wndRect.right, wndRect.bottom);
+			const int size = colSize * rowSize;
+			int* matrixScreen = new int[size] { 0 };
+			std::fill(matrixScreen, matrixScreen + (n > size ? size : n), 1);
+			std::random_shuffle(matrixScreen, matrixScreen + size);
+			for (int i = 0, k = 0; i < size; i++) {
+				if (matrixScreen[i]) {
+					std::cout << "#" << k + 1 << " " << (i % colSize) * offsetSize << " " << (i / colSize) * offsetSize << std::endl;
+					Partical* newPartical = new Partical(IDB_PART, Vector2D((float)(i % colSize) * offsetSize, (float)(i / colSize) * offsetSize), mass[k++]);
+					sceneObjects.push_back(newPartical);
+					grSystem.addObject(newPartical);
+				}
+			}
+
+			delete[] matrixScreen;
+
+			std::cout << "End create particals\n";
+
+			ShowWindow(hwnd, SW_SHOW);
+			UpdateWindow(hwnd);
+			MSG msg; // Сообщение
+			while (GetMessage(&msg, 0, 0, 0))
 			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
+				if (!IsDialogMessage(hwnd, &msg))
+				{
+					TranslateMessage(&msg);
+					DispatchMessage(&msg);
+				}
 			}
-		}
 
-		std::cout << "End simulation\n";
+			freeResources();
+			std::cout << "End simulation\n\n";
+		}
 	}
 	catch (std::exception ex) {
 		std::cout << "Error: " << ex.what() << std::endl;
 	}
-	std::cout << "Free resources\n";
-	for (auto p : sceneObjects)
-		delete p;
 
-	if (mass)
-		delete[] mass;
+	freeResources();
 	std::cout << "Success end of program\n";
 	return 0;
 }
@@ -173,5 +181,19 @@ void paintFrame(PAINTSTRUCT& ps)
 	DeleteObject(hSysBmp);
 	DeleteDC(hMemDC); // Удаление контекстов
 	DeleteObject(hBrush);
+}
+
+void freeResources()
+{
+	std::cout << "Free resources\n";
+	for (auto p : sceneObjects)
+		delete p;
+	sceneObjects.clear();
+	GravitySystem::getInstance().clear();
+
+	if (mass) {
+		delete[] mass;
+		mass = nullptr;
+	}
 }
 

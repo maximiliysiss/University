@@ -21,15 +21,15 @@ Vector2D::Vector2D(Vector2D vec1, Vector2D vec2)
 	y = vec2.y - vec1.y;
 }
 
-void Vector2D::rotate(Vector2D center, float angle)
+void Vector2D::rotate(float angle)
 {
 	//angle = angle * 3.14f / 180.0f;
-	Vector2D t(center, *this);
+	Vector2D t(Vector2D(0, 0), *this);
 	float xt = t.x;
 	t.x = xt * cos(angle) - t.y * sin(angle);
 	t.y = xt * sin(angle) + t.y * cos(angle);
-	this->x = center.x + t.x;
-	this->y = center.y + t.y;
+	this->x = t.x;
+	this->y = t.y;
 }
 
 void Vector2D::rotate(Vector2D center, float cos, float sin)

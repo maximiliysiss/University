@@ -34,7 +34,7 @@ void SceneObject::paint(HDC hdc)
 	DeleteDC(hMem);
 }
 
-void SceneObject::collisionAction(const SceneObject& obj)
+void SceneObject::collisionAction(const SceneObject* obj)
 {
 }
 

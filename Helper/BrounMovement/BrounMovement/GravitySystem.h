@@ -13,6 +13,7 @@ class GravitySystem
 public:
 	static GravitySystem& getInstance();
 	void addObject(SceneObject* obj);
+	void clear();
 	void calculate() const;
 };
 
