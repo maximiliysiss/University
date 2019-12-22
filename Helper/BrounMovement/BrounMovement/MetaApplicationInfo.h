@@ -1,4 +1,6 @@
-#pragma once
+﻿#pragma once
+
+// Данные о приложении (Singleton)
 class MetaApplicationInfo
 {
 	static MetaApplicationInfo* appInfo;
@@ -8,8 +10,10 @@ class MetaApplicationInfo
 public:
 	static MetaApplicationInfo& getInstance();
 
+	// Установить размеры
 	void setSize(int width, int height);
-	inline int getWidht() { return wndWidht; }
-	inline int getHeight() { return wndHeight; }
+	// получить размеры
+	inline int getWidht() const { return wndWidht; }
+	inline int getHeight() const { return wndHeight; }
 };
 

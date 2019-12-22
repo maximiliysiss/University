@@ -1,4 +1,4 @@
-#include "GravitySystem.h"
+﻿#include "GravitySystem.h"
 
 GravitySystem* GravitySystem::gravitySystem = nullptr;
 
@@ -22,6 +22,7 @@ void GravitySystem::clear()
 
 void GravitySystem::calculate() const
 {
+	// Обойдем все и расчитаем по парам
 	for (unsigned i = 0; i < sceneObjects.size(); i++) {
 		for (unsigned j = i + 1; j < sceneObjects.size(); j++) {
 			if (sceneObjects[i]->isCollision(*sceneObjects[j])) {

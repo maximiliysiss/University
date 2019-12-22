@@ -23,7 +23,6 @@ Vector2D::Vector2D(Vector2D vec1, Vector2D vec2)
 
 void Vector2D::rotate(float angle)
 {
-	//angle = angle * 3.14f / 180.0f;
 	Vector2D t(Vector2D(0, 0), *this);
 	float xt = t.x;
 	t.x = xt * cos(angle) - t.y * sin(angle);

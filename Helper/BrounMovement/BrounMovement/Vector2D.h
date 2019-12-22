@@ -1,8 +1,10 @@
-#pragma once
+﻿#pragma once
 #include <cmath>
 
+// Вектор для 2Д
 struct Vector2D
 {
+	// Данные
 	float x, y;
 
 	Vector2D();

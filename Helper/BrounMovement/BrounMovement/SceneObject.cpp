@@ -24,6 +24,7 @@ void SceneObject::setPosition(Vector2D vec)
 	startPos = vec;
 }
 
+// Отрисовка
 void SceneObject::paint(HDC hdc)
 {
 	HDC hMem = CreateCompatibleDC(hdc); // Доп контекст
