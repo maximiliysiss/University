@@ -9,6 +9,7 @@
    "default_popup": "popup.html"
   },
   "permissions": [
-   "activeTab"
+   "activeTab",
+   "http://localhost:5000/*"
    ]
 }

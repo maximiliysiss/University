@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using WorkerPluginAPI.Services;
+using WorkerPluginAPI.Services.AuthAPI.Services;
 using WorkerPluginAPI.Services.Settings;
 
 namespace WorkerPluginAPI
@@ -34,7 +34,10 @@ namespace WorkerPluginAPI
                 });
             });
 
+            services.AddTransient<IAuthService, AuthService>();
+
             var authSettings = Configuration.GetSection("AuthSettings").Get<AuthorizeSettings>();
+            services.AddSingleton(authSettings);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(x =>
             {
@@ -49,6 +52,7 @@ namespace WorkerPluginAPI
                 };
             });
 
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("Default")));
         }
@@ -61,6 +65,7 @@ namespace WorkerPluginAPI
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder => builder.AllowAnyOrigin());
             app.UseAuthentication();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "PluginApi"));
