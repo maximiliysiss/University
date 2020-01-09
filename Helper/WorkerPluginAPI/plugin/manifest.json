@@ -1,18 +1,14 @@
 {
+  "manifest_version": 2,
+
   "name": "Worker plugin",
   "version": "1.0",
-  "description": "Worker plugin",
-
-  "permissions": [
-    "tabs",
-    "http://localhost:5000/*"
-  ],
 
   "browser_action": {
-    "default_title": "Worker",
-    "default_icon": "images/account-tie.png",
-    "popup": "popup.html"
+   "default_icon": "images/account-tie.png",
+   "default_popup": "popup.html"
   },
-
-  "options_page": "options.html"
+  "permissions": [
+   "activeTab"
+   ]
 }
