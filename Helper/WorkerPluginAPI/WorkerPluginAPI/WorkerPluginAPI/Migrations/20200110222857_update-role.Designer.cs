@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WorkerPluginAPI.Services;
 
 namespace WorkerPluginAPI.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20200110222857_update-role")]
+    partial class updaterole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -44,13 +46,6 @@ namespace WorkerPluginAPI.Migrations
                             Login = "Worker",
                             PasswordHash = "62EFB9EC331E364B96EFE68C8B03CA20",
                             WorkerType = 0
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Login = "Admin",
-                            PasswordHash = "E3AFED0047B08059D0FADA10F400C1E5",
-                            WorkerType = 1
                         });
                 });
 

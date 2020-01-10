@@ -17,7 +17,9 @@ namespace WorkerPluginAPI.Services
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Worker>().HasData(
-                new Worker { ID = 1, Login = "Worker", PasswordHash = CryptService.CreateMD5("Worker") });
+                new Worker { ID = 1, Login = "Worker", PasswordHash = CryptService.CreateMD5("Worker"), WorkerType = WorkerType.Worker },
+                new Worker { ID = 2, Login = "Admin", PasswordHash = CryptService.CreateMD5("Admin"), WorkerType = WorkerType.Admin }
+            );
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,31 +21,40 @@ namespace WorkerPluginAPI.Controllers
             _context = context;
         }
 
-        // GET: api/WorkerChecks
+        private Worker Worker => _context.Workers.FirstOrDefault(x => x.ID == int.Parse(this.User.Claims.FirstOrDefault(y => y.Type == "UserIdentifier").Value));
+
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<WorkerCheck>>> GetWorkerChecks()
         {
-            return await _context.WorkerChecks.ToListAsync();
+            return await _context.WorkerChecks.Include(x => x.Worker).ToListAsync();
         }
 
-        // POST: api/WorkerChecks
-        [HttpPost]
-        public async Task<ActionResult<WorkerCheck>> PostWorkerCheck(WorkerCheck workerCheck)
+        [HttpGet("action")]
+        [Authorize(Roles = "Worker")]
+        public async Task<ActionResult<WorkerCheck>> ActionStatus()
         {
-            _context.WorkerChecks.Add(workerCheck);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetWorkerCheck", new { id = workerCheck.ID }, workerCheck);
+            var user = Worker;
+            if (user == null)
+                return NotFound();
+            var newCheck = (await _context.WorkerChecks.AsNoTracking().Where(x => x.WorkerId == user.ID).OrderByDescending(x => x.DateTime).FirstOrDefaultAsync()) ??
+                                                                                                        new WorkerCheck { Type = Models.Type.In, WorkerId = user.ID };
+            newCheck.ID = 0;
+            newCheck.DateTime = DateTime.Now;
+            newCheck.Type = (Models.Type)(((int)newCheck.Type + 1) % 2);
+            _context.Add(newCheck);
+            _context.SaveChanges();
+            return newCheck;
         }
 
-        [Authorize]
+        [Authorize(Roles = "Worker")]
         [HttpGet("status")]
         public async Task<ActionResult<WorkerCheck>> CurrentState()
         {
-            var user = await _context.Workers.FirstOrDefaultAsync(x => x.ID == int.Parse(this.User.Claims.FirstOrDefault(y => y.Type == ClaimsIdentity.DefaultNameClaimType).Value));
+            var user = Worker;
             if (user == null)
                 return NotFound();
-            return await _context.WorkerChecks.Where(x => x.WorkerId == user.ID).OrderByDescending(x => x.DateTime).FirstOrDefaultAsync();
+            return await _context.WorkerChecks.Where(x => x.WorkerId == user.ID).OrderByDescending(x => x.DateTime).FirstOrDefaultAsync() ?? new WorkerCheck { Type = Models.Type.Out };
         }
     }
 }

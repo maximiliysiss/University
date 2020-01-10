@@ -1,12 +1,22 @@
-$(function () {
+﻿$(function () {
 
+    var actionBtn = $('#action');
     var location = window.localStorage;
 
-    authAction('worker', function () {
-        ajaxGet("api/workercheks/status", function (data) {
+    function changeBtnState(type) {
+        if (type === 0) {
+            actionBtn.val('Ушел с работы');
+        } else {
+            actionBtn.val('Пришел на работу');
+        }
+    }
 
+    authAction('worker', function () {
+        ajaxGet("api/workerchecks/status", function (data) {
+            changeBtnState(data.type);
+            $("#body").css("display", "flex");
         }, null, {
-            "Authorization": location.getItem('worker-accessToken')
+            "Authorization": "Bearer " + location.getItem('worker-accessToken')
         });
     });
 
@@ -18,5 +28,12 @@ $(function () {
     });
 
     $('#action').click(function () {
+        authAction('worker', function () {
+            ajaxGet("api/workerchecks/action", function (data) {
+                changeBtnState(data.type);
+            }, null, {
+                "Authorization": "Bearer " + location.getItem('worker-accessToken')
+            });
+        });
     });
 });
