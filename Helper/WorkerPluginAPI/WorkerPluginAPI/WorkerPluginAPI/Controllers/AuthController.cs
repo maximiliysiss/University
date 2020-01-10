@@ -27,7 +27,7 @@ namespace WorkerPluginAPI.Controllers
         {
             var loginResult = authService.AuthAttempt(loginModel);
             if (loginResult == null)
-                return NotFound();
+                return NotFound("Неправильный логин/пароль");
             return loginResult;
         }
 

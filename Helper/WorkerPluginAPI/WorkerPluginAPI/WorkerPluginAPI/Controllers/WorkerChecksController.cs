@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WorkerPluginAPI.Models;
@@ -36,6 +36,16 @@ namespace WorkerPluginAPI.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetWorkerCheck", new { id = workerCheck.ID }, workerCheck);
+        }
+
+        [Authorize]
+        [HttpGet("status")]
+        public async Task<ActionResult<WorkerCheck>> CurrentState()
+        {
+            var user = await _context.Workers.FirstOrDefaultAsync(x => x.ID == int.Parse(this.User.Claims.FirstOrDefault(y => y.Type == ClaimsIdentity.DefaultNameClaimType).Value));
+            if (user == null)
+                return NotFound();
+            return await _context.WorkerChecks.Where(x => x.WorkerId == user.ID).OrderByDescending(x => x.DateTime).FirstOrDefaultAsync();
         }
     }
 }
