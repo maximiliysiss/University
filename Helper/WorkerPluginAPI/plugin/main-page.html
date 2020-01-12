@@ -55,6 +55,12 @@
             color: white;
             transform: translateY(-7px);
         }
+
+
+        .button-off:hover {
+            background: grey;
+            box-shadow: 0 15px 20px grey;
+        }
     </style>
 </head>
 <body id="body">
@@ -63,7 +69,10 @@
             <div id="action"></div>
             <div id="time"></div>
         </button>
-        <button type="button" id="signout">Выйти</button>
+        <div style="display:flex; flex-direction:column; float:right">
+            <button type="button" id="pause">Пауза</button>
+            <button type="button" id="signout">Выйти</button>
+        </div>
     </div>
 </body>
 </html>

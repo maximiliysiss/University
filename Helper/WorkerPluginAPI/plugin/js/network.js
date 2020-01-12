@@ -74,6 +74,9 @@ function isAuthorize(mainPart, onSuccess) {
 	}
 }
 
-function authAction(mainPart, action) {
+function authAction(mainPart, action, state = null) {
+	if (state) {
+		return;
+	}
 	isAuthorize(mainPart, function () { action(); });
 }

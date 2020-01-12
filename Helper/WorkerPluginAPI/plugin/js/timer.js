@@ -3,6 +3,8 @@
 class Timer {
 
     constructor(diff) {
+        console.log(diff);
+
         if (diff < 4)
             diff = 4;
         this.hours = parseInt(diff / 1000 / 60 / 60);
