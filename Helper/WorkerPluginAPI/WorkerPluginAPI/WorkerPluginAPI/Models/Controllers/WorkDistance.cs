@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace WorkerPluginAPI.Models.Controllers
 {
-    public class WorkerInfo
+    public class WorkerInfo<T>
     {
         public Worker Worker { get; set; }
-        public List<WorkDistance> WorkDistances { get; set; } = new List<WorkDistance>();
+        public List<T> WorkDistances { get; set; } = new List<T>();
     }
 
     public class WorkDistance
@@ -26,5 +26,11 @@ namespace WorkerPluginAPI.Models.Controllers
 
         public string StartDateTime => Start.ToString("dd.MM.yyyy HH:mm");
         public string EndDateTime => End.ToString("dd.MM.yyyy HH:mm");
+    }
+
+    public class DayInfo
+    {
+        public int Day { get; set; }
+        public string Time { get; set; }
     }
 }
