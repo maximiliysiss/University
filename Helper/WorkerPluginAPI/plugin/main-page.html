@@ -1,0 +1,78 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="js/jquery/jquery.js"></script>
+    <script src="js/network.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/main-page.js"></script>
+    <style>
+
+        body {
+            background: url(https://html5book.ru/wp-content/uploads/2015/07/background39.png);
+            min-width: 525px;
+            min-height: 470px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        input, button, submit {
+            border: none;
+        }
+
+        button {
+            white-space: normal;
+            text-decoration: none;
+            outline: none;
+            display: inline-block;
+            width: 140px;
+            height: 45px;
+            line-height: 45px;
+            border-radius: 45px;
+            margin: 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            text-transform: uppercase;
+            text-align: center;
+            letter-spacing: 3px;
+            font-weight: 600;
+            color: #524f4e;
+            background: white;
+            box-shadow: 0 8px 15px rgba(0,0,0,.1);
+            transition: .3s;
+        }
+
+        .input-circle {
+            width: 240px;
+            height: 240px;
+            border-radius: 150px;
+        }
+
+        button:hover {
+            background: #2EE59D;
+            box-shadow: 0 15px 20px rgba(46,229,157,.4);
+            color: white;
+            transform: translateY(-7px);
+        }
+
+
+        .button-off:hover {
+            background: grey;
+            box-shadow: 0 15px 20px grey;
+        }
+    </style>
+</head>
+<body id="body">
+    <div>
+        <button id="action-btn" class="input-circle">
+            <div id="action"></div>
+            <div id="time"></div>
+        </button>
+        <div style="display:flex; flex-direction:column; float:right">
+            <button type="button" id="pause">Пауза</button>
+            <button type="button" id="signout">Выйти</button>
+        </div>
+    </div>
+</body>
+</html>
