@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TabControl>
+            <TabItem Header="Сотрудники" Name="Workers"></TabItem>
+            <TabItem Header="Валюты" Name="Currency"></TabItem>
+            <TabItem Header="Конвертация" Name="Convert"></TabItem>
+            <TabItem Header="Счета" Name="Accounts"></TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

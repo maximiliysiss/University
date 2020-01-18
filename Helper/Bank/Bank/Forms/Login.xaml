@@ -14,6 +14,9 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="20px"></RowDefinition>
             <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
         <Label HorizontalAlignment="Center" FontSize="14pt">Логин</Label>
@@ -21,5 +24,9 @@
         <Label Grid.Row="2" HorizontalAlignment="Center" FontSize="14pt">Пароль</Label>
         <PasswordBox Name="password" Grid.Row="3" Width="400px" FontSize="14pt"></PasswordBox>
         <Button Click="LoginClick" Grid.Row="5" Width="400px" FontSize="14pt">Вход</Button>
+
+        <Label Grid.Row="6"></Label>
+        <Label Name="BankName" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Center">Bank</Label>
+        <Label Name="Address" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Center">Address</Label>
     </Grid>
 </Window>

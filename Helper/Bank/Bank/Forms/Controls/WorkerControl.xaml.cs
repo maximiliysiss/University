@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using Bank.Forms.Controls.Models.List;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Bank.Forms.Controls
 {
@@ -21,6 +11,8 @@ namespace Bank.Forms.Controls
         public WorkerControl()
         {
             InitializeComponent();
+            this.Clients.Content = new ClientList();
+            this.Accounts.Content = new ClientPrivateAccountList();
         }
     }
 }

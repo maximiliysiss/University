@@ -5,6 +5,9 @@ using System.Windows.Controls;
 
 namespace Bank.Services
 {
+    /// <summary>
+    /// Сервис для получения окна для пользователя
+    /// </summary>
     public class WindowsSelectorService
     {
         public Window GetWindowByRole(Role role)
@@ -26,7 +29,7 @@ namespace Bank.Services
                     break;
             }
 
-            return new Window { Content = userControl };
+            return new MainWindow(userControl);
         }
     }
 }

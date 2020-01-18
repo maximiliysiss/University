@@ -50,6 +50,9 @@ namespace Bank.Extensions
 
         private static void dataGrid_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
+            // Будем игнорировать Lazy загрузку
+            if (e.Column.Header.ToString() == "LazyLoader")
+                e.Cancel = true;
             PropertyDescriptor propertyDescriptor = e.PropertyDescriptor as PropertyDescriptor;
             if (propertyDescriptor != null)
             {

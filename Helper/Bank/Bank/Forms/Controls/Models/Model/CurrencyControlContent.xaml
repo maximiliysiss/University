@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Bank.Forms.Controls.Models.Model.CurrencyControlContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bank.Forms.Controls.Models.Model"
+             mc:Ignorable="d" 
+             Height="50" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt">Название</Label>
+        <TextBox Grid.Column="1" VerticalAlignment="Center" FontSize="14pt" Text="{Binding Name}"></TextBox>
+    </Grid>
+</UserControl>

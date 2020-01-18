@@ -23,30 +23,34 @@ namespace Bank.Forms.Controls.Models
         /// </summary>
         public Button Action;
         public Button DeleteBtn;
+        private bool isCancel = false;
         /// <summary>
         /// Таблица
         /// </summary>
         public Grid InnerContent;
+        private UserControl userControl;
+        public UserControl UserControl => userControl;
 
         public BaseModelControl(T obj, UserControl content)
         {
             this.DataContext = obj;
+            this.userControl = content;
             this.Width = content.Width + 50;
             this.Height = content.Height + 150;
             InitializeComponent();
 
-            Action.Click += (s, e) => PrevAction(obj);
+            Action.Click += (s, e) => isCancel = !PrevAction(obj);
 
             if (IsEdit(obj))
             {
                 Action.Content = "Изменить";
-                Action.Click += (s, e) => databaseContext.Update(obj);
+                Action.Click += (s, e) => { if (!isCancel) databaseContext.Update(obj); };
             }
             else
             {
                 this.DeleteBtn.Visibility = Visibility.Hidden;
                 Action.Content = "Добавить";
-                Action.Click += (s, e) => databaseContext.Add(obj);
+                Action.Click += (s, e) => { if (!isCancel) databaseContext.Add(obj); };
             }
 
             Action.Click += (s, e) =>
@@ -62,8 +66,9 @@ namespace Bank.Forms.Controls.Models
         /// Пред действие
         /// </summary>
         /// <param name="obj"></param>
-        protected virtual void PrevAction(T obj)
+        protected virtual bool PrevAction(T obj)
         {
+            return true;
         }
 
         /// <summary>

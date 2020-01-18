@@ -7,6 +7,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <TabControl>
+            <TabItem Header="Клиенты" Name="Clients"></TabItem>
+            <TabItem Header="Личные счета клиентов" Name="Accounts"></TabItem>
+        </TabControl>
     </Grid>
 </UserControl>

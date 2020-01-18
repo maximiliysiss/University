@@ -17,6 +17,8 @@ namespace Bank.Forms
         public Login()
         {
             InitializeComponent();
+            this.BankName.Content = App.SettingsInfo.BankName;
+            this.Address.Content = App.SettingsInfo.Address;
         }
 
         /// <summary>
