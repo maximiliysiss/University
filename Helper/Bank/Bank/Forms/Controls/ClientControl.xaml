@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="Bank.Forms.Controls.ClientControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bank.Forms.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Личные счета" Name="Accounts"></TabItem>
+            <TabItem Header="Переводы">
+                <Grid Width="400" Height="200" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="0">ID</Label>
+                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="1">ФИО</Label>
+                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="2">Количество</Label>
+                    <Label VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14pt" Grid.Row="3">Счет</Label>
+
+                    <TextBox TextChanged="ChangeGuid" Name="Guid" VerticalAlignment="Center" Grid.Row="0" Grid.Column="1" FontSize="14pt"></TextBox>
+                    <TextBox Name="Fio" VerticalAlignment="Center" IsReadOnly="True" Grid.Row="1" Grid.Column="1" FontSize="14pt"></TextBox>
+                    <TextBox Name="Sum" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" FontSize="14pt"></TextBox>
+                    <ComboBox SelectedValuePath="Id" DisplayMemberPath="{Binding InfoString}" Name="Account" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" FontSize="14pt"></ComboBox>
+                    <Button Click="CreateTransactionClick" Grid.Row="4" Grid.ColumnSpan="2">Перевод</Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

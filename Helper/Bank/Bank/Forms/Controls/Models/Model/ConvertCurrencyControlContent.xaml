@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Bank.Forms.Controls.Models.Model.ConvertCurrencyControlContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bank.Forms.Controls.Models.Model"
+             mc:Ignorable="d" 
+             Height="100" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">Валюта</Label>
+        <Label Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">Валюта</Label>
+        <Label Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center">Конвертация (1:1)</Label>
+
+        <ComboBox Name="From" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding CurrencyFromId}" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"></ComboBox>
+        <ComboBox Name="To" SelectedValuePath="Id" DisplayMemberPath="Name" SelectedValue="{Binding CurrencyToId}" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"></ComboBox>
+        <TextBox Name="Convert" Text="{Binding Convert}" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center"></TextBox>
+
+    </Grid>
+</UserControl>

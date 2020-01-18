@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="Bank.Forms.Controls.Models.Model.UsersControlContent"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bank.Forms.Controls.Models.Model"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
+             xmlns:model="clr-namespace:Bank.Models"
+             mc:Ignorable="d" 
+             Height="250" Width="400">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="dataFromEnum" MethodName="GetValues"
+                            ObjectType="{x:Type System:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="model:Role"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ComboBox Name="role" ItemsSource="{Binding Source={StaticResource dataFromEnum}}" SelectedValue="{Binding Role}" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Center"></ComboBox>
+        <Label Grid.Row="1" Grid.Column="0" FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">ФИО</Label>
+        <Label Grid.Row="2" Grid.Column="0" FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">Адрес</Label>
+        <Label Grid.Row="3" Grid.Column="0" FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">Код документа</Label>
+        <Label Grid.Row="4" Grid.Column="0" FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">Логин</Label>
+        <Label Grid.Row="5" Grid.Column="0" FontSize="14pt" VerticalAlignment="Center" HorizontalAlignment="Center">Пароль</Label>
+
+        <TextBox Grid.Row="1" Text="{Binding FIO}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Row="2" Text="{Binding Address}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Row="3" Text="{Binding DocumentCode}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBox>
+        <TextBox Grid.Row="4" Text="{Binding Login}" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></TextBox>
+        <PasswordBox Name="Password" Grid.Row="5" Grid.Column="1" FontSize="14pt" VerticalAlignment="Center"></PasswordBox>
+    </Grid>
+</UserControl>
