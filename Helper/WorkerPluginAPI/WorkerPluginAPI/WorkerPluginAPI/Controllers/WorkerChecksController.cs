@@ -28,10 +28,7 @@ namespace WorkerPluginAPI.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<WorkerCheck>>> GetWorkerChecks()
-        {
-            return await _context.WorkerChecks.Include(x => x.Worker).ToListAsync();
-        }
+        public async Task<ActionResult<IEnumerable<WorkerCheck>>> GetWorkerChecks() => await _context.WorkerChecks.Include(x => x.Worker).ToListAsync();
 
         [HttpGet("action")]
         [Authorize(Roles = "Worker")]
@@ -43,14 +40,8 @@ namespace WorkerPluginAPI.Controllers
             var newCheck = (await _context.WorkerChecks.AsNoTracking().Where(x => x.WorkerId == user.ID).OrderByDescending(x => x.ID).FirstOrDefaultAsync()) ??
                                                                                                         new WorkerCheck { Type = Models.Type.Out, WorkerId = user.ID };
             newCheck.ID = 0;
-            if (newCheck.Type == Models.Type.Pause)
-            {
-                newCheck.Type = Models.Type.Out;
-                newCheck.DateTime = new DateTime(DateTime.Now.Ticks - newCheck.DateTime.Ticks);
-            }
-            else
-                newCheck.DateTime = DateTime.Now;
-            newCheck.Type = (Models.Type)(((int)newCheck.Type + 1) % 2);
+            newCheck.Type = newCheck.Type == Models.Type.Pause ? Models.Type.Continue : (Models.Type)(((int)newCheck.Type + 1) % 2);
+            newCheck.DateTime = DateTime.Now;
             _context.Add(newCheck);
             _context.SaveChanges();
             return newCheck;
@@ -67,6 +58,16 @@ namespace WorkerPluginAPI.Controllers
         }
 
         [Authorize(Roles = "Worker")]
+        [HttpGet("prevstatus")]
+        public async Task<ActionResult<WorkerCheck>> PrevState()
+        {
+            var user = Worker;
+            if (user == null)
+                return NotFound();
+            return await _context.WorkerChecks.Where(x => x.WorkerId == user.ID).OrderByDescending(x => x.ID).Skip(1).FirstOrDefaultAsync() ?? new WorkerCheck { Type = Models.Type.Out }; ;
+        }
+
+        [Authorize(Roles = "Worker")]
         [HttpGet("pause")]
         public async Task<ActionResult<WorkerCheck>> Pause()
         {
@@ -74,11 +75,10 @@ namespace WorkerPluginAPI.Controllers
             if (user == null)
                 return NotFound();
             var lastAction = await _context.WorkerChecks.Where(x => x.WorkerId == user.ID && (x.Type == Models.Type.In || x.Type == Models.Type.Out)).OrderByDescending(x => x.ID)
-                                                                                                                                                            .FirstOrDefaultAsync();
-            if (lastAction == null || lastAction.Type != Models.Type.In)
+                                                                                                                                .Select(x=>(Models.Type?)x.Type).FirstOrDefaultAsync();
+            if (!lastAction.HasValue || lastAction != Models.Type.In)
                 return BadRequest();
             var newAction = new WorkerCheck { Type = Models.Type.Pause, WorkerId = user.ID };
-            newAction.DateTime = new DateTime(newAction.DateTime.Ticks - lastAction.DateTime.Ticks);
             _context.Add(newAction);
             _context.SaveChanges();
             return newAction;

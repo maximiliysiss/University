@@ -7,7 +7,7 @@ namespace WorkerPluginAPI.Models
 {
     public enum Type
     {
-        In, Out, Pause
+        In, Out, Pause, Continue
     }
 
     public class WorkerCheck
