@@ -24,7 +24,7 @@ namespace test_angry_service.Controllers
         /// <param name="result"></param>
         /// <returns></returns>
         [HttpPost]
-        public ExecutedLog ExecutedLog(float result)
+        public ExecutedLog ExecutedLog([FromBody]float result)
         {
             ExecutedLog exec = new ExecutedLog
             {

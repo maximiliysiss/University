@@ -39,6 +39,7 @@ namespace test_angry_service
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

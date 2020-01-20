@@ -22,6 +22,6 @@ namespace test_angry_service.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public List<Question> Questions() => context.Questions.ToList();
+        public List<string> Questions() => context.Questions.Select(x => x.Content).ToList();
     }
 }
