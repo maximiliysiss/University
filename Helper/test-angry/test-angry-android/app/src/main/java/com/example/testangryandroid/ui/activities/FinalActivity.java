@@ -32,7 +32,7 @@ public class FinalActivity extends AppCompatActivity {
         testPresentation = TestPresentation.getInstance();
 
         TextView textView = findViewById(R.id.finalResult);
-        textView.setText("Итоговый процент агрессии " + testPresentation.getResult() + "%");
+        textView.setText(App.getUserName()+ ", ваш результат " + testPresentation.getResult() + "%");
     }
 
     public void clickOnEnd() {
