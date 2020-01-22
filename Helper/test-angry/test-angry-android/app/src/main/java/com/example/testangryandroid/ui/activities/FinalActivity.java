@@ -14,9 +14,18 @@ import com.example.testangryandroid.network.callbacks.UniversalCallback;
 import com.example.testangryandroid.ui.extendings.OnSafeClickEvent;
 import com.example.testangryandroid.ui.presentation.TestPresentation;
 
+/**
+ * Final test (last activity)
+ */
 public class FinalActivity extends AppCompatActivity {
 
+    /**
+     * Presentation
+     */
     TestPresentation testPresentation;
+    /**
+     * Main layout
+     */
     ConstraintLayout constraintLayout;
 
     @Override
@@ -35,6 +44,9 @@ public class FinalActivity extends AppCompatActivity {
         textView.setText(App.getUserName()+ ", ваш результат " + testPresentation.getResult() + "%");
     }
 
+    /**
+     * Back to start
+     */
     public void clickOnEnd() {
         App.getExecutedRetrofit().testEnd(testPresentation.getResult()).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
             testPresentation.clear();

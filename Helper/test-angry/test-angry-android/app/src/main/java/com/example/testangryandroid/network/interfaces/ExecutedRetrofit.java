@@ -7,6 +7,11 @@ import retrofit2.http.POST;
 
 public interface ExecutedRetrofit {
 
+    /**
+     * End test
+     * @param result
+     * @return
+     */
     @POST("executed")
     Call<ResponseBody> testEnd(@Body Float result);
 

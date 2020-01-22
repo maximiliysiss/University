@@ -11,6 +11,9 @@ import com.example.testangryandroid.ui.activities.TestActivity;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Business logic
+ */
 public class TestPresentation implements Presentational<TestActivity> {
 
     static TestPresentation testPresentation;
@@ -21,14 +24,26 @@ public class TestPresentation implements Presentational<TestActivity> {
         return testPresentation;
     }
 
+    /**
+     * All questions
+     */
     private List<String> questions;
     private int currentQuestion = 0;
+    /**
+     * Count of yes
+     */
     private int yesAnswers = 0;
+    /**
+     * Activity
+     */
     private TestActivity testActivity;
 
     private TestPresentation() {
     }
 
+    /**
+     * End test
+     */
     public void clear() {
         questions = null;
         yesAnswers = currentQuestion = 0;
@@ -58,6 +73,10 @@ public class TestPresentation implements Presentational<TestActivity> {
         step();
     }
 
+    /**
+     * Get result percent
+     * @return
+     */
     public float getResult() {
         return (float) yesAnswers / (float) questions.size() * 100;
     }

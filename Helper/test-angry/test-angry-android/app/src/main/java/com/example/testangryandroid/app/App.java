@@ -12,11 +12,20 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Application class
+ */
 public class App extends Application {
 
+    /**
+     * Connections to server
+     */
     private static QuestionRetrofit questionRetrofit;
     private static ExecutedRetrofit executedRetrofit;
 
+    /**
+     * Current user
+     */
     private static String userName;
 
     public static String getUserName() {
@@ -39,6 +48,9 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
+        /**
+         * Create connections
+         */
         Retrofit retrofit = new Retrofit.Builder().baseUrl(getString(R.string.server_url)).addConverterFactory(GsonConverterFactory.create(new Gson())).build();
         questionRetrofit = retrofit.create(QuestionRetrofit.class);
         executedRetrofit = retrofit.create(ExecutedRetrofit.class);

@@ -3,6 +3,9 @@ package com.example.testangryandroid.ui.extendings;
 import android.os.SystemClock;
 import android.view.View;
 
+/**
+ * Safe click (block double click on button)
+ */
 public class OnSafeClickEvent implements View.OnClickListener {
 
     EmptyAction emptyAction;

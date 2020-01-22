@@ -11,6 +11,9 @@ import android.widget.Button;
 import com.example.testangryandroid.R;
 import com.example.testangryandroid.ui.extendings.OnSafeClickEvent;
 
+/**
+ * Main activity (Start)
+ */
 public class MainActivity extends AppCompatActivity {
 
     Button start;
@@ -28,6 +31,9 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new OnSafeClickEvent(this::startTest));
     }
 
+    /**
+     * Open activity with textbox for name
+     */
     public void startTest() {
         startActivity(new Intent(this, PreTestActivity.class));
     }

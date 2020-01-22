@@ -13,6 +13,9 @@ import com.example.testangryandroid.R;
 import com.example.testangryandroid.ui.extendings.OnSafeClickEvent;
 import com.example.testangryandroid.ui.presentation.TestPresentation;
 
+/**
+ * Activity test
+ */
 public class TestActivity extends AppCompatActivity {
 
     public TextView question, ready, full;
