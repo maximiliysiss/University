@@ -14,9 +14,14 @@ namespace WorkerPluginAPI.Models
     {
         public int ID { get; set; }
         public string Login { get; set; }
+        [JsonIgnore]
         public string PasswordHash { get; set; }
+        [JsonIgnore]
         public string Token { get; set; }
         public WorkerType WorkerType { get; set; }
+        [NotMapped]
+        [JsonProperty("PasswordHash")]
+        public string PasswordHashJson { set => PasswordHash = value; }
 
         [JsonIgnore]
         [NotMapped]
