@@ -11,10 +11,29 @@ namespace WorkerPluginAPI.Services
 {
     namespace AuthAPI.Services
     {
+        /// <summary>
+        /// Сервис авториазции
+        /// </summary>
         public interface IAuthService
         {
+            /// <summary>
+            /// Авторизоваться
+            /// </summary>
+            /// <param name="loginModel"></param>
+            /// <returns></returns>
             TokenResult AuthAttempt(LoginModel loginModel);
+            /// <summary>
+            /// Обновить токен
+            /// </summary>
+            /// <param name="token"></param>
+            /// <param name="refreshToken"></param>
+            /// <returns></returns>
             TokenResult RefreshToken(string token, string refreshToken);
+            /// <summary>
+            /// Сгенерировать токен для пользователя
+            /// </summary>
+            /// <param name="user"></param>
+            /// <returns></returns>
             string GenerateKey(Worker user);
         }
 
@@ -59,6 +78,11 @@ namespace WorkerPluginAPI.Services
                 };
             }
 
+            /// <summary>
+            /// Вытащить информацию из токена
+            /// </summary>
+            /// <param name="token"></param>
+            /// <returns></returns>
             private ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
             {
                 var tokenValidationParameters = new TokenValidationParameters

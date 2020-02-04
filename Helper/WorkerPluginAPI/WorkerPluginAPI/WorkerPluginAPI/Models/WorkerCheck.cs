@@ -5,11 +5,17 @@ using System.Threading.Tasks;
 
 namespace WorkerPluginAPI.Models
 {
+    /// <summary>
+    /// Состояния
+    /// </summary>
     public enum Type
     {
-        In, Out, Pause, Continue
+        In, Out, Pause, Continue, Custom
     }
 
+    /// <summary>
+    /// Отметка о состоянии работы
+    /// </summary>
     public class WorkerCheck
     {
         public int ID { get; set; }

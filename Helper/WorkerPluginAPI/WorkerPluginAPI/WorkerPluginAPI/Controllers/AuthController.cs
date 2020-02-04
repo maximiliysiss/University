@@ -18,7 +18,7 @@ namespace WorkerPluginAPI.Controllers
         }
 
         /// <summary>
-        /// Login by login/password
+        /// Авторизация
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
@@ -32,7 +32,7 @@ namespace WorkerPluginAPI.Controllers
         }
 
         /// <summary>
-        /// Refresh Token
+        /// Обновить токен
         /// </summary>
         /// <param name="token"></param>
         /// <param name="refreshToken"></param>
@@ -51,7 +51,7 @@ namespace WorkerPluginAPI.Controllers
         }
 
         /// <summary>
-        /// Login by token
+        /// Авторизация по токену
         /// </summary>
         /// <returns></returns>
         [Authorize]

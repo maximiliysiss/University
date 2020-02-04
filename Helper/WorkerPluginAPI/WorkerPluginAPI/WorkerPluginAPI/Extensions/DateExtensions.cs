@@ -7,7 +7,13 @@ namespace WorkerPluginAPI.Extensions
 {
     public static class DateExtensions
     {
-        public static bool InMonth(this DateTime dateTime, DateTime date) => dateTime.Year == date.Year && dateTime.Month == date.Month;
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="dateTime"></param>
+        /// <param name="year"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public static bool InMonth(this DateTime dateTime, int year, int month) => dateTime.Year == year && dateTime.Month == month;
     }
 }

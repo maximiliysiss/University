@@ -4,12 +4,18 @@ using System.Security.Claims;
 
 namespace WorkerPluginAPI.Models
 {
+    /// <summary>
+    /// Тип
+    /// </summary>
     public enum WorkerType
     {
         Worker,
         Admin,
     }
 
+    /// <summary>
+    /// Работник
+    /// </summary>
     public class Worker
     {
         public int ID { get; set; }
