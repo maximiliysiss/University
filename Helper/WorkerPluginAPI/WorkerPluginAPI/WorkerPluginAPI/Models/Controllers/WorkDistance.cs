@@ -1,33 +1,26 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace WorkerPluginAPI.Models.Controllers
 {
+    /// <summary>
+    /// Сбор информации о работнике
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class WorkerInfo<T>
     {
+        /// <summary>
+        /// Работник
+        /// </summary>
         public Worker Worker { get; set; }
+        /// <summary>
+        /// Какие-то характеристики
+        /// </summary>
         public List<T> WorkDistances { get; set; } = new List<T>();
     }
 
-    public class WorkDistance
-    {
-        [JsonIgnore]
-        public DateTime Start { get; set; }
-        [JsonIgnore]
-        public DateTime End { get; set; }
-
-        public Type StartType { get; set; }
-        public Type EndType { get; set; }
-        public string StartTypeString => StartType.ToString();
-        public string EndTypeString => EndType.ToString();
-
-        public string StartDateTime => Start.ToString("dd.MM.yyyy HH:mm");
-        public string EndDateTime => End.ToString("dd.MM.yyyy HH:mm");
-    }
-
+    /// <summary>
+    /// Характеристика о работе за день
+    /// </summary>
     public class DayInfo
     {
         public int Day { get; set; }

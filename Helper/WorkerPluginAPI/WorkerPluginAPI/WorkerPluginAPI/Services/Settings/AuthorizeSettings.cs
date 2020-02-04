@@ -4,6 +4,9 @@ using System.Text;
 
 namespace WorkerPluginAPI.Services.Settings
 {
+    /// <summary>
+    /// Настройки авториазции
+    /// </summary>
     public class AuthorizeSettings
     {
         public string Audience { get; set; }

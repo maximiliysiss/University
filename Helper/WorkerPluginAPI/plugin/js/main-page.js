@@ -21,8 +21,9 @@
         disable(pauseBtn, true);
 
         switch (type) {
+			case 3:
             case 0: {
-                timerClass = new Timer(Date.now() - Date.parse(time));
+                timerClass = new Timer(Date.parse(time) - Date.parse("0001-01-01T00:00:00"));
                 timer();
                 timerId = setInterval(timer, 1000);
 

@@ -9,6 +9,9 @@ using WorkerPluginAPI.Services;
 
 namespace WorkerPluginAPI.Controllers
 {
+    /// <summary>
+    /// Crud для работника
+    /// </summary>
     [Authorize(Roles = "Admin")]
     [Route("api/[controller]")]
     [ApiController]
