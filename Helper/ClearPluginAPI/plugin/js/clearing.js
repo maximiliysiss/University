@@ -26,28 +26,14 @@
         ajaxPost('api/clearactions/', { type: type }, null);
     }
 
-    $('#clear-cache').click(function () {
-        createLog('cache', {
-            "appcache": true,
-            "cache": true,
-            "cacheStorage": true
-        });
-    });
-
-    $('#clear-load').click(function () {
-        createLog('load', {
-            "downloads": true
-        });
-    });
-
-    $('#clear-cookies').click(function () {
-        createLog('cookies', {
-            "cookies": true
+    $('#clear-history').click(function () {
+        createLog('history', {
+            "history": true
         });
     });
 	
-	$('#clear-history').click(function () {
-		document.location = 'clearing-history.html';
+	$('#back').click(function () {
+		document.location = 'popup.html';
     });
 
 });
