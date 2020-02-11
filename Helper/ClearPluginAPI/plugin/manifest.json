@@ -13,6 +13,10 @@
     "downloads",
     "cookies",
     "browsingData",
+	"history",
     "http://localhost:5000/*"
-  ]
+  ],
+  "background" : {
+    "scripts" : ["js/background.js"]
+  } 
 }

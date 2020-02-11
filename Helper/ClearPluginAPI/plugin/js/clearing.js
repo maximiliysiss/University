@@ -29,10 +29,16 @@
         var callback = function () {
             toastr.success("Успешно");
         };
-        chrome.history.deleteRange({
-            startTime: new Date(valFrom).getTime(),
-            endTime: new Date(valTo).getTime()
-        }, callback);
+
+        chrome.runtime.sendMessage({
+            code: "history",
+            start: new Date(valFrom).getTime(),
+            end: new Date(valTo).getTime()
+        }, (response) => {
+            if (response.message === "success")
+                callback();
+        });
+
         ajaxPost('api/clearactions/', { type: "history" }, null);
     });
 
