@@ -26,14 +26,22 @@
         if (!valTo || !valFrom)
             return;
 
+        var dateFrom = new Date(valFrom);
+        var dateTo = new Date(valTo);
+
+        if (dateFrom > dateTo) {
+            toastr.warning("Введите правильные данные");
+            return;
+        }
+
         var callback = function () {
             toastr.success("Успешно");
         };
 
         chrome.runtime.sendMessage({
             code: "history",
-            start: new Date(valFrom).getTime(),
-            end: new Date(valTo).getTime()
+            start: dateFrom.getTime(),
+            end: dateTo.getTime()
         }, (response) => {
             if (response.message === "success")
                 callback();
