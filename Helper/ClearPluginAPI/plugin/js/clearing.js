@@ -18,22 +18,26 @@
         "hideMethod": "fadeOut"
     };
 
-    function createLog(type, options) {
+    $('#clear-history').click(function () {
+
+        var valFrom = $("#from").val();
+        var valTo = $("#to").val();
+
+        if (!valTo || !valFrom)
+            return;
+
         var callback = function () {
             toastr.success("Успешно");
         };
-        chrome.browsingData.remove({}, options, callback);
-        ajaxPost('api/clearactions/', { type: type }, null);
-    }
-
-    $('#clear-history').click(function () {
-        createLog('history', {
-            "history": true
-        });
+        chrome.history.deleteRange({
+            startTime: new Date(valFrom).getTime(),
+            endTime: new Date(valTo).getTime()
+        }, callback);
+        ajaxPost('api/clearactions/', { type: "history" }, null);
     });
-	
-	$('#back').click(function () {
-		document.location = 'popup.html';
+
+    $('#back').click(function () {
+        document.location = 'popup.html';
     });
 
 });
