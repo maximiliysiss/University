@@ -6,6 +6,5 @@ packages/
 *.jar
 .gradle/
 .idea/
-build/
 Debug/
 Release/
