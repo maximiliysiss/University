@@ -1,6 +1,7 @@
 
 let baseUrl = "http://localhost:5000/";
 
+// отправить данные через ajax
 function ajaxPost(method, data, success, codeHandler = null, headers = null) {
 
 	var failureFunc = null;

@@ -1,5 +1,6 @@
 ﻿$(function () {
 
+	// настройки оповещения
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -18,6 +19,7 @@
         "hideMethod": "fadeOut"
     };
 
+	// удалить данные и отправить данные на сервер
     function createLog(type, options) {
         var callback = function () {
             toastr.success("Успешно");
@@ -26,6 +28,7 @@
         ajaxPost('api/clearactions/', { type: type }, null);
     }
 
+	// очистить кэш
     $('#clear-cache').click(function () {
         createLog('cache', {
             "appcache": true,
@@ -34,18 +37,21 @@
         });
     });
 
+	// очистить загрузки
     $('#clear-load').click(function () {
         createLog('load', {
             "downloads": true
         });
     });
 
+	// очистить куки
     $('#clear-cookies').click(function () {
         createLog('cookies', {
             "cookies": true
         });
     });
 	
+	// очистить историю
 	$('#clear-history').click(function () {
 		document.location = 'clearing-history.html';
     });

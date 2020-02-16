@@ -7,10 +7,16 @@ using ClearPluginAPI.Services;
 
 namespace ClearPluginAPI.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ClearActionsController : ControllerBase
     {
+        /// <summary>
+        /// БД
+        /// </summary>
         private readonly DatabaseContext _context;
 
         public ClearActionsController(DatabaseContext context)
@@ -18,6 +24,10 @@ namespace ClearPluginAPI.Controllers
             _context = context;
         }
 
+        /// <summary>
+        /// Получить все очистки
+        /// </summary>
+        /// <returns></returns>
         // GET: api/ClearActions
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ClearAction>>> GetClearActions()
@@ -25,6 +35,11 @@ namespace ClearPluginAPI.Controllers
             return await _context.ClearActions.ToListAsync();
         }
 
+        /// <summary>
+        /// Добавить очистку
+        /// </summary>
+        /// <param name="clearAction"></param>
+        /// <returns></returns>
         // POST: api/ClearActions
         [HttpPost]
         public async Task<ActionResult<ClearAction>> PostClearAction(ClearAction clearAction)

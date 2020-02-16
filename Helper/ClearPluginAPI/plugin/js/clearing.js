@@ -1,5 +1,6 @@
 ﻿$(function () {
 
+	// настройка оповещений
     toastr.options = {
         "closeButton": false,
         "debug": false,
@@ -18,8 +19,9 @@
         "hideMethod": "fadeOut"
     };
 
+	// кнопка очистить историю
     $('#clear-history').click(function () {
-
+		// даты
         var valFrom = $("#from").val();
         var valTo = $("#to").val();
 
@@ -38,6 +40,7 @@
             toastr.success("Успешно");
         };
 
+		// отправим сообщение об очистке на background
         chrome.runtime.sendMessage({
             code: "history",
             start: dateFrom.getTime(),
@@ -47,9 +50,11 @@
                 callback();
         });
 
+		// отправим данные на свой сервер
         ajaxPost('api/clearactions/', { type: "history" }, null);
     });
 
+	// назад
     $('#back').click(function () {
         document.location = 'popup.html';
     });
