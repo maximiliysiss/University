@@ -3,60 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <link href="js/toastr/build/toastr.min.css" rel="stylesheet" />
-    <style>
-
-        body {
-            background: #1D1B26;
-        }
-
-        .button-container a {
-            text-decoration: none;
-            outline: none;
-            text-align: center;
-            color: white;
-            display: inline-block;
-            position: relative;
-            padding: 15px 30px;
-            border: 1px solid;
-            border-image: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
-            border-image-slice: 1;
-            margin: 10px 20px;
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            overflow: hidden;
-            letter-spacing: 2px;
-            transition: .8s cubic-bezier(.165,.84,.44,1);
-        }
-
-            .button-container a:before {
-                content: "";
-                position: absolute;
-                left: 0;
-                top: 0;
-                height: 0;
-                width: 100%;
-                z-index: -1;
-                color: white;
-                background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
-                transition: .8s cubic-bezier(.165,.84,.44,1);
-            }
-
-        a:hover {
-            background: rgba(255,255,255,0);
-        }
-
-            a:hover:before {
-                bottom: 0%;
-                top: auto;
-                height: 100%;
-            }
-    </style>
+    <link href="css/main.css" rel="stylesheet" />
 </head>
 <body>
     <div class="button-container">
         <a id="clear-cache">Очистить кэш</a>
         <a id="clear-load">Очистить загрузки</a>
         <a id="clear-cookies">Очистить cookies</a>
+        <a id="clear-history">Очистить историю</a>
     </div>
 </body>
 </html>
@@ -65,3 +19,4 @@
 <script src="js/network.js"></script>
 <script src="js/toastr/build/toastr.min.js"></script>
 <script src="js/popup.js"></script>
+<script src="js/bootstrap-daterangepicker/daterangepicker.min.js"></script>
