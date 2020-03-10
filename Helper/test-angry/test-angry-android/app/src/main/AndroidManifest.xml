@@ -13,16 +13,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.activities.PreTestActivity"></activity>
-        <activity android:name=".ui.activities.FinalActivity" />
-        <activity android:name=".ui.activities.TestActivity" />
-        <activity android:name=".ui.activities.MainActivity">
+        <activity android:name=".ui.activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activities.PreTestActivity" />
+        <activity android:name=".ui.activities.FinalActivity" />
+        <activity android:name=".ui.activities.TestActivity" />
+        <activity android:name=".ui.activities.MainActivity"></activity>
     </application>
 
 </manifest>
