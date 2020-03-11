@@ -4,21 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activities.PreTestActivity">
+    tools:context=".ui.activities.RegisterActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="40px">
+        android:padding="20dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Логин"
+            android:textAlignment="center"
+            android:textSize="12pt"></TextView>
 
         <EditText
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Логин"
-            android:textSize="14pt"></EditText>
+            android:textSize="12pt"></EditText>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Пароль"
+            android:textAlignment="center"
+            android:textSize="12pt"></TextView>
 
         <EditText
             android:id="@+id/password"
@@ -26,17 +40,24 @@
             android:layout_height="wrap_content"
             android:hint="Пароль"
             android:inputType="textPassword"
-            android:textSize="14pt"></EditText>
+            android:textSize="12pt"></EditText>
 
-        <Button
-            android:id="@+id/loginBtn"
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="login"
-            android:text="Войти"></Button>
+            android:text="Повторите пароль"
+            android:textAlignment="center"
+            android:textSize="12pt"></TextView>
+
+        <EditText
+            android:id="@+id/confirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Повторите пароль"
+            android:inputType="textPassword"
+            android:textSize="12pt"></EditText>
 
         <Button
-            android:id="@+id/registerBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="register"

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using test_angry_service.Models.Controllers;
 using test_angry_service.Services;
 
 namespace test_angry_service.Controllers
@@ -8,23 +10,44 @@ namespace test_angry_service.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly DatabaseContext databaseContext;
+        private readonly IAuthService authService;
 
-        public AuthController(DatabaseContext databaseContext)
+        public AuthController(IAuthService authService)
         {
-            this.databaseContext = databaseContext;
+            this.authService = authService;
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<LoginResult>> LoginAsync([FromBody]LoginModel loginModel)
+        {
+            var res = await authService.LoginAsync(loginModel);
+            if (res == null)
+                return NotFound();
+            return res;
         }
 
         [Authorize]
-        public ActionResult Login()
+        [HttpPost("refreshToken")]
+        public async Task<ActionResult<LoginResult>> RefreshTokenAsync([FromHeader]string refreshToken, [FromHeader]string authorization)
         {
-            return Ok();
+            var parts = authorization?.Split(" ");
+            var res = await authService.RefreshToken(refreshToken, parts[1]);
+            if (res == null)
+                return NotFound();
+            return res;
         }
 
+        [HttpGet("login")]
         [Authorize]
-        public ActionResult Register()
+        public ActionResult Login() => Ok();
+
+        [HttpPost("register")]
+        public async Task<ActionResult<LoginResult>> RegisterAsync([FromBody]RegisterModel registerModel)
         {
-            return Ok();
+            var res = await authService.RegisterAsync(registerModel);
+            if (res == null)
+                return BadRequest("This user is exists");
+            return res;
         }
     }
 }

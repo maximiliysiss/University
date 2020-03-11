@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -15,46 +14,44 @@ import com.example.testangryandroid.app.UserContext.DatabaseContext;
 import com.example.testangryandroid.app.UserContext.UserContext;
 import com.example.testangryandroid.network.callbacks.ActionCallback;
 import com.example.testangryandroid.network.callbacks.UniversalCallback;
-import com.example.testangryandroid.network.models.LoginModel;
 import com.example.testangryandroid.network.models.LoginResult;
-import com.example.testangryandroid.ui.extendings.EmptyAction;
-import com.example.testangryandroid.ui.extendings.OnSafeClickEvent;
+import com.example.testangryandroid.network.models.RegisterModel;
 
-/**
- * Activity with textBox
- */
-public class PreTestActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     EditText login;
     EditText password;
+    EditText confirmPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pre_test);
+        setContentView(R.layout.activity_register);
 
         login = findViewById(R.id.login);
         password = findViewById(R.id.password);
+        confirmPassword = findViewById(R.id.confirmPassword);
     }
 
-    public void login(View view) {
+    public void register(View view) {
         String loginString = login.getText().toString().trim();
         String passwordString = password.getText().toString().trim();
+        String confirmPasswordString = confirmPassword.getText().toString().trim();
 
-        if (loginString.length() == 0 || passwordString.length() == 0) {
+        if (loginString.length() == 0 || passwordString.length() == 0 || confirmPasswordString.length() == 0) {
             Toast.makeText(getBaseContext(), "Заполните форму", Toast.LENGTH_SHORT);
             return;
         }
 
-        App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<>(getBaseContext(), loginResult -> {
-            if (loginResult != null) {
-                DatabaseContext.setUserContext(new UserContext(loginResult));
-                startActivity(new Intent(PreTestActivity.this, MainActivity.class));
-            }
-        }));
-    }
+        if (!passwordString.equals(confirmPasswordString)) {
+            Toast.makeText(getBaseContext(), "Пароли не совпадают", Toast.LENGTH_SHORT);
+            return;
+        }
 
-    public void register(View view) {
-        startActivity(new Intent(this, RegisterActivity.class));
+        App.getAuthRetrofit().register(new RegisterModel(loginString, passwordString)).enqueue(new UniversalCallback<>(getBaseContext(),
+                loginResult -> {
+                    DatabaseContext.setUserContext(new UserContext(loginResult));
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                }));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using test_angry_service.Models;
 using test_angry_service.Services;
@@ -7,6 +8,7 @@ using test_angry_service.Services;
 namespace test_angry_service.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class QuestionController : ControllerBase
     {
