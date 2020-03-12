@@ -12,6 +12,7 @@ import com.example.testangryandroid.R;
 import com.example.testangryandroid.app.App;
 import com.example.testangryandroid.app.UserContext.DatabaseContext;
 import com.example.testangryandroid.network.callbacks.UniversalCallback;
+import com.example.testangryandroid.network.models.ResultModel;
 import com.example.testangryandroid.ui.extendings.OnSafeClickEvent;
 import com.example.testangryandroid.ui.presentation.TestPresentation;
 
@@ -42,14 +43,14 @@ public class FinalActivity extends AppCompatActivity {
         testPresentation = TestPresentation.getInstance();
 
         TextView textView = findViewById(R.id.finalResult);
-        textView.setText(App.getUserName() + ", ваш результат " + testPresentation.getResult() + "%");
+        textView.setText(DatabaseContext.getUserContext().getName() + ", ваш результат " + testPresentation.getResult() + "%");
     }
 
     /**
      * Back to start
      */
     public void clickOnEnd() {
-        App.getExecutedRetrofit().testEnd(testPresentation.getResult(), DatabaseContext.getUserContext().getName()).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
+        App.getExecutedRetrofit().testEnd(new ResultModel(DatabaseContext.getUserContext().getName(), testPresentation.getResult())).enqueue(new UniversalCallback<>(getBaseContext(), x -> {
             testPresentation.clear();
             startActivity(new Intent(this, MainActivity.class));
         }));

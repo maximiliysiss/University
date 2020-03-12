@@ -37,19 +37,6 @@ public class App extends Application {
     private static ExecutedRetrofit executedRetrofit;
     private static AuthRetrofit authRetrofit;
 
-    /**
-     * Current user
-     */
-    private static String userName;
-
-    public static String getUserName() {
-        return userName;
-    }
-
-    public static void setUserName(String userName) {
-        App.userName = userName;
-    }
-
     public static QuestionRetrofit getQuestionRetrofit() {
         return questionRetrofit;
     }

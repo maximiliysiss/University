@@ -42,16 +42,16 @@ public class PreTestActivity extends AppCompatActivity {
         String passwordString = password.getText().toString().trim();
 
         if (loginString.length() == 0 || passwordString.length() == 0) {
-            Toast.makeText(getBaseContext(), "Заполните форму", Toast.LENGTH_SHORT);
+            Toast.makeText(getBaseContext(), "Заполните форму", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<>(getBaseContext(), loginResult -> {
+        App.getAuthRetrofit().login(new LoginModel(loginString, passwordString)).enqueue(new UniversalCallback<LoginResult>(getBaseContext(), loginResult -> {
             if (loginResult != null) {
                 DatabaseContext.setUserContext(new UserContext(loginResult));
                 startActivity(new Intent(PreTestActivity.this, MainActivity.class));
             }
-        }));
+        }).setMessage("Неправильный логин/пароль"));
     }
 
     public void register(View view) {

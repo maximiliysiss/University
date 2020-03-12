@@ -39,19 +39,19 @@ public class RegisterActivity extends AppCompatActivity {
         String confirmPasswordString = confirmPassword.getText().toString().trim();
 
         if (loginString.length() == 0 || passwordString.length() == 0 || confirmPasswordString.length() == 0) {
-            Toast.makeText(getBaseContext(), "Заполните форму", Toast.LENGTH_SHORT);
+            Toast.makeText(getBaseContext(), "Заполните форму", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!passwordString.equals(confirmPasswordString)) {
-            Toast.makeText(getBaseContext(), "Пароли не совпадают", Toast.LENGTH_SHORT);
+            Toast.makeText(getBaseContext(), "Пароли не совпадают", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        App.getAuthRetrofit().register(new RegisterModel(loginString, passwordString)).enqueue(new UniversalCallback<>(getBaseContext(),
+        App.getAuthRetrofit().register(new RegisterModel(loginString, passwordString)).enqueue(new UniversalCallback<LoginResult>(getBaseContext(),
                 loginResult -> {
                     DatabaseContext.setUserContext(new UserContext(loginResult));
                     startActivity(new Intent(RegisterActivity.this, MainActivity.class));
-                }));
+                }).setMessage("Такой пользователь уже существует"));
     }
 }
