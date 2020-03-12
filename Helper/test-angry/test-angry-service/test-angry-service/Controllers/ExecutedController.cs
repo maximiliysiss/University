@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using test_angry_service.Models;
+using test_angry_service.Models.Controllers;
 using test_angry_service.Services;
 
 namespace test_angry_service.Controllers
@@ -8,6 +10,7 @@ namespace test_angry_service.Controllers
     /// Log
     /// </summary>
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class ExecutedController : ControllerBase
     {
@@ -24,12 +27,12 @@ namespace test_angry_service.Controllers
         /// <param name="result"></param>
         /// <returns></returns>
         [HttpPost]
-        public ExecutedLog ExecutedLog([FromBody]float result)
+        public ExecutedLog ExecutedLog([FromBody]ResultModel result)
         {
             ExecutedLog exec = new ExecutedLog
             {
-                AngryPercent = result,
-                Name = this.Request.HttpContext.Connection.RemoteIpAddress.ToString()
+                AngryPercent = result.Result,
+                Name = result.Name
             };
 
             context.Add(exec);

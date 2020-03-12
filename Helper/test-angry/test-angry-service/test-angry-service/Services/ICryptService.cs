@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace test_angry_service.Services
+{
+    public interface ICryptService
+    {
+        string CreateHash(string data);
+    }
+
+    public class CryptService : ICryptService
+    {
+        public string CreateHash(string data)
+        {
+            using System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
+
+            byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(data);
+            byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < hashBytes.Length; i++)
+                sb.Append(hashBytes[i].ToString("X2"));
+            return sb.ToString();
+        }
+    }
+}

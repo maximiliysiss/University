@@ -35,6 +35,6 @@ public class MainActivity extends AppCompatActivity {
      * Open activity with textbox for name
      */
     public void startTest() {
-        startActivity(new Intent(this, PreTestActivity.class));
+        startActivity(new Intent(this, TestActivity.class));
     }
 }
