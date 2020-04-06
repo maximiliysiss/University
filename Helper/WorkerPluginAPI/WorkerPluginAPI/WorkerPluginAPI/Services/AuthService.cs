@@ -89,7 +89,6 @@ namespace WorkerPluginAPI.Services
                 {
                     ValidateAudience = true,
                     ValidateIssuer = true,
-                    ValidateLifetime = true,
                     ValidAudience = authorizeSettings.Audience,
                     ValidIssuer = authorizeSettings.Issuer,
                     IssuerSigningKey = authorizeSettings.SecurityKey

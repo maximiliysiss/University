@@ -38,12 +38,13 @@ namespace WorkerPluginAPI.Controllers
         /// <param name="refreshToken"></param>
         /// <returns></returns>
         [HttpGet]
-        public ActionResult<TokenResult> Refresh([FromHeader]string token, [FromHeader]string refreshToken)
+        [Authorize]
+        public ActionResult<TokenResult> Refresh([FromHeader]string authorization, [FromHeader]string refreshToken)
         {
-            if (StringUtils.IsNullOrEmpty(token, refreshToken))
+            if (StringUtils.IsNullOrEmpty(authorization, refreshToken))
                 return NotFound();
 
-            var refreshResult = authService.RefreshToken(token, refreshToken);
+            var refreshResult = authService.RefreshToken(authorization.Split(" ")[1], refreshToken);
             if (refreshResult == null)
                 return BadRequest();
 
