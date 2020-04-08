@@ -1,12 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.CodeAnalysis.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using PeopleAnalysis.Extensions;
+using PeopleAnalysis.Models;
+using PeopleAnalysis.Models.Configuration;
+using PeopleAnalysis.Services;
+using System.Collections.Generic;
 
 namespace PeopleAnalysis
 {
@@ -23,6 +27,14 @@ namespace PeopleAnalysis
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<AuthContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDefaultIdentity<User>(o =>
+            {
+                o.Tokens.AuthenticatorIssuer = "http://localhost";
+            }).AddEntityFrameworkStores<AuthContext>();
+            services.AddRazorPages();
+            services.AddApi(Configuration.Get<KeysConfiguration>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +52,7 @@ namespace PeopleAnalysis
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

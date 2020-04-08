@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PeopleAnalysis.Models;
+using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
 {
@@ -26,6 +27,17 @@ namespace PeopleAnalysis.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Finder()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Finder([FromForm]FindPeopleViewModel findPeopleViewModel)
+        {
+            return View(findPeopleViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
