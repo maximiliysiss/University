@@ -1,16 +1,14 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.CodeAnalysis.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
 using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Models;
 using PeopleAnalysis.Models.Configuration;
 using PeopleAnalysis.Services;
-using System.Collections.Generic;
+using PeopleAnalysis.Services.APIs;
 
 namespace PeopleAnalysis
 {
@@ -27,14 +25,17 @@ namespace PeopleAnalysis
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")));
+            services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
             services.AddDbContext<AuthContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")));
             services.AddDefaultIdentity<User>(o =>
             {
                 o.Tokens.AuthenticatorIssuer = "http://localhost";
             }).AddEntityFrameworkStores<AuthContext>();
             services.AddRazorPages();
-            services.AddApi(Configuration.Get<KeysConfiguration>());
+            services.AddScoped<ApisManager>();
+            services.AddSingleton(Configuration.Get<KeysConfiguration>());
+            services.AddScoped<AnaliticService>();
+            services.AddScoped<VkSocialApi>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

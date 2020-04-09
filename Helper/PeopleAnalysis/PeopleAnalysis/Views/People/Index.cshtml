@@ -1,0 +1,21 @@
+﻿@model PeopleAnalysis.ViewModels.UserDetailInformationViewModel
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card d-flex flex-column p-3 m-2 ">
+    <h1 class="p-2">Информация о человеке</h1>
+    <div class="d-flex flex-row" style="width: 100%;">
+        <img class="card-img-top w-25 m-3" src="@Model.Photo">
+        <div class="card-body">
+            <h5 class="card-title">@Model.FullName</h5>
+            <p class="card-text">Дата рождения: @(Model.Birthday?.ToString() ?? "Не указана")</p>
+            <a class="card-text" target="_blank" rel="noopener noreferrer" href="@Model.PageUrl">Ссылка на страницу</a>
+        </div>
+    </div>
+
+    @{await Html.RenderPartialAsync("Photos", Model);}
+    @{await Html.RenderPartialAsync("Analitycs", Model);}
+
+</div>

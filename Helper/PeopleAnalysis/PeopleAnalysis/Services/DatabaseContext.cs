@@ -5,8 +5,10 @@ namespace PeopleAnalysis.Services
 {
     public class DatabaseContext : DbContext
     {
-        public DatabaseContext(DbContextOptions options) : base(options)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
         {
         }
+
+        public DbSet<Request> Requests { get; set; }
     }
 }

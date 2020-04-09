@@ -1,0 +1,37 @@
+﻿@model List<Request>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card m-2 p-2">
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <h2>Запросов на обработку нету</h2>
+    }
+    else
+    {
+        <h2>Запросы на обработку</h2>
+
+        <table class="w-100">
+            <tr>
+                <td>Время подачи</td>
+                <td>Пользователь</td>
+                <td>Социальная сеть</td>
+                <td>Статус</td>
+            </tr>
+            @foreach (var request in Model)
+            {
+                <tr>
+                    <td>@request.DateTime</td>
+                    <td>@request.User</td>
+                    <td>@request.Social</td>
+                    <td>@request.Status</td>
+                </tr>
+            }
+        </table>
+    }
+
+</div>
+

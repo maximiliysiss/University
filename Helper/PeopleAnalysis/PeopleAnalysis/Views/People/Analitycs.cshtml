@@ -1,0 +1,21 @@
+﻿@model PeopleAnalysis.ViewModels.UserDetailInformationViewModel
+
+<h2 class="p-2 mt-2">Аналитика</h2>
+<hr />
+
+@if (Model.IsPrivate || (Model.Photos?.Length ?? 0) < 2)
+{
+    <h2 class="p-2">Профиль пользователя в статусе private или недостаточно данных. Невозможно провести аналитику</h2>
+}
+else if (Model.AnalitycsViewModel == null)
+{
+    <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
+        @Html.Hidden("id", Model.Id)
+        @Html.Hidden("social", Model.Social)
+        <input value="Запустить аналитику" class="btn btn-primary w-100" type="submit" />
+    </form>
+}
+else
+{
+
+}

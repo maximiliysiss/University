@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PeopleAnalysis.Models;
+using PeopleAnalysis.Services;
 using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
@@ -13,31 +10,25 @@ namespace PeopleAnalysis.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApisManager apisManager;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ApisManager apisManager)
         {
             _logger = logger;
+            this.apisManager = apisManager;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        public IActionResult Finder()
-        {
-            return View();
+            return View(new FindPeoplePageViewModel());
         }
 
         [HttpPost]
-        public IActionResult Finder([FromForm]FindPeopleViewModel findPeopleViewModel)
+        public IActionResult Index([FromForm]FindPeoplePageViewModel findPeoplePageViewModel)
         {
-            return View(findPeopleViewModel);
+            if (!string.IsNullOrEmpty(findPeoplePageViewModel.FindPeopleViewModel.FindText))
+                findPeoplePageViewModel.FinderResultViewModel = apisManager.GetFinded(findPeoplePageViewModel.FindPeopleViewModel.FindText);
+            return View(findPeoplePageViewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

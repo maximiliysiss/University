@@ -7,7 +7,7 @@ namespace PeopleAnalysis.Services
 {
     public class AuthContext : IdentityDbContext<User, IdentityRole<int>, int>
     {
-        public AuthContext(DbContextOptions options) : base(options)
+        public AuthContext(DbContextOptions<AuthContext> options) : base(options)
         {
         }
     }
