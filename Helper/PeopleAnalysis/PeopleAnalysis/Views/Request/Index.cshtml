@@ -4,6 +4,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+<div class="modal fade" id="delete-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Удаление</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Вы уверены что хотите удалить этот запрос?
+            </div>
+            <div class="modal-footer">
+                <form method="post" asp-action="Delete">
+                    @Html.Hidden("toDelete")
+                    <input type="submit" value="Да" class="btn btn-success" />
+                </form>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Нет</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="card m-2 p-2">
 
     @if (Model == null || Model.Count == 0)
@@ -14,24 +38,34 @@
     {
         <h2>Запросы на обработку</h2>
 
-        <table class="w-100">
-            <tr>
-                <td>Время подачи</td>
-                <td>Пользователь</td>
-                <td>Социальная сеть</td>
-                <td>Статус</td>
-            </tr>
+        <table class="w-100 table table-hover">
+            <thead>
+                <tr>
+                    <td>Время подачи</td>
+                    <td>Пользователь</td>
+                    <td>Социальная сеть</td>
+                    <td>Статус</td>
+                    <td></td>
+                </tr>
+            </thead>
             @foreach (var request in Model)
             {
                 <tr>
                     <td>@request.DateTime</td>
-                    <td>@request.User</td>
+                    <td><a target="_blank" rel="noopener noreferrer" href="@request.UserUrl">@request.User</a></td>
                     <td>@request.Social</td>
                     <td>@request.Status</td>
+                    <td>
+                        <div class="d-inline-flex">
+                            @if (request.Status.In(new[] { Status.Create, Status.InProgress }))
+                            {
+                                <a href="#" data-toggle="modal" data-target="#delete-modal" onclick="$('#toDelete').val(@request.Id)">Удалить из обработки</a>
+                            }
+                        </div>
+                    </td>
                 </tr>
             }
         </table>
     }
 
 </div>
-

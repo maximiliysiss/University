@@ -15,6 +15,7 @@ namespace PeopleAnalysis.Services.APIs
     public interface ISocialApi
     {
         string Name { get; }
+        Uri GetUserUri(string id);
         FinderResultViewModel Find(string text);
         FinderResultViewModel FindPage(Uri text);
         UserDetailInformationViewModel GetUserDetailInformationView(string id);
@@ -22,14 +23,11 @@ namespace PeopleAnalysis.Services.APIs
 
     public class VkSocialApi : VkApi, ISocialApi
     {
-        private readonly AnaliticService analiticService;
-
         public string Name => "Vk";
 
-        public VkSocialApi(KeysConfiguration keysConfiguration, AnaliticService analiticService)
+        public VkSocialApi(KeysConfiguration keysConfiguration)
         {
             Authorize(new ApiAuthParams { AccessToken = keysConfiguration["vk"].Key });
-            this.analiticService = analiticService;
         }
 
         private FinderResultViewModel Create(IEnumerable<User> users)
@@ -89,14 +87,14 @@ namespace PeopleAnalysis.Services.APIs
                 Birthday = user?.BirthDate,
                 FullName = $"{user?.FirstName} {user?.LastName}",
                 Id = id,
-                PageUrl = new Uri($"https://vk.com/id{id}"),
+                PageUrl = GetUserUri(id),
                 Photo = user.PhotoMaxOrig,
                 Photos = photos?.Select(x => x.Sizes?.Last()?.Url).Where(x => x != null).ToArray(),
                 IsPrivate = user.IsClosed ?? false,
-                Social = Name.ToLower(),
-                // TODO
-                AnalitycsViewModel = analiticService.GetAnaliticsAboutUser(id, Name.ToLower(), 0)
+                Social = Name.ToLower()
             };
         }
+
+        public Uri GetUserUri(string id) => new Uri($"https://vk.com/id{id}");
     }
 }

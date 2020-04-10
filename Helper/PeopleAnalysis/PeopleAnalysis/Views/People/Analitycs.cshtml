@@ -7,11 +7,12 @@
 {
     <h2 class="p-2">Профиль пользователя в статусе private или недостаточно данных. Невозможно провести аналитику</h2>
 }
-else if (Model.AnalitycsViewModel == null)
+else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(new[] { Status.Closed, Status.Fail }))
 {
     <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
         @Html.Hidden("id", Model.Id)
         @Html.Hidden("social", Model.Social)
+        @Html.Hidden("userName", Model.FullName)
         <input value="Запустить аналитику" class="btn btn-primary w-100" type="submit" />
     </form>
 }

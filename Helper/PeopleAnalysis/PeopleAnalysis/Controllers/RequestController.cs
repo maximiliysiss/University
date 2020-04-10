@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using PeopleAnalysis.Models;
 using PeopleAnalysis.Services;
 
 namespace PeopleAnalysis.Controllers
@@ -24,6 +25,26 @@ namespace PeopleAnalysis.Controllers
                 requests.Add(res);
             }
             return View(requests);
+        }
+
+        [HttpPost]
+        public IActionResult Delete([FromForm]int toDelete)
+        {
+            var find = databaseContext.Requests.Find(toDelete);
+            if (find == null)
+                return NotFound();
+            databaseContext.Add(new Request
+            {
+                CreateId = 0,
+                OwnerId = find.OwnerId,
+                Social = find.Social,
+                Status = Status.Closed,
+                User = find.User,
+                UserId = find.UserId,
+                UserUrl = find.UserUrl
+            });
+            databaseContext.SaveChanges();
+            return Redirect("Index");
         }
     }
 }

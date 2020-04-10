@@ -10,7 +10,8 @@ namespace PeopleAnalysis.Models
         Create,
         InProgress,
         Fail,
-        Complete
+        Complete,
+        Closed
     }
 
     public class Request
@@ -19,9 +20,11 @@ namespace PeopleAnalysis.Models
         public DateTime DateTime { get; set; } = DateTime.Now;
         public string User { get; set; }
         public string UserId { get; set; }
+        public Uri UserUrl { get; set; }
         public string Social { get; set; }
         public int OwnerId { get; set; }
         public int CreateId { get; set; }
         public Status Status { get; set; }
+        public Guid Session { get; set; }
     }
 }
