@@ -15,6 +15,10 @@ namespace PeopleAnalysis.Services
         {
             //TODO
             await analiticService.InProcessAsync(request, request.CreateId, databaseContext);
+
+            // TODO magic
+
+            await analiticService.ReadyResult(request, request.CreateId, databaseContext);
         }
     }
 }

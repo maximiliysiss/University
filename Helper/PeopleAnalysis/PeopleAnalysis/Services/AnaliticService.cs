@@ -56,6 +56,7 @@ namespace PeopleAnalysis.Services
     public interface IAnaliticAIService
     {
         Task InProcessAsync(Request request, string user, DatabaseContext databaseContext);
+        Task ReadyResult(Request request, string createId, DatabaseContext databaseContext);
     }
 
     public class AnaliticAIService : IAnaliticAIService
@@ -80,6 +81,11 @@ namespace PeopleAnalysis.Services
             });
 
             await databaseContext.SaveChangesAsync();
+        }
+
+        public Task ReadyResult(Request request, string createId, DatabaseContext databaseContext)
+        {
+
         }
     }
 }

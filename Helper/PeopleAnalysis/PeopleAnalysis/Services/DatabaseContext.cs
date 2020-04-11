@@ -10,5 +10,8 @@ namespace PeopleAnalysis.Services
         }
 
         public DbSet<Request> Requests { get; set; }
+        public DbSet<Result> Results { get; set; }
+        public DbSet<AnalysObject> AnalysObjects { get; set; }
+        public DbSet<ResultObject> ResultObjects { get; set; }
     }
 }

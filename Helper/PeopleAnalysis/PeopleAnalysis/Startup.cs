@@ -26,7 +26,7 @@ namespace PeopleAnalysis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
+            services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")).UseLazyLoadingProxies(), ServiceLifetime.Scoped);
             services.AddDbContext<AuthContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AuthContext>();
