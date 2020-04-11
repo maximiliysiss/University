@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleAnalysis", "PeopleAnalysis\PeopleAnalysis.csproj", "{DBB2C0D5-7FAE-4F2E-8DE8-603816982048}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleAnalysis", "PeopleAnalysis\PeopleAnalysis.csproj", "{DBB2C0D5-7FAE-4F2E-8DE8-603816982048}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PeopleAnalisysAPI", "PeopleAnalisysAPI\PeopleAnalisysAPI.csproj", "{CAA4CC13-3F82-4A4A-8327-0A37305766C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleAnalisysAPI", "PeopleAnalisysAPI\PeopleAnalisysAPI.csproj", "{CAA4CC13-3F82-4A4A-8327-0A37305766C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

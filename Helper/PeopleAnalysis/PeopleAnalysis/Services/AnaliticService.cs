@@ -2,6 +2,7 @@
 using PeopleAnalysis.ViewModels;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace PeopleAnalysis.Services
 {
@@ -9,11 +10,13 @@ namespace PeopleAnalysis.Services
     {
         private readonly DatabaseContext databaseContext;
         private readonly ApisManager apisManager;
+        private readonly ISender sender;
 
-        public AnaliticService(DatabaseContext databaseContext, ApisManager apisManager)
+        public AnaliticService(DatabaseContext databaseContext, ApisManager apisManager, ISender sender)
         {
             this.databaseContext = databaseContext;
             this.apisManager = apisManager;
+            this.sender = sender;
         }
 
         public AnalitycsViewModel GetAnaliticsAboutUser(string userId, string social, int currentUserId)
@@ -30,12 +33,10 @@ namespace PeopleAnalysis.Services
 
         public bool CreateRequest(AnalitycsRequestModel analitycsRequest)
         {
-            // TODO create view
-            var isExists = databaseContext.Requests.Where(x => x.OwnerId == 0 && x.Social == analitycsRequest.Social && x.User == analitycsRequest.Id)
-                .GroupBy(x => x.Session).Where(x => !x.Any(y => y.Status == Status.Closed || y.Status == Status.Fail)).Any();
+            var isExists = databaseContext.Requests.Any(x => x.OwnerId == 0 && x.Social == analitycsRequest.Social && x.User == analitycsRequest.Id && x.Status == Status.Complete);
             if (isExists)
                 return false;
-            databaseContext.Requests.Add(new Request
+            var newRequest = new Models.Request
             {
                 CreateId = 0,
                 OwnerId = 0,
@@ -43,11 +44,42 @@ namespace PeopleAnalysis.Services
                 User = analitycsRequest.UserName,
                 Social = analitycsRequest.Social,
                 UserId = analitycsRequest.Id,
-                UserUrl = apisManager[analitycsRequest.Social].GetUserUri(analitycsRequest.Id),
-                Session = Guid.NewGuid()
-            });
+                UserUrl = apisManager[analitycsRequest.Social].GetUserUri(analitycsRequest.Id)
+            };
+            databaseContext.Requests.Add(newRequest);
             databaseContext.SaveChanges();
+            sender.Send(newRequest);
             return true;
+        }
+    }
+
+    public interface IAnaliticAIService
+    {
+        Task InProcessAsync(Request request, int user, DatabaseContext databaseContext);
+    }
+
+    public class AnaliticAIService : IAnaliticAIService
+    {
+        public async Task InProcessAsync(Request request, int user, DatabaseContext databaseContext)
+        {
+            var find = databaseContext.Requests.Find(request.Id);
+            if (find == null)
+                throw new ApplicationException("Not found request");
+            if (find.Status != request.Status)
+                throw new ApplicationException("Request is changed");
+
+            databaseContext.Add(new Request
+            {
+                CreateId = user,
+                OwnerId = request.OwnerId,
+                Social = request.Social,
+                Status = Status.InProgress,
+                User = request.User,
+                UserId = request.UserId,
+                UserUrl = request.UserUrl
+            });
+
+            await databaseContext.SaveChangesAsync();
         }
     }
 }

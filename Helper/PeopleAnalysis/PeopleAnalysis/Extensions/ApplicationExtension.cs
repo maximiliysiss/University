@@ -9,6 +9,5 @@ namespace PeopleAnalysis.Extensions
 {
     public static class ApplicationExtension
     {
-        public static T GetService<T>(this IServiceProvider serviceProvider) => (T)serviceProvider.GetService(typeof(T));
     }
 }

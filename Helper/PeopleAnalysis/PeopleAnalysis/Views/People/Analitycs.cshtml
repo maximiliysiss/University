@@ -5,7 +5,7 @@
 
 @if (Model.IsPrivate || (Model.Photos?.Length ?? 0) < 2)
 {
-    <h2 class="p-2">Профиль пользователя в статусе private или недостаточно данных. Невозможно провести аналитику</h2>
+    <h3 class="p-2">Профиль пользователя в статусе private или недостаточно данных. Невозможно провести аналитику</h3>
 }
 else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(new[] { Status.Closed, Status.Fail }))
 {
@@ -16,7 +16,7 @@ else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(
         <input value="Запустить аналитику" class="btn btn-primary w-100" type="submit" />
     </form>
 }
-else
+else if (Model.AnalitycsViewModel.Status == Status.InProgress)
 {
-
+    <a asp-action="Index" asp-controller="Request" class="h3 p-2">В процессе</a>
 }

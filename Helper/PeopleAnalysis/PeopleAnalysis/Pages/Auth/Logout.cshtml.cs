@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using PeopleAnalysis.Models;
 
-namespace PeopleAnalysis.Areas.Identity.Pages.Account
+namespace PeopleAnalysis
 {
     [AllowAnonymous]
     public class LogoutModel : PageModel

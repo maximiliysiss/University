@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PeopleAnalysis.Models;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
 {
+    [Authorize]
     public class AnaliticController : Controller
     {
         private readonly AnaliticService analiticService;

@@ -5,7 +5,7 @@ using PeopleAnalysis.Models;
 
 namespace PeopleAnalysis.Services
 {
-    public class AuthContext : IdentityDbContext<User, IdentityRole<int>, int>
+    public class AuthContext : IdentityDbContext<User>
     {
         public AuthContext(DbContextOptions<AuthContext> options) : base(options)
         {

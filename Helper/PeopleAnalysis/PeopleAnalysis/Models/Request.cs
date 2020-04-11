@@ -25,6 +25,5 @@ namespace PeopleAnalysis.Models
         public int OwnerId { get; set; }
         public int CreateId { get; set; }
         public Status Status { get; set; }
-        public Guid Session { get; set; }
     }
 }

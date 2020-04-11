@@ -54,12 +54,21 @@
                     <td>@request.DateTime</td>
                     <td><a target="_blank" rel="noopener noreferrer" href="@request.UserUrl">@request.User</a></td>
                     <td>@request.Social</td>
-                    <td>@request.Status</td>
+                    <td><a asp-action="Index" asp-controller="People" asp-route-key="@request.UserId" asp-route-social="@request.Social">@request.Status</a></td>
                     <td>
                         <div class="d-inline-flex">
                             @if (request.Status.In(new[] { Status.Create, Status.InProgress }))
                             {
                                 <a href="#" data-toggle="modal" data-target="#delete-modal" onclick="$('#toDelete').val(@request.Id)">Удалить из обработки</a>
+                            }
+                            @if (request.Status.In(new[] { Status.Fail, Status.Closed }))
+                            {
+                                <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
+                                    @Html.Hidden("id", request.UserId)
+                                    @Html.Hidden("social", request.Social)
+                                    @Html.Hidden("userName", request.User)
+                                    <button class="btn btn-link p-0 m-0 button-lnk" type="submit">Запустить аналитику</button>
+                                </form>
                             }
                         </div>
                     </td>

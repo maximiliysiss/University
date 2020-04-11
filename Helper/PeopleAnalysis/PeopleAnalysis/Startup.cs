@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,22 +26,32 @@ namespace PeopleAnalysis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
             services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
-            services.AddDbContext<AuthContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")));
-            services.AddDefaultIdentity<User>(o =>
+            services.AddDbContext<AuthContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
+
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AuthContext>();
+            services.ConfigureApplicationCookie(options =>
             {
-                o.Tokens.AuthenticatorIssuer = "http://localhost";
-            }).AddEntityFrameworkStores<AuthContext>();
+                options.AccessDeniedPath = "/Auth/Login";
+                options.LoginPath = "/Auth/Login";
+                options.LogoutPath = "/Auth/Logout";
+            });
+
+            services.AddControllersWithViews();
             services.AddRazorPages();
+
             services.AddScoped<ApisManager>();
             services.AddSingleton(Configuration.Get<KeysConfiguration>());
             services.AddScoped<AnaliticService>();
+            services.AddScoped<IAnaliticAIService, AnaliticAIService>();
             services.AddScoped<VkSocialApi>();
+            services.AddHostedService<RabbitMQService>();
+            services.AddScoped<ISender, RabbitMQClient>();
+            services.AddSingleton<IAIService, TensorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -61,7 +73,11 @@ namespace PeopleAnalysis
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
+
+            AuthContextInitializer.RolesInit(roleManager);
+            AuthContextInitializer.UsersInits(userManager);
         }
     }
 }

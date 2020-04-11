@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
 {
+    [Authorize]
     public class PeopleController : Controller
     {
         private readonly ApisManager apisManager;
