@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Models;
 using PeopleAnalysis.Services;
 
@@ -19,8 +20,11 @@ namespace PeopleAnalysis.Controllers
 
         public IActionResult Index()
         {
-            List<Models.Request> requests = new List<Models.Request>();
-            foreach (var r in databaseContext.Requests.AsEnumerable().GroupBy(x => new { x.UserId, x.Social, x.OwnerId }).ToDictionary(x => x.Key, x => x.OrderBy(x => x.DateTime)))
+            List<Request> requests = new List<Models.Request>();
+            IEnumerable<Request> request = databaseContext.Requests;
+            if (!User.IsAdmin())
+                request = request.Where(x => x.OwnerId == User.UserId());
+            foreach (var r in request.AsEnumerable().GroupBy(x => new { x.UserId, x.Social, x.OwnerId }).ToDictionary(x => x.Key, x => x.OrderBy(x => x.DateTime)))
             {
                 var res = r.Value.Last();
                 res.DateTime = r.Value.First().DateTime;
@@ -37,7 +41,7 @@ namespace PeopleAnalysis.Controllers
                 return NotFound();
             databaseContext.Add(new Request
             {
-                CreateId = 0,
+                CreateId = User.UserId(),
                 OwnerId = find.OwnerId,
                 Social = find.Social,
                 Status = Status.Closed,

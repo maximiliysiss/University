@@ -66,7 +66,7 @@ namespace PeopleAnalysis.Services.APIs
                 Count = 100,
                 HasPhoto = true,
                 Sort = VkNet.Enums.UserSort.ByPopularity,
-                Fields = ProfileFields.PhotoId
+                Fields = ProfileFields.All
             });
             return Create(users);
         }

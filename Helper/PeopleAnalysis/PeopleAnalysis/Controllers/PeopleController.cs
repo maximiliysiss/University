@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.ViewModels;
 
@@ -21,7 +22,7 @@ namespace PeopleAnalysis.Controllers
         public IActionResult Index([FromQuery]OpenPeopleViewModel openPeopleViewModel)
         {
             var detail = apisManager[openPeopleViewModel.Social].GetUserDetailInformationView(openPeopleViewModel.Key);
-            detail.AnalitycsViewModel = analiticService.GetAnaliticsAboutUser(detail.Id, detail.Social, 0);
+            detail.AnalitycsViewModel = analiticService.GetAnaliticsAboutUser(detail.Id, detail.Social, User.UserId());
             return View(detail);
         }
     }

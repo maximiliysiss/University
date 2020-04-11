@@ -19,7 +19,7 @@ namespace PeopleAnalysis.Services
             this.sender = sender;
         }
 
-        public AnalitycsViewModel GetAnaliticsAboutUser(string userId, string social, int currentUserId)
+        public AnalitycsViewModel GetAnaliticsAboutUser(string userId, string social, string currentUserId)
         {
             var lastAnalitics = databaseContext.Requests.OrderByDescending(x => x.Id)
                 .FirstOrDefault(x => x.UserId == userId && x.Social == social && x.OwnerId == currentUserId);
@@ -31,15 +31,15 @@ namespace PeopleAnalysis.Services
             };
         }
 
-        public bool CreateRequest(AnalitycsRequestModel analitycsRequest)
+        public bool CreateRequest(AnalitycsRequestModel analitycsRequest, string user)
         {
-            var isExists = databaseContext.Requests.Any(x => x.OwnerId == 0 && x.Social == analitycsRequest.Social && x.User == analitycsRequest.Id && x.Status == Status.Complete);
+            var isExists = databaseContext.Requests.Any(x => x.OwnerId == user && x.Social == analitycsRequest.Social && x.User == analitycsRequest.Id && x.Status == Status.Complete);
             if (isExists)
                 return false;
             var newRequest = new Models.Request
             {
-                CreateId = 0,
-                OwnerId = 0,
+                CreateId = user,
+                OwnerId = user,
                 Status = Status.Create,
                 User = analitycsRequest.UserName,
                 Social = analitycsRequest.Social,
@@ -55,12 +55,12 @@ namespace PeopleAnalysis.Services
 
     public interface IAnaliticAIService
     {
-        Task InProcessAsync(Request request, int user, DatabaseContext databaseContext);
+        Task InProcessAsync(Request request, string user, DatabaseContext databaseContext);
     }
 
     public class AnaliticAIService : IAnaliticAIService
     {
-        public async Task InProcessAsync(Request request, int user, DatabaseContext databaseContext)
+        public async Task InProcessAsync(Request request, string user, DatabaseContext databaseContext)
         {
             var find = databaseContext.Requests.Find(request.Id);
             if (find == null)

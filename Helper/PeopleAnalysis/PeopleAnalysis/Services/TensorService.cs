@@ -14,7 +14,7 @@ namespace PeopleAnalysis.Services
         public async Task ProcessTaskAsync(Request request, IAnaliticAIService analiticService, DatabaseContext databaseContext)
         {
             //TODO
-            await analiticService.InProcessAsync(request, 0, databaseContext);
+            await analiticService.InProcessAsync(request, request.CreateId, databaseContext);
         }
     }
 }

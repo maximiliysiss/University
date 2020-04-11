@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Models;
 using PeopleAnalysis.ViewModels;
 
@@ -44,13 +45,15 @@ namespace PeopleAnalysis.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Login,Password")] UserViewModel loginViewModel)
+        public async Task<IActionResult> Create(UserViewModel loginViewModel)
         {
             if (ModelState.IsValid)
             {
                 if ((await userManager.FindByEmailAsync(loginViewModel.Login)) != null)
-                    return BadRequest();
-                await userManager.CreateAsync(new Models.User { Email = loginViewModel.Login, UserName = loginViewModel.Login }, loginViewModel.Password);
+                    return this.Error(loginViewModel, "Такой пользователь уже существует");
+                var newUser = new User { Email = loginViewModel.Login, UserName = loginViewModel.Login };
+                await userManager.CreateAsync(newUser, loginViewModel.Password);
+                await userManager.AddToRoleAsync(newUser, "User");
                 return RedirectToAction(nameof(Index));
             }
             return View(loginViewModel);
@@ -65,12 +68,17 @@ namespace PeopleAnalysis.Controllers
             var loginViewModel = await userManager.FindByIdAsync(id);
             if (loginViewModel == null)
                 return NotFound();
-            return View(loginViewModel);
+            return View(new UserViewModel
+            {
+                Id = loginViewModel.Id,
+                Login = loginViewModel.Email,
+                Role = (await userManager.GetRolesAsync(loginViewModel)).FirstOrDefault()
+            });
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Login,Password")] UserViewModel loginViewModel)
+        public async Task<IActionResult> Edit(string id, UserViewModel loginViewModel)
         {
             if (id != loginViewModel.Id)
                 return NotFound();
@@ -79,8 +87,12 @@ namespace PeopleAnalysis.Controllers
             {
                 var user = await userManager.FindByIdAsync(id);
                 user.Email = loginViewModel.Login;
-                await userManager.UpdateAsync(user);
-                await userManager.ChangePasswordAsync(user, loginViewModel.CurrentPassword, loginViewModel.Password);
+                var res = await userManager.UpdateAsync(user);
+                if (!res.Succeeded)
+                    return this.Error(loginViewModel, string.Join(", ", res.Errors.Select(x => x.Description)));
+                res = await userManager.ChangePasswordAsync(user, loginViewModel.CurrentPassword, loginViewModel.Password);
+                if (!res.Succeeded)
+                    return this.Error(loginViewModel, string.Join(", ", res.Errors.Select(x => x.Description)));
                 return RedirectToAction(nameof(Index));
             }
             return View(loginViewModel);

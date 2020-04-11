@@ -22,8 +22,8 @@ namespace PeopleAnalysis.Models
         public string UserId { get; set; }
         public Uri UserUrl { get; set; }
         public string Social { get; set; }
-        public int OwnerId { get; set; }
-        public int CreateId { get; set; }
+        public string OwnerId { get; set; }
+        public string CreateId { get; set; }
         public Status Status { get; set; }
     }
 }
