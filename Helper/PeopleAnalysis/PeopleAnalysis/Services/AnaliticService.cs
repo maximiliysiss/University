@@ -108,10 +108,13 @@ namespace PeopleAnalysis.Services
 
             readyResult.Request = completeRequest;
 
-            foreach (var obj in readyResult.ResultObjects)
+            for (int i = 0; i < readyResult.ResultObjects.Count; i++)
             {
-                if (!databaseContext.AnalysObjects.Any(x => x.Name == obj.AnalysObject.Name))
-                    databaseContext.AnalysObjects.Add(obj.AnalysObject);
+                var tmp = databaseContext.AnalysObjects.FirstOrDefault(x => x.Name == readyResult.ResultObjects[i].AnalysObject.Name);
+                if (tmp == null)
+                    databaseContext.AnalysObjects.Add(readyResult.ResultObjects[i].AnalysObject);
+                else
+                    readyResult.ResultObjects[i].AnalysObject = tmp;
             }
 
             databaseContext.Add(completeRequest);

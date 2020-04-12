@@ -10,7 +10,7 @@ using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
         private readonly UserManager<User> userManager;
