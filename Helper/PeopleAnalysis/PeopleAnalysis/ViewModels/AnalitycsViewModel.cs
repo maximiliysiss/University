@@ -16,5 +16,7 @@ namespace PeopleAnalysis.ViewModels
     public class AnalitycsViewModel
     {
         public Status Status { get; set; }
+        public Result Result { get; set; }
+        public TimeSpan Time { get; set; }
     }
 }

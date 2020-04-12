@@ -1,10 +1,13 @@
-﻿namespace PeopleAnalysis.Models
+﻿using System.Collections.Generic;
+
+namespace PeopleAnalysis.Models
 {
     public class Result
     {
         public int Id { get; set; }
         public virtual Request Request { get; set; }
         public bool ResultAnswer { get; set; }
+        public virtual List<ResultObject> ResultObjects { get; set; }
     }
 
     public class ResultObject

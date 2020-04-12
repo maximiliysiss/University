@@ -48,6 +48,7 @@ namespace PeopleAnalysis
             services.AddHostedService<RabbitMQService>();
             services.AddScoped<ISender, RabbitMQClient>();
             services.AddSingleton<IAIService, TensorService>();
+            services.AddSingleton<ColorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

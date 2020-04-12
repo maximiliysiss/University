@@ -25,9 +25,14 @@ namespace PeopleAnalysis.Services
                 .FirstOrDefault(x => x.UserId == userId && x.Social == social && x.OwnerId == currentUserId);
             if (lastAnalitics == null)
                 return null;
+            Result result = null;
+            if (lastAnalitics.Status == Status.Complete)
+                result = databaseContext.Results.FirstOrDefault(x => x.Request.Id == lastAnalitics.Id);
             return new AnalitycsViewModel
             {
-                Status = lastAnalitics.Status
+                Status = lastAnalitics.Status,
+                Result = result,
+                Time = lastAnalitics.TimeComplete
             };
         }
 
@@ -55,13 +60,13 @@ namespace PeopleAnalysis.Services
 
     public interface IAnaliticAIService
     {
-        Task InProcessAsync(Request request, string user, DatabaseContext databaseContext);
-        Task ReadyResult(Request request, string createId, DatabaseContext databaseContext);
+        Task<Request> InProcessAsync(Request request, string user, DatabaseContext databaseContext);
+        Task ReadyResult(Request request, string createId, DatabaseContext databaseContext, Result readyResult);
     }
 
     public class AnaliticAIService : IAnaliticAIService
     {
-        public async Task InProcessAsync(Request request, string user, DatabaseContext databaseContext)
+        public async Task<Request> InProcessAsync(Request request, string user, DatabaseContext databaseContext)
         {
             var find = databaseContext.Requests.Find(request.Id);
             if (find == null)
@@ -69,7 +74,7 @@ namespace PeopleAnalysis.Services
             if (find.Status != request.Status)
                 throw new ApplicationException("Request is changed");
 
-            databaseContext.Add(new Request
+            var newRequest = new Request
             {
                 CreateId = user,
                 OwnerId = request.OwnerId,
@@ -78,14 +83,40 @@ namespace PeopleAnalysis.Services
                 User = request.User,
                 UserId = request.UserId,
                 UserUrl = request.UserUrl
-            });
+            };
+            databaseContext.Add(newRequest);
 
             await databaseContext.SaveChangesAsync();
+            return newRequest;
         }
 
-        public Task ReadyResult(Request request, string createId, DatabaseContext databaseContext)
+        public async Task ReadyResult(Request request, string createId, DatabaseContext databaseContext, Result readyResult)
         {
+            // TODO
 
+            var completeRequest = new Request
+            {
+                CreateId = request.CreateId,
+                OwnerId = request.OwnerId,
+                Social = request.Social,
+                Status = Status.Complete,
+                User = request.User,
+                UserId = request.UserId,
+                UserUrl = request.UserUrl,
+                TimeComplete = DateTime.Now - request.DateTime
+            };
+
+            readyResult.Request = completeRequest;
+
+            foreach (var obj in readyResult.ResultObjects)
+            {
+                if (!databaseContext.AnalysObjects.Any(x => x.Name == obj.AnalysObject.Name))
+                    databaseContext.AnalysObjects.Add(obj.AnalysObject);
+            }
+
+            databaseContext.Add(completeRequest);
+            databaseContext.Add(readyResult);
+            databaseContext.SaveChanges();
         }
     }
 }

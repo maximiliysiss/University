@@ -25,5 +25,6 @@ namespace PeopleAnalysis.Models
         public string OwnerId { get; set; }
         public string CreateId { get; set; }
         public Status Status { get; set; }
+        public TimeSpan TimeComplete { get; set; }
     }
 }

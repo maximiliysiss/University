@@ -1,4 +1,5 @@
 ﻿@model PeopleAnalysis.ViewModels.UserDetailInformationViewModel
+@inject PeopleAnalysis.Services.ColorService colorService
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -19,3 +20,34 @@
     @{await Html.RenderPartialAsync("Analitycs", Model);}
 
 </div>
+
+
+@section Scripts
+{
+    @if (Model.AnalitycsViewModel?.Result != null)
+    {
+        <script>
+            $(function () {
+                var barChart = new Chart($('#bar'), {
+                    type: 'bar',
+                    data: {
+                        labels: [@Html.Raw(string.Join(",", Model.AnalitycsViewModel.Result.ResultObjects.Select(x => $@"""{x.AnalysObject.Name}""")))],
+                        datasets: [{
+                            data: [@(string.Join(",", Model.AnalitycsViewModel.Result.ResultObjects.Select(x => x.Count)))],
+                            backgroundColor:[@Html.Raw(string.Join(",",colorService.ColorHexList(Model.AnalitycsViewModel.Result.ResultObjects?.Count ?? 0)))]
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+        </script>
+    }
+}

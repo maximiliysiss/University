@@ -20,3 +20,14 @@ else if (Model.AnalitycsViewModel.Status == Status.InProgress)
 {
     <a asp-action="Index" asp-controller="Request" class="h3 p-2">В процессе</a>
 }
+else if (Model.AnalitycsViewModel.Status == Status.Complete)
+{
+    <div class="p-0">
+        <p class="h4">Время обработки: @Model.AnalitycsViewModel.Time.ToString("h'h 'm'm 's's'")</p>
+        <div class="d-flex flex-wrap">
+            <div class="card w-50">
+                <canvas id="bar"></canvas>
+            </div>
+        </div>
+    </div>
+}
