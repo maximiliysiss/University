@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@inject TranslateChatter.Services.ILocalizer localizer
+@inject Microsoft.AspNetCore.Identity.UserManager<User> userManager
+@inject Microsoft.AspNetCore.Identity.SignInManager<User> signManager
+
+@{
+    if (signManager.IsSignedIn(User))
+    {
+        var us = await userManager.FindByEmailAsync(User.Identity.Name);
+        System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(us.Language.UICode);
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -6,6 +18,7 @@
     <title>@ViewData["Title"] - TranslateChatter</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/toastr.js/toastr.min.css" />
 </head>
 <body>
     <header>
@@ -20,10 +33,7 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@localizer["Home"]</a>
                         </li>
                     </ul>
                 </div>
@@ -43,6 +53,7 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

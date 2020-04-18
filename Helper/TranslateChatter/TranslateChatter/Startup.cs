@@ -13,6 +13,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TranslateChatter.Services;
+using TranslateChatter.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace TranslateChatter
 {
@@ -28,14 +30,22 @@ namespace TranslateChatter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
+            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.AccessDeniedPath = "/Identity/Account/Login";
+                options.LoginPath = "/Identity/Account/Login";
+                options.LogoutPath = "/Identity/Account/Logout";
+            });
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
+            //services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ITranslateService, YandexTranslateService>();
+            services.AddScoped<ILocalizer, Localizer>();
             services.AddSingleton(Configuration.GetSection("TranslateConfiguration").Get<TranslateConfiguration>());
         }
 
