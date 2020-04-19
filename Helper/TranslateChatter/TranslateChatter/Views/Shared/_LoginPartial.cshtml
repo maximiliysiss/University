@@ -1,9 +1,7 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject TranslateChatter.Services.ILocalizer localizer
-@inject SignInManager<User> SignInManager
+﻿@inject TranslateChatter.Services.ILocalizer localizer
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if (User.Identity.IsAuthenticated)
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">@localizer["Hello"] @User.Identity.Name!</a>

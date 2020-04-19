@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Internal;
-using System.Linq;
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace TranslateChatter.Services
@@ -42,7 +40,7 @@ namespace TranslateChatter.Services
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
             var tranlateResult = await httpClient.PostAsync($"{translateConfiguration.BaseUrl}?lang={langFrom}-{langTo}&key={translateConfiguration.Key}", stringContent);
             if (tranlateResult.IsSuccessStatusCode)
-                return (await tranlateResult.Content.ReadAsAsync<TranslateResult>()).Text.Join(" ");
+                return string.Join(" ", (await tranlateResult.Content.ReadAsAsync<TranslateResult>()).Text);
             return "";
         }
     }

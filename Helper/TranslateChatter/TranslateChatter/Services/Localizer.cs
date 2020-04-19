@@ -16,19 +16,17 @@ namespace TranslateChatter.Services
 
     public class Localizer : ILocalizer
     {
-        private UserManager<User> userManager;
         private IHttpContextAccessor httpContextAccessor;
 
-        public Localizer(UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        public Localizer(IHttpContextAccessor httpContextAccessor)
         {
-            this.userManager = userManager;
             this.httpContextAccessor = httpContextAccessor;
 
             var userName = httpContextAccessor.HttpContext.User?.Identity.Name;
             if (!string.IsNullOrEmpty(userName))
             {
-                var uiCode = userManager.FindByEmailAsync(userName).Result.Language.UICode;
-                Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(uiCode);
+                //var uiCode = userManager.FindByEmailAsync(userName).Result.Language.UICode;
+                //Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(uiCode);
             }
         }
 

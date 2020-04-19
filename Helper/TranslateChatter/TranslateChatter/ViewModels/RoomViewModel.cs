@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TranslateChatter.Models;
+using TranslateChatter.ChatAPI;
 
 namespace TranslateChatter.ViewModels
 {

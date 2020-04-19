@@ -1,12 +1,10 @@
-﻿@model IEnumerable<TranslateChatter.Models.Room>
-@inject Microsoft.AspNetCore.Identity.UserManager<User> usermanager
+﻿@model IEnumerable<TranslateChatter.ChatAPI.Room>
 @inject TranslateChatter.Services.ILocalizer localizer
 
 @{
     ViewData["Title"] = "Index";
 
-    var user = await usermanager.FindByEmailAsync(User.Identity.Name);
-    var count = Model.Count(x => x.CreatorId == user.Id);
+    var count = Model.Count(x => x.CreatorId == User.Id());
 }
 
 
@@ -21,7 +19,7 @@
     <h2>@localizer["YourRoom"]</h2>
     <hr />
     <div class="d-flex flex-wrap justify-content-start text-center">
-        @foreach (var item in Model.Where(x => x.CreatorId == user.Id))
+        @foreach (var item in Model.Where(x => x.CreatorId == "" /* user.Id*/))
         {
             <a href="@Url.Action("RoomChat", "Home", new { id = item.Id })">
                 <div class="card p-3 m-2" style="width: 18rem;">
@@ -39,7 +37,7 @@
     <h2>@localizer["OtherRoom"]</h2>
     <hr />
     <div class="d-flex flex-wrap justify-content-start text-center">
-        @foreach (var item in Model.Where(x => x.CreatorId != user.Id))
+        @foreach (var item in Model.Where(x => x.CreatorId != /*user.Id*/ ""))
         {
             <a href="@Url.Action("RoomChat", "Home", new { id = item.Id })">
                 <div class="card p-3 m-2" style="width: 18rem;">

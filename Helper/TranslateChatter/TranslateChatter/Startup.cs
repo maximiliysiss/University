@@ -1,20 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.EntityFrameworkCore;
-using TranslateChatter.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using TranslateChatter.Services;
-using TranslateChatter.Models;
 using Microsoft.AspNetCore.Http;
+using TranslateChatter.AuthAPI;
+using TranslateChatter.ChatAPI;
+using TranslateChatter.Settings;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace TranslateChatter
 {
@@ -30,10 +24,7 @@ namespace TranslateChatter
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
-            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")).UseLazyLoadingProxies());
-            services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-            services.ConfigureApplicationCookie(options =>
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(options =>
             {
                 options.AccessDeniedPath = "/Identity/Account/Login";
                 options.LoginPath = "/Identity/Account/Login";
@@ -43,10 +34,20 @@ namespace TranslateChatter
             services.AddControllersWithViews();
             services.AddRazorPages();
             services.AddSignalR();
-            //services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<ITranslateService, YandexTranslateService>();
             services.AddScoped<ILocalizer, Localizer>();
             services.AddSingleton(Configuration.GetSection("TranslateConfiguration").Get<TranslateConfiguration>());
+
+            var serviceConfig = Configuration.GetSection("Services").Get<ServiceInfoService>();
+            services.AddScoped<IAuthAPIClient, Services.AuthAPIClient>(x => new Services.AuthAPIClient(serviceConfig["AuthAPI"], new System.Net.Http.HttpClient(), 
+                x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<ITokenService>()));
+            services.AddScoped<IChatAPIClient, Services.ChatAPIClient>(x => new Services.ChatAPIClient(serviceConfig["ChatAPI"], new System.Net.Http.HttpClient(),
+                x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<ITokenService>()));
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            var authSettings = Configuration.GetSection("AuthSettings").Get<AuthSettings>();
+            services.AddSingleton(authSettings);
+            services.AddScoped<ITokenService, TokenService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

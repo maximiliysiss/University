@@ -1,6 +1,7 @@
 ﻿using AuthAPI.Models.Controller;
 using AuthAPI.Models.Database;
 using AuthAPI.Settings;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -64,9 +65,11 @@ namespace AuthAPI.Services
                 Role = authDataProvider.Roles.FirstOrDefault(x => x.Name == "User")
             };
 
+            authDataProvider.Languages.Load();
+
             authDataProvider.Add(newUser);
-            var res = await GenerateTokenAndResult(newUser);
             await authDataProvider.SaveChangesAsync();
+            var res = await GenerateTokenAndResult(newUser);
             return res;
         }
 
@@ -87,10 +90,10 @@ namespace AuthAPI.Services
         private async Task<LoginResult> GenerateTokenAndResult(User user)
         {
             var refreshToken = Guid.NewGuid().ToString();
-            var claimsToken = tokenService.GenerateToken(user);
-
             user.RefreshToken = refreshToken;
             await authDataProvider.SaveChangesAsync();
+
+            var claimsToken = tokenService.GenerateToken(user);
 
             return new LoginResult
             {

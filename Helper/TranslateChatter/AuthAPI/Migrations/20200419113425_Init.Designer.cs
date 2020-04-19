@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AuthAPI.Migrations
 {
     [DbContext(typeof(AuthDataProvider))]
-    [Migration("20200303183518_Update-Length")]
-    partial class UpdateLength
+    [Migration("20200419113425_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,45 @@ namespace AuthAPI.Migrations
                 .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("AuthAPI.Models.Database.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UICode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Name");
+
+                    b.ToTable("Languages");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "en",
+                            Name = "English",
+                            UICode = "en-US"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "ru",
+                            Name = "Русский",
+                            UICode = "ru-RU"
+                        });
+                });
 
             modelBuilder.Entity("AuthAPI.Models.Database.Role", b =>
                 {
@@ -34,7 +73,16 @@ namespace AuthAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name");
+
                     b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "User"
+                        });
                 });
 
             modelBuilder.Entity("AuthAPI.Models.Database.User", b =>
@@ -45,7 +93,13 @@ namespace AuthAPI.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(400)")
+                        .HasMaxLength(400);
+
+                    b.Property<int?>("LanguageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
 
                     b.Property<string>("Nickname")
                         .HasColumnType("nvarchar(max)");
@@ -61,6 +115,10 @@ namespace AuthAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email");
+
+                    b.HasIndex("LanguageId");
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
@@ -68,6 +126,10 @@ namespace AuthAPI.Migrations
 
             modelBuilder.Entity("AuthAPI.Models.Database.User", b =>
                 {
+                    b.HasOne("AuthAPI.Models.Database.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId");
+
                     b.HasOne("AuthAPI.Models.Database.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId");

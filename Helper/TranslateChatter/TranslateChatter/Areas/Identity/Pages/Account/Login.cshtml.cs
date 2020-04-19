@@ -11,29 +11,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using TranslateChatter.Models;
+using TranslateChatter.AuthAPI;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using TranslateChatter.Services;
 
 namespace TranslateChatter.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
-        private readonly ILogger<LoginModel> _logger;
+        private readonly IAuthAPIClient authAPIClient;
+        private readonly ITokenService tokenService;
 
-        public LoginModel(SignInManager<User> signInManager, 
-            ILogger<LoginModel> logger,
-            UserManager<User> userManager)
+        public LoginModel(IAuthAPIClient authAPIClient, ITokenService tokenService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _logger = logger;
+            this.authAPIClient = authAPIClient;
+            this.tokenService = tokenService;
         }
 
         [BindProperty]
         public InputModel Input { get; set; }
-
-        public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
         public string ReturnUrl { get; set; }
 
@@ -64,9 +61,7 @@ namespace TranslateChatter.Areas.Identity.Pages.Account
             returnUrl ??= Url.Content("~/");
 
             // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
-            ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             ReturnUrl = returnUrl;
         }
@@ -77,23 +72,15 @@ namespace TranslateChatter.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                // This doesn't count login failures towards account lockout
-                // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
-                if (result.Succeeded)
+                try
                 {
-                    _logger.LogInformation("User logged in.");
+                    var result = await authAPIClient.ApiAuthLoginPostAsync(new AuthAPI.LoginModel { Login = Input.Email, Password = Input.Password });
+                    await tokenService.SignInAsync(result.AccessToken);
                     return LocalRedirect(returnUrl);
                 }
-                if (result.IsLockedOut)
-                {
-                    _logger.LogWarning("User account locked out.");
-                    return RedirectToPage("./Lockout");
-                }
-                else
+                catch (ApiException)
                 {
                     ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return Page();
                 }
             }
 

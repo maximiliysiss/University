@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using TranslateChatter.Data;
+using TranslateChatter.AuthAPI;
+using TranslateChatter.Extensions;
 using TranslateChatter.Models;
+using TranslateChatter.Services;
 
 namespace TranslateChatter.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IAuthAPIClient authAPIClient;
+        private readonly ITokenService tokenService;
 
-        public IndexModel(UserManager<User> userManager, SignInManager<User> signInManager)
+        public IndexModel(IAuthAPIClient authAPIClient, ITokenService tokenService)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
+            this.authAPIClient = authAPIClient;
+            this.tokenService = tokenService;
         }
 
         public string Username { get; set; }
@@ -33,31 +32,26 @@ namespace TranslateChatter.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
             [Display(Name = "Language")]
-            public int Language { get; set; }
+            public string Language { get; set; }
 
         }
 
-        private async Task LoadAsync(User user)
+        private async Task LoadAsync()
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var currentUser = await authAPIClient.ApiUserAsync(tokenService.GenerateFullToken(User.Token()));
 
-            Username = userName;
+            Username = currentUser.Nickname;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber,
-                Language = user.Language.Id
+                Language = currentUser.Language.Name
             };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await authAPIClient.ApiUserAsync(User)
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");

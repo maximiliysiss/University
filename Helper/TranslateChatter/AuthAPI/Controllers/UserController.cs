@@ -2,11 +2,14 @@
 using AuthAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace AuthAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
@@ -20,7 +23,6 @@ namespace AuthAPI.Controllers
             this.authDataProvider = authDataProvider;
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult<UserModel> GetUser([FromHeader]string authorization)
         {
@@ -28,7 +30,9 @@ namespace AuthAPI.Controllers
             return mapperService.Map<UserModel>(userService.GetUser(parts[1]));
         }
 
-        [Authorize]
+        [HttpGet("lang")]
+        public ActionResult<IEnumerable<LanguageModel>> Languages() => authDataProvider.Languages.Select(x => mapperService.Map<LanguageModel>(x)).ToList();
+
         [HttpPut("changelanguage")]
         public ActionResult<UserModel> UpdateLanguage([FromBody]ChangeLanguageModel changeLanguageModel, [FromHeader]string authorization)
         {

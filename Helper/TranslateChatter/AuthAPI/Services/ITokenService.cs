@@ -59,7 +59,10 @@ namespace AuthAPI.Services
             new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
             new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role.Name),
             new Claim(ClaimsIdentity.DefaultIssuer, authSettings.Issuer),
-            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/salt", Guid.NewGuid().ToString())
+            new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/salt", Guid.NewGuid().ToString()),
+            new Claim("Code", user.Language.Code),
+            new Claim("UICode", user.Language.UICode),
+            new Claim("Id", user.Id.ToString())
         };
     }
 }

@@ -11,6 +11,7 @@
         public string Email { get; set; }
         public string Nickname { get; set; }
         public virtual RoleModel Role { get; set; }
+        public virtual LanguageModel Language { get; set; }
     }
 
     public class LanguageModel

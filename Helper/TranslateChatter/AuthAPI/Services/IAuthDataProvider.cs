@@ -9,10 +9,12 @@ namespace AuthAPI.Services
     {
         IQueryable<User> Users { get; }
         IQueryable<Role> Roles { get; }
+        IQueryable<Language> Languages { get; }
         void Add<T>(T obj);
         void Delete<T>(T obj);
         void Update<T>(T obj);
         void SaveChanges();
+        void Attach(object obj);
         Task SaveChangesAsync();
     }
 
@@ -37,18 +39,29 @@ namespace AuthAPI.Services
             modelBuilder.Entity<Role>().HasIndex(x => x.Name);
             modelBuilder.Entity<User>().HasIndex(x => x.Email);
 
+            modelBuilder.Entity<Language>().HasIndex(x => x.Name);
+
             modelBuilder.Entity<Language>().HasData(new[] {
                 new Language{ Id = 1, Name = "English", Code = "en", UICode = "en-US" },
                 new Language{ Id = 2, Name = "Русский", Code = "ru", UICode = "ru-RU" }
             });
+
+            modelBuilder.Entity<User>().Property("LanguageId").HasDefaultValue(1);
+
+            modelBuilder.Entity<Role>().HasData(new[] {
+                new Role{ Id = 1, Name = "User" }
+            });
         }
 
         void IAuthDataProvider.Update<T>(T obj) => base.Update(obj);
+        void IAuthDataProvider.Attach(object obj) => base.Attach(obj);
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Language> Languages { get; set; }
 
         IQueryable<User> IAuthDataProvider.Users => this.Users;
         IQueryable<Role> IAuthDataProvider.Roles => this.Roles;
+        IQueryable<Language> IAuthDataProvider.Languages => this.Languages;
     }
 }

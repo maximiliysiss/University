@@ -1,13 +1,8 @@
 ﻿@inject TranslateChatter.Services.ILocalizer localizer
-@inject Microsoft.AspNetCore.Identity.UserManager<User> userManager
-@inject Microsoft.AspNetCore.Identity.SignInManager<User> signManager
 
 @{
-    if (signManager.IsSignedIn(User))
-    {
-        var us = await userManager.FindByEmailAsync(User.Identity.Name);
-        System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(us.Language.UICode);
-    }
+    if (User.Identity.IsAuthenticated)
+        System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(User.UICode());
 }
 
 <!DOCTYPE html>

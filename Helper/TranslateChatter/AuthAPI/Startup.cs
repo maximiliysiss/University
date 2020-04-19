@@ -26,7 +26,7 @@ namespace AuthAPI
             var authSettings = Configuration.GetSection("AuthSettings").Get<AuthSettings>();
 
             services.AddSingleton(authSettings);
-            services.AddDbContext<IAuthDataProvider, AuthDataProvider>(x => x.UseSqlServer(Configuration.GetConnectionString("SQLServer")).UseLazyLoadingProxies(), ServiceLifetime.Scoped);
+            services.AddDbContext<IAuthDataProvider, AuthDataProvider>(x => x.UseLazyLoadingProxies().UseSqlServer(Configuration.GetConnectionString("SQLServer")), ServiceLifetime.Scoped);
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICryptService, CryptService>();

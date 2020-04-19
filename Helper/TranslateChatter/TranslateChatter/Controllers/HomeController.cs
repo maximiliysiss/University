@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using TranslateChatter.Data;
-using TranslateChatter.Models;
+using TranslateChatter.ChatAPI;
+using TranslateChatter.Extensions;
 using TranslateChatter.ViewModels;
 
 namespace TranslateChatter.Controllers
@@ -13,20 +10,17 @@ namespace TranslateChatter.Controllers
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly DatabaseContext _context;
-        private readonly UserManager<User> userManager;
-        private async Task<User> CurrentUser() => await userManager.FindByEmailAsync(User.Identity.Name);
+        private readonly IChatAPIClient chatAPIClient;
 
-        public HomeController(DatabaseContext context, UserManager<User> userManager)
+        public HomeController(IChatAPIClient chatAPIClient)
         {
-            _context = context;
-            this.userManager = userManager;
+            this.chatAPIClient = chatAPIClient;
         }
 
         // GET: Rooms
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Rooms.ToListAsync());
+            return View(await chatAPIClient.ApiRoomsGetAsync());
         }
 
         // GET: Rooms/Create
@@ -37,17 +31,15 @@ namespace TranslateChatter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] Room room)
+        public async Task<IActionResult> Create([Bind("Id,Name")] ChatAPI.Room room)
         {
             if (ModelState.IsValid)
             {
-                var userId = (await CurrentUser()).Id;
-                var roomCounts = _context.Rooms.Count(x => x.CreatorId == userId);
-                if (roomCounts > 2)
+                var roomCounts = await chatAPIClient.ApiRoomsUserAsync(User.Id());
+                if (roomCounts.Count > 2)
                     return RedirectToAction("Index");
-                room.CreatorId = userId;
-                _context.Add(room);
-                await _context.SaveChangesAsync();
+                room.CreatorId = User.Id();
+                room = await chatAPIClient.ApiRoomsPostAsync(room);
                 return RedirectToAction(nameof(Index));
             }
             return View(room);
@@ -58,7 +50,7 @@ namespace TranslateChatter.Controllers
         {
             if (id == null)
                 return NotFound();
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await chatAPIClient.ApiRoomsGetAsync(id.Value);
             if (room == null)
                 return NotFound();
             return View(room);
@@ -66,21 +58,19 @@ namespace TranslateChatter.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] Room room)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ChatAPI.Room room)
         {
             if (id != room.Id)
                 return NotFound();
 
-            var currentUser = await CurrentUser();
-            var currentRoom = _context.Rooms.FirstOrDefault(x => x.Id == id);
-            if (currentRoom == null || currentUser.Id != currentRoom?.CreatorId)
+            var currentRoom = await chatAPIClient.ApiRoomsGetAsync(room.Id);
+            if (currentRoom == null || User.Id() != currentRoom?.CreatorId)
                 return BadRequest();
 
             if (ModelState.IsValid)
             {
                 currentRoom.Name = room.Name;
-                _context.Update(currentRoom);
-                await _context.SaveChangesAsync();
+                await chatAPIClient.ApiRoomsPutAsync(id, currentRoom);
                 return RedirectToAction(nameof(Index));
             }
             return View(room);
@@ -90,9 +80,8 @@ namespace TranslateChatter.Controllers
         {
             if (id == null)
                 return NotFound();
-            var currentUser = await CurrentUser();
-            var room = await _context.Rooms.FirstOrDefaultAsync(m => m.Id == id);
-            if (room == null || room.CreatorId != currentUser.Id)
+            var room = await chatAPIClient.ApiRoomsGetAsync(id.Value);
+            if (room == null || room.CreatorId != User.Id())
                 return NotFound();
             return View(room);
         }
@@ -102,23 +91,20 @@ namespace TranslateChatter.Controllers
         {
             if (!id.HasValue)
                 return NotFound();
-            var findRoom = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == id);
+            var findRoom = await chatAPIClient.ApiRoomsGetAsync(id.Value);
             if (findRoom == null)
                 return NotFound();
-            var user = await CurrentUser();
-            return View(new RoomViewModel { Room = findRoom, IsAction = findRoom?.CreatorId == user.Id });
+            return View(new RoomViewModel { Room = findRoom, IsAction = findRoom?.CreatorId == User.Id() });
         }
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var currentUser = await CurrentUser();
-            var room = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == id);
-            if (room.CreatorId != currentUser.Id)
+            var room = await chatAPIClient.ApiRoomsGetAsync(id);
+            if (room.CreatorId != User.Id())
                 return NotFound();
-            _context.Rooms.Remove(room);
-            await _context.SaveChangesAsync();
+            await chatAPIClient.ApiRoomsDeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
