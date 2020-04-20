@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using TranslateChatter.Models;
+using TranslateChatter.AuthAPI;
+using TranslateChatter.Extensions;
 using TranslateChatter.Services;
 using TranslateChatter.ViewModels;
 
@@ -18,20 +14,19 @@ namespace TranslateChatter.Controllers
     public class TranslateController : ControllerBase
     {
         private readonly ITranslateService translateService;
-        private readonly UserManager<User> userManager;
+        private readonly IAuthAPIClient authAPIClient;
 
-        public TranslateController(ITranslateService translateService, UserManager<User> userManager)
+        public TranslateController(ITranslateService translateService, IAuthAPIClient authAPIClient)
         {
             this.translateService = translateService;
-            this.userManager = userManager;
+            this.authAPIClient = authAPIClient;
         }
 
         [HttpPost]
         public async Task<string> MessageTranlsate([FromBody]TranslateViewModel translateView)
         {
-            var user = await userManager.FindByEmailAsync(User.Identity.Name);
-            var senderUser = await userManager.FindByEmailAsync(translateView.Sender);
-            return await translateService.Translate(translateView.Message, user.Language.Code, senderUser.Language.Code);
+            var senderUser = await authAPIClient.ApiUserFindAsync(translateView.Sender);
+            return await translateService.Translate(translateView.Message, User.Code(), senderUser.Language.Code);
         }
     }
 }

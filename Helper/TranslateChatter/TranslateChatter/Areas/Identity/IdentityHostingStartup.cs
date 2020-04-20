@@ -1,11 +1,4 @@
-﻿using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using TranslateChatter.Data;
-using TranslateChatter.Models;
+﻿using Microsoft.AspNetCore.Hosting;
 
 [assembly: HostingStartup(typeof(TranslateChatter.Areas.Identity.IdentityHostingStartup))]
 namespace TranslateChatter.Areas.Identity

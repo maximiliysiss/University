@@ -10,7 +10,7 @@ namespace AuthAPI.Services
     public interface ITokenService
     {
         string GenerateToken(User user);
-        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
+        ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true);
     }
 
     public class TokenService : ITokenService
@@ -35,13 +35,13 @@ namespace AuthAPI.Services
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
 
-        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token)
+        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
                 ValidateIssuer = true,
-                ValidateLifetime = true,
+                ValidateLifetime = lifetime,
                 ValidAudience = authSettings.Audience,
                 ValidIssuer = authSettings.Issuer,
                 IssuerSigningKey = authSettings.SecurityKey

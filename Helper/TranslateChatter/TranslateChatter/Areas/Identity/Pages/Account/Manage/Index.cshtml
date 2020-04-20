@@ -15,15 +15,10 @@
                 <label asp-for="Username">@localizer["Username"]</label>
                 <input asp-for="Username" class="form-control" disabled />
             </div>
-            <div class="form-group">
-                <label asp-for="Input.PhoneNumber">@localizer["Phone"]</label>
-                <input asp-for="Input.PhoneNumber" class="form-control" />
-                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
-            </div>
 
             <div class="form-group">
                 <label asp-for="Input.Language">@localizer["Lang"]</label>
-                <select class="form-control" asp-for="Input.Language" asp-items="(await authChatAPI.ApiUserLangAsync()).Select(x => new SelectListItem(x.Name, x.Name))"></select>
+                <select class="form-control" asp-for="Input.Language" asp-items="(await authChatAPI.ApiUserLangAsync()).Select(x => new SelectListItem(x.Name, x.Code))"></select>
                 <span asp-validation-for="Input.Language" class="text-danger"></span>
             </div>
 

@@ -41,7 +41,7 @@ namespace AuthAPI.Services
 
         public async Task<LoginResult> RefreshToken(string refreshToken, string token)
         {
-            var tokenInfo = tokenService.GetPrincipalFromExpiredToken(token);
+            var tokenInfo = tokenService.GetPrincipalFromExpiredToken(token, false);
             var user = authDataProvider.Users.FirstOrDefault(x => x.Email == tokenInfo.Identity.Name);
             if (user == null || user.RefreshToken != refreshToken)
                 return null;

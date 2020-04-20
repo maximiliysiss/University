@@ -45,54 +45,36 @@ namespace TranslateChatter.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                Language = currentUser.Language.Name
+                Language = currentUser.Language.Code
             };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await authAPIClient.ApiUserAsync(User)
+            var user = await authAPIClient.ApiUserAsync(User.Token());
             if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            await LoadAsync(user);
+                return NotFound($"Unable to load user with ID '{User.Id()}'.");
+            await LoadAsync();
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user = await authAPIClient.ApiUserAsync(User.Token());
             if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
+                return NotFound($"Unable to load user with ID '{User.Id()}'.");
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                await LoadAsync();
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
-            {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
-                }
-            }
+            if (Input.Language != user.Language.Name)
+                await authAPIClient.ApiUserChangelanguageAsync(User.Token(), new ChangeLanguageModel { Language = Input.Language });
+            var refresh = await authAPIClient.ApiAuthRefreshtokenAsync(User.Refresh(), User.Token());
+            await tokenService.SignInAsync(refresh);
 
-            if (Input.Language != user.Language.Id)
-            {
-                user.LanguageId = Input.Language;
-                await _userManager.UpdateAsync(user);
-            }
-
-            await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
             return RedirectToPage();
         }

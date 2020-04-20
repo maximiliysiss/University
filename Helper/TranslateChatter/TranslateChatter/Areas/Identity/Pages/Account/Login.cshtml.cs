@@ -75,7 +75,7 @@ namespace TranslateChatter.Areas.Identity.Pages.Account
                 try
                 {
                     var result = await authAPIClient.ApiAuthLoginPostAsync(new AuthAPI.LoginModel { Login = Input.Email, Password = Input.Password });
-                    await tokenService.SignInAsync(result.AccessToken);
+                    await tokenService.SignInAsync(result);
                     return LocalRedirect(returnUrl);
                 }
                 catch (ApiException)

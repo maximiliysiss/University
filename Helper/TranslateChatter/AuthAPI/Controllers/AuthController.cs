@@ -26,7 +26,6 @@ namespace AuthAPI.Controllers
             return res;
         }
 
-        [Authorize]
         [HttpPut("refreshToken")]
         public async Task<ActionResult<LoginResult>> RefreshTokenAsync([FromHeader]string refreshToken, [FromHeader]string authorization)
         {

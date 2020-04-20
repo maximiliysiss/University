@@ -67,11 +67,8 @@ namespace TranslateChatter.Areas.Identity.Pages.Account
                 try
                 {
                     var result = await authAPIClient.ApiAuthRegisterAsync(new AuthAPI.RegisterModel { Email = Input.Email, Nickname = Input.Email, Password = Input.Password });
-                    if (result != null)
-                    {
-                        await tokenService.SignInAsync(result.AccessToken);
-                        return LocalRedirect(returnUrl);
-                    }
+                    await tokenService.SignInAsync(result);
+                    return LocalRedirect(returnUrl);
                 }
                 catch (ApiException)
                 {

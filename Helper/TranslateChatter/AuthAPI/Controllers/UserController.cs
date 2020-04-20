@@ -30,6 +30,15 @@ namespace AuthAPI.Controllers
             return mapperService.Map<UserModel>(userService.GetUser(parts[1]));
         }
 
+        [HttpGet("Find")]
+        public ActionResult<UserModel> FindUser(string email)
+        {
+            var user = authDataProvider.Users.FirstOrDefault(x => x.Email == email);
+            if (user == null)
+                return NotFound();
+            return mapperService.Map<UserModel>(user);
+        }
+
         [HttpGet("lang")]
         public ActionResult<IEnumerable<LanguageModel>> Languages() => authDataProvider.Languages.Select(x => mapperService.Map<LanguageModel>(x)).ToList();
 
@@ -38,6 +47,7 @@ namespace AuthAPI.Controllers
         {
             var parts = authorization.Split(" ");
             var user = userService.GetUser(parts[1]);
+            user.Language = authDataProvider.Languages.FirstOrDefault(x => x.Code == changeLanguageModel.Language);
             authDataProvider.Update(user);
             authDataProvider.SaveChanges();
             return mapperService.Map<UserModel>(user);

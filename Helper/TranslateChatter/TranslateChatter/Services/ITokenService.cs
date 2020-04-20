@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using TranslateChatter.AuthAPI;
 using TranslateChatter.Settings;
 
 namespace TranslateChatter.Services
@@ -18,7 +19,7 @@ namespace TranslateChatter.Services
     {
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
         string GenerateFullToken(string token);
-        Task SignInAsync(string token);
+        Task SignInAsync(LoginResult loginResult);
     }
 
     public class TokenService : ITokenService
@@ -53,10 +54,13 @@ namespace TranslateChatter.Services
             return principal;
         }
 
-        public async Task SignInAsync(string token)
+        public async Task SignInAsync(LoginResult loginResult)
         {
-            var principal = GetPrincipalFromExpiredToken(token);
-            principal.Identities.First().AddClaim(new Claim("Token", token));
+            if (loginResult == null)
+                return;
+            var principal = GetPrincipalFromExpiredToken(loginResult.AccessToken);
+            principal.Identities.First().AddClaim(new Claim("Token", loginResult.AccessToken));
+            principal.Identities.First().AddClaim(new Claim("Refresh", loginResult.RefreshToken));
             await httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties());
         }
     }

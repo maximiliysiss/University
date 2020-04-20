@@ -49,7 +49,7 @@ namespace ChatAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRoom(int id, Room room)
+        public async Task<ActionResult<Room>> PutRoom(int id, Room room)
         {
             if (id != room.Id)
             {
@@ -74,7 +74,7 @@ namespace ChatAPI.Controllers
                 }
             }
 
-            return NoContent();
+            return room;
         }
 
         [HttpPost]
@@ -83,7 +83,7 @@ namespace ChatAPI.Controllers
             _context.Rooms.Add(room);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetRoom", new { id = room.Id }, room);
+            return room;
         }
 
         [HttpDelete("{id}")]
