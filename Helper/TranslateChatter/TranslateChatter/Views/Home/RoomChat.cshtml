@@ -1,0 +1,66 @@
+﻿@model TranslateChatter.ViewModels.RoomViewModel
+@inject TranslateChatter.Services.ILocalizer localizer
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (Model.IsAction)
+{
+    <div class="form-group">
+        <a asp-controller="Home" asp-action="Edit" asp-route-id="@Model.Room.Id" class="btn btn-info m-1">@localizer["Edit"]</a>
+        <a asp-controller="Home" asp-action="Delete" asp-route-id="@Model.Room.Id" class="btn btn-danger m-1">@localizer["Delete"]</a>
+    </div>
+}
+
+<div>
+    <div id="chatroom" class="form-control pre-scrollable" style="height: 400px"></div>
+    <div id="inputForm" class="d-flex mt-1">
+        <input type="text" id="message" class="w-100 form-control" />
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/lib/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
+    <script>
+
+        let sendInput = document.getElementById("message");
+
+        const hubConnection = new signalR.HubConnectionBuilder()
+            .withUrl("/chat?room=@Model.Room.Id")
+            .build();
+
+        hubConnection.on("Send", function (message, user) {
+            $.ajax({
+                url: "/api/Translate",
+                type: "POST",
+                contentType: "application/json",
+                accepts: "application/json",
+                data: JSON.stringify({ message: message, sender: user }),
+                success: function (data) {
+                    let elem = document.createElement("p");
+                    elem.appendChild(document.createTextNode(user + ": " + data));
+                    let firstElem = document.getElementById("chatroom").firstChild;
+                    document.getElementById("chatroom").insertBefore(elem, firstElem);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert("Error: " + errorThrown);
+                }
+            });
+        });
+
+        sendInput.onkeypress = function (e) {
+            if (!e)
+                e = window.event;
+            var keyCode = e.keyCode || e.which;
+            if (keyCode == '13') {
+                hubConnection.invoke("Send", sendInput.value);
+                sendInput.value = "";
+            }
+        };
+
+        hubConnection.start();
+
+    </script>
+}
