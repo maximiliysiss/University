@@ -30,9 +30,9 @@ namespace ChatAPI.Services
             Database.Migrate();
         }
 
-        void IDatabaseContext.Add(object obj) => this.Add(obj);
-        public Task SaveChangesAsync() => this.SaveChangesAsync();
-        void IDatabaseContext.Remove(object obj) => this.Remove(obj);
-        void IDatabaseContext.Update(object obj) => this.Update(obj);
+        void IDatabaseContext.Add(object obj) => base.Add(obj);
+        public Task SaveChangesAsync() => base.SaveChangesAsync();
+        void IDatabaseContext.Remove(object obj) => base.Remove(obj);
+        void IDatabaseContext.Update(object obj) => base.Update(obj);
     }
 }
