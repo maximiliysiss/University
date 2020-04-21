@@ -61,7 +61,10 @@ namespace TranslateChatter.Services
             var principal = GetPrincipalFromExpiredToken(loginResult.AccessToken);
             principal.Identities.First().AddClaim(new Claim("Token", loginResult.AccessToken));
             principal.Identities.First().AddClaim(new Claim("Refresh", loginResult.RefreshToken));
+            await httpContextAccessor.HttpContext.SignOutAsync();
             await httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties());
+            /*for next request in this request*/
+            httpContextAccessor.HttpContext.User = principal;
         }
     }
 }
