@@ -19,4 +19,7 @@ RUN dotnet publish "ChatAPI.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "ChatAPI.dll"]
+COPY wait /wait
+RUN chmod +x /wait
+COPY /cert /root/.dotnet/https
+ENTRYPOINT /wait && dotnet ChatAPI.dll

@@ -19,4 +19,5 @@ RUN dotnet publish "TranslateChatter.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY /cert /root/.dotnet/https
 ENTRYPOINT ["dotnet", "TranslateChatter.dll"]

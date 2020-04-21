@@ -1,5 +1,6 @@
 using AuthAPI.Services;
 using AuthAPI.Settings;
+using Castle.Core.Logging;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace AuthAPI
@@ -63,8 +65,10 @@ namespace AuthAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAuthDataProvider authDataProvider)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IAuthDataProvider authDataProvider, ILogger<Startup> logger)
         {
+            logger.LogInformation($"Connection string: {Configuration.GetConnectionString("SQLServer")}");
+
             authDataProvider.ApplyChanges();
 
             if (env.IsDevelopment())
