@@ -50,6 +50,7 @@ namespace TranslateChatter.AuthAPI
                         tokenService.SignInAsync(result);
                     }
                 }
+
                 client.DefaultRequestHeaders.Remove("Authorization");
                 request.Headers.Remove("Authorization");
                 request.Headers.Add("Authorization", tokenService.GenerateFullToken(httpContextAccessor.HttpContext.User.Token()));

@@ -16,6 +16,7 @@ namespace AuthAPI.Services
         void SaveChanges();
         void Attach(object obj);
         Task SaveChangesAsync();
+        void ApplyChanges();
     }
 
     public class AuthDataProvider : DbContext, IAuthDataProvider
@@ -55,6 +56,11 @@ namespace AuthAPI.Services
 
         void IAuthDataProvider.Update<T>(T obj) => base.Update(obj);
         void IAuthDataProvider.Attach(object obj) => base.Attach(obj);
+
+        public void ApplyChanges()
+        {
+            Database.Migrate();
+        }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }

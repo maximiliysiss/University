@@ -9,6 +9,7 @@ using TranslateChatter.AuthAPI;
 using TranslateChatter.ChatAPI;
 using TranslateChatter.Settings;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Net.Http;
 
 namespace TranslateChatter
 {
@@ -39,9 +40,11 @@ namespace TranslateChatter
             services.AddSingleton(Configuration.GetSection("TranslateConfiguration").Get<TranslateConfiguration>());
 
             var serviceConfig = Configuration.GetSection("Services").Get<ServiceInfoService>();
-            services.AddScoped<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(serviceConfig["AuthAPI"], new System.Net.Http.HttpClient(),
+            services.AddScoped<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(serviceConfig["AuthAPI"],
+                new System.Net.Http.HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),
                 x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<ITokenService>()));
-            services.AddScoped<IChatAPIClient, ChatAPIClient>(x => new ChatAPIClient(serviceConfig["ChatAPI"], new System.Net.Http.HttpClient(),
+            services.AddScoped<IChatAPIClient, ChatAPIClient>(x => new ChatAPIClient(serviceConfig["ChatAPI"],
+                new System.Net.Http.HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),
                 x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<ITokenService>(), x.GetRequiredService<IAuthAPIClient>()));
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
 

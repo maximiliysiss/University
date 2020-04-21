@@ -26,7 +26,7 @@ namespace ChatAPI
             var authSettings = Configuration.GetSection("AuthSettings").Get<AuthSettings>();
 
             services.AddControllers();
-            services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<IDatabaseContext, DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -55,8 +55,10 @@ namespace ChatAPI
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IDatabaseContext databaseContext)
         {
+            databaseContext.ApplyChanges();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

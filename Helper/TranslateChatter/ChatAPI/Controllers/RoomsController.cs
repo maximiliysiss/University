@@ -14,9 +14,9 @@ namespace ChatAPI.Controllers
     [Authorize]
     public class RoomsController : ControllerBase
     {
-        private readonly DatabaseContext _context;
+        private readonly IDatabaseContext _context;
 
-        public RoomsController(DatabaseContext context)
+        public RoomsController(IDatabaseContext context)
         {
             _context = context;
         }
@@ -38,7 +38,7 @@ namespace ChatAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Room>> GetRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == id);
 
             if (room == null)
             {
@@ -56,7 +56,7 @@ namespace ChatAPI.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(room).State = EntityState.Modified;
+            _context.Update(room);
 
             try
             {
@@ -80,7 +80,7 @@ namespace ChatAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<Room>> PostRoom(Room room)
         {
-            _context.Rooms.Add(room);
+            _context.Add(room);
             await _context.SaveChangesAsync();
 
             return room;
@@ -89,13 +89,13 @@ namespace ChatAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Room>> DeleteRoom(int id)
         {
-            var room = await _context.Rooms.FindAsync(id);
+            var room = await _context.Rooms.FirstOrDefaultAsync(x => x.Id == id);
             if (room == null)
             {
                 return NotFound();
             }
 
-            _context.Rooms.Remove(room);
+            _context.Remove(room);
             await _context.SaveChangesAsync();
 
             return room;
