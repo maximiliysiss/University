@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace AuthAPI.Controllers
 {
+    /// <summary>
+    /// Контроллер авторизации
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -17,6 +20,11 @@ namespace AuthAPI.Controllers
             this.authService = authService;
         }
 
+        /// <summary>
+        /// Логин
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         [HttpPost("login")]
         public async Task<ActionResult<LoginResult>> LoginAsync([FromBody]LoginModel loginModel)
         {
@@ -26,6 +34,12 @@ namespace AuthAPI.Controllers
             return res;
         }
 
+        /// <summary>
+        /// Обновить токен
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <param name="authorization"></param>
+        /// <returns></returns>
         [HttpPut("refreshToken")]
         public async Task<ActionResult<LoginResult>> RefreshTokenAsync([FromHeader]string refreshToken, [FromHeader]string authorization)
         {
@@ -36,10 +50,19 @@ namespace AuthAPI.Controllers
             return res;
         }
 
+        /// <summary>
+        /// Проверить токен
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("login")]
         [Authorize]
         public ActionResult Login() => Ok();
 
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="registerModel"></param>
+        /// <returns></returns>
         [HttpPost("register")]
         public async Task<ActionResult<LoginResult>> RegisterAsync([FromBody]RegisterModel registerModel)
         {
@@ -49,6 +72,12 @@ namespace AuthAPI.Controllers
             return res;
         }
 
+        /// <summary>
+        /// Восстановить пароль
+        /// </summary>
+        /// <param name="passwordRestore"></param>
+        /// <param name="authorization"></param>
+        /// <returns></returns>
         [HttpPut("restorepassword")]
         [Authorize]
         public async Task<ActionResult<LoginResult>> RestorePasswordAsync([FromBody] PasswordRestore passwordRestore, [FromHeader]string authorization)

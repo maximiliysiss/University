@@ -3,8 +3,16 @@ using System.Linq;
 
 namespace AuthAPI.Services
 {
+    /// <summary>
+    /// Сервис для пользователя
+    /// </summary>
     public interface IUserService
     {
+        /// <summary>
+        /// Получить пользователя
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         User GetUser(string token);
     }
 

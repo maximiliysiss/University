@@ -2,6 +2,9 @@
 
 namespace AuthAPI.Models.Controller
 {
+    /// <summary>
+    /// Модель регистрации
+    /// </summary>
     public class RegisterModel
     {
         [Required]

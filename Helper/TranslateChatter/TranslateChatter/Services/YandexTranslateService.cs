@@ -3,14 +3,33 @@ using System.Threading.Tasks;
 
 namespace TranslateChatter.Services
 {
+    /// <summary>
+    /// Сервис для перевода
+    /// </summary>
     public interface ITranslateService
     {
+        /// <summary>
+        /// Перевод
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="langTo"></param>
+        /// <param name="langFrom"></param>
+        /// <returns></returns>
         Task<string> Translate(string text, string langTo, string langFrom);
     }
 
+    /// <summary>
+    /// Настройка
+    /// </summary>
     public class TranslateConfiguration
     {
+        /// <summary>
+        /// Ключ
+        /// </summary>
         public string Key { get; set; }
+        /// <summary>
+        /// Базовый url
+        /// </summary>
         public string BaseUrl { get; set; }
     }
 

@@ -6,6 +6,9 @@ using TranslateChatter.ChatAPI;
 
 namespace TranslateChatter.ViewModels
 {
+    /// <summary>
+    /// Комната
+    /// </summary>
     public class RoomViewModel
     {
         public Room Room { get; set; }

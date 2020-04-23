@@ -5,8 +5,14 @@ using System.Threading.Tasks;
 
 namespace AuthAPI.Services
 {
+    /// <summary>
+    /// Сервис для данных
+    /// </summary>
     public interface IAuthDataProvider
     {
+        /// <summary>
+        /// Таблицы
+        /// </summary>
         IQueryable<User> Users { get; }
         IQueryable<Role> Roles { get; }
         IQueryable<Language> Languages { get; }
@@ -14,8 +20,15 @@ namespace AuthAPI.Services
         void Delete<T>(T obj);
         void Update<T>(T obj);
         void SaveChanges();
+        /// <summary>
+        /// Связать запись с объектом
+        /// </summary>
+        /// <param name="obj"></param>
         void Attach(object obj);
         Task SaveChangesAsync();
+        /// <summary>
+        /// Применить изменения миграций
+        /// </summary>
         void ApplyChanges();
     }
 

@@ -8,6 +8,9 @@ using TranslateChatter.Models;
 
 namespace TranslateChatter.Services
 {
+    /// <summary>
+    /// Хаб от SignalR для чата
+    /// </summary>
     [Authorize]
     public class ChatHub : Hub
     {

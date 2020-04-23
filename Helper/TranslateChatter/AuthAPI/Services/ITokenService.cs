@@ -7,9 +7,23 @@ using System.Security.Claims;
 
 namespace AuthAPI.Services
 {
+    /// <summary>
+    /// Сервис для токенов
+    /// </summary>
     public interface ITokenService
     {
+        /// <summary>
+        /// Создать токен
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
         string GenerateToken(User user);
+        /// <summary>
+        /// Извлеть данные из токена
+        /// </summary>
+        /// <param name="token"></param>
+        /// <param name="lifetime"></param>
+        /// <returns></returns>
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true);
     }
 

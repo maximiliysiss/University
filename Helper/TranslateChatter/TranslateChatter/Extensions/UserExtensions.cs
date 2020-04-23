@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TranslateChatter.Extensions
 {
+    /// <summary>
+    /// Получение полей авторизации
+    /// </summary>
     public static class UserExtensions
     {
         public static string Code(this ClaimsPrincipal claimsPrincipal) => claimsPrincipal.Claims.FirstOrDefault(x => x.Type == "Code")?.Value;

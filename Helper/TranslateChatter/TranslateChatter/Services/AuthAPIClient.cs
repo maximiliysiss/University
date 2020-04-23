@@ -6,12 +6,20 @@ using TranslateChatter.Services;
 
 namespace TranslateChatter.AuthAPI
 {
+    /// <summary>
+    /// АПИ клиент
+    /// </summary>
     public class APIClient
     {
+        /// <summary>
+        /// Для получения контекста
+        /// </summary>
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly ITokenService tokenService;
         public IAuthAPIClient AuthAPIClient { get; protected set; }
-
+        /// <summary>
+        /// Endpoint, которым не нужно проверять авторизацию
+        /// </summary>
         private readonly string[] authEndPoints = new[] {
             "/api/Auth/refreshToken",
             "/api/Auth/login"
@@ -31,6 +39,12 @@ namespace TranslateChatter.AuthAPI
             this.tokenService = tokenService;
         }
 
+        /// <summary>
+        /// Проверим авторизацию и установим ее для запроса
+        /// </summary>
+        /// <param name="client"></param>
+        /// <param name="request"></param>
+        /// <param name="url"></param>
         protected void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url)
         {
             if (User.Identity.IsAuthenticated)
@@ -59,6 +73,9 @@ namespace TranslateChatter.AuthAPI
         }
     }
 
+    /// <summary>
+    /// Клиент для AuthAPI
+    /// </summary>
     public partial class AuthAPIClient : APIClient
     {
         public AuthAPIClient(string baseUrl, HttpClient httpClient, IHttpContextAccessor httpContextAccessor, ITokenService tokenService) : base(httpContextAccessor, tokenService)

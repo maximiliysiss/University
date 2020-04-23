@@ -2,8 +2,16 @@
 
 namespace AuthAPI.Services
 {
+    /// <summary>
+    /// Сервис для шифрования
+    /// </summary>
     public interface ICryptService
     {
+        /// <summary>
+        /// Получить хэш
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         string CreateHash(string data);
     }
 

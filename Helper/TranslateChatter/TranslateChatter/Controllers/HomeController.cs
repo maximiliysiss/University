@@ -7,6 +7,9 @@ using TranslateChatter.ViewModels;
 
 namespace TranslateChatter.Controllers
 {
+    /// <summary>
+    /// Главный контроллер
+    /// </summary>
     [Authorize]
     public class HomeController : Controller
     {
@@ -29,6 +32,11 @@ namespace TranslateChatter.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Создать комнату
+        /// </summary>
+        /// <param name="room"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name")] ChatAPI.Room room)
@@ -45,6 +53,11 @@ namespace TranslateChatter.Controllers
             return View(room);
         }
 
+        /// <summary>
+        /// Изменить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         // GET: Rooms/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -56,6 +69,12 @@ namespace TranslateChatter.Controllers
             return View(room);
         }
 
+        /// <summary>
+        /// Изменить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="room"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ChatAPI.Room room)
@@ -76,6 +95,11 @@ namespace TranslateChatter.Controllers
             return View(room);
         }
 
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -86,6 +110,11 @@ namespace TranslateChatter.Controllers
             return View(room);
         }
 
+        /// <summary>
+        /// Войти в чат
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> RoomChat(int? id)
         {
@@ -97,6 +126,11 @@ namespace TranslateChatter.Controllers
             return View(new RoomViewModel { Room = findRoom, IsAction = findRoom?.CreatorId == User.Id() });
         }
 
+        /// <summary>
+        /// Удалить
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

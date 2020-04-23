@@ -4,6 +4,9 @@ using TranslateChatter.Extensions;
 
 namespace TranslateChatter.Services
 {
+    /// <summary>
+    /// Система для локализации
+    /// </summary>
     public interface ILocalizer
     {
         string this[string code] { get; }

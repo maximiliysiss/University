@@ -3,6 +3,9 @@ using System.Text;
 
 namespace TranslateChatter.Settings
 {
+    /// <summary>
+    /// Настройки авториазции
+    /// </summary>
     public class AuthSettings
     {
         public string Audience { get; set; }
