@@ -1,0 +1,26 @@
+<annotation>
+	<folder>yacht</folder>
+	<filename>photo-1521110048000-effe6bb4fb7e.jpg</filename>
+	<path>C:\Users\zimma\Downloads\models\yacht\photo-1521110048000-effe6bb4fb7e.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>780</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>yacht</name>
+		<pose>Unspecified</pose>
+		<truncated>1</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1</xmin>
+			<ymin>330</ymin>
+			<xmax>442</xmax>
+			<ymax>727</ymax>
+		</bndbox>
+	</object>
+</annotation>

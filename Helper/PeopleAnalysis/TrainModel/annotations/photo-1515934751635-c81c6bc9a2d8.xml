@@ -1,0 +1,26 @@
+<annotation>
+	<folder>ring</folder>
+	<filename>photo-1515934751635-c81c6bc9a2d8.jpg</filename>
+	<path>C:\Users\zimma\Downloads\models\ring\photo-1515934751635-c81c6bc9a2d8.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>333</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>ring</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>192</xmin>
+			<ymin>105</ymin>
+			<xmax>317</xmax>
+			<ymax>186</ymax>
+		</bndbox>
+	</object>
+</annotation>

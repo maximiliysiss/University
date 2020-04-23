@@ -1,0 +1,26 @@
+<annotation>
+	<folder>house</folder>
+	<filename>photo-1512917774080-9991f1c4c750.jpg</filename>
+	<path>C:\Users\zimma\Downloads\models\house\photo-1512917774080-9991f1c4c750.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>500</width>
+		<height>333</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>house</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>107</xmin>
+			<ymin>60</ymin>
+			<xmax>382</xmax>
+			<ymax>204</ymax>
+		</bndbox>
+	</object>
+</annotation>
