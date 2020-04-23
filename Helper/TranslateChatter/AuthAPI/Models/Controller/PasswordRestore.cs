@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace AuthAPI.Models.Controller
 {
+    /// <summary>
+    /// Сменить пароль
+    /// </summary>
     public class PasswordRestore
     {
         [Required]

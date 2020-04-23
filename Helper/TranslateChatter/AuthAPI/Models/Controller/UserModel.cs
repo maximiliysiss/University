@@ -1,5 +1,8 @@
 ﻿namespace AuthAPI.Models.Controller
 {
+    /// <summary>
+    /// Роль
+    /// </summary>
     public class RoleModel
     {
         public string Name { get; set; }

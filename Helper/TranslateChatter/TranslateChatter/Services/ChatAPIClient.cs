@@ -6,6 +6,9 @@ using TranslateChatter.Services;
 
 namespace TranslateChatter.ChatAPI
 {
+    /// <summary>
+    /// Клиент для ChatAPI
+    /// </summary>
     public partial class ChatAPIClient : APIClient
     {
         public ChatAPIClient(string baseUrl, HttpClient httpClient, IHttpContextAccessor httpContextAccessor, ITokenService tokenService, IAuthAPIClient authAPIClient) : base(httpContextAccessor, tokenService)

@@ -9,6 +9,9 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace ChatAPI.Controllers
 {
+    /// <summary>
+    /// CRUD контроллер для комнат
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]

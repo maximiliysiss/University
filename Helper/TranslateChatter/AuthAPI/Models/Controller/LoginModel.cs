@@ -2,6 +2,9 @@
 
 namespace AuthAPI.Models.Controller
 {
+    /// <summary>
+    /// Логин
+    /// </summary>
     public class LoginModel
     {
         [Required]

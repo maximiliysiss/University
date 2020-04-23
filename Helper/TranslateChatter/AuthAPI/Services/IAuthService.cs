@@ -8,11 +8,36 @@ using System.Threading.Tasks;
 
 namespace AuthAPI.Services
 {
+    /// <summary>
+    /// Сервис для авторизации
+    /// </summary>
     public interface IAuthService
     {
+        /// <summary>
+        /// Логин
+        /// </summary>
+        /// <param name="loginModel"></param>
+        /// <returns></returns>
         Task<LoginResult> LoginAsync(LoginModel loginModel);
+        /// <summary>
+        /// Регистрация
+        /// </summary>
+        /// <param name="registerModel"></param>
+        /// <returns></returns>
         Task<LoginResult> RegisterAsync(RegisterModel registerModel);
+        /// <summary>
+        /// Обновить пароль
+        /// </summary>
+        /// <param name="passwordRestore"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         Task<LoginResult> RestorePassword(PasswordRestore passwordRestore, string token);
+        /// <summary>
+        /// Обновить токен
+        /// </summary>
+        /// <param name="refreshToken"></param>
+        /// <param name="token"></param>
+        /// <returns></returns>
         Task<LoginResult> RefreshToken(string refreshToken, string token);
     }
 

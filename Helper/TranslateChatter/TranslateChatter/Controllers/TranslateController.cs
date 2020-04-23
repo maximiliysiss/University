@@ -8,6 +8,9 @@ using TranslateChatter.ViewModels;
 
 namespace TranslateChatter.Controllers
 {
+    /// <summary>
+    /// Контроллер для перевода
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
@@ -22,6 +25,11 @@ namespace TranslateChatter.Controllers
             this.authAPIClient = authAPIClient;
         }
 
+        /// <summary>
+        /// Метод перевода
+        /// </summary>
+        /// <param name="translateView"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<string> MessageTranlsate([FromBody]TranslateViewModel translateView)
         {

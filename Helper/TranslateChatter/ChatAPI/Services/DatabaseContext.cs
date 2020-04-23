@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace ChatAPI.Services
 {
+    /// <summary>
+    /// Контекст данных
+    /// </summary>
     public interface IDatabaseContext
     {
         IQueryable<Room> Rooms { get; }

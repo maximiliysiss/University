@@ -5,8 +5,17 @@ using System;
 
 namespace AuthAPI.Services
 {
+    /// <summary>
+    /// Сервис маппер
+    /// </summary>
     public interface IMapperService
     {
+        /// <summary>
+        /// Мапить данные
+        /// </summary>
+        /// <typeparam name="R"></typeparam>
+        /// <param name="fromMap"></param>
+        /// <returns></returns>
         R Map<R>(object fromMap);
     }
 

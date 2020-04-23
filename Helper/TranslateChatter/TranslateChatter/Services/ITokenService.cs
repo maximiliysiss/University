@@ -15,10 +15,28 @@ using TranslateChatter.Settings;
 
 namespace TranslateChatter.Services
 {
+    /// <summary>
+    /// Сервис для токена
+    /// </summary>
     public interface ITokenService
     {
+        /// <summary>
+        /// Получить инфу о пользователе из токена
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
+        /// <summary>
+        /// Создать токен
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
         string GenerateFullToken(string token);
+        /// <summary>
+        /// Авторизовать в системе
+        /// </summary>
+        /// <param name="loginResult"></param>
+        /// <returns></returns>
         Task SignInAsync(LoginResult loginResult);
     }
 
