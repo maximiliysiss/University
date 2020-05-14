@@ -34,6 +34,10 @@
     <PackageReference Include="VkNet" Version="1.51.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\PeopleAnalysisML.Model\PeopleAnalysisML.Model.csproj" />
+  </ItemGroup>
+
 
 
 </Project>

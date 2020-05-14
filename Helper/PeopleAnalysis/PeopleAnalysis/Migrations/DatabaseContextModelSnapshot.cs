@@ -106,8 +106,8 @@ namespace PeopleAnalysis.Migrations
                     b.Property<int?>("AnalysObjectId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Count")
-                        .HasColumnType("integer");
+                    b.Property<float>("Count")
+                        .HasColumnType("real");
 
                     b.Property<int?>("ResultId")
                         .HasColumnType("integer");

@@ -53,7 +53,7 @@ namespace PeopleAnalysis.Services
                     {
                         using var scope = scopeFactory.CreateScope();
                         await aIService.ProcessTaskAsync(JsonConvert.DeserializeObject<Request>(message), scope.ServiceProvider.GetService<IAnaliticAIService>(),
-                            scope.ServiceProvider.GetRequiredService<DatabaseContext>());
+                            scope.ServiceProvider.GetRequiredService<DatabaseContext>(), scope.ServiceProvider.GetRequiredService<ApisManager>());
                     }
                     catch (Exception) { }
                     finally

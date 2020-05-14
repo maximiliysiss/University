@@ -1,16 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Models;
 using PeopleAnalysis.Models.Configuration;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.Services.APIs;
+using PeopleAnalysisML.Model;
 
 namespace PeopleAnalysis
 {
@@ -49,6 +48,7 @@ namespace PeopleAnalysis
             services.AddScoped<ISender, RabbitMQClient>();
             services.AddSingleton<IAIService, TensorService>();
             services.AddSingleton<ColorService>();
+            services.AddSingleton<IMLService, ConsumeModel>(x => new ConsumeModel(Configuration["ML:ModelPath"]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

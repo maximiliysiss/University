@@ -15,7 +15,7 @@ namespace PeopleAnalysis.Models
         public int Id { get; set; }
         public virtual Result Result { get; set; }
         public virtual AnalysObject AnalysObject { get; set; }
-        public int Count { get; set; }
+        public float Count { get; set; }
     }
 
     public class AnalysObject

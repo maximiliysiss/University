@@ -1,5 +1,6 @@
 ﻿using PeopleAnalysis.Models;
 using PeopleAnalysis.ViewModels;
+using PeopleAnalysisML.Model;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -116,6 +117,9 @@ namespace PeopleAnalysis.Services
                 else
                     readyResult.ResultObjects[i].AnalysObject = tmp;
             }
+
+            var resultIndex = readyResult.ResultObjects.Sum(x => x.Count * x.AnalysObject.Weight);
+            readyResult.ResultAnswer = resultIndex > 1;
 
             databaseContext.Add(completeRequest);
             databaseContext.Add(readyResult);
