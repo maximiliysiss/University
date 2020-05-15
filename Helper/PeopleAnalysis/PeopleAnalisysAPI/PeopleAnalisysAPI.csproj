@@ -8,5 +8,9 @@
     <ProjectReference Include="..\PeopleAnalysisML.Model\PeopleAnalysisML.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 
 </Project>
