@@ -62,7 +62,7 @@ namespace AuthAPI.Services
             return principal;
         }
 
-        public Task SignInAsync(LoginResult loginResult)
+        public Task SignInAsync(IAuthResult loginResult)
         {
             throw new NotImplementedException();
         }

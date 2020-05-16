@@ -1,5 +1,5 @@
-﻿@model PeopleAnalysis.ViewModels.UserViewModel
-@inject Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole> RoleManager
+﻿@model PeopleAnalysis.AuthAPI.UserViewModel
+@inject PeopleAnalysis.AuthAPI.IAuthAPIClient authAPIClient
 @{
     ViewData["Title"] = "Create";
 }
@@ -25,7 +25,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Role" class="control-label"></label>
-                @Html.DropDownListFor(x => x.Role, RoleManager.Roles.Select(x => new SelectListItem(x.Name, x.Name)).ToList(), new { @class = "custom-select" })
+                @Html.DropDownListFor(x => x.Role, (await authAPIClient.ApiRolesAsync()).Select(x => new SelectListItem(x.Name, x.Name)).ToList(), new { @class = "custom-select" })
                 <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <div class="form-group">

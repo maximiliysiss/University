@@ -10,6 +10,11 @@ namespace PeopleAnalysis.Controllers
     {
         private readonly IApplicationAPIClient applicationAPIClient;
 
+        public AnaliticController(IApplicationAPIClient applicationAPIClient)
+        {
+            this.applicationAPIClient = applicationAPIClient;
+        }
+
         public async Task<IActionResult> StartAnalys([FromForm]AnalitycsRequestModel analitycsRequest)
         {
             if (await applicationAPIClient.ApiAnaliticStartanalysAsync(analitycsRequest))

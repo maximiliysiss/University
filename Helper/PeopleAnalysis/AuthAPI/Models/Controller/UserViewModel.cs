@@ -1,6 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace PeopleAnalysis.ViewModels
+namespace AuthAPI.Models.Controller
 {
     public class UserViewModel
     {

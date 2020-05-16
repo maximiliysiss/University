@@ -1,5 +1,4 @@
-﻿using AuthAPI.Models.Controller;
-using AuthAPI.Settings;
+﻿using AuthAPI.Settings;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -16,15 +15,15 @@ namespace CommonCoreLibrary.Auth.Interfaces
     {
         ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true);
         string GenerateFullToken(string token);
-        Task SignInAsync(LoginResult loginResult);
+        Task SignInAsync(IAuthResult loginResult);
     }
 
-    public class TokenService : IBaseTokenService
+    public class ClientTokenService : IBaseTokenService
     {
         private readonly AuthSettings authSettings;
         private readonly IHttpContextAccessor httpContextAccessor;
 
-        public TokenService(AuthSettings authSettings, IHttpContextAccessor httpContextAccessor)
+        public ClientTokenService(AuthSettings authSettings, IHttpContextAccessor httpContextAccessor)
         {
             this.authSettings = authSettings;
             this.httpContextAccessor = httpContextAccessor;
@@ -51,7 +50,7 @@ namespace CommonCoreLibrary.Auth.Interfaces
             return principal;
         }
 
-        public async Task SignInAsync(LoginResult loginResult)
+        public async Task SignInAsync(IAuthResult loginResult)
         {
             if (loginResult == null)
                 return;

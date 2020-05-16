@@ -4,37 +4,26 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PeopleAnalysis.AuthAPI;
 using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Models;
-using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class UsersController : Controller
     {
-        private readonly UserManager<User> userManager;
+        private readonly IAuthAPIClient authAPIClient;
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(IAuthAPIClient authAPIClient)
         {
-            this.userManager = userManager;
+            this.authAPIClient = authAPIClient;
         }
 
         // GET: LoginViewModels
         public async Task<IActionResult> Index()
         {
-            List<UserViewModel> userModels = new List<UserViewModel>();
-            foreach (var user in userManager.Users.ToList())
-            {
-                var role = await userManager.GetRolesAsync(user);
-                userModels.Add(new UserViewModel
-                {
-                    Id = user.Id,
-                    Login = user.Email,
-                    Role = role.FirstOrDefault()
-                });
-            }
-            return View(userModels);
+            return View(await authAPIClient.ApiUsersAsync());
         }
 
         // GET: LoginViewModels/Create
@@ -49,11 +38,7 @@ namespace PeopleAnalysis.Controllers
         {
             if (ModelState.IsValid)
             {
-                if ((await userManager.FindByEmailAsync(loginViewModel.Login)) != null)
-                    return this.Error(loginViewModel, "Такой пользователь уже существует");
-                var newUser = new User { Email = loginViewModel.Login, UserName = loginViewModel.Login };
-                await userManager.CreateAsync(newUser, loginViewModel.Password);
-                await userManager.AddToRoleAsync(newUser, "User");
+                await authAPIClient.ApiUsersCreateAsync(loginViewModel);
                 return RedirectToAction(nameof(Index));
             }
             return View(loginViewModel);
@@ -64,16 +49,7 @@ namespace PeopleAnalysis.Controllers
         {
             if (id == null)
                 return NotFound();
-
-            var loginViewModel = await userManager.FindByIdAsync(id);
-            if (loginViewModel == null)
-                return NotFound();
-            return View(new UserViewModel
-            {
-                Id = loginViewModel.Id,
-                Login = loginViewModel.Email,
-                Role = (await userManager.GetRolesAsync(loginViewModel)).FirstOrDefault()
-            });
+            return View(await authAPIClient.ApiUsersFindAsync(id));
         }
 
         [HttpPost]
@@ -85,14 +61,7 @@ namespace PeopleAnalysis.Controllers
 
             if (ModelState.IsValid)
             {
-                var user = await userManager.FindByIdAsync(id);
-                user.Email = loginViewModel.Login;
-                var res = await userManager.UpdateAsync(user);
-                if (!res.Succeeded)
-                    return this.Error(loginViewModel, string.Join(", ", res.Errors.Select(x => x.Description)));
-                res = await userManager.ChangePasswordAsync(user, loginViewModel.CurrentPassword, loginViewModel.Password);
-                if (!res.Succeeded)
-                    return this.Error(loginViewModel, string.Join(", ", res.Errors.Select(x => x.Description)));
+                await authAPIClient.ApiUsersEditAsync(id, loginViewModel);
                 return RedirectToAction(nameof(Index));
             }
             return View(loginViewModel);
@@ -103,10 +72,7 @@ namespace PeopleAnalysis.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed([FromForm]string toDelete)
         {
-            var loginViewModel = await userManager.FindByIdAsync(toDelete);
-            if (loginViewModel == null)
-                return NotFound();
-            await userManager.DeleteAsync(loginViewModel);
+            await authAPIClient.ApiUsersDeleteAsync(toDelete);
             return RedirectToAction(nameof(Index));
         }
     }

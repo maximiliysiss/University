@@ -1,4 +1,5 @@
 ﻿using AuthAPI.Models.Controller;
+using CommonCoreLibrary.Auth.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -9,6 +10,6 @@ namespace CommonCoreLibrary.APIClient
     public interface IAuthBaseAPIClient
     {
         Task AuthLoginGetAsync();
-        Task<LoginResult> AuthRefreshtokenAsync(string v1, string v2);
+        Task<IAuthResult> AuthRefreshtokenAsync(string v1, string v2);
     }
 }
