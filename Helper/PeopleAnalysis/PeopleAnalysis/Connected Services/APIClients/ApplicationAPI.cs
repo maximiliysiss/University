@@ -21,4 +21,9 @@ namespace PeopleAnalysis.ApplicationAPI
             base.PrepareRequest(client, request, url);
         }
     }
+
+    public partial class ApiException : IApiException
+    {
+
+    }
 }

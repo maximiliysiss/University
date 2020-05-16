@@ -1,3 +1,4 @@
+using AuthAPI.Extensions;
 using AuthAPI.Services;
 using AuthAPI.Settings;
 using CommonCoreLibrary.Startup;
@@ -44,6 +45,7 @@ namespace AuthAPI
             logger.LogInformation($"Connection string: {Configuration.GetConnectionString("SQLServer")}");
 
             authDataProvider.ApplyChanges();
+            app.InitDatabase();
 
             if (env.IsDevelopment())
             {

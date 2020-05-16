@@ -49,10 +49,10 @@ namespace PeopleAnalysis
             services.AddSingleton<ColorService>();
 
             services.AddSingleton<IBaseTokenService, ClientTokenService>();
-            services.AddSingleton<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(Configuration["AuthAPI"], new HttpClient(), x.GetRequiredService<IHttpContextAccessor>(),
-                x.GetRequiredService<IBaseTokenService>()));
-            services.AddSingleton<IApplicationAPIClient, ApplicationAPIClient>(x => new ApplicationAPIClient(Configuration["ApplicationAPI"], new HttpClient(), x.GetRequiredService<IHttpContextAccessor>(),
-                x.GetRequiredService<IBaseTokenService>(), x.GetRequiredService<IAuthAPIClient>()));
+            services.AddSingleton<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(Configuration["AuthAPI"], new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),
+                x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<IBaseTokenService>()));
+            services.AddSingleton<IApplicationAPIClient, ApplicationAPIClient>(x => new ApplicationAPIClient(Configuration["ApplicationAPI"], new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),
+                x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<IBaseTokenService>(), x.GetRequiredService<IAuthAPIClient>()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

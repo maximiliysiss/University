@@ -31,4 +31,9 @@ namespace PeopleAnalysis.AuthAPI
             base.PrepareRequest(client, request, url);
         }
     }
+
+    public partial class ApiException: IApiException
+    {
+
+    }
 }

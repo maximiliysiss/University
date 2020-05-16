@@ -50,7 +50,8 @@ namespace AuthAPI.Services
             modelBuilder.Entity<User>().Property("LanguageId").HasDefaultValue(1);
 
             modelBuilder.Entity<Role>().HasData(new[] {
-                new Role{ Id = 1, Name = "User" }
+                new Role{ Id = 1, Name = "User" },
+                new Role{ Id = 2, Name = "Admin" },
             });
         }
 
