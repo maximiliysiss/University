@@ -5,11 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PeopleAnalysis.ApplicationAPI;
 using PeopleAnalysis.Models;
 using PeopleAnalysis.Models.Configuration;
 using PeopleAnalysis.Services;
-using PeopleAnalysis.Services.APIs;
-using PeopleAnalysisML.Model;
 
 namespace PeopleAnalysis
 {
@@ -25,7 +24,6 @@ namespace PeopleAnalysis
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DatabaseContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")).UseLazyLoadingProxies(), ServiceLifetime.Scoped);
             services.AddDbContext<AuthContext>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
 
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<AuthContext>();
@@ -39,16 +37,11 @@ namespace PeopleAnalysis
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddScoped<ApisManager>();
             services.AddSingleton(Configuration.Get<KeysConfiguration>());
-            services.AddScoped<AnaliticService>();
-            services.AddScoped<IAnaliticAIService, AnaliticAIService>();
-            services.AddScoped<VkSocialApi>();
-            services.AddHostedService<RabbitMQService>();
             services.AddScoped<ISender, RabbitMQClient>();
-            services.AddSingleton<IAIService, TensorService>();
             services.AddSingleton<ColorService>();
-            services.AddSingleton<IMLService, ConsumeModel>(x => new ConsumeModel(Configuration["ML:ModelPath"]));
+
+            services.AddSingleton<IApplicationAPIClient, ApplicationAPIClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

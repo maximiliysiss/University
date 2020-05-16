@@ -1,24 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PeopleAnalysis.Extensions;
-using PeopleAnalysis.Services;
-using PeopleAnalysis.ViewModels;
+using PeopleAnalysis.ApplicationAPI;
+using System.Threading.Tasks;
 
 namespace PeopleAnalysis.Controllers
 {
     [Authorize]
     public class AnaliticController : Controller
     {
-        private readonly AnaliticService analiticService;
+        private readonly IApplicationAPIClient applicationAPIClient;
 
-        public AnaliticController(AnaliticService analiticService)
+        public async Task<IActionResult> StartAnalys([FromForm]AnalitycsRequestModel analitycsRequest)
         {
-            this.analiticService = analiticService;
-        }
-
-        public IActionResult StartAnalys([FromForm]AnalitycsRequestModel analitycsRequest)
-        {
-            if (analiticService.CreateRequest(analitycsRequest, User.UserId()))
+            if (await applicationAPIClient.ApiAnaliticStartanalysAsync(analitycsRequest))
                 return RedirectToActionPermanent("Index", "Request");
             return BadRequest();
         }

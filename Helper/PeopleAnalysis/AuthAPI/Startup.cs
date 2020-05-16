@@ -28,7 +28,7 @@ namespace AuthAPI
             services.AddSingleton(authSettings);
             services.AddDbContext<IAuthDataProvider, AuthDataProvider>(x => x.UseLazyLoadingProxies().UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<ITokenService, AuthAPI.Services.TokenService>();
             services.AddScoped<ICryptService, CryptService>();
             services.AddTransient<IMapperService, AutoMapperService>();
             services.AddTransient<IUserService, UserService>();

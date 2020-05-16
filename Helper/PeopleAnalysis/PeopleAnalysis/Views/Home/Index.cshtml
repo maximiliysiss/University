@@ -1,4 +1,4 @@
-﻿@model PeopleAnalysis.ViewModels.FindPeoplePageViewModel
+﻿@model PeopleAnalysis.ApplicationAPI.FindPeoplePageViewModel
 @{
     ViewData["Title"] = "Finder";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -22,7 +22,7 @@
 
 <div>
 
-    @foreach (var groupFinder in Model?.FinderResultViewModel ?? Enumerable.Empty<PeopleAnalysis.ViewModels.FinderResultViewModel>())
+    @foreach (var groupFinder in Model?.FinderResultViewModel ?? Enumerable.Empty<PeopleAnalysis.ApplicationAPI.FinderResultViewModel>())
     {
         <div class="form-group">
             <label>API: @groupFinder.Name</label>
@@ -30,7 +30,7 @@
         </div>
         <div class="form-group">
             <div class="d-flex flex-wrap justify-content-center text-center">
-                @foreach (var user in groupFinder.FindedPeopleViewModels?.Take(3) ?? Enumerable.Empty<PeopleAnalysis.ViewModels.FindedPeopleViewModel>())
+                @foreach (var user in groupFinder.FindedPeopleViewModels?.Take(3) ?? Enumerable.Empty<PeopleAnalysis.ApplicationAPI.FindedPeopleViewModel>())
                 {
                     <a asp-action="Index" asp-controller="People" asp-route-key="@user.Id" asp-route-social="@groupFinder.Name.ToLower()">
                         <div class="card p-3 m-2" style="width: 18rem;">
@@ -55,7 +55,7 @@
 
             <div class="collapse" id="data_@groupFinder.Name">
                 <div class="d-flex flex-wrap justify-content-center text-center">
-                    @foreach (var user in groupFinder.FindedPeopleViewModels?.Skip(3) ?? Enumerable.Empty<PeopleAnalysis.ViewModels.FindedPeopleViewModel>())
+                    @foreach (var user in groupFinder.FindedPeopleViewModels?.Skip(3) ?? Enumerable.Empty<PeopleAnalysis.ApplicationAPI.FindedPeopleViewModel>())
                     {
                         <a asp-action="Index" asp-controller="People" asp-route-key="@user.Id" asp-route-social="@groupFinder.Name.ToLower()">
                             <div class="card p-3 m-2" style="width: 18rem;">

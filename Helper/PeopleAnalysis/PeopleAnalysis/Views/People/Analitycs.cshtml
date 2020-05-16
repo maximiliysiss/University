@@ -1,13 +1,13 @@
-﻿@model PeopleAnalysis.ViewModels.UserDetailInformationViewModel
+﻿@model PeopleAnalysis.ApplicationAPI.UserDetailInformationViewModel
 
 <h2 class="p-2 mt-2">Аналитика</h2>
 <hr />
 
-@if (Model.IsPrivate || (Model.Photos?.Length ?? 0) < 2)
+@if (Model.IsPrivate || (Model.Photos?.Count ?? 0) < 2)
 {
     <h3 class="p-2">Профиль пользователя в статусе private или недостаточно данных. Невозможно провести аналитику</h3>
 }
-else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(new[] { Status.Closed, Status.Fail }))
+else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(new[] { StatusEnum.Closed.Raw(), StatusEnum.Fail.Raw() }))
 {
     <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
         @Html.Hidden("id", Model.Id)
@@ -16,14 +16,14 @@ else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(
         <input value="Запустить аналитику" class="btn btn-primary w-100" type="submit" />
     </form>
 }
-else if (Model.AnalitycsViewModel.Status == Status.InProgress)
+else if (Model.AnalitycsViewModel.Status == StatusEnum.InProgress.Raw())
 {
     <a asp-action="Index" asp-controller="Request" class="h3 p-2">В процессе</a>
 }
-else if (Model.AnalitycsViewModel.Status == Status.Complete)
+else if (Model.AnalitycsViewModel.Status == StatusEnum.Complete.Raw())
 {
     <div class="p-0">
-        <p class="h4">Время обработки: @Model.AnalitycsViewModel.Time.ToString("h'h 'm'm 's's'")</p>
+        <p class="h4">Время обработки: @Model.AnalitycsViewModel.Time@*ToString("h'h 'm'm 's's'")*@</p>
         <div class="d-flex flex-wrap">
             <div class="card w-50">
                 <canvas id="bar"></canvas>

@@ -1,29 +1,25 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PeopleAnalysis.Extensions;
-using PeopleAnalysis.Services;
+using PeopleAnalysis.ApplicationAPI;
 using PeopleAnalysis.ViewModels;
+using System.Threading.Tasks;
 
 namespace PeopleAnalysis.Controllers
 {
     [Authorize]
     public class PeopleController : Controller
     {
-        private readonly ApisManager apisManager;
-        private readonly AnaliticService analiticService;
+        private readonly IApplicationAPIClient applicationAPIClient;
 
-        public PeopleController(ApisManager apisManager, AnaliticService analiticService)
+        public PeopleController(IApplicationAPIClient applicationAPIClient)
         {
-            this.apisManager = apisManager;
-            this.analiticService = analiticService;
+            this.applicationAPIClient = applicationAPIClient;
         }
 
         [HttpGet]
-        public IActionResult Index([FromQuery]OpenPeopleViewModel openPeopleViewModel)
+        public async Task<IActionResult> Index([FromQuery]OpenPeopleViewModel openPeopleViewModel)
         {
-            var detail = apisManager[openPeopleViewModel.Social].GetUserDetailInformationView(openPeopleViewModel.Key);
-            detail.AnalitycsViewModel = analiticService.GetAnaliticsAboutUser(detail.Id, detail.Social, User.UserId());
-            return View(detail);
+            return View(await applicationAPIClient.ApiPeopleAsync(openPeopleViewModel));
         }
     }
 }

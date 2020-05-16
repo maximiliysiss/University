@@ -1,23 +1,20 @@
 ﻿using System.Diagnostics;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using PeopleAnalysis.ApplicationAPI;
 using PeopleAnalysis.Models;
-using PeopleAnalysis.Services;
-using PeopleAnalysis.ViewModels;
 
 namespace PeopleAnalysis.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ApisManager apisManager;
+        private readonly IApplicationAPIClient applicationAPIClient;
 
-        public HomeController(ILogger<HomeController> logger, ApisManager apisManager)
+        public HomeController(IApplicationAPIClient applicationAPIClient)
         {
-            _logger = logger;
-            this.apisManager = apisManager;
+            this.applicationAPIClient = applicationAPIClient;
         }
 
         public IActionResult Index()
@@ -26,10 +23,10 @@ namespace PeopleAnalysis.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index([FromForm]FindPeoplePageViewModel findPeoplePageViewModel)
+        public async Task<IActionResult> Index([FromForm]FindPeoplePageViewModel findPeoplePageViewModel)
         {
             if (!string.IsNullOrEmpty(findPeoplePageViewModel.FindPeopleViewModel.FindText))
-                findPeoplePageViewModel.FinderResultViewModel = apisManager.GetFinded(findPeoplePageViewModel.FindPeopleViewModel.FindText);
+                findPeoplePageViewModel = await applicationAPIClient.ApiFindpeopleAsync(findPeoplePageViewModel);
             return View(findPeoplePageViewModel);
         }
 

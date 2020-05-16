@@ -1,4 +1,4 @@
-﻿@model List<Request>
+﻿@model List<PeopleAnalysis.ApplicationAPI.Request>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -57,11 +57,11 @@
                     <td><a asp-action="Index" asp-controller="People" asp-route-key="@request.UserId" asp-route-social="@request.Social">@request.Status</a></td>
                     <td>
                         <div class="d-inline-flex">
-                            @if (request.Status.In(new[] { Status.Create, Status.InProgress }))
+                            @if (request.Status.In(new[] { StatusEnum.Create.Raw(), StatusEnum.InProgress.Raw() }))
                             {
                                 <a href="#" data-toggle="modal" data-target="#delete-modal" onclick="$('#toDelete').val(@request.Id)">Удалить из обработки</a>
                             }
-                            @if (request.Status.In(new[] { Status.Fail, Status.Closed }))
+                            @if (request.Status.In(new[] { StatusEnum.Fail.Raw(), StatusEnum.Closed.Raw() }))
                             {
                                 <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
                                     @Html.Hidden("id", request.UserId)

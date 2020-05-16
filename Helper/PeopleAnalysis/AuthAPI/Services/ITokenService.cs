@@ -1,16 +1,18 @@
-﻿using AuthAPI.Models.Database;
+﻿using AuthAPI.Models.Controller;
+using AuthAPI.Models.Database;
 using AuthAPI.Settings;
+using CommonCoreLibrary.Auth.Interfaces;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace AuthAPI.Services
 {
-    public interface ITokenService
+    public interface ITokenService: IBaseTokenService
     {
         string GenerateToken(User user);
-        ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true);
     }
 
     public class TokenService : ITokenService
@@ -20,6 +22,11 @@ namespace AuthAPI.Services
         public TokenService(AuthSettings authSettings)
         {
             this.authSettings = authSettings;
+        }
+
+        public string GenerateFullToken(string token)
+        {
+            throw new NotImplementedException();
         }
 
         public string GenerateToken(User user)
@@ -53,6 +60,11 @@ namespace AuthAPI.Services
                 throw new SecurityTokenException("Invalid token");
 
             return principal;
+        }
+
+        public Task SignInAsync(LoginResult loginResult)
+        {
+            throw new NotImplementedException();
         }
 
         private Claim[] CreateClaimIdentity(User user) => new[] {

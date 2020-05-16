@@ -5,25 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PeopleAnalysis.Models;
-using PeopleAnalysis.Services;
+using PeopleAnalysis.ApplicationAPI;
 
 namespace PeopleAnalysis.Controllers
 {
     [Authorize(Roles = "Admin")]
     public class ObjectsController : Controller
     {
-        private readonly DatabaseContext _context;
+        private readonly IApplicationAPIClient applicationAPIClient;
 
-        public ObjectsController(DatabaseContext context)
+        public ObjectsController(IApplicationAPIClient applicationAPIClient)
         {
-            _context = context;
+            this.applicationAPIClient = applicationAPIClient;
         }
 
         // GET: AnalysObjects
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AnalysObjects.ToListAsync());
+            return View(await applicationAPIClient.ApiObjectsAsync());
         }
 
         // GET: AnalysObjects/Create
@@ -38,8 +37,7 @@ namespace PeopleAnalysis.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(analysObject);
-                await _context.SaveChangesAsync();
+                await applicationAPIClient.ApiObjectsCreateAsync(analysObject);
                 return RedirectToAction(nameof(Index));
             }
             return View(analysObject);
@@ -53,7 +51,7 @@ namespace PeopleAnalysis.Controllers
                 return NotFound();
             }
 
-            var analysObject = await _context.AnalysObjects.FindAsync(id);
+            var analysObject = await applicationAPIClient.ApiObjectsFindAsync(id);
             if (analysObject == null)
             {
                 return NotFound();
@@ -74,19 +72,11 @@ namespace PeopleAnalysis.Controllers
             {
                 try
                 {
-                    _context.Update(analysObject);
-                    await _context.SaveChangesAsync();
+                    await applicationAPIClient.ApiObjectsEditAsync(id, analysObject);
                 }
-                catch (DbUpdateConcurrencyException)
+                catch (Exception)
                 {
-                    if (!AnalysObjectExists(analysObject.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    throw;
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -98,12 +88,8 @@ namespace PeopleAnalysis.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var analysObject = await _context.AnalysObjects.FindAsync(id);
-            _context.AnalysObjects.Remove(analysObject);
-            await _context.SaveChangesAsync();
+            await applicationAPIClient.ApiObjectsDeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
-
-        private bool AnalysObjectExists(int id) => _context.AnalysObjects.Any(e => e.Id == id);
     }
 }
