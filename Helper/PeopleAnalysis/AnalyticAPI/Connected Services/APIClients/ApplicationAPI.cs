@@ -1,11 +1,10 @@
-﻿using CommonCoreLibrary.APIClient;
+﻿using AnalyticAPI.AuthAPI;
+using CommonCoreLibrary.APIClient;
 using CommonCoreLibrary.Auth.Interfaces;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
-using PeopleAnalysis.AuthAPI;
 using System.Net.Http;
 
-namespace PeopleAnalysis.ApplicationAPI
+namespace AnalyticAPI.ApplicationAPI
 {
     public partial class ApplicationAPIClient : BaseAPIClient
     {
@@ -14,7 +13,7 @@ namespace PeopleAnalysis.ApplicationAPI
             this._baseUrl = baseUrl;
             this._httpClient = httpClient;
             this.AuthAPIClient = authBaseAPI;
-            _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(() => new JsonSerializerSettings());
+            _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
         }
 
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url)

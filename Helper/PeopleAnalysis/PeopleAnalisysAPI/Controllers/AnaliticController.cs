@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using PeopleAnalisysAPI.ViewModels;
 using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.ViewModels;
@@ -12,16 +13,32 @@ namespace PeopleAnalysis.Controllers
     public class AnaliticController : ControllerBase
     {
         private readonly AnaliticService analiticService;
+        private readonly IAnaliticAIService analiticAIService;
 
-        public AnaliticController(AnaliticService analiticService)
+        public AnaliticController(AnaliticService analiticService, IAnaliticAIService analiticAIService)
         {
             this.analiticService = analiticService;
+            this.analiticAIService = analiticAIService;
         }
 
         [HttpPost("StartAnalys")]
-        public ActionResult<bool> StartAnalys([FromBody]AnalitycsRequestModel analitycsRequest)
+        public ActionResult<bool> StartAnalys([FromBody]AnalitycsRequestModel analitycsRequest, [FromHeader]string authorization)
         {
-            return analiticService.CreateRequest(analitycsRequest, User.UserId());
+            return analiticService.CreateRequest(analitycsRequest, User.UserId(), authorization);
+        }
+
+        [HttpPost("InProcess")]
+        public ActionResult InProcess([FromBody]RequestViewModel requestViewModel)
+        {
+            analiticAIService.InProcessAsync(requestViewModel, User.Identity.Name);
+            return Ok();
+        }
+
+        [HttpPost("ReadyResult")]
+        public ActionResult ReadyResult([FromBody]ReadyResultViewModel readyResultViewModel)
+        {
+            analiticAIService.ReadyResult(readyResultViewModel);
+            return Ok();
         }
     }
 }

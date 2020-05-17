@@ -1,6 +1,7 @@
-﻿using Castle.Core.Logging;
+﻿using AnalyticAPI.ApplicationAPI;
+using AutoMapper;
+using CommonCoreLibrary.Services;
 using Microsoft.Extensions.Logging;
-using PeopleAnalysis.Models;
 using PeopleAnalysisML.Model;
 using System;
 using System.Collections.Generic;
@@ -13,30 +14,36 @@ namespace PeopleAnalysis.Services
 {
     public interface IAIService
     {
-        Task ProcessTaskAsync(Request request, IAnaliticAIService analiticService, DatabaseContext databaseContext, ApisManager apisManager);
+        Task ProcessTaskAsync(Request request);
     }
 
     public class TensorService : IAIService
     {
         private readonly IMLService mLService;
         private readonly ILogger<TensorService> logger;
+        private readonly IApplicationAPIClient applicationAPIClient;
+        private readonly IMapperService mapper;
 
-        public TensorService(IMLService mLService, ILogger<TensorService> logger)
+        public TensorService(IMLService mLService, ILogger<TensorService> logger, IApplicationAPIClient applicationAPIClient, IMapperService mapper)
         {
             this.mLService = mLService;
             this.logger = logger;
+            this.applicationAPIClient = applicationAPIClient;
+            this.mapper = mapper;
         }
 
-        public async Task ProcessTaskAsync(Request request, IAnaliticAIService analiticService, DatabaseContext databaseContext, ApisManager apisManager)
+        public async Task ProcessTaskAsync(Request request)
         {
             logger.LogInformation("Start processing");
-            await analiticService.InProcessAsync(request, request.CreateId, databaseContext);
-
-            var api = apisManager[request.Social];
-            var detail = api.GetUserDetailInformationView(request.UserId);
+            var taskInProcess = applicationAPIClient.ApiAnaliticInprocessAsync(mapper.Map<RequestViewModel>(request));
+            var detail = await applicationAPIClient.ApiPeopleAsync(new OpenPeopleViewModel
+            {
+                Key = request.UserId,
+                Social = request.Social
+            });
 
             List<string> files = new List<string>();
-            var path = Path.Combine(System.IO.Path.GetTempPath(), $"{request.UserId}_{Environment.TickCount64}");
+            var path = Path.Combine(Path.GetTempPath(), $"{request.UserId}_{Environment.TickCount64}");
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
 
@@ -86,7 +93,12 @@ namespace PeopleAnalysis.Services
                 });
             }
 
-            await analiticService.ReadyResult(request, request.CreateId, databaseContext, readyResult);
+            await taskInProcess;
+            await applicationAPIClient.ApiAnaliticReadyresultAsync(new ReadyResultViewModel
+            {
+                RequestViewModel = mapper.Map<RequestViewModel>(request),
+                Result = readyResult
+            });
         }
     }
 }

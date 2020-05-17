@@ -67,7 +67,7 @@ namespace PeopleAnalysis.Controllers
                     else
                         throw;
                 }
-                return RedirectToAction(nameof(GetObjects));
+                return Ok();
             }
             return analysObject;
         }
@@ -79,7 +79,7 @@ namespace PeopleAnalysis.Controllers
             var analysObject = await _context.AnalysObjects.FirstOrDefaultAsync(x => x.Id == id);
             _context.Remove(analysObject);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(GetObjects));
+            return Ok();
         }
 
         private bool AnalysObjectExists(int id) => _context.AnalysObjects.Any(e => e.Id == id);

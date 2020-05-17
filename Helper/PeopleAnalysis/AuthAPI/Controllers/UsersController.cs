@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AuthAPI.Models.Controller;
 using AuthAPI.Models.Database;
 using AuthAPI.Services;
+using CommonCoreLibrary.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,18 +26,18 @@ namespace AuthAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<UserModel>>> Index()
+        public async Task<ActionResult<List<UserViewModel>>> Index()
         {
-            return await db.Users.Select(x => mapperService.Map<UserModel>(x)).ToListAsync();
+            return (await db.Users.ToListAsync()).Select(x => mapperService.Map<UserViewModel>(x)).ToList();
         }
 
         [HttpGet("Find")]
-        public async Task<ActionResult<UserModel>> Find(string id)
+        public async Task<ActionResult<UserViewModel>> Find(string id)
         {
             var user = db.Users.FirstOrDefault(x => x.Id.ToString() == id);
             if (user == null)
                 return NotFound();
-            return mapperService.Map<UserModel>(user);
+            return mapperService.Map<UserViewModel>(user);
         }
 
         [HttpPost("Create")]

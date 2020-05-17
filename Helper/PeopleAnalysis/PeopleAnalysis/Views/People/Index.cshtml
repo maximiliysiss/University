@@ -24,17 +24,17 @@
 
 @section Scripts
 {
-    @if (Model.AnalitycsViewModel?.Result != null)
+    @if (Model.AnalitycsViewModel.IsResult)
     {
         <script>
             $(function () {
                 var barChart = new Chart($('#bar'), {
                     type: 'bar',
                     data: {
-                        labels: [@Html.Raw(string.Join(",", Model.AnalitycsViewModel.Result.ResultObjects.Select(x => $@"""{x.AnalysObject.Name}""")))],
+                        labels: [@Html.Raw(string.Join(",", Model.AnalitycsViewModel.ResultsNames.Select(x => $@"""{x}""")))],
                         datasets: [{
-                            data: [@(string.Join(",", Model.AnalitycsViewModel.Result.ResultObjects.Select(x => x.Count)))],
-                            backgroundColor:[@Html.Raw(string.Join(",",colorService.ColorHexList(Model.AnalitycsViewModel.Result.ResultObjects?.Count ?? 0)))]
+                            data: [@(string.Join(",", Model.AnalitycsViewModel.ResultsValues))],
+                            backgroundColor:[@Html.Raw(string.Join(",",colorService.ColorHexList(Model.AnalitycsViewModel.ResultObjectsCount)))]
                         }]
                     },
                     options: {
@@ -50,10 +50,10 @@
                 var pieChart = new Chart($('#pie'), {
                     type: 'doughnut',
                     data: {
-                        labels: [@Html.Raw(string.Join(",", Model.AnalitycsViewModel.Result.ResultObjects.Select(x => $@"""{x.AnalysObject.Name}""")))],
+                        labels: [@Html.Raw(string.Join(",", Model.AnalitycsViewModel.ResultsNames.Select(x => $@"""{x}""")))],
                         datasets: [{
-                            data: [@(string.Join(",", Model.AnalitycsViewModel.Result.ResultObjects.Select(x => x.Count)))],
-                            backgroundColor:[@Html.Raw(string.Join(",",colorService.ColorHexList(Model.AnalitycsViewModel.Result.ResultObjects?.Count ?? 0)))]
+                            data: [@(string.Join(",", Model.AnalitycsViewModel.ResultsValues))],
+                            backgroundColor:[@Html.Raw(string.Join(",",colorService.ColorHexList(Model.AnalitycsViewModel.ResultObjectsCount)))]
                         }]
                     },
                     options: {

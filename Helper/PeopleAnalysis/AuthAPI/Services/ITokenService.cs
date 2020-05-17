@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace AuthAPI.Services
 {
-    public interface ITokenService: IBaseTokenService
+    public interface ITokenService : IBaseTokenService
     {
         string GenerateToken(User user);
     }
@@ -74,7 +74,8 @@ namespace AuthAPI.Services
             new Claim("http://schemas.xmlsoap.org/ws/2005/05/identity/claims/salt", Guid.NewGuid().ToString()),
             new Claim("Code", user.Language.Code),
             new Claim("UICode", user.Language.UICode),
-            new Claim("Id", user.Id.ToString())
+            new Claim("Id", user.Id.ToString()),
+            new Claim("Refresher", user.RefreshToken)
         };
     }
 }

@@ -1,6 +1,7 @@
 using AuthAPI.Extensions;
 using AuthAPI.Services;
 using AuthAPI.Settings;
+using CommonCoreLibrary.Services;
 using CommonCoreLibrary.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -27,9 +28,9 @@ namespace AuthAPI
             var authSettings = Configuration.GetSection("AuthSettings").Get<AuthSettings>();
 
             services.AddSingleton(authSettings);
-            services.AddDbContext<IAuthDataProvider, AuthDataProvider>(x => x.UseLazyLoadingProxies().UseNpgsql(Configuration.GetConnectionString("Default")), ServiceLifetime.Scoped);
+            services.AddDbContext<IAuthDataProvider, AuthDataProvider>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")).UseLazyLoadingProxies(), ServiceLifetime.Scoped);
             services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<ITokenService, AuthAPI.Services.TokenService>();
+            services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<ICryptService, CryptService>();
             services.AddTransient<IMapperService, AutoMapperService>();
             services.AddTransient<IUserService, UserService>();

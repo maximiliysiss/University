@@ -7,15 +7,6 @@
 {
     <h3 class="p-2">Профиль пользователя в статусе private или недостаточно данных. Невозможно провести аналитику</h3>
 }
-else if (Model.AnalitycsViewModel == null || Model.AnalitycsViewModel.Status.In(new[] { StatusEnum.Closed.Raw(), StatusEnum.Fail.Raw() }))
-{
-    <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
-        @Html.Hidden("id", Model.Id)
-        @Html.Hidden("social", Model.Social)
-        @Html.Hidden("userName", Model.FullName)
-        <input value="Запустить аналитику" class="btn btn-primary w-100" type="submit" />
-    </form>
-}
 else if (Model.AnalitycsViewModel.Status == StatusEnum.InProgress.Raw())
 {
     <a asp-action="Index" asp-controller="Request" class="h3 p-2">В процессе</a>
@@ -33,4 +24,13 @@ else if (Model.AnalitycsViewModel.Status == StatusEnum.Complete.Raw())
             </div>
         </div>
     </div>
+}
+else if (!Model.AnalitycsViewModel.IsResult || Model.AnalitycsViewModel.Status.In(new[] { StatusEnum.Closed.Raw(), StatusEnum.Fail.Raw() }))
+{
+    <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
+        @Html.Hidden("id", Model.Id)
+        @Html.Hidden("social", Model.Social)
+        @Html.Hidden("userName", Model.FullName)
+        <input value="Запустить аналитику" class="btn btn-primary w-100" type="submit" />
+    </form>
 }

@@ -1,10 +1,15 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using AnalyticAPI.ApplicationAPI;
+using CommonCoreLibrary.Auth.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using PeopleAnalysis.Models;
+using Newtonsoft.Json.Linq;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System;
+using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,12 +26,14 @@ namespace PeopleAnalysis.Services
         private readonly IServiceScopeFactory scopeFactory;
         private readonly IAIService aIService;
         private readonly ConnectionFactory factory;
+        private readonly ILogger<RabbitMQService> logger;
 
-        public RabbitMQService(IAIService aIService, IServiceScopeFactory scopeFactory)
+        public RabbitMQService(IAIService aIService, IServiceScopeFactory scopeFactory, ILogger<RabbitMQService> logger)
         {
             this.scopeFactory = scopeFactory;
             this.aIService = aIService;
             factory = new ConnectionFactory() { HostName = "localhost" };
+            this.logger = logger;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -48,14 +55,25 @@ namespace PeopleAnalysis.Services
                 consumer.Received += async (sender, ea) =>
                 {
                     var body = ea.Body;
-                    var message = Encoding.UTF8.GetString(body);
+                    var message = Encoding.UTF8.GetString(body.ToArray());
+                    var jsonObject = JObject.Parse(message);
                     try
                     {
                         using var scope = scopeFactory.CreateScope();
-                        await aIService.ProcessTaskAsync(JsonConvert.DeserializeObject<Request>(message), scope.ServiceProvider.GetService<IAnaliticAIService>(),
-                            scope.ServiceProvider.GetRequiredService<DatabaseContext>(), scope.ServiceProvider.GetRequiredService<ApisManager>());
+                        var baseTokenService = scope.ServiceProvider.GetRequiredService<IBaseTokenService>();
+                        var tokens = jsonObject["args"].Value<string>().Split(' ')[1];
+                        var claims = baseTokenService.GetPrincipalFromExpiredToken(tokens, false);
+                        await baseTokenService.SignInAsync(new BaseAuthResult
+                        {
+                            AccessToken = tokens,
+                            RefreshToken = claims.Claims.FirstOrDefault(x => x.Type == "Refresher").Value
+                        });
+                        await aIService.ProcessTaskAsync(JsonConvert.DeserializeObject<Request>(jsonObject["message"].ToString()));
                     }
-                    catch (Exception) { }
+                    catch (Exception ex)
+                    {
+                        logger.LogError(ex, ex.Message);
+                    }
                     finally
                     {
                         channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);

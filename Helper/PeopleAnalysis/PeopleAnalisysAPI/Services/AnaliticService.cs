@@ -1,4 +1,9 @@
-﻿using PeopleAnalysis.Models;
+﻿using CommonCoreLibrary.Extensions;
+using CommonCoreLibrary.Services;
+using Microsoft.AspNetCore.Http;
+using PeopleAnalisysAPI.Models.Rabbit;
+using PeopleAnalisysAPI.ViewModels;
+using PeopleAnalysis.Models;
 using PeopleAnalysis.ViewModels;
 using System;
 using System.Linq;
@@ -11,12 +16,16 @@ namespace PeopleAnalysis.Services
         private readonly IDatabaseContext databaseContext;
         private readonly ApisManager apisManager;
         private readonly ISender sender;
+        private readonly IMapperService mapperService;
+        private readonly IHttpContextAccessor httpContextAccessor;
 
-        public AnaliticService(IDatabaseContext databaseContext, ApisManager apisManager, ISender sender)
+        public AnaliticService(IDatabaseContext databaseContext, ApisManager apisManager, ISender sender, IMapperService mapperService, IHttpContextAccessor httpContextAccessor)
         {
             this.databaseContext = databaseContext;
             this.apisManager = apisManager;
             this.sender = sender;
+            this.mapperService = mapperService;
+            this.httpContextAccessor = httpContextAccessor;
         }
 
         public AnalitycsViewModel GetAnaliticsAboutUser(string userId, string social, string currentUserId)
@@ -24,19 +33,22 @@ namespace PeopleAnalysis.Services
             var lastAnalitics = databaseContext.Requests.OrderByDescending(x => x.Id)
                 .FirstOrDefault(x => x.UserId == userId && x.Social == social && x.OwnerId == currentUserId);
             if (lastAnalitics == null)
-                return null;
+                return new AnalitycsViewModel();
             Result result = null;
             if (lastAnalitics.Status == Status.Complete)
                 result = databaseContext.Results.FirstOrDefault(x => x.Request.Id == lastAnalitics.Id);
             return new AnalitycsViewModel
             {
                 Status = lastAnalitics.Status,
-                Result = result,
-                Time = lastAnalitics.TimeComplete
+                ResultObjectsCount = result?.ResultObjects?.Count ?? 0,
+                IsResult = result != null,
+                Time = lastAnalitics.TimeComplete,
+                ResultsNames = result?.ResultObjects.Select(x => x.AnalysObject.Name).ToArray() ?? Array.Empty<string>(),
+                ResultsValues = result?.ResultObjects.Select(x => x.Count).ToArray() ?? Array.Empty<float>()
             };
         }
 
-        public bool CreateRequest(AnalitycsRequestModel analitycsRequest, string user)
+        public bool CreateRequest(AnalitycsRequestModel analitycsRequest, string user, string authorization)
         {
             var isExists = databaseContext.Requests.Any(x => x.OwnerId == user && x.Social == analitycsRequest.Social && x.User == analitycsRequest.Id && x.Status == Status.Complete);
             if (isExists)
@@ -53,22 +65,29 @@ namespace PeopleAnalysis.Services
             };
             databaseContext.Add(newRequest);
             databaseContext.SaveChanges();
-            sender.Send(newRequest);
+            sender.Send(mapperService.Map<RequestRabbit>(newRequest), authorization ?? string.Empty);
             return true;
         }
     }
 
     public interface IAnaliticAIService
     {
-        Task<Request> InProcessAsync(Request request, string user, DatabaseContext databaseContext);
-        Task ReadyResult(Request request, string createId, DatabaseContext databaseContext, Result readyResult);
+        Task<Request> InProcessAsync(RequestViewModel request, string user);
+        Task ReadyResult(ReadyResultViewModel readyResultViewModel);
     }
 
     public class AnaliticAIService : IAnaliticAIService
     {
-        public async Task<Request> InProcessAsync(Request request, string user, DatabaseContext databaseContext)
+        private readonly IDatabaseContext databaseContext;
+
+        public AnaliticAIService(IDatabaseContext databaseContext)
         {
-            var find = databaseContext.Requests.Find(request.Id);
+            this.databaseContext = databaseContext;
+        }
+
+        public async Task<Request> InProcessAsync(RequestViewModel request, string user)
+        {
+            var find = databaseContext.Requests.FirstOrDefault(x => x.Id == request.Id);
             if (find == null)
                 throw new ApplicationException("Not found request");
             if (find.Status != request.Status)
@@ -90,9 +109,9 @@ namespace PeopleAnalysis.Services
             return newRequest;
         }
 
-        public async Task ReadyResult(Request request, string createId, DatabaseContext databaseContext, Result readyResult)
+        public async Task ReadyResult(ReadyResultViewModel readyResultViewModel)
         {
-            // TODO
+            var request = readyResultViewModel.RequestViewModel;
 
             var completeRequest = new Request
             {
@@ -106,13 +125,13 @@ namespace PeopleAnalysis.Services
                 TimeComplete = DateTime.Now - request.DateTime
             };
 
-            readyResult.Request = completeRequest;
+            var readyResult = readyResultViewModel.Result;
 
             for (int i = 0; i < readyResult.ResultObjects.Count; i++)
             {
                 var tmp = databaseContext.AnalysObjects.FirstOrDefault(x => x.Name == readyResult.ResultObjects[i].AnalysObject.Name);
                 if (tmp == null)
-                    databaseContext.AnalysObjects.Add(readyResult.ResultObjects[i].AnalysObject);
+                    databaseContext.Add(readyResult.ResultObjects[i].AnalysObject);
                 else
                     readyResult.ResultObjects[i].AnalysObject = tmp;
             }

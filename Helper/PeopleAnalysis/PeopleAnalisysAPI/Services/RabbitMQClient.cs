@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using CommonCoreLibrary.Services;
+using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
 
@@ -6,7 +7,7 @@ namespace PeopleAnalysis.Services
 {
     public interface ISender
     {
-        void Send<T>(T message);
+        void Send<T>(T message, object args = null);
     }
 
     public class RabbitMQClient : ISender
@@ -18,7 +19,7 @@ namespace PeopleAnalysis.Services
             factory = new ConnectionFactory() { HostName = "localhost" };
         }
 
-        public void Send<T>(T message)
+        public void Send<T>(T message, object args = null)
         {
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
@@ -28,7 +29,7 @@ namespace PeopleAnalysis.Services
                                  autoDelete: false,
                                  arguments: null);
 
-            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message));
+            var body = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new { message, args }));
             var properties = channel.CreateBasicProperties();
             properties.Persistent = true;
 

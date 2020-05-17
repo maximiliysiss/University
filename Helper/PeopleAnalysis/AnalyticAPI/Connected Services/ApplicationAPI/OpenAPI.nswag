@@ -53,7 +53,7 @@
       "wrapResponseMethods": [],
       "generateResponseClasses": true,
       "responseClass": "SwaggerResponse",
-      "namespace": "PeopleAnalysis.ApplicationAPI",
+      "namespace": "AnalyticAPI.ApplicationAPI",
       "requiredPropertiesMustBeDefined": true,
       "dateType": "System.DateTimeOffset",
       "jsonConverters": null,

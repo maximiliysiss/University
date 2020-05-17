@@ -1,5 +1,6 @@
 ﻿using AuthAPI.Models.Controller;
 using AuthAPI.Services;
+using CommonCoreLibrary.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

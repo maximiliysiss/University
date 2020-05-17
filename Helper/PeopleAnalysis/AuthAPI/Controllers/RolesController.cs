@@ -2,6 +2,7 @@
 using System.Linq;
 using AuthAPI.Models.Controller;
 using AuthAPI.Services;
+using CommonCoreLibrary.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AuthAPI.Controllers

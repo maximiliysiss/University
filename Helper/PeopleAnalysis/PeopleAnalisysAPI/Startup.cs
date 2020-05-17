@@ -1,3 +1,4 @@
+using CommonCoreLibrary.Services;
 using CommonCoreLibrary.Startup;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -5,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using PeopleAnalisysAPI.Services;
 using PeopleAnalysis.Models.Configuration;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.Services.APIs;
@@ -34,6 +36,9 @@ namespace PeopleAnalisysAPI
             services.AddScoped<VkSocialApi>();
             services.AddScoped<ISender, RabbitMQClient>();
             services.AddControllers();
+
+            services.AddSingleton<IMapperService, MapperService>();
+            services.AddHttpContextAccessor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,8 +54,8 @@ namespace PeopleAnalisysAPI
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            app.UseAuthorization();
             app.UseAuthentication();
+            app.UseAuthorization();
             app.UseSwaggerWithUI(Configuration["ApiInfo:Name"], Configuration["ApiInfo:Version"]);
 
             app.UseEndpoints(endpoints =>

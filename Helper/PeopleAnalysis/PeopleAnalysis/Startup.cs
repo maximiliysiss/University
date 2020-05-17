@@ -1,5 +1,6 @@
 using AuthAPI.Settings;
 using CommonCoreLibrary.Auth.Interfaces;
+using CommonCoreLibrary.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

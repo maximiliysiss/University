@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
+using CommonCoreLibrary.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PeopleAnalysis.AuthAPI;
-using PeopleAnalysis.Extensions;
-using PeopleAnalysis.Models;
 
 namespace PeopleAnalysis.Controllers
 {

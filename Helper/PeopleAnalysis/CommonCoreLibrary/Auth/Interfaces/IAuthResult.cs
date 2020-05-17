@@ -9,4 +9,10 @@ namespace CommonCoreLibrary.Auth.Interfaces
         string AccessToken { get; set; }
         string RefreshToken { get; set; }
     }
+
+    public class BaseAuthResult : IAuthResult
+    {
+        public string AccessToken { get; set; }
+        public string RefreshToken { get; set; }
+    }
 }
