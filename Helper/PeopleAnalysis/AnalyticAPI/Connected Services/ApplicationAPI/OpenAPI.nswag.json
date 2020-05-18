@@ -11,6 +11,16 @@
           "Analitic"
         ],
         "operationId": "StartAnalys",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {

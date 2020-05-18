@@ -14,7 +14,7 @@ else if (Model.AnalitycsViewModel.Status == StatusEnum.InProgress.Raw())
 else if (Model.AnalitycsViewModel.Status == StatusEnum.Complete.Raw())
 {
     <div class="p-0">
-        <p class="h4">Время обработки: @Model.AnalitycsViewModel.Time@*ToString("h'h 'm'm 's's'")*@</p>
+        <p class="h4">Время обработки: @Model.AnalitycsViewModel.Time.ToString()</p>
         <div class="d-flex flex-wrap">
             <div class="card w-50">
                 <canvas id="bar"></canvas>
@@ -25,7 +25,8 @@ else if (Model.AnalitycsViewModel.Status == StatusEnum.Complete.Raw())
         </div>
     </div>
 }
-else if (!Model.AnalitycsViewModel.IsResult || Model.AnalitycsViewModel.Status.In(new[] { StatusEnum.Closed.Raw(), StatusEnum.Fail.Raw() }))
+
+@if (Model.AnalitycsViewModel.Status.In(new[] { StatusEnum.Closed.Raw(), StatusEnum.Fail.Raw(), StatusEnum.Complete.Raw() }))
 {
     <form method="post" asp-action="StartAnalys" asp-controller="Analitic">
         @Html.Hidden("id", Model.Id)

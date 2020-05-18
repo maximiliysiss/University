@@ -52,6 +52,12 @@ namespace AuthAPI.Services
             modelBuilder.Entity<Role>().HasData(new[] {
                 new Role{ Id = 1, Name = "User" },
                 new Role{ Id = 2, Name = "Admin" },
+                new Role{ Id = 3, Name = "Service" },
+            });
+
+            modelBuilder.Entity<User>().HasData(new[] { 
+                new User{ Email = "admin@admin.ru", LanguageId = 1, Nickname = "admin", Id = 1, PasswordHash = CryptService.CreateHash("admin"), RoleId = 2 },
+                new User{ Email = "service@service.ru", LanguageId = 1, Nickname = "service", Id = 2, PasswordHash = CryptService.CreateHash("service"), RoleId = 3 },
             });
         }
 

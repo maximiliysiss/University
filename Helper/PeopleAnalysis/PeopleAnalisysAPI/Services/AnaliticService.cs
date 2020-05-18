@@ -138,6 +138,7 @@ namespace PeopleAnalysis.Services
 
             var resultIndex = readyResult.ResultObjects.Sum(x => x.Count * x.AnalysObject.Weight);
             readyResult.ResultAnswer = resultIndex > 1;
+            readyResult.Request = completeRequest;
 
             databaseContext.Add(completeRequest);
             databaseContext.Add(readyResult);

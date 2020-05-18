@@ -16,13 +16,11 @@ namespace AuthAPI.Controllers
     {
         private readonly IAuthDataProvider db;
         private readonly IMapperService mapperService;
-        private readonly ICryptService cryptService;
 
-        public UsersController(IAuthDataProvider db, IMapperService mapperService, ICryptService cryptService)
+        public UsersController(IAuthDataProvider db, IMapperService mapperService)
         {
             this.db = db;
             this.mapperService = mapperService;
-            this.cryptService = cryptService;
         }
 
         [HttpGet]
@@ -69,7 +67,7 @@ namespace AuthAPI.Controllers
                 var role = db.Roles.FirstOrDefault(x => x.Name == loginViewModel.Role);
                 user.Email = loginViewModel.Login;
                 user.Role = role;
-                user.PasswordHash = cryptService.CreateHash(loginViewModel.Password);
+                user.PasswordHash = CryptService.CreateHash(loginViewModel.Password);
                 db.Update(user);
                 db.SaveChanges();
                 return Ok();

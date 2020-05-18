@@ -2,14 +2,9 @@
 
 namespace AuthAPI.Services
 {
-    public interface ICryptService
+    public class CryptService
     {
-        string CreateHash(string data);
-    }
-
-    public class CryptService : ICryptService
-    {
-        public string CreateHash(string data)
+        public static string CreateHash(string data)
         {
             using System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create();
 

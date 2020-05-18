@@ -35,7 +35,8 @@ namespace PeopleAnalysis.Services
         public async Task ProcessTaskAsync(Request request)
         {
             logger.LogInformation("Start processing");
-            var taskInProcess = applicationAPIClient.ApiAnaliticInprocessAsync(mapper.Map<RequestViewModel>(request));
+            var reqViewModel = mapper.Map<RequestViewModel>(request);
+            await applicationAPIClient.ApiAnaliticInprocessAsync(reqViewModel);
             var detail = await applicationAPIClient.ApiPeopleAsync(new OpenPeopleViewModel
             {
                 Key = request.UserId,
@@ -93,7 +94,6 @@ namespace PeopleAnalysis.Services
                 });
             }
 
-            await taskInProcess;
             await applicationAPIClient.ApiAnaliticReadyresultAsync(new ReadyResultViewModel
             {
                 RequestViewModel = mapper.Map<RequestViewModel>(request),

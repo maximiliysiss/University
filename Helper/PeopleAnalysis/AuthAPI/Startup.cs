@@ -1,4 +1,3 @@
-using AuthAPI.Extensions;
 using AuthAPI.Services;
 using AuthAPI.Settings;
 using CommonCoreLibrary.Services;
@@ -31,7 +30,6 @@ namespace AuthAPI
             services.AddDbContext<IAuthDataProvider, AuthDataProvider>(x => x.UseNpgsql(Configuration.GetConnectionString("Default")).UseLazyLoadingProxies(), ServiceLifetime.Scoped);
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<ICryptService, CryptService>();
             services.AddTransient<IMapperService, AutoMapperService>();
             services.AddTransient<IUserService, UserService>();
 
@@ -46,7 +44,6 @@ namespace AuthAPI
             logger.LogInformation($"Connection string: {Configuration.GetConnectionString("SQLServer")}");
 
             authDataProvider.ApplyChanges();
-            app.InitDatabase();
 
             if (env.IsDevelopment())
             {

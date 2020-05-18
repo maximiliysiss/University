@@ -20,8 +20,8 @@ namespace CommonCoreLibrary.Auth.Interfaces
 
     public class ClientTokenService : IBaseTokenService
     {
-        private readonly AuthSettings authSettings;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        protected readonly AuthSettings authSettings;
+        protected readonly IHttpContextAccessor httpContextAccessor;
 
         public ClientTokenService(AuthSettings authSettings, IHttpContextAccessor httpContextAccessor)
         {
@@ -29,15 +29,15 @@ namespace CommonCoreLibrary.Auth.Interfaces
             this.httpContextAccessor = httpContextAccessor;
         }
 
-        public string GenerateFullToken(string token) => $"Bearer {token}";
+        public virtual string GenerateFullToken(string token) => $"Bearer {token}";
 
-        public ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true)
+        public virtual ClaimsPrincipal GetPrincipalFromExpiredToken(string token, bool lifetime = true)
         {
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = true,
                 ValidateIssuer = true,
-                ValidateLifetime = true,
+                ValidateLifetime = lifetime,
                 ValidAudience = authSettings.Audience,
                 ValidIssuer = authSettings.Issuer,
                 IssuerSigningKey = authSettings.SecurityKey
@@ -50,7 +50,7 @@ namespace CommonCoreLibrary.Auth.Interfaces
             return principal;
         }
 
-        public async Task SignInAsync(IAuthResult loginResult)
+        public virtual async Task SignInAsync(IAuthResult loginResult)
         {
             if (loginResult == null)
                 return;

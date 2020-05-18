@@ -48,6 +48,7 @@ namespace PeopleAnalysis
 
             services.AddSingleton(Configuration.Get<KeysConfiguration>());
             services.AddSingleton<ColorService>();
+            services.AddScoped<ILocalizer, Localizer>();
 
             services.AddSingleton<IBaseTokenService, ClientTokenService>();
             services.AddSingleton<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(Configuration["AuthAPI"], new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),

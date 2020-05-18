@@ -14,6 +14,7 @@ namespace AnalyticAPI.ApplicationAPI
             this._httpClient = httpClient;
             this.AuthAPIClient = authBaseAPI;
             _settings = new System.Lazy<Newtonsoft.Json.JsonSerializerSettings>(CreateSerializerSettings);
+            _settings.Value.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
         }
 
         partial void PrepareRequest(System.Net.Http.HttpClient client, System.Net.Http.HttpRequestMessage request, string url)

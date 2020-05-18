@@ -19,12 +19,12 @@ namespace AnalyticAPI.ApplicationAPI
     {
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(AnalitycsRequestModel body);
+        System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(string authorization, AnalitycsRequestModel body);
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(AnalitycsRequestModel body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(string authorization, AnalitycsRequestModel body, System.Threading.CancellationToken cancellationToken);
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -163,15 +163,15 @@ namespace AnalyticAPI.ApplicationAPI
     
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(AnalitycsRequestModel body)
+        public System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(string authorization, AnalitycsRequestModel body)
         {
-            return ApiAnaliticStartanalysAsync(body, System.Threading.CancellationToken.None);
+            return ApiAnaliticStartanalysAsync(authorization, body, System.Threading.CancellationToken.None);
         }
     
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(AnalitycsRequestModel body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<bool> ApiAnaliticStartanalysAsync(string authorization, AnalitycsRequestModel body, System.Threading.CancellationToken cancellationToken)
         {
             var urlBuilder_ = new System.Text.StringBuilder();
             urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/Analitic/StartAnalys");
@@ -181,6 +181,8 @@ namespace AnalyticAPI.ApplicationAPI
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
+                    if (authorization != null)
+                        request_.Headers.TryAddWithoutValidation("authorization", ConvertToString(authorization, System.Globalization.CultureInfo.InvariantCulture));
                     var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
                     content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;

@@ -4,6 +4,7 @@ using PeopleAnalisysAPI.ViewModels;
 using PeopleAnalysis.Extensions;
 using PeopleAnalysis.Services;
 using PeopleAnalysis.ViewModels;
+using System.Threading.Tasks;
 
 namespace PeopleAnalysis.Controllers
 {
@@ -28,9 +29,9 @@ namespace PeopleAnalysis.Controllers
         }
 
         [HttpPost("InProcess")]
-        public ActionResult InProcess([FromBody]RequestViewModel requestViewModel)
+        public async Task<ActionResult> InProcess([FromBody]RequestViewModel requestViewModel)
         {
-            analiticAIService.InProcessAsync(requestViewModel, User.Identity.Name);
+            await analiticAIService.InProcessAsync(requestViewModel, User.Identity.Name);
             return Ok();
         }
 

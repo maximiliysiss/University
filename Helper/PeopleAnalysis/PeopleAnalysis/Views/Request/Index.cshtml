@@ -54,7 +54,7 @@
                     <td>@request.DateTime</td>
                     <td><a target="_blank" rel="noopener noreferrer" href="@request.UserUrl">@request.User</a></td>
                     <td>@request.Social</td>
-                    <td><a asp-action="Index" asp-controller="People" asp-route-key="@request.UserId" asp-route-social="@request.Social">@request.Status</a></td>
+                    <td><a asp-action="Index" asp-controller="People" asp-route-key="@request.UserId" asp-route-social="@request.Social">@((StatusEnum)request.Status)</a></td>
                     <td>
                         <div class="d-inline-flex">
                             @if (request.Status.In(new[] { StatusEnum.Create.Raw(), StatusEnum.InProgress.Raw() }))

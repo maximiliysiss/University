@@ -1,6 +1,7 @@
 using AnalyticAPI.ApplicationAPI;
 using AnalyticAPI.AuthAPI;
 using AnalyticAPI.Services;
+using AnalyticAPI.Services.Settings;
 using AutoMapper;
 using CommonCoreLibrary.Auth.Interfaces;
 using CommonCoreLibrary.Services;
@@ -39,7 +40,9 @@ namespace AnalyticAPI
             services.AddSingleton<IMLService, ConsumeModel>(x => new ConsumeModel(Configuration["ML:ModelPath"]));
             services.AddSingleton<IMapperService, MapperService>();
 
-            services.AddSingleton<IBaseTokenService, ClientTokenService>();
+            services.AddSingleton(Configuration.GetSection("Service").Get<ServiceAuthConfig>());
+
+            services.AddSingleton<IBaseTokenService, VirtualTokenService>();
             services.AddSingleton<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(Configuration["AuthAPI"], new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),
                 x.GetRequiredService<IHttpContextAccessor>(), x.GetRequiredService<IBaseTokenService>()));
             services.AddSingleton<IApplicationAPIClient, ApplicationAPIClient>(x => new ApplicationAPIClient(Configuration["ApplicationAPI"], new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),

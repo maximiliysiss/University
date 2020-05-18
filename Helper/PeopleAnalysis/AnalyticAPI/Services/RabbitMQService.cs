@@ -1,4 +1,6 @@
 ﻿using AnalyticAPI.ApplicationAPI;
+using AnalyticAPI.AuthAPI;
+using AnalyticAPI.Services.Settings;
 using CommonCoreLibrary.Auth.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,13 +29,17 @@ namespace PeopleAnalysis.Services
         private readonly IAIService aIService;
         private readonly ConnectionFactory factory;
         private readonly ILogger<RabbitMQService> logger;
+        private readonly IAuthAPIClient authAPIClient;
+        private readonly ServiceAuthConfig serviceAuthConfig;
 
-        public RabbitMQService(IAIService aIService, IServiceScopeFactory scopeFactory, ILogger<RabbitMQService> logger)
+        public RabbitMQService(IAIService aIService, IServiceScopeFactory scopeFactory, ILogger<RabbitMQService> logger, IAuthAPIClient authAPIClient, ServiceAuthConfig serviceAuthConfig)
         {
             this.scopeFactory = scopeFactory;
             this.aIService = aIService;
             factory = new ConnectionFactory() { HostName = "localhost" };
             this.logger = logger;
+            this.authAPIClient = authAPIClient;
+            this.serviceAuthConfig = serviceAuthConfig;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
@@ -61,13 +67,12 @@ namespace PeopleAnalysis.Services
                     {
                         using var scope = scopeFactory.CreateScope();
                         var baseTokenService = scope.ServiceProvider.GetRequiredService<IBaseTokenService>();
-                        var tokens = jsonObject["args"].Value<string>().Split(' ')[1];
-                        var claims = baseTokenService.GetPrincipalFromExpiredToken(tokens, false);
-                        await baseTokenService.SignInAsync(new BaseAuthResult
+                        var loginResult = await authAPIClient.ApiAuthLoginPostAsync(new LoginModel
                         {
-                            AccessToken = tokens,
-                            RefreshToken = claims.Claims.FirstOrDefault(x => x.Type == "Refresher").Value
+                            Login = serviceAuthConfig.Login,
+                            Password = serviceAuthConfig.Password
                         });
+                        await baseTokenService.SignInAsync(loginResult);
                         await aIService.ProcessTaskAsync(JsonConvert.DeserializeObject<Request>(jsonObject["message"].ToString()));
                     }
                     catch (Exception ex)

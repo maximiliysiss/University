@@ -19,19 +19,17 @@ namespace AuthAPI.Services
     public class AuthService : IAuthService
     {
         private readonly IAuthDataProvider authDataProvider;
-        private readonly ICryptService cryptService;
         private readonly ITokenService tokenService;
 
-        public AuthService(IAuthDataProvider authDataProvider, ICryptService cryptService, ITokenService tokenService)
+        public AuthService(IAuthDataProvider authDataProvider, ITokenService tokenService)
         {
             this.authDataProvider = authDataProvider;
-            this.cryptService = cryptService;
             this.tokenService = tokenService;
         }
 
         public async Task<LoginResult> LoginAsync(LoginModel loginModel)
         {
-            var exists = authDataProvider.Users.FirstOrDefault(x => x.Email == loginModel.Login && x.PasswordHash == cryptService.CreateHash(loginModel.Password));
+            var exists = authDataProvider.Users.FirstOrDefault(x => x.Email == loginModel.Login && x.PasswordHash == CryptService.CreateHash(loginModel.Password));
             if (exists == null)
                 return null;
             var res = await GenerateTokenAndResult(exists);
@@ -61,7 +59,7 @@ namespace AuthAPI.Services
             {
                 Email = registerModel.Email,
                 Nickname = registerModel.Nickname,
-                PasswordHash = cryptService.CreateHash(registerModel.Password),
+                PasswordHash = CryptService.CreateHash(registerModel.Password),
                 Role = authDataProvider.Roles.FirstOrDefault(x => x.Name == "User")
             };
 
@@ -77,10 +75,10 @@ namespace AuthAPI.Services
         {
             var tokenInfo = tokenService.GetPrincipalFromExpiredToken(token);
             var exists = authDataProvider.Users.FirstOrDefault(x => x.Id == passwordRestore.UserId);
-            if (exists == null || exists.Email != tokenInfo.Identity.Name || exists.PasswordHash != cryptService.CreateHash(passwordRestore.PrevPassword))
+            if (exists == null || exists.Email != tokenInfo.Identity.Name || exists.PasswordHash != CryptService.CreateHash(passwordRestore.PrevPassword))
                 return null;
 
-            exists.PasswordHash = cryptService.CreateHash(passwordRestore.Password);
+            exists.PasswordHash = CryptService.CreateHash(passwordRestore.Password);
 
             var res = await GenerateTokenAndResult(exists);
             await authDataProvider.SaveChangesAsync();
