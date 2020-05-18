@@ -46,7 +46,16 @@ namespace AuthAPI.Controllers
                 if (await db.Users.AnyAsync(x => x.Email == loginViewModel.Login))
                     return BadRequest("Такой пользователь уже существует");
                 var role = db.Roles.FirstOrDefault(x => x.Name == loginViewModel.Role);
-                var newUser = new User { Email = loginViewModel.Login, Nickname = loginViewModel.Login, Role = role };
+                var lang = db.Languages.First();
+                var newUser = new User
+                {
+                    Email = loginViewModel.Login,
+                    Nickname = loginViewModel.Login,
+                    Role = role,
+                    Language = lang,
+                    LanguageId = lang.Id,
+                    RoleId = role.Id
+                };
                 db.Add(newUser);
                 db.SaveChanges();
                 return Ok();

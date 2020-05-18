@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@inject CommonCoreLibrary.Services.ILocalizer localizer
+@{
+    if (User.Identity.IsAuthenticated)
+        System.Threading.Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(User.UICode());
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,18 +29,18 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@localizer["Home"]</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="Index">Заявки</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Request" asp-action="Index">@localizer["Requests"]</a>
                             </li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Пользователи</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">@localizer["Users"]</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Objects" asp-action="Index">Объекты</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Objects" asp-action="Index">@localizer["Objects"]</a>
                                 </li>
                             }
                         }

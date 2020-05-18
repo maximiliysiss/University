@@ -1,22 +1,23 @@
 ﻿@model PeopleAnalysis.ApplicationAPI.FindPeoplePageViewModel
+@inject CommonCoreLibrary.Services.ILocalizer localizer
 @{
     ViewData["Title"] = "Finder";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <style>
-
     .card:hover {
         cursor: pointer;
         background-color: #e3e3e3;
     }
+
 </style>
 
 <form asp-action="Index" method="post">
-    <h4>Find people</h4>
+    <h4>@localizer["FindPeople"]</h4>
     <hr />
     <div class="form-group">
-        <input asp-for="FindPeopleViewModel.FindText" class="form-control" placeholder="Поиск" />
+        <input asp-for="FindPeopleViewModel.FindText" class="form-control" placeholder="@localizer["Search"]" />
     </div>
 </form>
 
@@ -37,8 +38,8 @@
                             <img class="card-img-top" src="@user.ImagePath" alt="Card image cap">
                             <div class="card-body">
                                 <h5 class="card-title">@user.FullName</h5>
-                                <p class="card-text">Возраст: @(user.Age?.ToString() ?? "Не указан")</p>
-                                <a href="#" class="btn btn-primary">Go to analytics</a>
+                                <p class="card-text">@localizer["Age"]: @(user.Age?.ToString() ?? localizer["NotSet"])</p>
+                                <a href="#" class="btn btn-primary">@localizer["GoToAnalytic"]</a>
                             </div>
                         </div>
                     </a>
@@ -49,7 +50,7 @@
             {
                 <button id="expender_@groupFinder.Name" class="btn btn-primary w-100" type="button" data-toggle="collapse" data-target="#data_@groupFinder.Name" aria-expanded="false"
                         onclick="$(this).css('display', 'none' );">
-                    Раскрыть
+                    @localizer["Open"]
                 </button>
             }
 
@@ -62,7 +63,7 @@
                                 <img class="card-img-top" src="@user.ImagePath" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">@user.FullName</h5>
-                                    <p class="card-text">Возраст: @(user.Age?.ToString() ?? "Не указан")</p>
+                                    <p class="card-text">@localizer["Age"]: @(user.Age?.ToString() ?? localizer["NotSet"])</p>
                                     <a href="#" class="btn btn-primary">Go to analytics</a>
                                 </div>
                             </div>
@@ -72,7 +73,7 @@
 
                 <button class="btn btn-primary w-100" type="button" data-toggle="collapse" data-target="#data_@groupFinder.Name"
                         onclick="$('#expender_@groupFinder.Name').css('display','block')">
-                    Скрыть
+                    @localizer["Hide"]
                 </button>
             </div>
 

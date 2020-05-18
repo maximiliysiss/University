@@ -42,6 +42,7 @@ namespace PeopleAnalysis.Services
                 Status = lastAnalitics.Status,
                 ResultObjectsCount = result?.ResultObjects?.Count ?? 0,
                 IsResult = result != null,
+                Answer = result?.ResultAnswer ?? false,
                 Time = lastAnalitics.TimeComplete,
                 ResultsNames = result?.ResultObjects.Select(x => x.AnalysObject.Name).ToArray() ?? Array.Empty<string>(),
                 ResultsValues = result?.ResultObjects.Select(x => x.Count).ToArray() ?? Array.Empty<float>()

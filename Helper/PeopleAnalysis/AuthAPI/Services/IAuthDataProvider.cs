@@ -48,6 +48,7 @@ namespace AuthAPI.Services
             });
 
             modelBuilder.Entity<User>().Property("LanguageId").HasDefaultValue(1);
+            modelBuilder.Entity<User>().Property("RoleId").HasDefaultValue(1);
 
             modelBuilder.Entity<Role>().HasData(new[] {
                 new Role{ Id = 1, Name = "User" },

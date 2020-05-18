@@ -15,9 +15,9 @@ namespace PeopleAnalysis.Controllers
             this.applicationAPIClient = applicationAPIClient;
         }
 
-        public async Task<IActionResult> StartAnalys([FromForm]AnalitycsRequestModel analitycsRequest)
+        public async Task<IActionResult> StartAnalys([FromForm]AnalitycsRequestModel analitycsRequest, [FromHeader]string authorization)
         {
-            if (await applicationAPIClient.ApiAnaliticStartanalysAsync(analitycsRequest))
+            if (await applicationAPIClient.ApiAnaliticStartanalysAsync(string.Empty, analitycsRequest))
                 return RedirectToActionPermanent("Index", "Request");
             return BadRequest();
         }

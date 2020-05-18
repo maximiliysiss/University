@@ -21,5 +21,6 @@ namespace PeopleAnalysis.ViewModels
         public bool IsResult { get; set; } = false;
         public string[] ResultsNames { get; set; }
         public float[] ResultsValues { get; set; }
+        public bool Answer { get; set; }
     }
 }

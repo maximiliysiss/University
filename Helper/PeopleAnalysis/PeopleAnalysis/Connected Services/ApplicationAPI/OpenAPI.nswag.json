@@ -11,6 +11,16 @@
           "Analitic"
         ],
         "operationId": "StartAnalys",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -556,43 +566,35 @@
           },
           "ownerId": {
             "type": "string",
-            "readOnly": true,
             "nullable": true
           },
           "social": {
             "type": "string",
-            "readOnly": true,
             "nullable": true
           },
           "user": {
             "type": "string",
-            "readOnly": true,
             "nullable": true
           },
           "userId": {
             "type": "string",
-            "readOnly": true,
             "nullable": true
           },
           "userUrl": {
             "type": "string",
-            "readOnly": true,
             "format": "uri",
             "nullable": true
           },
           "id": {
             "type": "integer",
-            "readOnly": true,
             "format": "int32"
           },
           "createId": {
             "type": "string",
-            "readOnly": true,
             "nullable": true
           },
           "dateTime": {
             "type": "string",
-            "readOnly": true,
             "format": "date-time"
           }
         }
@@ -888,6 +890,9 @@
               "type": "number",
               "format": "float"
             }
+          },
+          "answer": {
+            "type": "boolean"
           }
         }
       },
