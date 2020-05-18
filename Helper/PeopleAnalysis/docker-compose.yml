@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  analyticapi:
+    image: ${DOCKER_REGISTRY-}analyticapi
+    build:
+      context: .
+      dockerfile: AnalyticAPI/Dockerfile
+
+  authapi:
+    image: ${DOCKER_REGISTRY-}authapi
+    build:
+      context: .
+      dockerfile: AuthAPI/Dockerfile
+
+
+  peopleanalisysapi:
+    image: ${DOCKER_REGISTRY-}peopleanalisysapi
+    build:
+      context: .
+      dockerfile: PeopleAnalisysAPI/Dockerfile
+
+
+  peopleanalysis:
+    image: ${DOCKER_REGISTRY-}peopleanalysis
+    build:
+      context: .
+      dockerfile: PeopleAnalysis/Dockerfile
+

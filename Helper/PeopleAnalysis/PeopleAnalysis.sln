@@ -11,9 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PeopleAnalysisML.Model", "P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AuthAPI", "AuthAPI\AuthAPI.csproj", "{B95ABC95-818C-49DC-BF6A-D8006AA05D83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyticAPI", "AnalyticAPI\AnalyticAPI.csproj", "{F4DF98A1-27E9-472D-85E5-4A78828A1130}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnalyticAPI", "AnalyticAPI\AnalyticAPI.csproj", "{F4DF98A1-27E9-472D-85E5-4A78828A1130}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonCoreLibrary", "CommonCoreLibrary\CommonCoreLibrary.csproj", "{7110DB13-0A5F-455D-9603-0067AD02180B}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{CDB1CBF7-6768-4B84-B8E7-5076B6ED0695}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{7110DB13-0A5F-455D-9603-0067AD02180B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7110DB13-0A5F-455D-9603-0067AD02180B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7110DB13-0A5F-455D-9603-0067AD02180B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDB1CBF7-6768-4B84-B8E7-5076B6ED0695}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDB1CBF7-6768-4B84-B8E7-5076B6ED0695}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDB1CBF7-6768-4B84-B8E7-5076B6ED0695}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDB1CBF7-6768-4B84-B8E7-5076B6ED0695}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
