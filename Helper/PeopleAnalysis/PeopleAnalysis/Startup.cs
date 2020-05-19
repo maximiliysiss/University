@@ -70,6 +70,8 @@ namespace PeopleAnalysis
             }
             app.UseStaticFiles();
 
+            app.UseHttpsRedirection();
+
             app.UseRouting();
 
             app.UseAuthentication();

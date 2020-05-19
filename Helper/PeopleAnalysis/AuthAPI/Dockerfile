@@ -8,6 +8,7 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["AuthAPI/AuthAPI.csproj", "AuthAPI/"]
+COPY ["CommonCoreLibrary/CommonCoreLibrary.csproj", "CommonCoreLibrary/"]
 RUN dotnet restore "AuthAPI/AuthAPI.csproj"
 COPY . .
 WORKDIR "/src/AuthAPI"

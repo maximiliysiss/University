@@ -22,4 +22,4 @@ COPY --from=publish /app/publish .
 COPY wait /wait
 RUN chmod +x /wait
 COPY /cert /root/.dotnet/https
-ENTRYPOINT ["dotnet", "PeopleAnalysis.dll"]
+ENTRYPOINT /wait && dotnet PeopleAnalysis.dll

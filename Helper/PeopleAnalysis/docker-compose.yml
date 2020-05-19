@@ -1,17 +1,35 @@
 version: '3.4'
 
+networks:
+  peopleapp:
+    driver: bridge
+
 services:
   analyticapi:
     image: ${DOCKER_REGISTRY-}analyticapi
     build:
       context: .
       dockerfile: AnalyticAPI/Dockerfile
+    networks:
+      - peopleapp
+    environment:
+      WAIT_HOSTS: db:5432
+      WAIT_HOSTS_TIMEOUT: 300
+    ports:
+      - "8003:443"
 
   authapi:
     image: ${DOCKER_REGISTRY-}authapi
     build:
       context: .
       dockerfile: AuthAPI/Dockerfile
+    networks:
+      - peopleapp
+    environment:
+      WAIT_HOSTS: db:5432
+      WAIT_HOSTS_TIMEOUT: 300
+    ports:
+      - "8002:443"
 
 
   peopleanalisysapi:
@@ -19,6 +37,13 @@ services:
     build:
       context: .
       dockerfile: PeopleAnalisysAPI/Dockerfile
+    networks:
+      - peopleapp
+    environment:
+      WAIT_HOSTS: db:5432
+      WAIT_HOSTS_TIMEOUT: 300
+    ports:
+      - "8001:443"
 
 
   peopleanalysis:
@@ -26,4 +51,13 @@ services:
     build:
       context: .
       dockerfile: PeopleAnalysis/Dockerfile
+    ports:
+      - "8000:443"
 
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 6521
+    ports:
+      - "5433:5432"

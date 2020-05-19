@@ -24,4 +24,5 @@ COPY --from=publish /app/publish .
 COPY wait /wait
 RUN chmod +x /wait
 COPY /cert /root/.dotnet/https
-ENTRYPOINT ["dotnet", "AnalyticAPI.dll"]
+COPY PeopleAnalysisML.Model/MLModel.zip /ml
+ENTRYPOINT /wait && dotnet AnalyticAPI.dll
