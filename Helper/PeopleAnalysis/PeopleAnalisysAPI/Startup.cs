@@ -1,3 +1,4 @@
+using AnalyticAPI.Services.Settings;
 using CommonCoreLibrary.Services;
 using CommonCoreLibrary.Startup;
 using Microsoft.AspNetCore.Builder;
@@ -39,6 +40,8 @@ namespace PeopleAnalisysAPI
 
             services.AddSingleton<IMapperService, MapperService>();
             services.AddHttpContextAccessor();
+
+            services.AddSingleton(Configuration.GetSection("RabbitMQ").Get<RabbitMQSettings>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

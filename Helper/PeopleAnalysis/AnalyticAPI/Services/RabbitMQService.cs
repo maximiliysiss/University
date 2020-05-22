@@ -31,15 +31,18 @@ namespace PeopleAnalysis.Services
         private readonly ILogger<RabbitMQService> logger;
         private readonly IAuthAPIClient authAPIClient;
         private readonly ServiceAuthConfig serviceAuthConfig;
+        private readonly RabbitMQSettings rabbitMQSettings;
 
-        public RabbitMQService(IAIService aIService, IServiceScopeFactory scopeFactory, ILogger<RabbitMQService> logger, IAuthAPIClient authAPIClient, ServiceAuthConfig serviceAuthConfig)
+        public RabbitMQService(IAIService aIService, IServiceScopeFactory scopeFactory, ILogger<RabbitMQService> logger, IAuthAPIClient authAPIClient, ServiceAuthConfig serviceAuthConfig,
+            RabbitMQSettings rabbitMQSettings)
         {
             this.scopeFactory = scopeFactory;
             this.aIService = aIService;
-            factory = new ConnectionFactory() { HostName = "localhost" };
+            factory = new ConnectionFactory() { HostName = rabbitMQSettings.Host };
             this.logger = logger;
             this.authAPIClient = authAPIClient;
             this.serviceAuthConfig = serviceAuthConfig;
+            this.rabbitMQSettings = rabbitMQSettings;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)

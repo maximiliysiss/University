@@ -1,3 +1,4 @@
+using AnalyticAPI.Services.Settings;
 using AuthAPI.Settings;
 using CommonCoreLibrary.Auth.Interfaces;
 using CommonCoreLibrary.Services;

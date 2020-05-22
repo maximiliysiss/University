@@ -41,6 +41,7 @@ namespace AnalyticAPI
             services.AddSingleton<IMapperService, MapperService>();
 
             services.AddSingleton(Configuration.GetSection("Service").Get<ServiceAuthConfig>());
+            services.AddSingleton(Configuration.GetSection("RabbitMQ").Get<RabbitMQSettings>());
 
             services.AddSingleton<IBaseTokenService, VirtualTokenService>();
             services.AddSingleton<IAuthAPIClient, AuthAPIClient>(x => new AuthAPIClient(Configuration["AuthAPI"], new HttpClient(new HttpClientHandler { ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; } }),

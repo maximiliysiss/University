@@ -32,7 +32,6 @@ namespace PeopleAnalysis.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(AnalysObject analysObject)
         {
             if (ModelState.IsValid)
@@ -60,7 +59,6 @@ namespace PeopleAnalysis.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, AnalysObject analysObject)
         {
             if (id != analysObject.Id)
@@ -85,7 +83,6 @@ namespace PeopleAnalysis.Controllers
 
         // POST: AnalysObjects/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await applicationAPIClient.ApiObjectsDeleteAsync(id);

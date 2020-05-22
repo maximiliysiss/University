@@ -30,7 +30,6 @@ namespace PeopleAnalysis.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UserViewModel loginViewModel)
         {
             if (ModelState.IsValid)
@@ -50,7 +49,7 @@ namespace PeopleAnalysis.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+
         public async Task<IActionResult> Edit(string id, UserViewModel loginViewModel)
         {
             if (id != loginViewModel.Id)
@@ -66,7 +65,6 @@ namespace PeopleAnalysis.Controllers
 
         // POST: LoginViewModels/Delete/5
         [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed([FromForm]string toDelete)
         {
             await authAPIClient.ApiUsersDeleteAsync(toDelete);

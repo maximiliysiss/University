@@ -1,4 +1,5 @@
-﻿using CommonCoreLibrary.Services;
+﻿using AnalyticAPI.Services.Settings;
+using CommonCoreLibrary.Services;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using System.Text;
@@ -14,9 +15,9 @@ namespace PeopleAnalysis.Services
     {
         private readonly ConnectionFactory factory;
 
-        public RabbitMQClient()
+        public RabbitMQClient(RabbitMQSettings rabbitMQSettings)
         {
-            factory = new ConnectionFactory() { HostName = "localhost" };
+            factory = new ConnectionFactory() { HostName = rabbitMQSettings.Host };
         }
 
         public void Send<T>(T message, object args = null)

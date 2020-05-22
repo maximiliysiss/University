@@ -13,7 +13,7 @@ services:
     networks:
       - peopleapp
     environment:
-      WAIT_HOSTS: db:5432
+      WAIT_HOSTS: db:5432, rabbitmq:5672
       WAIT_HOSTS_TIMEOUT: 300
     ports:
       - "8003:443"
@@ -40,7 +40,7 @@ services:
     networks:
       - peopleapp
     environment:
-      WAIT_HOSTS: db:5432
+      WAIT_HOSTS: db:5432, rabbitmq:5672
       WAIT_HOSTS_TIMEOUT: 300
     ports:
       - "8001:443"
@@ -53,6 +53,8 @@ services:
       dockerfile: PeopleAnalysis/Dockerfile
     ports:
       - "8000:443"
+    networks:
+      - peopleapp
 
   db:
     image: postgres
@@ -60,4 +62,14 @@ services:
     environment:
       POSTGRES_PASSWORD: 6521
     ports:
-      - "5433:5432"
+      - "5433:5432" 
+    networks:
+      - peopleapp
+
+  rabbitmq:
+    image: rabbitmq:3.6.6-management
+    networks:
+      - peopleapp
+    ports:
+        - "5673:5672"
+        - "15673:15672"
