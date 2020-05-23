@@ -353,11 +353,6 @@
     <Compile Include="Forms\Controls\TechnologControl.xaml.cs">
       <DependentUpon>TechnologControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\20191219214758_Init.cs" />
-    <Compile Include="Migrations\20191219214758_Init.designer.cs">
-      <DependentUpon>20191219214758_Init.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\DatabaseContextModelSnapshot.cs" />
     <Compile Include="Models\Detail.cs" />
     <Compile Include="Models\Plan.cs" />
     <Compile Include="Models\RawMaterial.cs" />
