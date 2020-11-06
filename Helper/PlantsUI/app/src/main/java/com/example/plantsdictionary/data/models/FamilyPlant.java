@@ -6,6 +6,11 @@ public class FamilyPlant {
     public String name;
     public List<Plants> plants;
 
+    public FamilyPlant(String name, List<Plants> plants) {
+        this.name = name;
+        this.plants = plants;
+    }
+
     public String getName() {
         return name;
     }

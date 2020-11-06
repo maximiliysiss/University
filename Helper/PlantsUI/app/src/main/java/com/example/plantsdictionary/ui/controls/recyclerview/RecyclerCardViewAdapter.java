@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.plantsdictionary.ui.controls.recyclerview.viewholder.CardViewConstructor;
@@ -24,7 +25,7 @@ public class RecyclerCardViewAdapter<T, Card extends CardViewHolder<T>> extends 
     /**
      * Список данных
      */
-    private List<T> list;
+    private LiveData<List<T>> list;
     /**
      * Фрагмент, в котором рабоатем
      */
@@ -38,7 +39,7 @@ public class RecyclerCardViewAdapter<T, Card extends CardViewHolder<T>> extends 
      */
     private final CardViewConstructor<Card> cardViewConstructor;
 
-    public RecyclerCardViewAdapter(List<T> list, Fragment fragment, int itemLayout, CardViewConstructor<Card> cardViewConstructor) {
+    public RecyclerCardViewAdapter(LiveData<List<T>> list, Fragment fragment, int itemLayout, CardViewConstructor<Card> cardViewConstructor) {
         this.list = list;
         this.fragment = fragment;
         this.itemLayout = itemLayout;
@@ -68,7 +69,7 @@ public class RecyclerCardViewAdapter<T, Card extends CardViewHolder<T>> extends 
      */
     @Override
     public void onBindViewHolder(@NonNull Card holder, int position) {
-        holder.setObj(list.get(position));
+        holder.setObj(list.getValue().get(position));
     }
 
     /**
@@ -78,6 +79,6 @@ public class RecyclerCardViewAdapter<T, Card extends CardViewHolder<T>> extends 
      */
     @Override
     public int getItemCount() {
-        return list.size();
+        return list.getValue().size();
     }
 }

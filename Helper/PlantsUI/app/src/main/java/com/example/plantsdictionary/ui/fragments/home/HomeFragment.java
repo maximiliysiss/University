@@ -32,7 +32,7 @@ public class HomeFragment extends Fragment {
 
         final RecyclerView actionRecyclerView = root.findViewById(R.id.actions);
         actionRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        actionRecyclerView.setAdapter(new RecyclerCardViewAdapter(new ArrayList(), this, R.layout.action_item,
+        actionRecyclerView.setAdapter(new RecyclerCardViewAdapter(homeViewModel.getActionViewModels(), this, R.layout.action_item,
                 view -> new ActionRecyclerViewHolder(view)));
         homeViewModel.getActionViewModels().observe(getViewLifecycleOwner(), actionViewModels -> actionRecyclerView.getAdapter().notifyDataSetChanged());
         return root;

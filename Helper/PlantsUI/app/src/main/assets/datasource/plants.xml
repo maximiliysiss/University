@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<plants>
-    <plant>
-        <name>Цветок 1</name>
-        <description>Тут описание</description>
-        <location>Обитает дома</location>
-        <family>Сольери</family>
-    </plant>
-</plants>

@@ -3,7 +3,7 @@ package com.example.plantsdictionary.data.models;
 public class Action {
     private String name;
     private String caption;
-    private int navigateTo;
+    private String navigateTo;
 
     public String getName() {
         return name;
@@ -21,11 +21,11 @@ public class Action {
         this.caption = caption;
     }
 
-    public int getNavigateTo() {
+    public String getNavigateTo() {
         return navigateTo;
     }
 
-    public void setNavigateTo(int navigateTo) {
+    public void setNavigateTo(String navigateTo) {
         this.navigateTo = navigateTo;
     }
 }
