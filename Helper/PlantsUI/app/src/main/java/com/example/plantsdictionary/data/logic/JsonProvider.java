@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.plantsdictionary.data.models.Action;
 import com.example.plantsdictionary.data.models.FamilyPlant;
+import com.example.plantsdictionary.data.models.Favorite;
 import com.example.plantsdictionary.data.models.Plants;
 import com.example.plantsdictionary.interfaces.DataProvider;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,7 +47,6 @@ public class JsonProvider implements DataProvider {
         return plantCache;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<FamilyPlant> getFamilyPlants() {
         List<Plants> plants = getAllPlants();
@@ -69,6 +69,21 @@ public class JsonProvider implements DataProvider {
         }
 
         return actionCache;
+    }
+
+    @Override
+    public List<Favorite> getAllFavorites() {
+        return null;
+    }
+
+    @Override
+    public void insertFavorite(Favorite favorite) {
+
+    }
+
+    @Override
+    public void deleteFavorite(Favorite favorite) {
+
     }
 
     private String inputStreamToString(InputStream is) throws IOException {

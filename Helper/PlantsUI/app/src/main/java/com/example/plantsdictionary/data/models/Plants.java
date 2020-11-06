@@ -1,10 +1,20 @@
 package com.example.plantsdictionary.data.models;
 
 public class Plants {
+
+    private int id;
     private String name;
     private String location;
     private String description;
     private String family;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

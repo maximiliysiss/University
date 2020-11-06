@@ -55,6 +55,12 @@ public abstract class CardViewHolder<T> extends RecyclerView.ViewHolder {
         return view.getContext().getString(id);
     }
 
+    public int getNavigateByName(String name) {
+        Activity activity = getActivity();
+        int navResultId = activity.getResources().getIdentifier(name, "id", activity.getPackageName());
+        return navResultId;
+    }
+
     /**
      * @param itemView
      */

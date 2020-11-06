@@ -10,4 +10,7 @@
     <string name="menu_home">Домашняя страница</string>
     <string name="menu_all_plants">Все растения</string>
     <string name="menu_by_family">Семейства</string>
+    <string name="family_key">search</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -3,8 +3,8 @@ package com.example.plantsdictionary.data.models;
 import java.util.List;
 
 public class FamilyPlant {
-    public String name;
-    public List<Plants> plants;
+    private String name;
+    private List<Plants> plants;
 
     public FamilyPlant(String name, List<Plants> plants) {
         this.name = name;

@@ -13,4 +13,8 @@ public class ActionViewModel {
     public String getCaption() {
         return action.getCaption();
     }
+
+    public String getNavigateTo() {
+        return action.getNavigateTo();
+    }
 }

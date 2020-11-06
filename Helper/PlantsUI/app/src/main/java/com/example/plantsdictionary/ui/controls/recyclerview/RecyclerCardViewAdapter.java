@@ -79,6 +79,6 @@ public class RecyclerCardViewAdapter<T, Card extends CardViewHolder<T>> extends 
      */
     @Override
     public int getItemCount() {
-        return list.getValue().size();
+        return list.getValue() != null ? list.getValue().size() : 0;
     }
 }

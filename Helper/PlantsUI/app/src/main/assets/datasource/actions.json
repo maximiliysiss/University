@@ -2,11 +2,11 @@
   {
     "name": "allPlants",
     "caption": "Все растения",
-    "navigateTo": "fragment_all_plants"
+    "navigateTo": "nav_all_plants"
   },
   {
     "name": "byFamily",
     "caption": "Семейства",
-    "navigateTo": "fragment_by_family"
+    "navigateTo": "nav_by_family"
   }
 ]

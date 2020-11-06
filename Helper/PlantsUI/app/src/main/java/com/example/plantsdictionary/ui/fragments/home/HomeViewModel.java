@@ -17,7 +17,6 @@ public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<List<ActionViewModel>> actionViewModels;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public HomeViewModel() {
         actionViewModels = new MutableLiveData<>();
         actionViewModels.postValue(IOContainer.getInstance().resolve(DataProvider.class).getAllActions().stream()
