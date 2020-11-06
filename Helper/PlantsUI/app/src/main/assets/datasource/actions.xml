@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<actions>
+    <action>
+        <name>allPlants</name>
+        <caption>Все растения</caption>
+        <navigationTo>fragment_all_plants</navigationTo>
+    </action>
+    <action>
+        <name>byFamily</name>
+        <caption>Семейства</caption>
+        <navigationTo>fragment_by_family</navigationTo>
+    </action>
+</actions>

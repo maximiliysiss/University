@@ -1,15 +1,9 @@
-package com.example.plantsdictionary.ui.controls.ui.models;
+package com.example.plantsdictionary.data.models;
 
-public class ActionView {
+public class Action {
     private String name;
     private String caption;
     private int navigateTo;
-
-    public ActionView(String name, String caption, int navigateTo) {
-        this.name = name;
-        this.caption = caption;
-        this.navigateTo = navigateTo;
-    }
 
     public String getName() {
         return name;

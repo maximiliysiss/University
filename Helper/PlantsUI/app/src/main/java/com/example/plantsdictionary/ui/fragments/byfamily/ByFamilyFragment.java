@@ -22,7 +22,7 @@ public class ByFamilyFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         byFamilyViewModel =
                 new ViewModelProvider(this).get(ByFamilyViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
+        View root = inflater.inflate(R.layout.fragment_by_family, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
         byFamilyViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override

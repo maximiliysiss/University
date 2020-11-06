@@ -15,11 +15,11 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.plantsdictionary.ui.fragments.allplants.AllPlantsFragment"
         android:label="@string/menu_all_plants"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_all_plants" />
 
     <fragment
         android:id="@+id/nav_slideshow"
         android:name="com.example.plantsdictionary.ui.fragments.byfamily.ByFamilyFragment"
         android:label="@string/menu_by_family"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_by_family" />
 </navigation>
