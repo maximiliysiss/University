@@ -1,44 +1,50 @@
 [
   {
+    "id": 1,
     "name": "Цветок 1",
     "description": "Тут описание",
     "location": "Обитает дома",
-    "family": "Сольери"
+    "family": "Сольери",
+    "image": "Plant1.jpg"
   },
   {
-    "name": "Цветок 1",
+    "id": 2,
+    "name": "Цветок 2",
     "description": "Тут описание",
     "location": "Обитает дома",
-    "family": "Сольери"
+    "family": "Сольери",
+    "image": "Plant1.jpg"
   },
   {
-    "name": "Цветок 1",
+    "id": 3,
+    "name": "Цветок 3",
     "description": "Тут описание",
     "location": "Обитает дома",
-    "family": "Сольери"
+    "family": "Сольери",
+    "image": "Plant1.jpg"
   },
   {
-    "name": "Цветок 1",
+    "id": 4,
+    "name": "Цветок 4",
     "description": "Тут описание",
     "location": "Обитает дома",
-    "family": "Сольери"
+    "family": "Сольери",
+    "image": "Plant1.jpg"
   },
   {
-    "name": "Цветок 1",
+    "id": 5,
+    "name": "Цветок 5",
     "description": "Тут описание",
     "location": "Обитает дома",
-    "family": "Сольери"
+    "family": "Сольери",
+    "image": "Plant1.jpg"
   },
   {
-    "name": "Цветок 1",
+    "id": 6,
+    "name": "Цветок 6",
     "description": "Тут описание",
     "location": "Обитает дома",
-    "family": "Сольери"
-  },
-  {
-    "name": "Цветок 1",
-    "description": "Тут описание",
-    "location": "Обитает дома",
-    "family": "Сольери"
+    "family": "Сольери",
+    "image": "Plant1.jpg"
   }
 ]

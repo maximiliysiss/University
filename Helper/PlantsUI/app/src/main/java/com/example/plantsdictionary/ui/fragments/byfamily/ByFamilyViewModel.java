@@ -1,9 +1,5 @@
 package com.example.plantsdictionary.ui.fragments.byfamily;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -15,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+/**
+ * Модель для семейств
+ */
 public class ByFamilyViewModel extends ViewModel {
 
     private MutableLiveData<List<FamilyPlantViewModel>> familyViewModel;
@@ -26,6 +25,9 @@ public class ByFamilyViewModel extends ViewModel {
         reloadData();
     }
 
+    /**
+     * Перезагрузка данных
+     */
     public void reloadData() {
         Stream<FamilyPlantViewModel> stream = IOContainer.getInstance().resolve(DataProvider.class).getFamilyPlants().stream().map(x -> new FamilyPlantViewModel(x));
         String searchText = searchValue.getValue();

@@ -13,4 +13,12 @@
     <string name="family_key">search</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="favorites_key">favorites</string>
+    <string name="menu_favorite">Избранное</string>
+    <string name="datasource_path">datasource/</string>
+    <string name="images_path">images/</string>
+    <string name="favorite_title">Избранные</string>
+    <string name="menu_plant">Растение</string>
+    <string name="plantparcelablemodel">plantparcelablemodel</string>
+    <string name="allplantsparcelablemodel">allplantsparcelablemodel</string>
 </resources>

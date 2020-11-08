@@ -15,6 +15,9 @@ import com.example.plantsdictionary.R;
 import com.example.plantsdictionary.ui.controls.recyclerview.RecyclerCardViewAdapter;
 import com.example.plantsdictionary.ui.controls.ui.ActionRecyclerViewHolder;
 
+/**
+ * Фрагмент с действиями
+ */
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
@@ -29,7 +32,9 @@ public class HomeFragment extends Fragment {
         actionRecyclerView.setLayoutManager(gridLayoutManager);
         actionRecyclerView.setAdapter(new RecyclerCardViewAdapter(homeViewModel.getActionViewModels(), this, R.layout.action_item,
                 view -> new ActionRecyclerViewHolder(view)));
+
         homeViewModel.getActionViewModels().observe(getViewLifecycleOwner(), actionViewModels -> actionRecyclerView.getAdapter().notifyDataSetChanged());
+
         return root;
     }
 }

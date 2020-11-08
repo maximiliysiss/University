@@ -1,6 +1,20 @@
 package com.example.plantsdictionary.ui.interfaces;
 
+/**
+ * Activity с Toolbar
+ */
 public interface ToolbarActivity {
+    /**
+     * Обновить заголовок
+     *
+     * @param title
+     */
     void updateTitle(String title);
-    String getToolbatTitle();
+
+    /**
+     * Получить текущий заголовок
+     *
+     * @return
+     */
+    String getToolbarTitle();
 }

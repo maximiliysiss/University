@@ -17,6 +17,9 @@ import com.example.plantsdictionary.ui.controls.bindings.TextBinder;
 import com.example.plantsdictionary.ui.controls.recyclerview.RecyclerCardViewAdapter;
 import com.example.plantsdictionary.ui.controls.ui.FamilyRecyclerViewHolder;
 
+/**
+ * Фрагмент семейства
+ */
 public class ByFamilyFragment extends Fragment {
 
     private ByFamilyViewModel byFamilyViewModel;
@@ -26,6 +29,9 @@ public class ByFamilyFragment extends Fragment {
         byFamilyViewModel = new ViewModelProvider(this).get(ByFamilyViewModel.class);
         View root = inflater.inflate(R.layout.fragment_by_family, container, false);
 
+        /**
+         * Отображения списка семейств
+         */
         RecyclerView recyclerView = root.findViewById(R.id.families);
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2, GridLayoutManager.VERTICAL, false));
         recyclerView.setAdapter(new RecyclerCardViewAdapter(byFamilyViewModel.getFamilyViewModel(), this, R.layout.family_item,
@@ -36,6 +42,7 @@ public class ByFamilyFragment extends Fragment {
 
         byFamilyViewModel.getFamilyViewModel().observe(getViewLifecycleOwner(), x -> recyclerView.getAdapter().notifyDataSetChanged());
         byFamilyViewModel.getSearchValue().observe(getViewLifecycleOwner(), x -> byFamilyViewModel.reloadData());
+
         return root;
     }
 }

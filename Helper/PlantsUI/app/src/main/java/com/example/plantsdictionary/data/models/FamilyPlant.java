@@ -2,6 +2,9 @@ package com.example.plantsdictionary.data.models;
 
 import java.util.List;
 
+/**
+ * Семейство
+ */
 public class FamilyPlant {
     private String name;
     private List<Plants> plants;

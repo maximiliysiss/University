@@ -3,18 +3,20 @@ package com.example.plantsdictionary.data.models;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+/**
+ * Избранное
+ */
 @Entity
 public class Favorite {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private int id;
     private int plant;
 
     public Favorite() {
     }
 
-    public Favorite(int id, int plant) {
-        this.id = id;
+    public Favorite(int plant) {
         this.plant = plant;
     }
 

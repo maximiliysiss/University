@@ -22,4 +22,25 @@
         android:name="com.example.plantsdictionary.ui.fragments.byfamily.ByFamilyFragment"
         android:label="@string/menu_by_family"
         tools:layout="@layout/fragment_by_family" />
+
+    <fragment
+        android:id="@+id/nav_plant"
+        android:name="com.example.plantsdictionary.ui.fragments.plant.PlantFragment"
+        android:label="@string/menu_plant"
+        tools:layout="@layout/fragment_plant" />
+
+    <fragment
+        android:id="@+id/nav_favorite"
+        android:name="com.example.plantsdictionary.ui.fragments.allplants.AllPlantsFragment"
+        android:label="@string/menu_all_plants"
+        tools:layout="@layout/fragment_all_plants">
+        <argument
+            android:name="@string/allplantsparcelablemodel"
+            app:argType="com.example.plantsdictionary.ui.controls.base.fragmentmodels.AllPlantsParcelableModel" />
+        <argument
+            android:name="@string/favorites_key"
+            android:defaultValue="true"
+            app:argType="boolean" />
+    </fragment>
+
 </navigation>

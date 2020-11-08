@@ -14,10 +14,23 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/favorite"
+                    android:layout_width="@dimen/favroite_dim"
+                    android:layout_height="@dimen/favroite_dim"></ImageView>
+
+            </LinearLayout>
+
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ImageView>
+                android:layout_height="@dimen/main_image_plant_dim"></ImageView>
 
             <TextView
                 android:id="@+id/title"
@@ -33,13 +46,6 @@
                 android:layout_height="wrap_content"
                 android:padding="10px"
                 android:text="Family"></TextView>
-
-            <TextView
-                android:id="@+id/description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10px"
-                android:text="Description"></TextView>
 
         </LinearLayout>
 

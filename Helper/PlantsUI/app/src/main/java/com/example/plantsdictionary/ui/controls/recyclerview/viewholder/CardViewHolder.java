@@ -55,10 +55,19 @@ public abstract class CardViewHolder<T> extends RecyclerView.ViewHolder {
         return view.getContext().getString(id);
     }
 
-    public int getNavigateByName(String name) {
+    public int getIdByName(String name) {
         Activity activity = getActivity();
-        int navResultId = activity.getResources().getIdentifier(name, "id", activity.getPackageName());
-        return navResultId;
+        return activity.getResources().getIdentifier(name, "id", activity.getPackageName());
+    }
+
+    public int getStringIdByName(String name) {
+        Activity activity = getActivity();
+        return activity.getResources().getIdentifier(name, "string", activity.getPackageName());
+    }
+
+    public int getDrawableByName(String name) {
+        Activity activity = getActivity();
+        return activity.getResources().getIdentifier(name, "drawable", activity.getPackageName());
     }
 
     /**
@@ -67,12 +76,18 @@ public abstract class CardViewHolder<T> extends RecyclerView.ViewHolder {
     public CardViewHolder(@NonNull View itemView) {
         super(itemView);
         this.view = itemView;
-        this.view.setOnClickListener(v -> click());
+        this.view.setOnClickListener(v -> {
+            try {
+                click();
+            } catch (InstantiationException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
      * Обработка нажатия
      */
-    public void click() {
+    public void click() throws InstantiationException, IllegalAccessException {
     }
 }

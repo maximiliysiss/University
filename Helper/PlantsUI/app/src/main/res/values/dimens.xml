@@ -5,4 +5,7 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">80dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="favroite_dim">30dp</dimen>
+    <dimen name="main_image_plant_dim">100dp</dimen>
+    <dimen name="action_image_dim">50dp</dimen>
 </resources>

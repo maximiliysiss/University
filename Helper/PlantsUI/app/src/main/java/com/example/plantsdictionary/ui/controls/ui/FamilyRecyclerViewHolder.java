@@ -1,6 +1,5 @@
 package com.example.plantsdictionary.ui.controls.ui;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,10 +7,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.plantsdictionary.R;
+import com.example.plantsdictionary.ui.controls.base.fragmentmodels.AllPlantsParcelableModel;
 import com.example.plantsdictionary.ui.controls.recyclerview.viewholder.CardViewHolder;
 import com.example.plantsdictionary.ui.controls.ui.models.FamilyPlantViewModel;
 import com.example.plantsdictionary.ui.interfaces.ActivityNavigator;
 
+/**
+ * Модель для карточки семейства
+ */
 public class FamilyRecyclerViewHolder extends CardViewHolder<FamilyPlantViewModel> {
 
     TextView title;
@@ -34,11 +37,12 @@ public class FamilyRecyclerViewHolder extends CardViewHolder<FamilyPlantViewMode
     }
 
     @Override
-    public void click() {
+    public void click() throws IllegalAccessException, InstantiationException {
         super.click();
+        /**
+         * Надо открыть фрагмент
+         */
         ActivityNavigator activityNavigator = (ActivityNavigator) getActivity();
-        Bundle bundle = new Bundle();
-        bundle.putString(getString(R.string.family_key), obj.getTitle());
-        activityNavigator.navigateTo(R.id.nav_all_plants, bundle);
+        activityNavigator.navigateTo(R.id.nav_all_plants, R.string.allplantsparcelablemodel, new AllPlantsParcelableModel(false, obj.getTitle()));
     }
 }

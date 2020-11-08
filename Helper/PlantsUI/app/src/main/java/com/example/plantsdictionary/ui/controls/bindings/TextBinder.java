@@ -5,6 +5,9 @@ import android.text.TextWatcher;
 
 import androidx.lifecycle.MutableLiveData;
 
+/**
+ * Класс реакция на изменения текста с установкой данных в Observable класс
+ */
 public class TextBinder implements TextWatcher {
     MutableLiveData<String> stringLiveData;
 

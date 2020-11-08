@@ -1,5 +1,8 @@
 package com.example.plantsdictionary.data.models;
 
+/**
+ * Растение
+ */
 public class Plants {
 
     private int id;
@@ -7,6 +10,7 @@ public class Plants {
     private String location;
     private String description;
     private String family;
+    private String image;
 
     public int getId() {
         return id;
@@ -46,5 +50,13 @@ public class Plants {
 
     public void setFamily(String family) {
         this.family = family;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

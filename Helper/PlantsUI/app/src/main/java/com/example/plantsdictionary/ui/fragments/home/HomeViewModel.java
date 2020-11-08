@@ -1,8 +1,5 @@
 package com.example.plantsdictionary.ui.fragments.home;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -13,6 +10,9 @@ import com.example.plantsdictionary.ui.controls.ui.models.ActionViewModel;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Модель действий
+ */
 public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<List<ActionViewModel>> actionViewModels;
