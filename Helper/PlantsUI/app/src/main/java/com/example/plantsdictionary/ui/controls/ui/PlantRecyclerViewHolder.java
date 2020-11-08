@@ -7,6 +7,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.example.plantsdictionary.R;
+import com.example.plantsdictionary.infrastructure.ioc.IOCFactory;
 import com.example.plantsdictionary.infrastructure.ioc.IOContainer;
 import com.example.plantsdictionary.interfaces.ImageProvider;
 import com.example.plantsdictionary.ui.controls.base.fragmentmodels.PlantParcelableModel;
@@ -42,7 +43,7 @@ public class PlantRecyclerViewHolder extends CardViewHolder<PlantViewModel> {
 
         title.setText(obj.getTitle());
         family.setText(obj.getFamily());
-        image.setImageBitmap(IOContainer.getInstance().resolve(ImageProvider.class).loadBitmap(obj.getImageName()));
+        image.setImageBitmap(IOCFactory.getIContainer().resolve(ImageProvider.class).loadBitmap(obj.getImageName()));
         favorite.setImageResource(obj.isFavorite() ? R.drawable.ic_favorite_active : R.drawable.ic_favorite);
     }
 

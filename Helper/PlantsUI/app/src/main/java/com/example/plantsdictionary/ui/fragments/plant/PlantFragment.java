@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.plantsdictionary.R;
+import com.example.plantsdictionary.infrastructure.ioc.IOCFactory;
 import com.example.plantsdictionary.infrastructure.ioc.IOContainer;
 import com.example.plantsdictionary.interfaces.ImageProvider;
 import com.example.plantsdictionary.ui.controls.base.FragmentWithModel;
@@ -47,7 +48,7 @@ public class PlantFragment extends FragmentWithModel<PlantParcelableModel> {
         ImageView favorite = root.findViewById(R.id.favorite);
         ImageView image = root.findViewById(R.id.image);
 
-        ImageProvider imageProvider = IOContainer.getInstance().resolve(ImageProvider.class);
+        ImageProvider imageProvider = IOCFactory.getIContainer().resolve(ImageProvider.class);
 
         plantViewModel.getPlantViewModelMutableLiveData().observe(getViewLifecycleOwner(), x -> {
             title.setText(x.getTitle());

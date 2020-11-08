@@ -2,6 +2,7 @@ package com.example.plantsdictionary.ui.controls.ui.models;
 
 import com.example.plantsdictionary.data.models.Favorite;
 import com.example.plantsdictionary.data.models.Plants;
+import com.example.plantsdictionary.infrastructure.ioc.IOCFactory;
 import com.example.plantsdictionary.infrastructure.ioc.IOContainer;
 import com.example.plantsdictionary.interfaces.DataProvider;
 import com.example.plantsdictionary.ui.fragments.allplants.AllPlantsViewModel;
@@ -13,7 +14,7 @@ public class PlantViewModel {
     private final AllPlantsViewModel allPlantsViewModel;
     private Plants plants;
     private boolean isFavorite;
-    private DataProvider dataProvider = IOContainer.getInstance().resolve(DataProvider.class);
+    private DataProvider dataProvider = IOCFactory.getIContainer().resolve(DataProvider.class);
 
     public PlantViewModel(AllPlantsViewModel allPlantsViewModel, Plants plants, boolean isFavorite) {
         this.plants = plants;

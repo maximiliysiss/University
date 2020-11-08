@@ -3,6 +3,7 @@ package com.example.plantsdictionary.ui.fragments.byfamily;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.plantsdictionary.infrastructure.ioc.IOCFactory;
 import com.example.plantsdictionary.infrastructure.ioc.IOContainer;
 import com.example.plantsdictionary.interfaces.DataProvider;
 import com.example.plantsdictionary.ui.controls.ui.models.FamilyPlantViewModel;
@@ -29,7 +30,7 @@ public class ByFamilyViewModel extends ViewModel {
      * Перезагрузка данных
      */
     public void reloadData() {
-        Stream<FamilyPlantViewModel> stream = IOContainer.getInstance().resolve(DataProvider.class).getFamilyPlants().stream().map(x -> new FamilyPlantViewModel(x));
+        Stream<FamilyPlantViewModel> stream = IOCFactory.getIContainer().resolve(DataProvider.class).getFamilyPlants().stream().map(x -> new FamilyPlantViewModel(x));
         String searchText = searchValue.getValue();
         if (searchText != null && searchText.trim().length() != 0)
             stream = stream.filter(x -> x.getTitle().toLowerCase().contains(searchText.toLowerCase()));

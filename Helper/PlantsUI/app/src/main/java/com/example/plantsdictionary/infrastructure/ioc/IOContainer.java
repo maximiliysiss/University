@@ -9,13 +9,7 @@ import java.util.Map;
 public class IOContainer implements IContainer {
     private static IOContainer ioContainer;
 
-    private IOContainer() {
-    }
-
-    public static synchronized IOContainer getInstance() {
-        if (ioContainer != null)
-            return ioContainer;
-        return ioContainer = new IOContainer();
+    public IOContainer() {
     }
 
     /**

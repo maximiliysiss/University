@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.plantsdictionary.data.models.Favorite;
+import com.example.plantsdictionary.infrastructure.ioc.IOCFactory;
 import com.example.plantsdictionary.infrastructure.ioc.IOContainer;
 import com.example.plantsdictionary.interfaces.DataProvider;
 
@@ -14,7 +15,7 @@ public class PlantViewModel extends ViewModel {
 
     public PlantViewModel() {
         plantViewModelMutableLiveData = new MutableLiveData<>();
-        dataProvider = IOContainer.getInstance().resolve(DataProvider.class);
+        dataProvider = IOCFactory.getIContainer().resolve(DataProvider.class);
     }
 
     public void loadPlantById(int id) {
