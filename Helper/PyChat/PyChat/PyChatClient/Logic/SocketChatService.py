@@ -1,4 +1,5 @@
 import socket
+import json
 
 class SocketChatService:
     def __init__(self, host, port):
@@ -14,14 +15,15 @@ class SocketChatService:
         self.socket = socket.socket(socket.AF_INET,socket.SOCK_STREAM) 
         self.socket.connect((self.host,self.port))
 
-    def sendJsonString(self, jsonString):
-        self.socket.send(len(jsonString).to_bytes(2, byteorder ='big'))
+    def sendJsonString(self, jsonData):
+        jsonString = json.dumps(jsonData)
+        self.socket.send(len(jsonString).to_bytes(2, byteorder ="big"))
         self.socket.send(jsonString.encode())
 
     def login(self, login, password):
         self.initConnection()
-        self.sendJsonString(str({'action':'login', 'login':login, 'password':password}))
+        self.sendJsonString({"action":"login", "login":login, "password":password})
 
     def register(self, login, password):
         self.initConnection()
-        self.sendJsonString(str({'action':'register', 'login':login, 'password':password}))
+        self.sendJsonString({"action":"register", "login":login, "password":password})

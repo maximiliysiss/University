@@ -1,7 +1,9 @@
+import json
 
 class ChatClient:
-    def __init__(self, socket):
+    def __init__(self, socket, sqlclient):
         self.socket = socket
+        self.sqlclient = sqlclient
 
     def start(self):
         loginData = self.getJsonStringFromChannel()
@@ -9,6 +11,9 @@ class ChatClient:
             print('Incorrect login')
             return
         print(loginData)
+
+        loginJsonData = json.loads(loginData)
+        self.sqlclient.tryLogin(loginJsonData)
 
         while True:
             print(self.getJsonStringFromChannel())

@@ -2,6 +2,7 @@
 from _thread import *
 import threading 
 from Logic.ChatClient import ChatClient  
+from Logic.SqlConnectionClient import SqlClient
   
 def main(): 
     host = "localhost" 
@@ -14,10 +15,12 @@ def main():
     s.listen(5) 
     print("socket is listening") 
   
+    sqlClient = SqlClient("Server=localhost,29516;Database=chatpy;Trusted_Connection=True;")
+
     while True: 
         c, addr = s.accept()
         print('Connected to :', addr[0], ':', addr[1]) 
-        newClient = ChatClient(c)
+        newClient = ChatClient(c, sqlClient)
         start_new_thread(newClient.start, ()) 
     s.close()   
   
