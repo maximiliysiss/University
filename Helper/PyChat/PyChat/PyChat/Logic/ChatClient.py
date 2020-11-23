@@ -5,6 +5,7 @@ class ChatClient:
         self.socket = socket
         self.sqlclient = sqlclient
         self.server = server
+        self.user = None
 
     def start(self):
         loginData = self.getJsonStringFromChannel()
@@ -24,16 +25,38 @@ class ChatClient:
             result = self.sqlclient.tryregister(loginRegisterJsonData)
 
         if result is None:
+            print("Error login/register")
             self.sendJson({"message":"Error login/password"})
             self.socket.close()
             return
 
+        self.sendJson({"action":"login","data":result})
+        self.user = self.sqlclient.loadUser(result)
+
+        self.uploadData(0)
+        self.server.broadcastJsonMessage(self, {"message":self.user[1] + " in", "userName":self.user[1]})
+
         while True:
-            msg = self.getJsonStringFromChannel()
-            print(msg)
-            self.server.broadcastMessage(self, msg)
-          
+            try:
+                msg = self.getJsonStringFromChannel()
+
+                jsonMsg = json.loads(msg)
+                if "action" in jsonMsg:
+                    self.handleAction(jsonMsg)
+                    continue
+
+                self.server.broadcastMessage(self, msg)
+                self.sqlclient.insertMessage(jsonMsg)
+                print(msg)
+            except:
+                print("Connection closed")
+                break
+
+        self.server.remove(self)
         self.socket.close()
+
+    def convertMessageDTOToTransfer(self, msg):
+        return {"message":msg[1], "id": msg[0]}
         
     def getJsonStringFromChannel(self):
         data = self.socket.recv(2)
@@ -50,3 +73,11 @@ class ChatClient:
     def sendJson(self, jsonMsg):
         msg = json.dumps(jsonMsg)
         self.send(msg)
+
+    def uploadData(self, index):
+        loadedMsg = map(self.convertMessageDTOToTransfer, self.sqlclient.loadMessagePage(index))
+        self.sendJson({"action":"load", "data": list(loadedMsg)})
+
+    def handleAction(self, jsonMsg):
+        if jsonMsg["action"] == "load":
+            self.uploadData(jsonMsg["index"])

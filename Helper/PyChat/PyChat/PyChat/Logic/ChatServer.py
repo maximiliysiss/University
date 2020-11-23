@@ -20,7 +20,6 @@ class ChatServer:
 
         while True: 
             clientSocket, addr = self.listenSocket.accept()
-
             if len(self.clients) + 1 > self.maxPool:
                 clientSocket.send({"message":"Server is full"})
                 clientSocket.close()
@@ -36,3 +35,11 @@ class ChatServer:
     def broadcastMessage(self, client, message):
         for cl in self.clients:
             cl.send(message)
+
+    def broadcastJsonMessage(self, client, message):
+        for cl in self.clients:
+            cl.sendJson(message)
+
+    def remove(self, client):
+        self.clients.remove(client)
+        self.broadcastJsonMessage(client, {"userName":client.user[1],"message": client.user[1] + " out"})

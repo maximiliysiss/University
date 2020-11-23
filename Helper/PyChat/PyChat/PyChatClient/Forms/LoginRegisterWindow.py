@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 from Forms.ChatApplicationWindow import ChatApplicationWindow
+from Common.UserContext import UserContext
 
 class LoginRegisterWindow:
     def __init__(self, master, chatService):
@@ -28,15 +29,17 @@ class LoginRegisterWindow:
         self.frame.pack()
 
     def loginClick(self):
-        self.service.login(self.loginTextBox.get(), self.passwordTextBox.get())
-        self.openChatWindow()
+        self.openChatWindow(self.service.login)
 
     def registerClick(self):
-        self.service.register(self.loginTextBox.get(), self.passwordTextBox.get())
-        self.openChatWindow()
+        self.openChatWindow(self.service.register)
 
-    def openChatWindow(self):
+    def openChatWindow(self, loginAction):
         chatRoot = Tk()
         chatApplicationWindow = ChatApplicationWindow(chatRoot, self.service)
+        self.service.onReceive = chatApplicationWindow.newMessage
+        self.service.onLoadMessage = chatApplicationWindow.loadMessages
+        loginAction(self.loginTextBox.get(), self.passwordTextBox.get())
+        UserContext.getInstance().userName = self.loginTextBox.get()
         self.master.destroy()
         chatRoot.mainloop()

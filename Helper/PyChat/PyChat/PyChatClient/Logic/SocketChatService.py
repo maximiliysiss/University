@@ -2,6 +2,7 @@ import socket
 import json
 from _thread import *
 import threading 
+from Common.UserContext import UserContext
 
 class SocketChatService:
     def __init__(self, host, port):
@@ -10,6 +11,7 @@ class SocketChatService:
         self.port = port
         self.socket = None
         self.onReceive = None
+        self.onLoadMessage = None
 
     def initConnection(self):
         if self.socket is not None:
@@ -40,6 +42,24 @@ class SocketChatService:
             if messageLength <= 0:
                 continue
             msg = self.socket.recv(messageLength).decode()
+
+            dataJson = json.loads(msg)
+            if "action" in dataJson:
+                self.handleAction(dataJson)
+                continue
+
             if self.onReceive is None:
                 continue
-            self.onReceive(msg)
+            self.onReceive(dataJson)
+
+    def handleAction(self, actionMsg):
+
+        action = actionMsg["action"]
+
+        if action == "login":
+            UserContext.getInstance().userId = actionMsg["data"]
+        elif action == "load":
+            if self.onLoadMessage is not None:
+                minVal = min(map(lambda x: x["id"], actionMsg["data"]))
+                self.onLoadMessage(list(map(lambda x: x["message"],actionMsg["data"])), minVal)
+
