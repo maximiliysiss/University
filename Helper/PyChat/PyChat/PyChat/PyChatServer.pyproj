@@ -25,6 +25,9 @@
     <Compile Include="Logic\ChatClient.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Logic\ChatServer.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Logic\SqlConnectionClient.py">
       <SubType>Code</SubType>
     </Compile>

@@ -22,7 +22,7 @@ class LoginRegisterWindow:
         self.passwordTextBox.pack()
         self.loginButton = Button(self.frame, text="Login",command=self.loginClick)
         self.loginButton.pack()
-        self.registerButton = Button(self.frame, text="Register")
+        self.registerButton = Button(self.frame, text="Register",command=self.registerClick)
         self.registerButton.pack()
 
         self.frame.pack()

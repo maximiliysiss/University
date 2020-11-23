@@ -4,6 +4,7 @@ class ChatApplicationWindow:
     def __init__(self, master, service):
         self.master = master
         self.service = service
+        self.service.onReceive = self.newMessage
 
         master.title("Chat Client")
         master.geometry("500x400")
@@ -18,3 +19,6 @@ class ChatApplicationWindow:
         self.chatInput.place(relx=0,rely=bottomPointWithPadding,relwidth=0.8)
         self.chatSend = Button(master, text="Send")
         self.chatSend.place(relx=0.81,rely=bottomPointWithPadding, relwidth=0.15)
+
+    def newMessage(self, message):
+        self.chat.insert(END, message + '\n')
