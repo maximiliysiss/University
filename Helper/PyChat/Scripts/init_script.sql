@@ -31,13 +31,11 @@ if exists(select * from sys.procedures p where p.name = 'sp_messages')
 GO
 
 create proc sp_messages 
-	(@id int) as
+as
 begin
-	select top 20 
+	select
 		m.Id,
 		concat(u.Login, ': ', m.Content) from Messages m 
 	left join Users u on u.Id = m.UserId
-	where m.Id > @id
-	order by m.Id desc;
 end
 GO

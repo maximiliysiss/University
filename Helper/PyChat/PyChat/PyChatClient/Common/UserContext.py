@@ -1,3 +1,4 @@
+# Контекст текущего пользователя.  Singleton, который хранит UserId, UserName
 class UserContext:
     __instance = None
     def __init__(self):

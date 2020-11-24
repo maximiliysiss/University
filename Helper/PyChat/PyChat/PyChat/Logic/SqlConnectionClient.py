@@ -1,11 +1,13 @@
 import pyodbc
 import hashlib
 
+# Подключение к БД
 class SqlClient:
     def __init__(self, connString):
         self.connString = connString
         print("Connection String = ", connString)
 
+    # Попытка получить пользователя по логину и паролю
     def tryLogin(self, loginDataJson):
         conn = pyodbc.connect(self.connString)
         cursor = conn.cursor()
@@ -20,6 +22,7 @@ class SqlClient:
 
         return data[0][0]
      
+    # Попытка создать нового пользователя
     def tryregister(self, registerDataJson):
         conn = pyodbc.connect(self.connString)
         cursor = conn.cursor()
@@ -35,6 +38,7 @@ class SqlClient:
         cursor.close()
         return data[0][0]
 
+    # Получение информации о пользователе по ID
     def loadUser(self, userId):
         conn = pyodbc.connect(self.connString)
         cursor = conn.cursor()
@@ -42,6 +46,7 @@ class SqlClient:
         cursor.close()
         return data
 
+    # Добавление нового пользователя
     def insertMessage(self, messageData):
         conn = pyodbc.connect(self.connString)
         cursor = conn.cursor()
@@ -49,9 +54,10 @@ class SqlClient:
         conn.commit()
         cursor.close()
 
-    def loadMessagePage(self, page ):
+    # Загрузка истории сообщений
+    def loadMessageHistory(self ):
         conn = pyodbc.connect(self.connString)
         cursor = conn.cursor()
-        data = cursor.execute("exec sp_messages ?", page).fetchall()
+        data = cursor.execute("exec sp_messages").fetchall()
         cursor.close()
         return data
