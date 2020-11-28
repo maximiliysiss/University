@@ -8,4 +8,5 @@ packages/
 .idea/
 Debug/
 Release/
+__pycache__/
 build/
