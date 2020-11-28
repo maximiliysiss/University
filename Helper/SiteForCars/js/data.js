@@ -1,0 +1,59 @@
+var data = [{
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}, {
+    "Name": "Price",
+    "Price": 15.02,
+    "Type": "BMW",
+    "Body": "Sedan",
+    "Image": "car1.jpg"
+}]
+
+function getData() {
+    return data;
+}
