@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Car</title>
+    <title>Credits</title>
     <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700'>
@@ -15,7 +15,6 @@
 
 <body>
     <link rel="importer" href="pages/shared/header-navigation.html">
-    <link rel="importer" href="pages/shared/car-table.html" onafterload="onLoadTable">
     <link rel="importer" href="pages/shared/footer.html">
 </body>
 
@@ -26,16 +25,5 @@
 <script src="js/importer.js"></script>
 <script src="js/data.js"></script>
 <script src="js/ui-constructor.js"></script>
-
-<script>
-    function onLoadTable(htmlElement) {
-        var data = getData();
-        for (var i in data) {
-            constructCardForCar(data[i], function(el) {
-                $(htmlElement).append(el);
-            });
-        }
-    }
-</script>
 
 </html>

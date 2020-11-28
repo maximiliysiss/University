@@ -1,57 +1,9 @@
 var data = [{
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
-}, {
-    "Name": "Price",
-    "Price": 15.02,
-    "Type": "BMW",
-    "Body": "Sedan",
-    "Image": "car1.jpg"
+    "name": "One Car",
+    "price": 15.02,
+    "type": "BMW",
+    "body": "Sedan",
+    "image": "car1.jpg"
 }]
 
 function getData() {
