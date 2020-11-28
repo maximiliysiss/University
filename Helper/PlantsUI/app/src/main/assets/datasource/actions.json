@@ -1,0 +1,28 @@
+[
+  {
+    "name": "allPlants",
+    "caption": "Все растения",
+    "navigateTo": "nav_all_plants",
+    "image": "ic_plants"
+  },
+  {
+    "name": "byFamily",
+    "caption": "Семейства",
+    "navigateTo": "nav_by_family",
+    "image": "ic_family"
+  },
+  {
+    "name": "favorites",
+    "caption": "Избранные",
+    "navigateTo": "nav_all_plants",
+    "image": "ic_favorite",
+    "parcelableClass": "com.example.plantsdictionary.ui.controls.base.fragmentmodels.AllPlantsParcelableModel",
+    "parcelableClassId": "allplantsparcelablemodel",
+    "actionArguments": [
+      {
+        "name": "favorites",
+        "value": "true"
+      }
+    ]
+  }
+]
