@@ -54,10 +54,16 @@ class SqlClient:
         conn.commit()
         cursor.close()
 
-    # Загрузка истории сообщений
-    def loadMessageHistory(self ):
+    def insertPrivateMessage(self, messageData):
         conn = pyodbc.connect(self.connString)
         cursor = conn.cursor()
-        data = cursor.execute("exec sp_messages").fetchall()
+        cursor.execute("exec sp_create_privatemessage @userId=?, @content=?, @receiveId=?", messageData["userid"], messageData["message"], messageData["private"])
+        conn.commit()
+        cursor.close()
+
+    def loadMessageHistory(self, page, userId):
+        conn = pyodbc.connect(self.connString)
+        cursor = conn.cursor()
+        data = cursor.execute("exec sp_messages @id=?, @userId=?", page, userId).fetchall()
         cursor.close()
         return data

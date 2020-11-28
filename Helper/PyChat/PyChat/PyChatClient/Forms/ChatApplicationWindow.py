@@ -56,6 +56,8 @@ class ChatApplicationWindow:
     # Функция записи новой строки в чат.  Так как чат в режиме readonly, то
     # следует его разблокировать и снова заблокировать
     def addLineToChat(self, line):
+        if len(line) == 0:
+            return
         self.chat.configure(state="normal")
         self.chat.insert(END, line + '\n')
         self.chat.configure(state="disabled")

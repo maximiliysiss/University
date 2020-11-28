@@ -31,7 +31,7 @@ class ChatClient:
             result = self.sqlclient.tryregister(loginRegisterJsonData)
 
         # Если неудача, то отправим пользователю ошибку
-        if result is None:
+        if result is None or len(list(filter(lambda x: x.user is not None and x.user[0] == result,self.server.clients))) > 0:
             print("Error login/register")
             self.sendJson({"action":"loginfail","data":"Error login/password"})
             self.socket.close()
@@ -42,17 +42,32 @@ class ChatClient:
         self.sendJson({"action":"login","data":result})
         self.user = self.sqlclient.loadUser(result)
 
-        # Отправим также пользователю историю сообщений и сообщение о удачном входе
+        # Отправим также пользователю историю сообщений и сообщение о удачном
+        # входе
         self.uploadMessageHistory()
         self.server.broadcastJsonMessage(self, {"message":self.user[1] + " in", "userName":self.user[1], "userid":self.user[0]})
 
-        # Получем сообщения от пользователя, отправляем их всем и добавляем в БД
+        # Получем сообщения от пользователя, отправляем их всем и добавляем в
+        # БД
         while True:
             try:
                 msg = self.getJsonStringFromChannel()
                 jsonMsg = json.loads(msg)
+                if "action" in jsonMsg:
+                    self.handleAction(jsonMsg)
+                    continue
+
+                receiverId = None
+                if "message" in jsonMsg and jsonMsg["message"].startswith("@"):
+                    try:
+                        message = jsonMsg["message"]
+                        receiver = message[1:message.index(" ")]
+                        jsonMsg["private"] = list(filter(lambda x: x.user[1] == receiver,self.server.clients))[0].user[0]
+                        jsonMsg["message"] = message[message.index(" ") + 1:]
+                    except:
+                        print("Error parse data")
+
                 self.server.broadcastJsonMessage(self, jsonMsg)
-                print(msg)
             except:
                 print("Connection closed")
                 break
@@ -65,7 +80,8 @@ class ChatClient:
     def convertMessageDTOToTransfer(self, msg):
         return {"message":msg[1], "id": msg[0]}
     
-    # Получение сообщения из канала связи. Сначала идет длина сообщения, потом само сообщение
+    # Получение сообщения из канала связи.  Сначала идет длина сообщения, потом
+    # само сообщение
     def getJsonStringFromChannel(self):
         data = self.socket.recv(2)
         if not data:
@@ -86,5 +102,5 @@ class ChatClient:
 
     # Выгрузить пользователю историю сообщений
     def uploadMessageHistory(self):
-        loadedMsg = map(self.convertMessageDTOToTransfer, self.sqlclient.loadMessageHistory())
+        loadedMsg = map(self.convertMessageDTOToTransfer, self.sqlclient.loadMessageHistory(0, self.user[0]))
         self.sendJson({"action":"load", "data": list(loadedMsg)})

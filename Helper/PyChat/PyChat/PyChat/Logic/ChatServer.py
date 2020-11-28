@@ -41,8 +41,17 @@ class ChatServer:
 
     # Отправка всем пользователям JSON + его сохранение
     def broadcastJsonMessage(self, client, message):
-        self.sqlclient.insertMessage(message)
-        for cl in self.clients:
+
+        sendToClients = self.clients
+
+        if "private" in message: 
+            self.sqlclient.insertPrivateMessage(message)
+            message["message"] = "[private] " + message["message"]
+            sendToClients = list(filter(lambda x: x.user[0] == message["private"] or x == client, sendToClients))
+        else:
+            self.sqlclient.insertMessage(message)
+
+        for cl in sendToClients:
             cl.sendJson(message)
 
     # Удаление пользователя из списка пользователей
