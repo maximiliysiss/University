@@ -10,3 +10,4 @@ Debug/
 Release/
 __pycache__/
 build/
+*.class
