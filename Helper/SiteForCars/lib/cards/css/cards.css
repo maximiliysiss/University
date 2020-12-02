@@ -13,11 +13,6 @@ Body
     box-sizing: border-box;
 }
 
-body,
-html {
-    font-family: 'Open Sans Condensed', sans-serif;
-}
-
 
 /*--------------------
 Shop Card
@@ -34,6 +29,7 @@ Shop Card
     padding: 25px;
     text-align: center;
     z-index: 2;
+    position: relative;
 }
 
 .shop-card figure {
@@ -118,8 +114,8 @@ Shop Card
 }
 
 .shop-card .btn:hover {
-    color: #fff !important;
-    border: 1px solid transparent !important;
+    color: black !important;
+    border: 1px solid black !important;
 }
 
 .shop-card .btn:hover .bg {

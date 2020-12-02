@@ -1,0 +1,32 @@
+﻿@model IEnumerable<SiteCarAsp.Models.CarInformation>
+@inject SiteCarAsp.Services.ColorService colorService;
+
+@{ 
+    bool isAnyUsed = Model.Any(x => x.Used);
+}
+
+@foreach (var car in Model)
+{
+    <div class="shop-card @(isAnyUsed ? "car-used": "")">
+        <div class="title">
+            @car.Name
+        </div>
+        <div class="desc mb-4">
+            @car.Body/@car.Type
+        </div>
+        <div class="slider">
+            @for (int i = 0; i < car.Images.Length; i++)
+            {
+                <figure data-color="@colorService.GetColor(i)"><img src="@car.Images[i]" /></figure>
+            }
+        </div>
+        <div class="cta">
+            <div class="price">@car.Price</div>
+            <a href="@Url.Action("Index", "TestDrive", new { carId = car.Id }, null)" class="btn">Test Drive</a>
+        </div>
+        @if (car.Used)
+        {
+            <div class="used-line">Used</div>
+        }
+    </div>
+}

@@ -24,17 +24,15 @@
 <script src='lib/slick/slick.min.js'></script>
 <script src='lib/cards/js/cards.js'></script>
 <script src="js/importer.js"></script>
+<script src="js/filters.js"></script>
 <script src="js/data.js"></script>
 <script src="js/ui-constructor.js"></script>
 
 <script>
     function onLoadTable(htmlElement) {
-        var data = getData();
-        for (var i in data) {
-            constructCardForCar(data[i], function(el) {
-                $(htmlElement).append(el);
-            });
-        }
+        htmlElement = $("#car-table");
+        loadedData = getNewCars();
+        initUICarTable(loadedData, htmlElement);
     }
 </script>
 

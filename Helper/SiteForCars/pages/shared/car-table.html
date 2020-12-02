@@ -1,2 +1,30 @@
-<div class="d-inline-flex w-100 p-3 flex-wrap" id="car-table">
+<div>
+    <div class="accordion" id="accordionExample">
+        <div class="card">
+            <div id="headingOne">
+                <button class="w-100 btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    Filters
+                </button>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                <div class="card-body">
+                    <div class="filter-body">
+                        <div>Type</div>
+                        <div class="flex-row filter-data" field="type">
+                        </div>
+                    </div>
+                    <div class="filter-body">
+                        <div>Body</div>
+                        <div class="flex-row filter-data" field="body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-inline-flex w-100 p-3 flex-wrap car-table" id="car-table">
+    </div>
+
 </div>
