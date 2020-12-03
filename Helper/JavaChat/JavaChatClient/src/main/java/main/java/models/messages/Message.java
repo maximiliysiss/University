@@ -1,6 +1,6 @@
-package com.server.models;
+package main.java.models.messages;
 
-public class Message {
+public class Message implements Messagable {
     private String message;
     private int senderId;
     private String sender;

@@ -1,7 +1,7 @@
 package com.server;
 
-import com.server.data.MSSQLInteractor;
 import com.server.data.SqlInteractor;
+import com.server.data.SqlInteractorFactory;
 import com.server.logic.ChatServer;
 
 import java.util.Scanner;
@@ -15,7 +15,7 @@ public class Main {
         int port = sc.nextInt();
         sc.nextLine();
 
-        SqlInteractor sqlInteractor = new MSSQLInteractor("");
+        SqlInteractor sqlInteractor = SqlInteractorFactory.create("jdbc:sqlserver://localhost,54813;integratedSecurity=true;");
         ChatServer chatServer = new ChatServer(ip, port, sqlInteractor, 50);
         chatServer.start();
 

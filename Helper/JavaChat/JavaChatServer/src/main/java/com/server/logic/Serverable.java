@@ -1,6 +1,6 @@
 package com.server.logic;
 
 public interface Serverable {
-    void sendBroadcastMessage(String message);
-    void sendPrivateMessage();
+    <T> void sendBroadcastJsonMessage(T message);
+    <T> void sendPrivateJsonMessage(T message);
 }

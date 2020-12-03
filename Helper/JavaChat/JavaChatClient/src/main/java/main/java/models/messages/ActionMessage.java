@@ -1,8 +1,8 @@
-package com.server.models;
+package main.java.models.messages;
 
 import com.google.gson.Gson;
 
-public class ActionMessage {
+public class ActionMessage implements Messagable {
 
     private static Gson gson = new Gson();
 
@@ -12,13 +12,13 @@ public class ActionMessage {
     public ActionMessage() {
     }
 
+    public ActionMessage(String action) {
+        this.action = action;
+    }
+
     public ActionMessage(String action, String data) {
         this.action = action;
         this.data = data;
-    }
-
-    public ActionMessage(String action) {
-        this.action = action;
     }
 
     public String getAction() {

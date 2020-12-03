@@ -1,10 +1,10 @@
-package com.server.models;
+package com.server.logic.actionbody;
 
-public class User {
+public class LoginResult {
     private String login;
     private int id;
 
-    public User(String login, int id) {
+    public LoginResult(String login, int id) {
         this.login = login;
         this.id = id;
     }

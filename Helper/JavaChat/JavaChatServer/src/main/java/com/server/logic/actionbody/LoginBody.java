@@ -1,16 +1,15 @@
-package com.server.models;
+package com.server.logic.actionbody;
 
-public class LoginMessage {
+public class LoginBody {
     private String login;
     private String password;
-    private String action;
 
-    public String getAction() {
-        return action;
+    public LoginBody() {
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    public LoginBody(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 
     public String getLogin() {

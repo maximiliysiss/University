@@ -47,13 +47,14 @@ public class ChatServer extends Thread implements Serverable {
     }
 
     @Override
-    public void sendBroadcastMessage(String message) {
+    public <T> void sendBroadcastJsonMessage(T message) {
         for(ChatClient chatClient: this.chatClients){
-            chatClient.sendMessage(message);
+            chatClient.sendJson(message);
         }
     }
 
     @Override
-    public void sendPrivateMessage() {
+    public <T> void sendPrivateJsonMessage(T message) {
+
     }
 }
