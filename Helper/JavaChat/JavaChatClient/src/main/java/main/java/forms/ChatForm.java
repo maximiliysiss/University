@@ -2,6 +2,7 @@ package main.java.forms;
 
 import main.java.common.UserContext;
 import main.java.logic.ClientSocketLogic;
+import main.java.models.messages.ActionMessage;
 import main.java.models.messages.Message;
 
 import javax.swing.*;
@@ -46,7 +47,11 @@ public class ChatForm extends JFrame {
     }
 
     private void onLoadHistory(String s) {
-        chatArea.setText(s + "\n");
+        s = s.trim();
+        if (s.length() > 0)
+            s += "\n";
+
+        chatArea.setText(s);
     }
 
     private void initGUI() {
@@ -56,6 +61,7 @@ public class ChatForm extends JFrame {
         JMenuBar menuBar = new JMenuBar();
         JMenu chatMenuItem = new JMenu("Chat");
         JMenuItem clearDataItem = new JMenuItem("Clear data");
+        clearDataItem.addActionListener(x -> onClearData());
         chatMenuItem.add(clearDataItem);
 
         menuBar.add(chatMenuItem);
@@ -89,6 +95,10 @@ public class ChatForm extends JFrame {
 
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    private void onClearData() {
+        clientSocketLogic.sendJsonMessage(new ActionMessage("clear"));
     }
 
     private void sendMessage() {

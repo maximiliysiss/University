@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChatClient extends Thread {
@@ -76,16 +77,17 @@ public class ChatClient extends Thread {
             if (message.getMessage().startsWith("@")) {
                 String name = message.getMessage().substring(1, message.getMessage().indexOf(' '));
                 String msg = message.getMessage().substring(message.getMessage().indexOf(' ') + 1);
-                message.setMessage(msg);
-                message.setSender(message.getSender() + "[private]");
                 id = sqlInteractor.getUserByName(name);
+                if (id != null) {
+                    sqlInteractor.insertPrivateMessage(message, id);
+                    message.setMessage("[private] " + msg);
+                }
             }
 
             if (id == null) {
                 broadcastMessage(message);
             } else {
-                sqlInteractor.insertPrivateMessage(message, user.getId());
-                serverable.sendPrivateJsonMessage(message, id);
+                serverable.sendPrivateJsonMessage(message, Arrays.asList(id, getUserId()));
             }
 
         }
@@ -116,14 +118,13 @@ public class ChatClient extends Thread {
         close();
     }
 
-    private void loadData() {
+    public void loadData() {
         List<String> messages = sqlInteractor.loadMessages(user.getId());
         sendJson(new ActionMessage("load").packBody(messages));
     }
 
     private void clearData() {
-        sqlInteractor.clearData();
-        sendJson(new ActionMessage("reload"));
+        serverable.clearDataAction();
     }
 
     private User loginUser() {

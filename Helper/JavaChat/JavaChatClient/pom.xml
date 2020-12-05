@@ -21,10 +21,6 @@
                 <groupId>io.github.fvarrui</groupId>
                 <artifactId>javapackager</artifactId>
                 <version>1.4.1</version>
-                <configuration>
-                    <jrePath>C:/Program Files/Java/jre1.8.0_251/</jrePath>
-                    <jdkPath>C:/Program Files/Java/jdk-14.0.1/</jdkPath>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -33,6 +29,9 @@
                         </goals>
                         <configuration>
                             <mainClass>main.java.ChatClient</mainClass>
+                            <generateInstaller>false</generateInstaller>
+                            <administratorRequired>true</administratorRequired>
+                            <platform>windows</platform>
                         </configuration>
                     </execution>
                 </executions>

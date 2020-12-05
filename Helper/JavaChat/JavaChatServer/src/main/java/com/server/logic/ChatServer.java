@@ -68,11 +68,10 @@ public class ChatServer extends Thread implements Serverable {
     }
 
     @Override
-    public <T> void sendPrivateJsonMessage(T message, final Integer id) {
-        Optional<ChatClient> chatClient = chatClients.stream().filter(x -> x.getUserId() == id).findFirst();
-        if (chatClient.isPresent()) {
-            chatClient.get().sendJson(message);
-        }
+    public <T> void sendPrivateJsonMessage(T message, final List<Integer> ids) {
+        List<ChatClient> receivers = chatClients.stream().filter(x -> ids.contains(x.getUserId())).collect(Collectors.toList());
+        for (ChatClient chatClient : receivers)
+            chatClient.sendJson(message);
     }
 
     @Override
@@ -83,6 +82,14 @@ public class ChatServer extends Thread implements Serverable {
 
     public void onlineUpdate() {
         sendBroadcastJsonMessage(new ActionMessage("online").packBody(chatClients.stream().map(x -> x.getUserName()).collect(Collectors.toList())));
+    }
+
+    @Override
+    public void clearDataAction() {
+        sqlInteractor.clearData();
+        for (ChatClient chatClient : chatClients) {
+            chatClient.loadData();
+        }
     }
 
     public void shutdown() {

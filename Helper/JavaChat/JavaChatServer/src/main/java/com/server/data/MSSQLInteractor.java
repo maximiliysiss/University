@@ -118,7 +118,7 @@ public class MSSQLInteractor implements SqlInteractor {
     @Override
     public void clearData() {
         try (Connection conn = getConnection();
-             PreparedStatement statement = conn.prepareStatement("delete from Messages")) {
+             PreparedStatement statement = conn.prepareStatement("delete from private_message; delete from Messages;")) {
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

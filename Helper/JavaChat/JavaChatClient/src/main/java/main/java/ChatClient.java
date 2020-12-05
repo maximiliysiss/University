@@ -8,6 +8,9 @@ import main.java.logic.ClientSocketLogic;
 public class ChatClient {
 
     public static void main(String[] args) {
+
+        System.out.println("Start client");
+
         Config config = Config.readConfig("config.json");
         Cryptographic.init(config.getKey());
 

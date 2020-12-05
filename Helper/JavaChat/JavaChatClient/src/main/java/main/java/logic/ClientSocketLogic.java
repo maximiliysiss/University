@@ -109,7 +109,6 @@ public class ClientSocketLogic {
             case "loginfail":
                 loginFail(messagable);
                 break;
-            case "reload":
             case "load":
                 loadHandler.handle(String.join("\n", messagable.getBody(String[].class)));
                 break;
