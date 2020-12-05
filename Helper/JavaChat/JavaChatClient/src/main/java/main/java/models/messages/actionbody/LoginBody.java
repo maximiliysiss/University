@@ -1,5 +1,8 @@
 package main.java.models.messages.actionbody;
 
+/**
+ * Тело запроса на вход
+ */
 public class LoginBody {
     private String login;
     private String password;

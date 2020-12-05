@@ -1,5 +1,8 @@
 package com.server.models;
 
+/**
+ * Класс пользователя
+ */
 public class User {
     private String login;
     private int id;

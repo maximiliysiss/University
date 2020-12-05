@@ -1,5 +1,8 @@
 package main.java.models.messages.actionbody;
 
+/**
+ * Тело удачного входа
+ */
 public class LoginResult {
     private String login;
     private int id;

@@ -4,12 +4,14 @@ import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Смотри на клиенте
+ */
 public class Cryptographic {
 
     private final SecretKeySpec des;
@@ -57,6 +59,11 @@ public class Cryptographic {
         return null;
     }
 
+    /**
+     * Хэш MD5
+     * @param st
+     * @return
+     */
     public String md5(String st) {
         MessageDigest messageDigest = null;
         byte[] digest = new byte[0];

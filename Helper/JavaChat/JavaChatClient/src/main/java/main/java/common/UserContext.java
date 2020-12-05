@@ -1,5 +1,8 @@
 package main.java.common;
 
+/**
+ * Контекст пользовательского контекста
+ */
 public class UserContext {
 
     private static String login;

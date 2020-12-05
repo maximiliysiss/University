@@ -7,6 +7,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Обработка подключения к БД
+ */
 public class MSSQLInteractor implements SqlInteractor {
 
     private String connectionString;
@@ -15,6 +18,11 @@ public class MSSQLInteractor implements SqlInteractor {
         this.connectionString = connectionString;
     }
 
+    /**
+     * Получить подключение
+     *
+     * @return
+     */
     private Connection getConnection() {
         try {
             return DriverManager.getConnection(connectionString);
@@ -24,6 +32,13 @@ public class MSSQLInteractor implements SqlInteractor {
         return null;
     }
 
+    /**
+     * Попытка войти
+     *
+     * @param login
+     * @param password
+     * @return
+     */
     @Override
     public Integer tryLogin(String login, String password) {
         String passwordHash = Cryptographic.get().md5(password);
@@ -44,6 +59,12 @@ public class MSSQLInteractor implements SqlInteractor {
         return null;
     }
 
+    /**
+     * Есть ли такой пользователь
+     *
+     * @param login
+     * @return
+     */
     public boolean isExists(String login) {
         try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement("select count(1) c from Users where Login = ?")) {
@@ -58,6 +79,13 @@ public class MSSQLInteractor implements SqlInteractor {
         return true;
     }
 
+    /**
+     * Добвление нового пользователя
+     *
+     * @param login
+     * @param password
+     * @return
+     */
     @Override
     public Integer tryRegister(String login, String password) {
         if (isExists(login))
@@ -75,6 +103,12 @@ public class MSSQLInteractor implements SqlInteractor {
         return tryLogin(login, password);
     }
 
+    /**
+     * Получить ID пользователя по имени
+     *
+     * @param name
+     * @return
+     */
     @Override
     public Integer getUserByName(String name) {
         try (Connection conn = getConnection();
@@ -90,6 +124,11 @@ public class MSSQLInteractor implements SqlInteractor {
         return null;
     }
 
+    /**
+     * Добавить сообщение
+     *
+     * @param message
+     */
     @Override
     public void insertMessage(Message message) {
         try (Connection conn = getConnection();
@@ -102,6 +141,12 @@ public class MSSQLInteractor implements SqlInteractor {
         }
     }
 
+    /**
+     * Добавить приватное сообщение
+     *
+     * @param message
+     * @param userId
+     */
     @Override
     public void insertPrivateMessage(Message message, Integer userId) {
         try (Connection conn = getConnection();
@@ -115,6 +160,9 @@ public class MSSQLInteractor implements SqlInteractor {
         }
     }
 
+    /**
+     * Очистить данные
+     */
     @Override
     public void clearData() {
         try (Connection conn = getConnection();
@@ -125,6 +173,12 @@ public class MSSQLInteractor implements SqlInteractor {
         }
     }
 
+    /**
+     * Получить сообщения для пользователя
+     *
+     * @param id
+     * @return
+     */
     @Override
     public List<String> loadMessages(int id) {
         List<String> strings = new ArrayList<>();

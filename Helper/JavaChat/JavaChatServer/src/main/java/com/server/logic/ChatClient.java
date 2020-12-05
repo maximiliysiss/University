@@ -20,16 +20,43 @@ import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Представление клиента на сервер
+ */
 public class ChatClient extends Thread {
+    /**
+     * Потоки данных
+     */
     private final InputStream in;
     private final OutputStream out;
 
+    /**
+     * Ссылка на сервер
+     */
     private final Serverable serverable;
+    /**
+     * Ссылка на подключение к БД
+     */
     private final SqlInteractor sqlInteractor;
 
+    /**
+     * Конвертер JSON
+     */
     private final Gson gson = new Gson();
+
+    /**
+     * Сокет пользователя
+     */
     private final Socket clientSocket;
+
+    /**
+     * Пользователь
+     */
     private User user;
+
+    /**
+     * Работает ли сервак?
+     */
     private boolean isRun = true;
 
     public ChatClient(Socket clientSocket, SqlInteractor sqlInteractor, Serverable serverable) throws IOException {
@@ -48,6 +75,9 @@ public class ChatClient extends Thread {
         return user.getLogin();
     }
 
+    /**
+     * Запуск потока
+     */
     @Override
     public void run() {
         super.run();
@@ -93,11 +123,19 @@ public class ChatClient extends Thread {
         }
     }
 
+    /**
+     * Рассылка сообщений на всех
+     * @param message
+     */
     private void broadcastMessage(Message message) {
         sqlInteractor.insertMessage(message);
         serverable.sendBroadcastJsonMessage(message);
     }
 
+    /**
+     * Обрабокта действий
+     * @param message
+     */
     private void handleAction(ActionMessage message) {
         switch (message.getAction()) {
             case "clear":
@@ -112,21 +150,34 @@ public class ChatClient extends Thread {
         }
     }
 
+    /**
+     * Выход
+     */
     private void logout() {
         serverable.logout(this);
         broadcastMessage(new Message("Пользователь " + getUserName() + " покинул чат", getUserId(), getUserName()));
         close();
     }
 
+    /**
+     * Отправить историю сообщений
+     */
     public void loadData() {
         List<String> messages = sqlInteractor.loadMessages(user.getId());
         sendJson(new ActionMessage("load").packBody(messages));
     }
 
+    /**
+     * Очистить историю
+     */
     private void clearData() {
         serverable.clearDataAction();
     }
 
+    /**
+     * Авторизация
+     * @return
+     */
     private User loginUser() {
         ActionMessage loginJson = (ActionMessage) readJsonFromStream();
         LoginBody loginBody = loginJson.getBody(LoginBody.class);
@@ -142,6 +193,10 @@ public class ChatClient extends Thread {
         return new User(loginBody.getLogin(), userId);
     }
 
+    /**
+     * Получить сообщение из потока
+     * @return
+     */
     private Messagable readJsonFromStream() {
         try {
             byte[] lengthArray = new byte[4];
@@ -160,6 +215,11 @@ public class ChatClient extends Thread {
         return new ActionMessage("logout");
     }
 
+    /**
+     * Отправить данные
+     * @param data
+     * @param <T>
+     */
     public <T> void sendJson(T data) {
         String message = gson.toJson(data);
         byte[] encrypt = Cryptographic.get().encrypt(message.getBytes());
@@ -176,6 +236,9 @@ public class ChatClient extends Thread {
         }
     }
 
+    /**
+     * Закрыть соединение
+     */
     public void close() {
         try {
             this.clientSocket.close();

@@ -5,9 +5,15 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.*;
 
+/**
+ * Конфигурация из файла
+ */
 public class Config {
     private String ip;
     private int port;
+    /**
+     * Ключ для шифрования
+     */
     private String key;
 
     public String getIp() {
@@ -25,6 +31,11 @@ public class Config {
     private Config() {
     }
 
+    /**
+     * Прочитать конфигурацию из файла
+     * @param path
+     * @return
+     */
     public static Config readConfig(String path) {
         try (JsonReader reader = new JsonReader(new FileReader(ClassLoader.getSystemClassLoader().getResource(path).getFile()))) {
             Gson gson = new Gson();

@@ -3,5 +3,5 @@
   "port": 8000,
   "key": "Some key",
   "connectionString": "jdbc:sqlserver://localhost:54813;integratedSecurity=true;database=javachat",
-  "maxPool": 0
+  "maxPool": 50
 }

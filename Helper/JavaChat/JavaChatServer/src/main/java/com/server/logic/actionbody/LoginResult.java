@@ -1,5 +1,8 @@
 package com.server.logic.actionbody;
 
+/**
+ * Смотри на клиент
+ */
 public class LoginResult {
     private String login;
     private int id;

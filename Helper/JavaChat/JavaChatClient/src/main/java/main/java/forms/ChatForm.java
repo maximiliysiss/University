@@ -8,44 +8,81 @@ import main.java.models.messages.Message;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Форма чата
+ */
 public class ChatForm extends JFrame {
 
+    /**
+     * Размеры
+     */
     private final int WIDTH = 600, HEIGHT = 480;
 
+    /**
+     * Компоненты формы
+     */
     private TextArea chatArea;
     private TextField chatInput;
     private TextArea onlineArea;
-
-    private final ClientSocketLogic clientSocketLogic;
     private Button sendMessage;
+
+    /**
+     * Класс логики взаимодействия с сервером
+     */
+    private final ClientSocketLogic clientSocketLogic;
 
     public ChatForm(ClientSocketLogic clientSocketLogic) throws HeadlessException {
         this.clientSocketLogic = clientSocketLogic;
 
         initGUI();
 
+        /**
+         * Прикрепление обработчиков
+         */
         clientSocketLogic.registerMessageHandler(this::onNewMessages);
         clientSocketLogic.registerLoadHandler(this::onLoadHistory);
         clientSocketLogic.registerFailLoginHandler(this::onFailLogin);
         clientSocketLogic.registerOnlineHandler(this::onOnlineChange);
     }
 
+    /**
+     * Обновления списка онлайн пользователей
+     *
+     * @param online
+     */
     private void onOnlineChange(String online) {
         onlineArea.setText(online);
     }
 
+    /**
+     * Обработка ошибок авторизации
+     *
+     * @param message
+     */
     private void onFailLogin(String message) {
+        for (int i = 0; i < getMenuBar().getMenuCount(); i++)
+            getMenuBar().getMenu(i).setEnabled(false);
         chatInput.setEditable(false);
         sendMessage.setEnabled(false);
         onNewMessages(message);
     }
 
+    /**
+     * Обработка нового сообщения
+     *
+     * @param s
+     */
     private void onNewMessages(String s) {
         if (s == null || s.length() == 0)
             return;
         chatArea.append(s + "\n");
     }
 
+    /**
+     * Обработка загрузки истории
+     *
+     * @param s
+     */
     private void onLoadHistory(String s) {
         s = s.trim();
         if (s.length() > 0)
@@ -54,6 +91,9 @@ public class ChatForm extends JFrame {
         chatArea.setText(s);
     }
 
+    /**
+     * Создание UI
+     */
     private void initGUI() {
         JPanel rootPanel = new JPanel(new FlowLayout());
         rootPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -63,9 +103,7 @@ public class ChatForm extends JFrame {
         JMenuItem clearDataItem = new JMenuItem("Clear data");
         clearDataItem.addActionListener(x -> onClearData());
         chatMenuItem.add(clearDataItem);
-
         menuBar.add(chatMenuItem);
-        setJMenuBar(menuBar);
 
         JPanel highLine = new JPanel(new FlowLayout());
         highLine.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * 0.76)));
@@ -91,22 +129,32 @@ public class ChatForm extends JFrame {
         rootPanel.add(highLine);
         rootPanel.add(lowLine);
 
+        setJMenuBar(menuBar);
         setContentPane(rootPanel);
 
         setSize(WIDTH, HEIGHT);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Кнопка очистка данных
+     */
     private void onClearData() {
         clientSocketLogic.sendJsonMessage(new ActionMessage("clear"));
     }
 
+    /**
+     * Отправка сообщения
+     */
     private void sendMessage() {
         String content = chatInput.getText();
-        chatInput.setText("");
+        chatInput.setText(null);
         clientSocketLogic.sendJsonMessage(new Message(content, UserContext.getUserId(), UserContext.getLogin()));
     }
 
+    /**
+     * Показать форму
+     */
     public void showDialog() {
         setVisible(true);
     }

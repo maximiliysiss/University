@@ -6,14 +6,23 @@ import main.java.logic.ClientSocketLogic;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Форма входа
+ */
 public class LoginForm extends JFrame {
 
+    /**
+     * Класс логики
+     */
     private final ClientSocketLogic clientSocketLogic;
 
     private JPanel rootPanel;
     private TextField loginField;
     private JPasswordField passwordField;
 
+    /**
+     * Размеры
+     */
     private final int WIDTH = 300;
     private final int HEIGHT = 200;
 
@@ -23,6 +32,9 @@ public class LoginForm extends JFrame {
         initGUI();
     }
 
+    /**
+     * Создание UI
+     */
     private void initGUI() {
 
         GridLayout gridLayout = new GridLayout(6, 1);
@@ -46,14 +58,24 @@ public class LoginForm extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
+    /**
+     * Кнопка Login
+     */
     private void onLogin() {
         showChatForm(x -> clientSocketLogic.login(loginField.getText(), passwordField.getText()));
     }
 
+    /**
+     * Кнопка Register
+     */
     private void onRegister() {
         showChatForm(x -> clientSocketLogic.register(loginField.getText(), passwordField.getText()));
     }
 
+    /**
+     * Показать форму чата
+     * @param action
+     */
     private void showChatForm(ActionHandler<Void> action) {
         setVisible(false);
         dispose();

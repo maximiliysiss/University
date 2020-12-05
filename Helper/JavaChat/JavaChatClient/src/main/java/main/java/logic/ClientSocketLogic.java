@@ -16,15 +16,25 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
 
+/**
+ * Логика для взаимодействия с сервером
+ */
 public class ClientSocketLogic {
 
     private final String ip;
     private final int port;
 
     private Socket socket;
+
+    /**
+     * Потоки данных
+     */
     private OutputStream out;
     private InputStream in;
 
+    /**
+     * Обработчики событий
+     */
     private ActionHandler<String> messageHandler = x -> {
     };
     private ActionHandler<String> loadHandler = x -> {
@@ -34,6 +44,9 @@ public class ClientSocketLogic {
     private ActionHandler<String> onlineHandler = x -> {
     };
 
+    /**
+     * Конвертер
+     */
     private static Gson gson = new Gson();
 
     public ClientSocketLogic(String ip, int port) {
@@ -41,6 +54,9 @@ public class ClientSocketLogic {
         this.port = port;
     }
 
+    /**
+     * Подключение
+     */
     private void initConnection() {
         if (socket != null)
             return;
@@ -56,16 +72,31 @@ public class ClientSocketLogic {
         }
     }
 
+    /**
+     * Логин
+     *
+     * @param login
+     * @param password
+     */
     public void login(String login, String password) {
         initConnection();
         sendJsonMessage(new ActionMessage("login").packBody(new LoginBody(login, password)));
     }
 
+    /**
+     * Регистрация
+     *
+     * @param login
+     * @param password
+     */
     public void register(String login, String password) {
         initConnection();
         sendJsonMessage(new ActionMessage("register").packBody(new LoginBody(login, password)));
     }
 
+    /**
+     * Обработка входящих сообщений
+     */
     private void handleMessages() {
         while (true) {
             try {
@@ -89,6 +120,12 @@ public class ClientSocketLogic {
         }
     }
 
+    /**
+     * Получение данных из потока
+     *
+     * @return
+     * @throws IOException
+     */
     private String readMessageData() throws IOException {
         byte[] lengthArray = new byte[4];
         in.read(lengthArray, 0, 4);
@@ -101,6 +138,11 @@ public class ClientSocketLogic {
         return new String(messageData);
     }
 
+    /**
+     * Обработка действий
+     *
+     * @param messagable
+     */
     private void handleActionMessage(ActionMessage messagable) {
         switch (messagable.getAction()) {
             case "login":
@@ -117,6 +159,11 @@ public class ClientSocketLogic {
         }
     }
 
+    /**
+     * Ошибка входа
+     *
+     * @param messagable
+     */
     private void loginFail(ActionMessage messagable) {
         try {
             failLoginHandler.handle(messagable.getData());
@@ -126,10 +173,20 @@ public class ClientSocketLogic {
         }
     }
 
+    /**
+     * Удачный вход
+     *
+     * @param body
+     */
     private void loginAction(LoginResult body) {
         UserContext.setUser(body.getLogin(), body.getId());
     }
 
+    /**
+     * Отправить сообщение серверу
+     *
+     * @param message
+     */
     private void sendMessage(String message) {
         byte[] encrypt = Cryptographic.get().encrypt(message.getBytes());
         try {
@@ -144,9 +201,21 @@ public class ClientSocketLogic {
         }
     }
 
+    /**
+     * Отправить объект серверу
+     *
+     * @param obj
+     * @param <T>
+     */
     public <T> void sendJsonMessage(T obj) {
         sendMessage(gson.toJson(obj));
     }
+
+    /**
+     * Регистрация обработчиков
+     *
+     * @param messageHandler
+     */
 
     public void registerMessageHandler(ActionHandler<String> messageHandler) {
         synchronized (this.messageHandler) {

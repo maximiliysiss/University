@@ -6,11 +6,20 @@ import com.google.gson.stream.JsonReader;
 import java.io.FileReader;
 import java.io.IOException;
 
+/**
+ * Конфига (дополнительно смотри в проект клиента)
+ */
 public class Config {
     private String ip;
     private int port;
     private String key;
+    /**
+     * Строка подключения
+     */
     private String connectionString;
+    /**
+     * Максимальное количество подключений
+     */
     private int maxPool;
 
     public int getMaxPool() {

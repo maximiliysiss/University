@@ -2,6 +2,9 @@ package com.server.models;
 
 import com.google.gson.Gson;
 
+/**
+ * Смотри на клиент
+ */
 public class ActionMessage implements Messagable {
 
     private static Gson gson = new Gson();

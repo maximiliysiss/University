@@ -2,7 +2,6 @@ package com.server.logic;
 
 import com.server.data.SqlInteractor;
 import com.server.models.ActionMessage;
-import com.server.models.Message;
 import com.server.models.factory.Actions;
 
 import java.io.IOException;
@@ -11,17 +10,36 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * Сервер
+ */
 public class ChatServer extends Thread implements Serverable {
     private final String ip;
     private final int port;
-    private final SqlInteractor sqlInteractor;
+    /**
+     * Максимальное количество подключений
+     */
     private final int maxPool;
 
+    /**
+     * Подключение к БД
+     */
+    private final SqlInteractor sqlInteractor;
+
+    /**
+     * Клиенты
+     */
     private final List<ChatClient> chatClients = new ArrayList<>();
+
+    /**
+     * Сокет
+     */
     private ServerSocket serverSocket;
+    /**
+     * Закрыто ли приложение
+     */
     private boolean isClose = false;
 
     public ChatServer(String ip, int port, SqlInteractor sqlInteractor, int maxPool) {
@@ -31,6 +49,9 @@ public class ChatServer extends Thread implements Serverable {
         this.maxPool = maxPool;
     }
 
+    /**
+     * Запуск потока
+     */
     @Override
     public void run() {
         super.run();
@@ -60,6 +81,12 @@ public class ChatServer extends Thread implements Serverable {
 
     }
 
+    /**
+     * Отправить сообщение всем
+     *
+     * @param message
+     * @param <T>
+     */
     @Override
     public <T> void sendBroadcastJsonMessage(T message) {
         for (ChatClient chatClient : this.chatClients) {
@@ -67,6 +94,13 @@ public class ChatServer extends Thread implements Serverable {
         }
     }
 
+    /**
+     * Отправить сообщение определенным пользователям
+     *
+     * @param message
+     * @param ids
+     * @param <T>
+     */
     @Override
     public <T> void sendPrivateJsonMessage(T message, final List<Integer> ids) {
         List<ChatClient> receivers = chatClients.stream().filter(x -> ids.contains(x.getUserId())).collect(Collectors.toList());
@@ -74,16 +108,27 @@ public class ChatServer extends Thread implements Serverable {
             chatClient.sendJson(message);
     }
 
+    /**
+     * Выход пользователя
+     *
+     * @param chatClient
+     */
     @Override
     public void logout(ChatClient chatClient) {
         chatClients.remove(chatClient);
         onlineUpdate();
     }
 
+    /**
+     * Отправка пользователям актуального списка пользователей
+     */
     public void onlineUpdate() {
         sendBroadcastJsonMessage(new ActionMessage("online").packBody(chatClients.stream().map(x -> x.getUserName()).collect(Collectors.toList())));
     }
 
+    /**
+     * Обновить у всех историю
+     */
     @Override
     public void clearDataAction() {
         sqlInteractor.clearData();
@@ -92,6 +137,9 @@ public class ChatServer extends Thread implements Serverable {
         }
     }
 
+    /**
+     * Вырубить сервер
+     */
     public void shutdown() {
         try {
             isClose = true;

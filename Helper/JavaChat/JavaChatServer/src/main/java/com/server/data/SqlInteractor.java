@@ -4,6 +4,9 @@ import com.server.models.Message;
 
 import java.util.List;
 
+/**
+ * Интерфейс для подключения к БД
+ */
 public interface SqlInteractor {
     Integer tryLogin(String login, String password);
     Integer tryRegister(String login, String password);

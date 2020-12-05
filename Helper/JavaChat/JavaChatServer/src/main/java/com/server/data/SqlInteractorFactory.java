@@ -1,5 +1,8 @@
 package com.server.data;
 
+/**
+ * Фабрика для Singleton подключения к БД
+ */
 public class SqlInteractorFactory {
 
     private static SqlInteractor instance;

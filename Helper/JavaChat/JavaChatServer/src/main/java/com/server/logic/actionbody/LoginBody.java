@@ -1,5 +1,8 @@
 package com.server.logic.actionbody;
 
+/**
+ * Смотри на клиент
+ */
 public class LoginBody {
     private String login;
     private String password;

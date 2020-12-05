@@ -1,5 +1,8 @@
 package com.server.models;
 
+/**
+ * Смотри на клиент
+ */
 public class Message implements Messagable {
     private String message;
     private int senderId;

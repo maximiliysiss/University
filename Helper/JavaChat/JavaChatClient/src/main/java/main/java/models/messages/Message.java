@@ -1,5 +1,8 @@
 package main.java.models.messages;
 
+/**
+ * Сообщение от пользователя
+ */
 public class Message implements Messagable {
     private String message;
     private int senderId;

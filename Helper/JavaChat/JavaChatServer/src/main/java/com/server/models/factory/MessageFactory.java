@@ -8,6 +8,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.json.simple.parser.ParseException;
 
+/**
+ * Фабрика сообщений из String
+ * Смотри на клиент
+ */
 public class MessageFactory {
 
     private static Gson gson = new Gson();

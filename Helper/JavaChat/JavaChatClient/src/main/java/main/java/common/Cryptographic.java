@@ -10,8 +10,14 @@ import java.security.InvalidKeyException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * Класс для шифрования
+ */
 public class Cryptographic {
 
+    /**
+     * Настройки шифрования
+     */
     private final SecretKeySpec des;
     private final IvParameterSpec ivSpec;
     private Cipher cipher;
@@ -31,6 +37,12 @@ public class Cryptographic {
         }
     }
 
+    /**
+     * Зашифровать
+     *
+     * @param input
+     * @return
+     */
     public byte[] encrypt(byte[] input) {
         try {
             cipher.init(Cipher.ENCRYPT_MODE, des, ivSpec);
@@ -44,6 +56,12 @@ public class Cryptographic {
         return null;
     }
 
+    /**
+     * Дешифровать
+     *
+     * @param encrypted
+     * @return
+     */
     public byte[] decrypt(byte[] encrypted) {
         try {
             cipher.init(Cipher.DECRYPT_MODE, des, ivSpec);
@@ -57,32 +75,13 @@ public class Cryptographic {
         return null;
     }
 
-    public String md5(String st) {
-        MessageDigest messageDigest = null;
-        byte[] digest = new byte[0];
-
-        try {
-            messageDigest = MessageDigest.getInstance("MD5");
-            messageDigest.reset();
-            messageDigest.update(st.getBytes());
-            digest = messageDigest.digest();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        BigInteger bigInt = new BigInteger(1, digest);
-        String md5Hex = bigInt.toString(16);
-
-        while (md5Hex.length() < 32) {
-            md5Hex = "0" + md5Hex;
-        }
-
-        return md5Hex;
-    }
+    /**
+     * Singleton паттерн
+     */
 
     private static Cryptographic cryptographic;
 
-    public static void init(String key) {
+    public synchronized static void init(String key) {
         Cryptographic.cryptographic = new Cryptographic(key);
     }
 
