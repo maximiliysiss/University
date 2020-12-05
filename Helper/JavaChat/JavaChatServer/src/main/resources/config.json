@@ -1,0 +1,7 @@
+{
+  "ip": "127.0.0.1",
+  "port": 8000,
+  "key": "Some key",
+  "connectionString": "jdbc:sqlserver://localhost:54813;integratedSecurity=true;database=javachat",
+  "maxPool": 50
+}

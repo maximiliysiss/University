@@ -2,6 +2,8 @@ package com.server.data;
 
 import com.server.models.Message;
 
+import java.util.List;
+
 public interface SqlInteractor {
     Integer tryLogin(String login, String password);
     Integer tryRegister(String login, String password);
@@ -14,5 +16,5 @@ public interface SqlInteractor {
 
     void clearData();
 
-    String[] loadMessages(int id);
+    List<String> loadMessages(int id);
 }

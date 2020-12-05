@@ -9,15 +9,12 @@ public class UserContext {
         return login;
     }
 
-    public static void setLogin(String login) {
-        UserContext.login = login;
-    }
-
     public static int getUserId() {
         return userId;
     }
 
-    public static void setUserId(int userId) {
-        UserContext.userId = userId;
+    public static void setUser(String login, int id) {
+        UserContext.login = login;
+        UserContext.userId = id;
     }
 }

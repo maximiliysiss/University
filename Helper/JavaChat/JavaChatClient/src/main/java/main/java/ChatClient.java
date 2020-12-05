@@ -1,20 +1,17 @@
 package main.java;
 
+import main.java.common.Config;
+import main.java.common.Cryptographic;
 import main.java.forms.LoginForm;
 import main.java.logic.ClientSocketLogic;
-
-import java.util.Scanner;
 
 public class ChatClient {
 
     public static void main(String[] args) {
+        Config config = Config.readConfig("config.json");
+        Cryptographic.init(config.getKey());
 
-        System.out.println("Enter ip/port:");
-        Scanner scanner = new Scanner(System.in);
-        String ip = scanner.next();
-        int port = Integer.parseInt(scanner.next());
-
-        LoginForm loginForm = new LoginForm(new ClientSocketLogic(ip, port));
+        LoginForm loginForm = new LoginForm(new ClientSocketLogic(config.getIp(), config.getPort()));
         loginForm.showDialog();
     }
 

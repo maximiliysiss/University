@@ -5,18 +5,22 @@ import com.server.common.Cryptographic;
 import com.server.data.SqlInteractor;
 import com.server.logic.actionbody.LoginBody;
 import com.server.logic.actionbody.LoginResult;
-import com.server.models.*;
+import com.server.models.ActionMessage;
+import com.server.models.Messagable;
+import com.server.models.Message;
+import com.server.models.User;
 import com.server.models.factory.Actions;
 import com.server.models.factory.MessageFactory;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.Scanner;
+import java.util.List;
 
 public class ChatClient extends Thread {
-    private final Scanner in;
-    private final PrintWriter out;
+    private final InputStream in;
+    private final OutputStream out;
 
     private final Serverable serverable;
     private final SqlInteractor sqlInteractor;
@@ -24,17 +28,22 @@ public class ChatClient extends Thread {
     private final Gson gson = new Gson();
     private final Socket clientSocket;
     private User user;
+    private boolean isRun = true;
 
     public ChatClient(Socket clientSocket, SqlInteractor sqlInteractor, Serverable serverable) throws IOException {
         this.clientSocket = clientSocket;
         this.serverable = serverable;
         this.sqlInteractor = sqlInteractor;
-        this.in = new Scanner(clientSocket.getInputStream());
-        this.out = new PrintWriter(clientSocket.getOutputStream());
+        this.in = clientSocket.getInputStream();
+        this.out = clientSocket.getOutputStream();
     }
 
-    public Integer getUserId(){
+    public Integer getUserId() {
         return user.getId();
+    }
+
+    public String getUserName() {
+        return user.getLogin();
     }
 
     @Override
@@ -48,11 +57,10 @@ public class ChatClient extends Thread {
         }
 
         sendJson(new ActionMessage("login").packBody(new LoginResult(user.getLogin(), user.getId())));
+        loadData();
+        broadcastMessage(new Message("Пользователь " + user.getLogin() + " в сети", user.getId(), user.getLogin()));
 
-        while (true) {
-            if (!in.hasNext())
-                continue;
-
+        while (isRun) {
             Messagable messagable = readJsonFromStream();
 
             if (messagable instanceof ActionMessage) {
@@ -70,16 +78,19 @@ public class ChatClient extends Thread {
                 id = sqlInteractor.getUserByName(name);
             }
 
-            if (id == null){
-                sqlInteractor.insertMessage(message);
-                serverable.sendBroadcastJsonMessage(message);
-            }
-            else {
+            if (id == null) {
+                broadcastMessage(message);
+            } else {
                 sqlInteractor.insertPrivateMessage(message, user.getId());
                 serverable.sendPrivateJsonMessage(message, id);
             }
 
         }
+    }
+
+    private void broadcastMessage(Message message) {
+        sqlInteractor.insertMessage(message);
+        serverable.sendBroadcastJsonMessage(message);
     }
 
     private void handleAction(ActionMessage message) {
@@ -90,11 +101,18 @@ public class ChatClient extends Thread {
             case "load":
                 loadData();
                 break;
+            case "logout":
+                logout();
+                break;
         }
     }
 
+    private void logout() {
+        serverable.logout(this);
+    }
+
     private void loadData() {
-        String[] messages = sqlInteractor.loadMessages(user.getId());
+        List<String> messages = sqlInteractor.loadMessages(user.getId());
         sendJson(new ActionMessage("load").packBody(messages));
     }
 
@@ -119,15 +137,30 @@ public class ChatClient extends Thread {
     }
 
     private Messagable readJsonFromStream() {
-        String inputMessage = in.nextLine();
-        String msg = Cryptographic.get().decrypt(inputMessage);
-        return MessageFactory.createMessageFromString(msg);
+        try {
+            int length = in.read();
+            byte[] data = new byte[length];
+            in.read(data, 0, length);
+            byte[] messageData = Cryptographic.get().decrypt(data);
+
+            String msg = new String(messageData);
+            return MessageFactory.createMessageFromString(msg);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ActionMessage("logout");
     }
 
     public <T> void sendJson(T data) {
         String message = gson.toJson(data);
-        String crypt = Cryptographic.get().encrypt(message);
-        out.println(crypt);
+        byte[] crypt = Cryptographic.get().encrypt(message.getBytes());
+
+        try {
+            out.write(crypt.length);
+            out.write(crypt, 0, crypt.length);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void close() {
@@ -135,5 +168,6 @@ public class ChatClient extends Thread {
             this.clientSocket.close();
         } catch (IOException e) {
         }
+        this.isRun = false;
     }
 }

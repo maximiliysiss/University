@@ -32,7 +32,7 @@ public class MSSQLInteractor implements SqlInteractor {
              PreparedStatement statement = conn.prepareStatement("select Id from Users where Login = ? and PasswordHash = ?")) {
             statement.setString(1, login);
             statement.setString(2, passwordHash);
-            try (ResultSet resultSet = statement.getResultSet()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 boolean isExists = resultSet.next();
                 if (!isExists)
                     return null;
@@ -48,7 +48,7 @@ public class MSSQLInteractor implements SqlInteractor {
         try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement("select count(1) c from Users where Login = ?")) {
             statement.setString(1, login);
-            try (ResultSet resultSet = statement.getResultSet()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next())
                     return resultSet.getInt("c") > 0;
             }
@@ -80,7 +80,7 @@ public class MSSQLInteractor implements SqlInteractor {
         try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement("select Id from Users where Login = ?")) {
             statement.setString(1, name);
-            try (ResultSet resultSet = statement.getResultSet()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next())
                     return resultSet.getInt("Id");
             }
@@ -126,12 +126,12 @@ public class MSSQLInteractor implements SqlInteractor {
     }
 
     @Override
-    public String[] loadMessages(int id) {
+    public List<String> loadMessages(int id) {
         List<String> strings = new ArrayList<>();
         try (Connection conn = getConnection();
              PreparedStatement statement = conn.prepareStatement("exec sp_messages @id = 0, @userId = ?")) {
             statement.setInt(1, id);
-            try (ResultSet resultSet = statement.getResultSet()) {
+            try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     strings.add(resultSet.getString("Content"));
                 }
@@ -139,6 +139,6 @@ public class MSSQLInteractor implements SqlInteractor {
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return (String[]) strings.toArray();
+        return strings;
     }
 }

@@ -12,6 +12,7 @@ public class MessageFactory {
     private static Gson gson = new Gson();
 
     public static Messagable createMessageFromString(String jsonString) {
+        jsonString = jsonString.trim();
         JSONObject jsonValue = (JSONObject) JSONValue.parse(jsonString);
         if (jsonValue.containsKey("action"))
             return gson.fromJson(jsonString, ActionMessage.class);

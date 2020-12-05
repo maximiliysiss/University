@@ -1,4 +1,4 @@
-package com.server.common;
+package main.java.common;
 
 import javax.crypto.*;
 import javax.crypto.spec.IvParameterSpec;

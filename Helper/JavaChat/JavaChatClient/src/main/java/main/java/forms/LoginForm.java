@@ -1,5 +1,6 @@
 package main.java.forms;
 
+import main.java.logic.ActionHandler;
 import main.java.logic.ClientSocketLogic;
 
 import javax.swing.*;
@@ -46,11 +47,20 @@ public class LoginForm extends JFrame {
     }
 
     private void onLogin() {
-        ChatForm chatForm = new ChatForm(this.clientSocketLogic);
-        chatForm.showDialog();
+        showChatForm(x -> clientSocketLogic.login(loginField.getText(), passwordField.getText()));
     }
 
     private void onRegister() {
+        showChatForm(x -> clientSocketLogic.register(loginField.getText(), passwordField.getText()));
+    }
+
+    private void showChatForm(ActionHandler<Void> action) {
+        setVisible(false);
+        dispose();
+
+        ChatForm chatForm = new ChatForm(this.clientSocketLogic);
+        action.handle(null);
+        chatForm.showDialog();
     }
 
     public void showDialog() {

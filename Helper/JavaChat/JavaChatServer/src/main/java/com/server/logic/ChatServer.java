@@ -1,6 +1,7 @@
 package com.server.logic;
 
 import com.server.data.SqlInteractor;
+import com.server.models.Message;
 import com.server.models.factory.Actions;
 
 import java.io.IOException;
@@ -18,6 +19,8 @@ public class ChatServer extends Thread implements Serverable {
     private final int maxPool;
 
     private final List<ChatClient> chatClients = new ArrayList<>();
+    private ServerSocket serverSocket;
+    private boolean isClose = false;
 
     public ChatServer(String ip, int port, SqlInteractor sqlInteractor, int maxPool) {
         this.ip = ip;
@@ -34,10 +37,11 @@ public class ChatServer extends Thread implements Serverable {
 
         try {
             InetAddress inetAddress = InetAddress.getByName(ip);
-            ServerSocket serverSocket = new ServerSocket(port, 5, inetAddress);
+            serverSocket = new ServerSocket(port, 5, inetAddress);
             System.out.println("Server started");
             while (true) {
                 Socket clientSocket = serverSocket.accept();
+                System.out.println("New user in");
                 ChatClient chatClient = new ChatClient(clientSocket, sqlInteractor, this);
                 if (chatClients.size() + 1 > maxPool) {
                     chatClient.sendJson(Actions.ServerIsFull);
@@ -48,7 +52,8 @@ public class ChatServer extends Thread implements Serverable {
                 chatClient.start();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            if (!isClose)
+                e.printStackTrace();
         }
 
     }
@@ -65,6 +70,21 @@ public class ChatServer extends Thread implements Serverable {
         Optional<ChatClient> chatClient = chatClients.stream().filter(x -> x.getUserId() == id).findFirst();
         if (chatClient.isPresent()) {
             chatClient.get().sendJson(message);
+        }
+    }
+
+    @Override
+    public void logout(ChatClient chatClient) {
+        chatClients.remove(chatClient);
+        sendBroadcastJsonMessage(new Message("Пользователь " + chatClient.getUserName() + " покинул чат", chatClient.getUserId(), chatClient.getUserName()));
+        chatClient.close();
+    }
+
+    public void shutdown() {
+        try {
+            isClose = true;
+            serverSocket.close();
+        } catch (IOException e) {
         }
     }
 }

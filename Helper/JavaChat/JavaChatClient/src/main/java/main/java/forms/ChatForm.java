@@ -14,34 +14,65 @@ public class ChatForm extends JFrame {
     private TextArea onlineArea;
 
     private final ClientSocketLogic clientSocketLogic;
+    private Button sendMessage;
 
     public ChatForm(ClientSocketLogic clientSocketLogic) throws HeadlessException {
         this.clientSocketLogic = clientSocketLogic;
 
         initGUI();
+
+        clientSocketLogic.registerMessageHandler(this::onNewMessages);
+        clientSocketLogic.registerLoadHandler(this::onLoadHistory);
+        clientSocketLogic.registerFailLoginHandler(this::onFailLogin);
+    }
+
+    private void onFailLogin(String message) {
+        chatInput.setEditable(false);
+        sendMessage.setEnabled(false);
+        onNewMessages(message);
+    }
+
+    private void onNewMessages(String s) {
+        if (s == null || s.length() == 0)
+            return;
+        chatArea.append(s + "\n");
+    }
+
+    private void onLoadHistory(String s) {
+        chatArea.setText(s + "\n");
     }
 
     private void initGUI() {
         JPanel rootPanel = new JPanel(new FlowLayout());
-        rootPanel.setSize(WIDTH, HEIGHT);
+        rootPanel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
+
+        JMenuBar menuBar = new JMenuBar();
+        JMenu chatMenuItem = new JMenu("Chat");
+        JMenuItem clearDataItem = new JMenuItem("Clear data");
+        chatMenuItem.add(clearDataItem);
+
+        menuBar.add(chatMenuItem);
+        setJMenuBar(menuBar);
 
         JPanel highLine = new JPanel(new FlowLayout());
-        highLine.setSize(WIDTH, (int) (HEIGHT * 0.8));
+        highLine.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * 0.76)));
         chatArea = new TextArea();
-        chatArea.setSize((int) (WIDTH * 0.7), (int) (HEIGHT * 0.8));
+        chatArea.setPreferredSize(new Dimension((int) (WIDTH * 0.6), (int) (HEIGHT * 0.76)));
+        chatArea.setEditable(false);
         highLine.add(chatArea);
         onlineArea = new TextArea();
-        onlineArea.setSize((int) (WIDTH * 0.3), (int) (HEIGHT * 0.8));
+        onlineArea.setPreferredSize(new Dimension((int) (WIDTH * 0.3), (int) (HEIGHT * 0.76)));
+        onlineArea.setEditable(false);
         highLine.add(onlineArea);
 
         JPanel lowLine = new JPanel(new FlowLayout());
-        lowLine.setSize(WIDTH, (int) (HEIGHT * 0.2));
+        lowLine.setPreferredSize(new Dimension(WIDTH, (int) (HEIGHT * 0.06)));
         chatInput = new TextField();
-        chatInput.setSize((int) (WIDTH * 0.8), (int) (HEIGHT * 0.2));
+        chatInput.setPreferredSize(new Dimension((int) (WIDTH * 0.85), (int) (HEIGHT * 0.06)));
         lowLine.add(chatInput);
 
-        Button sendMessage = new Button("Send");
-        sendMessage.setSize((int) (WIDTH * 0.2), (int) (HEIGHT * 0.2));
+        sendMessage = new Button("Send");
+        sendMessage.addActionListener(x -> sendMessage());
         lowLine.add(sendMessage);
 
         rootPanel.add(highLine);
@@ -54,7 +85,8 @@ public class ChatForm extends JFrame {
     }
 
     private void sendMessage() {
-
+        String content = chatInput.getText();
+        chatInput.setText("");
     }
 
     public void showDialog() {
