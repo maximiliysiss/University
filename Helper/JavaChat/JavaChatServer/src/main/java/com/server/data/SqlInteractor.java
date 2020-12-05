@@ -11,4 +11,8 @@ public interface SqlInteractor {
     void insertMessage(Message message);
 
     void insertPrivateMessage(Message message, Integer userId);
+
+    void clearData();
+
+    String[] loadMessages(int id);
 }

@@ -1,10 +1,13 @@
 package com.server.logic;
 
 import com.google.gson.Gson;
+import com.server.common.Cryptographic;
 import com.server.data.SqlInteractor;
 import com.server.logic.actionbody.LoginBody;
 import com.server.logic.actionbody.LoginResult;
 import com.server.models.*;
+import com.server.models.factory.Actions;
+import com.server.models.factory.MessageFactory;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,13 +22,19 @@ public class ChatClient extends Thread {
     private final SqlInteractor sqlInteractor;
 
     private final Gson gson = new Gson();
+    private final Socket clientSocket;
     private User user;
 
     public ChatClient(Socket clientSocket, SqlInteractor sqlInteractor, Serverable serverable) throws IOException {
+        this.clientSocket = clientSocket;
         this.serverable = serverable;
         this.sqlInteractor = sqlInteractor;
         this.in = new Scanner(clientSocket.getInputStream());
         this.out = new PrintWriter(clientSocket.getOutputStream());
+    }
+
+    public Integer getUserId(){
+        return user.getId();
     }
 
     @Override
@@ -34,7 +43,7 @@ public class ChatClient extends Thread {
 
         this.user = loginUser();
         if (this.user == null) {
-            sendJson(new ActionMessage("loginfail", "User not found / This user is registered yet"));
+            sendJson(Actions.FailLogin);
             return;
         }
 
@@ -44,10 +53,16 @@ public class ChatClient extends Thread {
             if (!in.hasNext())
                 continue;
 
-            Message message = readJsonFromStream(Message.class);
+            Messagable messagable = readJsonFromStream();
+
+            if (messagable instanceof ActionMessage) {
+                handleAction((ActionMessage) messagable);
+                continue;
+            }
+
+            Message message = (Message) messagable;
 
             Integer id = null;
-
             if (message.getMessage().startsWith("@")) {
                 String name = message.getMessage().substring(1, message.getMessage().indexOf(' '));
                 String msg = message.getMessage().substring(message.getMessage().indexOf(' ') + 1);
@@ -55,17 +70,41 @@ public class ChatClient extends Thread {
                 id = sqlInteractor.getUserByName(name);
             }
 
-            if (id == null)
+            if (id == null){
                 sqlInteractor.insertMessage(message);
-            else
+                serverable.sendBroadcastJsonMessage(message);
+            }
+            else {
                 sqlInteractor.insertPrivateMessage(message, user.getId());
+                serverable.sendPrivateJsonMessage(message, id);
+            }
 
-            serverable.sendBroadcastJsonMessage(message);
         }
     }
 
+    private void handleAction(ActionMessage message) {
+        switch (message.getAction()) {
+            case "clear":
+                clearData();
+                break;
+            case "load":
+                loadData();
+                break;
+        }
+    }
+
+    private void loadData() {
+        String[] messages = sqlInteractor.loadMessages(user.getId());
+        sendJson(new ActionMessage("load").packBody(messages));
+    }
+
+    private void clearData() {
+        sqlInteractor.clearData();
+        sendJson(new ActionMessage("reload"));
+    }
+
     private User loginUser() {
-        ActionMessage loginJson = readJsonFromStream(ActionMessage.class);
+        ActionMessage loginJson = (ActionMessage) readJsonFromStream();
         LoginBody loginBody = loginJson.getBody(LoginBody.class);
 
         Integer userId = null;
@@ -79,12 +118,22 @@ public class ChatClient extends Thread {
         return new User(loginBody.getLogin(), userId);
     }
 
-    private <T> T readJsonFromStream(Class<T> tClass) {
-        return gson.fromJson(in.nextLine(), tClass);
+    private Messagable readJsonFromStream() {
+        String inputMessage = in.nextLine();
+        String msg = Cryptographic.get().decrypt(inputMessage);
+        return MessageFactory.createMessageFromString(msg);
     }
 
     public <T> void sendJson(T data) {
         String message = gson.toJson(data);
-        out.println(message);
+        String crypt = Cryptographic.get().encrypt(message);
+        out.println(crypt);
+    }
+
+    public void close() {
+        try {
+            this.clientSocket.close();
+        } catch (IOException e) {
+        }
     }
 }

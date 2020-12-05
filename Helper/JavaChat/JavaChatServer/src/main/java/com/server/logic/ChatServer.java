@@ -1,6 +1,7 @@
 package com.server.logic;
 
 import com.server.data.SqlInteractor;
+import com.server.models.factory.Actions;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -8,6 +9,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class ChatServer extends Thread implements Serverable {
     private final String ip;
@@ -36,9 +38,14 @@ public class ChatServer extends Thread implements Serverable {
             System.out.println("Server started");
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                if(chatClients.size() + 1 > maxPool){
-                    clientSocket.close();
+                ChatClient chatClient = new ChatClient(clientSocket, sqlInteractor, this);
+                if (chatClients.size() + 1 > maxPool) {
+                    chatClient.sendJson(Actions.ServerIsFull);
+                    chatClient.close();
+                    continue;
                 }
+                chatClients.add(chatClient);
+                chatClient.start();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -48,13 +55,16 @@ public class ChatServer extends Thread implements Serverable {
 
     @Override
     public <T> void sendBroadcastJsonMessage(T message) {
-        for(ChatClient chatClient: this.chatClients){
+        for (ChatClient chatClient : this.chatClients) {
             chatClient.sendJson(message);
         }
     }
 
     @Override
-    public <T> void sendPrivateJsonMessage(T message) {
-
+    public <T> void sendPrivateJsonMessage(T message, final Integer id) {
+        Optional<ChatClient> chatClient = chatClients.stream().filter(x -> x.getUserId() == id).findFirst();
+        if (chatClient.isPresent()) {
+            chatClient.get().sendJson(message);
+        }
     }
 }

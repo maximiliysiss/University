@@ -2,7 +2,7 @@ package com.server.models;
 
 import com.google.gson.Gson;
 
-public class ActionMessage {
+public class ActionMessage implements Messagable {
 
     private static Gson gson = new Gson();
 

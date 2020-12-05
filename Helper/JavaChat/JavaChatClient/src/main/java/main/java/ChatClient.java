@@ -1,6 +1,7 @@
 package main.java;
 
 import main.java.forms.LoginForm;
+import main.java.logic.ClientSocketLogic;
 
 import java.util.Scanner;
 
@@ -13,7 +14,7 @@ public class ChatClient {
         String ip = scanner.next();
         int port = Integer.parseInt(scanner.next());
 
-        LoginForm loginForm = new LoginForm();
+        LoginForm loginForm = new LoginForm(new ClientSocketLogic(ip, port));
         loginForm.showDialog();
     }
 

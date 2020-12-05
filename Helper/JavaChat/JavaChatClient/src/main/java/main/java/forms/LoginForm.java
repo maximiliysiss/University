@@ -1,9 +1,13 @@
 package main.java.forms;
 
+import main.java.logic.ClientSocketLogic;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LoginForm extends JFrame {
+
+    private final ClientSocketLogic clientSocketLogic;
 
     private JPanel rootPanel;
     private TextField loginField;
@@ -12,7 +16,9 @@ public class LoginForm extends JFrame {
     private final int WIDTH = 300;
     private final int HEIGHT = 200;
 
-    public LoginForm() {
+    public LoginForm(ClientSocketLogic clientSocketLogic) {
+        this.clientSocketLogic = clientSocketLogic;
+
         initGUI();
     }
 
@@ -40,11 +46,11 @@ public class LoginForm extends JFrame {
     }
 
     private void onLogin() {
-
+        ChatForm chatForm = new ChatForm(this.clientSocketLogic);
+        chatForm.showDialog();
     }
 
     private void onRegister() {
-
     }
 
     public void showDialog() {

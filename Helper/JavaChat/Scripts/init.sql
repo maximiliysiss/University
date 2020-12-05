@@ -69,7 +69,7 @@ begin
 		case 
 			when pm.Id is not null then concat(u.Login, ': [private] ', m.Content)
 			else concat(u.Login, ': ', m.Content)
-		end
+		end Content
 	from Messages m 
 	left join Users u on u.Id = m.UserId
 	left join Private_Message pm on pm.MessageId = m.Id
