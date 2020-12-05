@@ -1,6 +1,8 @@
 package main.java.forms;
 
+import main.java.common.UserContext;
 import main.java.logic.ClientSocketLogic;
+import main.java.models.messages.Message;
 
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +26,11 @@ public class ChatForm extends JFrame {
         clientSocketLogic.registerMessageHandler(this::onNewMessages);
         clientSocketLogic.registerLoadHandler(this::onLoadHistory);
         clientSocketLogic.registerFailLoginHandler(this::onFailLogin);
+        clientSocketLogic.registerOnlineHandler(this::onOnlineChange);
+    }
+
+    private void onOnlineChange(String online) {
+        onlineArea.setText(online);
     }
 
     private void onFailLogin(String message) {
@@ -87,6 +94,7 @@ public class ChatForm extends JFrame {
     private void sendMessage() {
         String content = chatInput.getText();
         chatInput.setText("");
+        clientSocketLogic.sendJsonMessage(new Message(content, UserContext.getUserId(), UserContext.getLogin()));
     }
 
     public void showDialog() {

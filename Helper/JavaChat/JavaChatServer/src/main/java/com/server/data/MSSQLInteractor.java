@@ -105,7 +105,7 @@ public class MSSQLInteractor implements SqlInteractor {
     @Override
     public void insertPrivateMessage(Message message, Integer userId) {
         try (Connection conn = getConnection();
-             PreparedStatement statement = conn.prepareStatement("execute sp_create_privatemessage @userId = ?, @content = ?, @receivedId = ?")) {
+             PreparedStatement statement = conn.prepareStatement("execute sp_create_privatemessage @userId = ?, @content = ?, @receiveId = ?")) {
             statement.setInt(1, message.getSenderId());
             statement.setString(2, message.getMessage());
             statement.setInt(3, userId);

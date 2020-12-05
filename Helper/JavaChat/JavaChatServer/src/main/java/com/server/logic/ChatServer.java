@@ -1,6 +1,7 @@
 package com.server.logic;
 
 import com.server.data.SqlInteractor;
+import com.server.models.ActionMessage;
 import com.server.models.Message;
 import com.server.models.factory.Actions;
 
@@ -11,6 +12,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ChatServer extends Thread implements Serverable {
     private final String ip;
@@ -76,8 +78,11 @@ public class ChatServer extends Thread implements Serverable {
     @Override
     public void logout(ChatClient chatClient) {
         chatClients.remove(chatClient);
-        sendBroadcastJsonMessage(new Message("Пользователь " + chatClient.getUserName() + " покинул чат", chatClient.getUserId(), chatClient.getUserName()));
-        chatClient.close();
+        onlineUpdate();
+    }
+
+    public void onlineUpdate() {
+        sendBroadcastJsonMessage(new ActionMessage("online").packBody(chatClients.stream().map(x -> x.getUserName()).collect(Collectors.toList())));
     }
 
     public void shutdown() {

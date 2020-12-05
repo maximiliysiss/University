@@ -13,10 +13,8 @@ import main.java.models.messages.actionbody.LoginResult;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
-import java.util.Scanner;
+import java.nio.ByteBuffer;
 
 public class ClientSocketLogic {
 
@@ -31,8 +29,9 @@ public class ClientSocketLogic {
     };
     private ActionHandler<String> loadHandler = x -> {
     };
-
     private ActionHandler<String> failLoginHandler = x -> {
+    };
+    private ActionHandler<String> onlineHandler = x -> {
     };
 
     private static Gson gson = new Gson();
@@ -70,12 +69,9 @@ public class ClientSocketLogic {
     private void handleMessages() {
         while (true) {
             try {
-                int length = in.read();
-                byte[] data = new byte[length];
-                in.read(data, 0, length);
-                byte[] messageData = Cryptographic.get().decrypt(data);
+                String messageData = readMessageData();
 
-                Messagable messagable = MessageFactory.createMessageFromString(new String(messageData));
+                Messagable messagable = MessageFactory.createMessageFromString(messageData);
                 if (messagable instanceof ActionMessage) {
                     handleActionMessage((ActionMessage) messagable);
                     continue;
@@ -93,6 +89,18 @@ public class ClientSocketLogic {
         }
     }
 
+    private String readMessageData() throws IOException {
+        byte[] lengthArray = new byte[4];
+        in.read(lengthArray, 0, 4);
+        ByteBuffer wrapped = ByteBuffer.wrap(lengthArray);
+        int length = wrapped.getInt();
+
+        byte[] data = new byte[length];
+        in.read(data, 0, length);
+        byte[] messageData = Cryptographic.get().decrypt(data);
+        return new String(messageData);
+    }
+
     private void handleActionMessage(ActionMessage messagable) {
         switch (messagable.getAction()) {
             case "login":
@@ -105,6 +113,8 @@ public class ClientSocketLogic {
             case "load":
                 loadHandler.handle(String.join("\n", messagable.getBody(String[].class)));
                 break;
+            case "online":
+                onlineHandler.handle(String.join("\n", messagable.getBody(String[].class)));
         }
     }
 
@@ -121,11 +131,15 @@ public class ClientSocketLogic {
         UserContext.setUser(body.getLogin(), body.getId());
     }
 
-    public void sendMessage(String message) {
+    private void sendMessage(String message) {
         byte[] encrypt = Cryptographic.get().encrypt(message.getBytes());
         try {
-            out.write(encrypt.length);
+            ByteBuffer wrapped = ByteBuffer.allocate(4);
+            wrapped.putInt(encrypt.length);
+
+            out.write(wrapped.array(), 0, 4);
             out.write(encrypt, 0, encrypt.length);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,6 +164,12 @@ public class ClientSocketLogic {
     public void registerFailLoginHandler(ActionHandler<String> failLoginHandler) {
         synchronized (this.failLoginHandler) {
             this.failLoginHandler = failLoginHandler;
+        }
+    }
+
+    public void registerOnlineHandler(ActionHandler<String> onlineHandler) {
+        synchronized (this.onlineHandler) {
+            this.onlineHandler = onlineHandler;
         }
     }
 }

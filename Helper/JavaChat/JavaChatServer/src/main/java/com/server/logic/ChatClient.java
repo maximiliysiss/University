@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.util.List;
 
 public class ChatClient extends Thread {
@@ -59,6 +60,7 @@ public class ChatClient extends Thread {
         sendJson(new ActionMessage("login").packBody(new LoginResult(user.getLogin(), user.getId())));
         loadData();
         broadcastMessage(new Message("Пользователь " + user.getLogin() + " в сети", user.getId(), user.getLogin()));
+        serverable.onlineUpdate();
 
         while (isRun) {
             Messagable messagable = readJsonFromStream();
@@ -75,6 +77,7 @@ public class ChatClient extends Thread {
                 String name = message.getMessage().substring(1, message.getMessage().indexOf(' '));
                 String msg = message.getMessage().substring(message.getMessage().indexOf(' ') + 1);
                 message.setMessage(msg);
+                message.setSender(message.getSender() + "[private]");
                 id = sqlInteractor.getUserByName(name);
             }
 
@@ -109,6 +112,8 @@ public class ChatClient extends Thread {
 
     private void logout() {
         serverable.logout(this);
+        broadcastMessage(new Message("Пользователь " + getUserName() + " покинул чат", getUserId(), getUserName()));
+        close();
     }
 
     private void loadData() {
@@ -138,7 +143,11 @@ public class ChatClient extends Thread {
 
     private Messagable readJsonFromStream() {
         try {
-            int length = in.read();
+            byte[] lengthArray = new byte[4];
+            in.read(lengthArray, 0, 4);
+            ByteBuffer wrapped = ByteBuffer.wrap(lengthArray);
+            int length = wrapped.getInt();
+
             byte[] data = new byte[length];
             in.read(data, 0, length);
             byte[] messageData = Cryptographic.get().decrypt(data);
@@ -146,18 +155,21 @@ public class ChatClient extends Thread {
             String msg = new String(messageData);
             return MessageFactory.createMessageFromString(msg);
         } catch (IOException e) {
-            e.printStackTrace();
         }
         return new ActionMessage("logout");
     }
 
     public <T> void sendJson(T data) {
         String message = gson.toJson(data);
-        byte[] crypt = Cryptographic.get().encrypt(message.getBytes());
+        byte[] encrypt = Cryptographic.get().encrypt(message.getBytes());
 
         try {
-            out.write(crypt.length);
-            out.write(crypt, 0, crypt.length);
+            ByteBuffer wrapped = ByteBuffer.allocate(4);
+            wrapped.putInt(encrypt.length);
+
+            out.write(wrapped.array(), 0, 4);
+            out.write(encrypt, 0, encrypt.length);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

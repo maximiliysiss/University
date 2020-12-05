@@ -5,4 +5,5 @@ public interface Serverable {
     <T> void sendPrivateJsonMessage(T message, Integer id);
 
     void logout(ChatClient chatClient);
+    void onlineUpdate();
 }

@@ -10,4 +10,5 @@ Debug/
 Release/
 __pycache__/
 build/
+target/
 *.class
