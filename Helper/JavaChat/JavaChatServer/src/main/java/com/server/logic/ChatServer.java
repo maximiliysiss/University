@@ -64,14 +64,12 @@ public class ChatServer extends Thread implements Serverable {
             System.out.println("Server started");
             while (true) {
                 Socket clientSocket = serverSocket.accept();
-                System.out.println("New user in");
                 ChatClient chatClient = new ChatClient(clientSocket, sqlInteractor, this);
                 if (chatClients.size() + 1 > maxPool) {
                     chatClient.sendJson(Actions.ServerIsFull);
                     chatClient.close();
                     continue;
                 }
-                chatClients.add(chatClient);
                 chatClient.start();
             }
         } catch (IOException e) {
@@ -108,6 +106,12 @@ public class ChatServer extends Thread implements Serverable {
             chatClient.sendJson(message);
     }
 
+    @Override
+    public void login(ChatClient chatClient) {
+        System.out.println("New user");
+        chatClients.add(chatClient);
+    }
+
     /**
      * Выход пользователя
      *
@@ -136,6 +140,17 @@ public class ChatServer extends Thread implements Serverable {
         for (ChatClient chatClient : chatClients) {
             chatClient.loadData();
         }
+    }
+
+    /**
+     * Есть ли уже такой пользователь в онлайне
+     *
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean isExists(int id) {
+        return chatClients.stream().filter(x -> x.getUserId() == id).count() > 0;
     }
 
     /**

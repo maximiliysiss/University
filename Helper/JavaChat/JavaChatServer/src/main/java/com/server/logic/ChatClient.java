@@ -69,10 +69,14 @@ public class ChatClient extends Thread {
     }
 
     public Integer getUserId() {
+        if (user == null)
+            return null;
         return user.getId();
     }
 
     public String getUserName() {
+        if (user == null)
+            return null;
         return user.getLogin();
     }
 
@@ -89,6 +93,14 @@ public class ChatClient extends Thread {
             serverable.logout(this);
             return;
         }
+
+        if (serverable.isExists(user.getId())) {
+            sendJson(Actions.Exists);
+            serverable.logout(this);
+            return;
+        }
+
+        serverable.login(this);
 
         sendJson(new ActionMessage("login").packBody(new LoginResult(user.getLogin(), user.getId())));
         loadData();
@@ -111,6 +123,7 @@ public class ChatClient extends Thread {
                 String msg = message.getMessage().substring(message.getMessage().indexOf(' ') + 1);
                 id = sqlInteractor.getUserByName(name);
                 if (id != null) {
+                    message.setMessage(msg);
                     sqlInteractor.insertPrivateMessage(message, id);
                     message.setMessage("[private] " + msg);
                 }

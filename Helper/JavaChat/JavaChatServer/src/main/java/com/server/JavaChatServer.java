@@ -8,8 +8,11 @@ import com.server.logic.ChatServer;
 
 import java.util.Scanner;
 
-public class Main {
+public class JavaChatServer {
+
     public static void main(String[] args) {
+
+        System.out.println("Start server");
 
         Config config = Config.readConfig("config.json");
         Cryptographic.init(config.getKey());
@@ -23,4 +26,5 @@ public class Main {
         scanner.nextLine();
         chatServer.shutdown();
     }
+
 }
