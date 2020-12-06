@@ -1,5 +1,6 @@
 from Crypto.Cipher import DES
 
+# Смотри в коде клиента
 class Crypt:
     __instance = None
     def __init__(self, key):

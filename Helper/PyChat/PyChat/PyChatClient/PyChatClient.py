@@ -5,6 +5,7 @@ from Common.Crypt import Crypt
 import json
 
 def main():
+    # считаем настройки из файла
     with open('config.json') as f: 
         config = json.load(f)
         port = config["port"]
