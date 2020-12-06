@@ -24,16 +24,16 @@ class ChatServer:
         # Цикл принятия новых пользователей
         while True: 
             clientSocket, addr = self.listenSocket.accept()
+            newClient = ChatClient(clientSocket, self.sqlclient, self)
             # Если места нету, то отправим ошибку входа
             if len(self.clients) + 1 > self.maxPool:
-                clientSocket.send({"action":"loginfail","data":"Server is full"})
-                clientSocket.close()
+                newClient.send({"action":"loginfail","data":"Server is full"})
+                newClient.close()
                 continue
 
             # Добавление нового пользователя к списку и его запуск в отдельном
             # потоке
             print('Connected to :', addr[0], ':', addr[1]) 
-            newClient = ChatClient(clientSocket, self.sqlclient, self)
             start_new_thread(newClient.start, ())
             self.clients.append(newClient)
 

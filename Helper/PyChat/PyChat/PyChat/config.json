@@ -1,0 +1,7 @@
+{
+  "ip": "localhost",
+  "port": 8000,
+  "connectionString": "Server=localhost,54813;Database=chatpy;UID=develop;PWD=root;DRIVER={ODBC Driver 17 for SQL Server}",
+  "maxPool": 50,
+  "key": "Only8sym"
+}
