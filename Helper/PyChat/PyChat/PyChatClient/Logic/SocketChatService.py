@@ -3,6 +3,7 @@ import json
 from _thread import *
 import threading 
 from Common.UserContext import UserContext
+from Common.Crypt import Crypt
 
 # Класс-сервис для обработки запросов от сервака и отправка их на сервер
 class SocketChatService:
@@ -27,8 +28,9 @@ class SocketChatService:
     # Отправить JSON на сервер
     def sendJsonString(self, jsonData):
         jsonString = json.dumps(jsonData)
-        self.socket.send(len(jsonString).to_bytes(2, byteorder ="big"))
-        self.socket.send(jsonString.encode())
+        msgBytes = Crypt.getInstance().encrypt(jsonString)
+        self.socket.send(len(msgBytes).to_bytes(2, byteorder ="big"))
+        self.socket.send(msgBytes)
 
     # Попытка авторизации через сервер
     def login(self, login, password):
@@ -48,7 +50,8 @@ class SocketChatService:
                 break
             if messageLength <= 0:
                 continue
-            msg = self.socket.recv(messageLength).decode()
+            msgData = self.socket.recv(messageLength)
+            msg = Crypt.getInstance().decrypt(msgData)
 
             dataJson = json.loads(msg)
             # Если это действие, а не сообщений

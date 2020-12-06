@@ -21,6 +21,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Common\Crypt.py" />
     <Compile Include="Common\UserContext.py">
       <SubType>Code</SubType>
     </Compile>
@@ -39,6 +40,9 @@
     <Folder Include="Forms\" />
     <Folder Include="Logic\" />
     <Folder Include="Common\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config.json" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

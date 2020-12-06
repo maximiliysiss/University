@@ -1,4 +1,5 @@
 import json
+from Common.Crypt import Crypt
 
 # Клиент сервера
 class ChatClient:
@@ -62,7 +63,7 @@ class ChatClient:
                     try:
                         message = jsonMsg["message"]
                         receiver = message[1:message.index(" ")]
-                        jsonMsg["private"] = list(filter(lambda x: x.user[1] == receiver,self.server.clients))[0].user[0]
+                        jsonMsg["private"] = self.sqlclient.getUserIdByLogin(receiver)[0]
                         jsonMsg["message"] = message[message.index(" ") + 1:]
                     except:
                         print("Error parse data")
@@ -88,12 +89,14 @@ class ChatClient:
             print('Incorrect data')
             return None
         msgLength = int.from_bytes(data, "big")
-        return self.socket.recv(msgLength).decode()
+        message = self.socket.recv(msgLength)
+        return Crypt.getInstance().decrypt(message)
 
     # Отправить сообщение пользователю
     def send(self, msg):
-        self.socket.send(len(msg).to_bytes(2, byteorder ="big"))
-        self.socket.send(msg.encode())
+        msgBytes = Crypt.getInstance().encrypt(msg)
+        self.socket.send(len(msgBytes).to_bytes(2, byteorder ="big"))
+        self.socket.send(msgBytes)
 
     # Отправить JSON пользователю
     def sendJson(self, jsonMsg):
@@ -104,3 +107,6 @@ class ChatClient:
     def uploadMessageHistory(self):
         loadedMsg = map(self.convertMessageDTOToTransfer, self.sqlclient.loadMessageHistory(0, self.user[0]))
         self.sendJson({"action":"load", "data": list(loadedMsg)})
+
+    def close(self):
+        self.socket.close();

@@ -67,3 +67,10 @@ class SqlClient:
         data = cursor.execute("exec sp_messages @id=?, @userId=?", page, userId).fetchall()
         cursor.close()
         return data
+
+    def getUserIdByLogin(self, login):
+        conn = pyodbc.connect(self.connString)
+        cursor = conn.cursor()
+        data = cursor.execute("select Id from [dbo].[Users] where Login = ?", login).fetchone()
+        cursor.close()
+        return data
