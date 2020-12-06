@@ -115,6 +115,7 @@ public class ChatServer extends Thread implements Serverable {
      */
     @Override
     public void logout(ChatClient chatClient) {
+        System.out.println("Sign out user");
         chatClients.remove(chatClient);
         onlineUpdate();
     }

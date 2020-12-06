@@ -60,8 +60,7 @@ public class ChatForm extends JFrame {
      * @param message
      */
     private void onFailLogin(String message) {
-        for (int i = 0; i < getMenuBar().getMenuCount(); i++)
-            getMenuBar().getMenu(i).setEnabled(false);
+        setJMenuBar(new JMenuBar());
         chatInput.setEditable(false);
         sendMessage.setEnabled(false);
         onNewMessages(message);

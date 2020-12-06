@@ -85,6 +85,7 @@ public class ChatClient extends Thread {
         this.user = loginUser();
         if (this.user == null) {
             sendJson(Actions.FailLogin);
+            serverable.logout(this);
             return;
         }
 
