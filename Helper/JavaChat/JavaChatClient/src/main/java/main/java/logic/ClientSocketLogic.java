@@ -15,6 +15,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Логика для взаимодействия с сервером
@@ -135,7 +136,7 @@ public class ClientSocketLogic {
         byte[] data = new byte[length];
         in.read(data, 0, length);
         byte[] messageData = Cryptographic.get().decrypt(data);
-        return new String(messageData);
+        return new String(messageData, StandardCharsets.UTF_8);
     }
 
     /**
@@ -188,7 +189,7 @@ public class ClientSocketLogic {
      * @param message
      */
     private void sendMessage(String message) {
-        byte[] encrypt = Cryptographic.get().encrypt(message.getBytes());
+        byte[] encrypt = Cryptographic.get().encrypt(message.getBytes(StandardCharsets.UTF_8));
         try {
             ByteBuffer wrapped = ByteBuffer.allocate(4);
             wrapped.putInt(encrypt.length);

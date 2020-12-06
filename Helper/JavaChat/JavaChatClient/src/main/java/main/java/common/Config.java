@@ -1,9 +1,11 @@
 package main.java.common;
 
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
+import org.apache.commons.io.IOUtils;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Конфигурация из файла
@@ -33,13 +35,15 @@ public class Config {
 
     /**
      * Прочитать конфигурацию из файла
+     *
      * @param path
      * @return
      */
     public static Config readConfig(String path) {
-        try (JsonReader reader = new JsonReader(new FileReader(ClassLoader.getSystemClassLoader().getResource(path).getFile()))) {
+
+        try (InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(path)) {
             Gson gson = new Gson();
-            return gson.fromJson(reader, Config.class);
+            return gson.fromJson(IOUtils.toString(inputStream, StandardCharsets.UTF_8), Config.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

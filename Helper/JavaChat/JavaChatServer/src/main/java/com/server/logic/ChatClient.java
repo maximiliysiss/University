@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -126,6 +127,7 @@ public class ChatClient extends Thread {
 
     /**
      * Рассылка сообщений на всех
+     *
      * @param message
      */
     private void broadcastMessage(Message message) {
@@ -135,6 +137,7 @@ public class ChatClient extends Thread {
 
     /**
      * Обрабокта действий
+     *
      * @param message
      */
     private void handleAction(ActionMessage message) {
@@ -177,6 +180,7 @@ public class ChatClient extends Thread {
 
     /**
      * Авторизация
+     *
      * @return
      */
     private User loginUser() {
@@ -196,6 +200,7 @@ public class ChatClient extends Thread {
 
     /**
      * Получить сообщение из потока
+     *
      * @return
      */
     private Messagable readJsonFromStream() {
@@ -209,7 +214,7 @@ public class ChatClient extends Thread {
             in.read(data, 0, length);
             byte[] messageData = Cryptographic.get().decrypt(data);
 
-            String msg = new String(messageData);
+            String msg = new String(messageData, StandardCharsets.UTF_8);
             return MessageFactory.createMessageFromString(msg);
         } catch (IOException e) {
         }
@@ -218,12 +223,13 @@ public class ChatClient extends Thread {
 
     /**
      * Отправить данные
+     *
      * @param data
      * @param <T>
      */
     public <T> void sendJson(T data) {
         String message = gson.toJson(data);
-        byte[] encrypt = Cryptographic.get().encrypt(message.getBytes());
+        byte[] encrypt = Cryptographic.get().encrypt(message.getBytes(StandardCharsets.UTF_8));
 
         try {
             ByteBuffer wrapped = ByteBuffer.allocate(4);
