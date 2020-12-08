@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using SiteCarAsp.Models;
 using SiteCarAsp.ViewModels;
+using SiteCarAsp.ViewModels.Request;
 
 namespace SiteCarAsp.Services
 {
@@ -13,7 +14,11 @@ namespace SiteCarAsp.Services
             {
                 MapperConfiguration mapperConfiguration = new MapperConfiguration(x =>
                 {
-                    x.CreateMap<TestDriveViewModel, TestDrive>();
+                    x.CreateMap<CreateCreditRequest, CreditsViewModel>();
+                    x.CreateMap<CreateTestDriveRequest, TestDriveService>();
+
+                    x.CreateMap<CreateCreditRequest, Credit>();
+                    x.CreateMap<CreateTestDriveRequest, TestDrive>();
                 });
                 return new Mapper(mapperConfiguration);
             });

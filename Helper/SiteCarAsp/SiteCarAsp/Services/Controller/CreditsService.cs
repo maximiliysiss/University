@@ -15,6 +15,12 @@ namespace SiteCarAsp.Services.Controller
         private readonly ICarsRepository carsDataProvider;
         private readonly ICreditRepository creditRepository;
 
+        public CreditsService(ICarsRepository carsDataProvider, ICreditRepository creditRepository)
+        {
+            this.carsDataProvider = carsDataProvider;
+            this.creditRepository = creditRepository;
+        }
+
         public Task AddAsync(Credit credit) => creditRepository.AddAsync(credit);
 
         public Task<IEnumerable<CarInformation>> GetCarsAsync() => carsDataProvider.GetAllAsync();

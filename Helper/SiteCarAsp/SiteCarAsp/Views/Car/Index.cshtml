@@ -15,7 +15,7 @@
             <div class="card-body">
                 @foreach (var filter in Model.Filters)
                 {
-                    <div class="filter-body" filter-id="car-table" filter-url="@Url.Action("FilterCars", "Home")">
+                    <div class="filter-body" filter-id="car-table" filter-url="@Url.Action("FilterCars", "Car")">
                         <div>@filter.Key</div>
                         <div class="flex-row filter-data" field="@filter.Key">
                             @foreach (var f in filter.Value)
@@ -31,7 +31,7 @@
 </div>
 
 <div class="d-inline-flex w-100 p-3 flex-wrap car-table" id="car-table">
-    @{await Html.RenderPartialAsync("~/Views/Components/_CarTable.cshtml", Model.Cars);}
+    @{await Html.RenderPartialAsync("~/Views/Components/CarTable.partial.cshtml", Model.Cars);}
 </div>
 
 @section Scripts {

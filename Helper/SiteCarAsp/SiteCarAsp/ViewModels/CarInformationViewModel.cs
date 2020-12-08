@@ -6,21 +6,19 @@ namespace SiteCarAsp.ViewModels
 {
     public class CarInformationViewModel
     {
-        private readonly IEnumerable<CarInformation> carInformation;
-
         public CarInformationViewModel(IEnumerable<CarInformation> carInformation)
         {
-            this.carInformation = carInformation;
+            this.Cars = carInformation;
         }
 
         public Dictionary<string, IEnumerable<string>> Filters
             => new Dictionary<string, IEnumerable<string>>
             {
-                { "type", carInformation.Select(x=>x.Type).Distinct() },
-                { "body", carInformation.Select(x=>x.Body).Distinct() }
+                { "type", Cars.Select(x=>x.Type).Distinct() },
+                { "body", Cars.Select(x=>x.Body).Distinct() }
             };
 
-        public IEnumerable<CarInformation> Cars => carInformation;
+        public IEnumerable<CarInformation> Cars { get; }
 
         public FilterViewModel[] ActiveFilters { get; set; }
     }

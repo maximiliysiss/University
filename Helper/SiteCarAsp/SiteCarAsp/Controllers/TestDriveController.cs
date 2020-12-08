@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SiteCarAsp.Models;
 using SiteCarAsp.Services;
 using SiteCarAsp.ViewModels;
+using SiteCarAsp.ViewModels.Request;
 using System.Threading.Tasks;
 
 namespace SiteCarAsp.Controllers
@@ -19,18 +20,16 @@ namespace SiteCarAsp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index([FromQuery] int carId) => View(new TestDriveViewModel(await testDriveService.GetCarsAsync(), carId));
+        public async Task<IActionResult> Index([FromQuery] int carId) => View(new TestDriveViewModel { CarId = carId, CarInformations = await testDriveService.GetCarsAsync() });
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromForm] TestDriveViewModel createTestDrive)
+        public async Task<IActionResult> Create([FromForm] CreateTestDriveRequest createTestDrive)
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", new TestDriveViewModel(await testDriveService.GetCarsAsync(), createTestDrive.CarId)
-                {
-                    Fio = createTestDrive.Fio,
-                    Phone = createTestDrive.Phone
-                });
+                var model = mapper.Map<TestDriveViewModel>(createTestDrive);
+                model.CarInformations = await testDriveService.GetCarsAsync();
+                return View("Index", model);
             }
             await testDriveService.AddTestDriveAsync(mapper.Map<TestDrive>(createTestDrive));
             return RedirectToAction("Index");

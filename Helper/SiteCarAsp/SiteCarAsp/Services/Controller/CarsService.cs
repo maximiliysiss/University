@@ -1,4 +1,5 @@
 ﻿using SiteCarAsp.Models;
+using SiteCarAsp.ViewModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace SiteCarAsp.Services
         Task<IEnumerable<CarInformation>> GetCars();
         Task<IEnumerable<CarInformation>> GetUsedCars();
         Task<IEnumerable<CarInformation>> GetNewCars();
-        Task<IEnumerable<CarInformation>> GetFilteredCars(Dictionary<string, string> filters);
+        Task<IEnumerable<CarInformation>> GetFilteredCars(FilterViewModel[] filters);
     }
 
     public class CarsService : ICarService
@@ -24,16 +25,16 @@ namespace SiteCarAsp.Services
 
         public Task<IEnumerable<CarInformation>> GetCars() => carsDataProvider.GetAllAsync();
 
-        public async Task<IEnumerable<CarInformation>> GetFilteredCars(Dictionary<string, string> filters)
+        public async Task<IEnumerable<CarInformation>> GetFilteredCars(FilterViewModel[] filters)
         {
             var resultData = await GetCars();
             foreach (var filter in filters)
             {
                 resultData = filter switch
                 {
-                    { Key: "type" } => resultData.Where(x => filter.Value.Contains(x.Type)),
-                    { Key: "body" } => resultData.Where(x => filter.Value.Contains(x.Body)),
-                    { Key: "used" } => filter.Value == "true" ? resultData.Where(x => x.Used) : resultData.Where(x => !x.Used),
+                    { Field: "type" } => resultData.Where(x => filter.Val.Contains(x.Type)),
+                    { Field: "body" } => resultData.Where(x => filter.Val.Contains(x.Body)),
+                    { Field: "used" } => filter.Val.ToLower() == "true" ? resultData.Where(x => x.Used) : resultData.Where(x => !x.Used),
                     _ => resultData
                 };
             }
