@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace SiteCarAsp.Services
 {
+    /// <summary>
+    /// Репозиторий для машин
+    /// </summary>
     public interface ICarsRepository : IDataProvider<CarInformation>
     {
         Task<IEnumerable<CarInformation>> GetUsedCarInformationAsync();

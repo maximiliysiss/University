@@ -1,5 +1,8 @@
 ﻿namespace SiteCarAsp.Services
 {
+    /// <summary>
+    /// Сервис под цвета - тут чисто схемы сочетающиеся
+    /// </summary>
     public class ColorService
     {
         private readonly string[] colors = new[] {

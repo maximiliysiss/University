@@ -2,6 +2,9 @@
 
 namespace SiteCarAsp.ViewModels.Request
 {
+    /// <summary>
+    /// Запрос на создание кредита
+    /// </summary>
     public class CreateCreditRequest
     {
         [Required]

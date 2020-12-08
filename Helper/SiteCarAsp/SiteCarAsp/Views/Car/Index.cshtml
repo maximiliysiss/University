@@ -16,7 +16,7 @@
                 @foreach (var filter in Model.Filters)
                 {
                     <div class="filter-body" filter-id="car-table" filter-url="@Url.Action("FilterCars", "Car")">
-                        <div>@filter.Key</div>
+                        <div>@filter.Key.ToUpper()</div>
                         <div class="flex-row filter-data" field="@filter.Key">
                             @foreach (var f in filter.Value)
                             {

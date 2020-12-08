@@ -1,5 +1,7 @@
-﻿activeFilters = []
+﻿// Активные фильтры
+activeFilters = []
 
+/*При нажатии на фильтр*/
 $(".filter").on("click", function () {
     var parent = $(this).parent();
     var body = parent.parent();
@@ -21,6 +23,11 @@ $(".filter").on("click", function () {
     applyFilters(filterUrl, filterId);
 });
 
+/**
+ * Применить фильтр надо отправить запрос на сервер и результат отрисовать
+ * @param {any} url
+ * @param {any} id
+ */
 function applyFilters(url, id) {
     $.ajax({
         url: url,

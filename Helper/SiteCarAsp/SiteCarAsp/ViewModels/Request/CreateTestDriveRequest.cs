@@ -2,6 +2,9 @@
 
 namespace SiteCarAsp.ViewModels.Request
 {
+    /// <summary>
+    /// Запрос на тест драйв
+    /// </summary>
     public class CreateTestDriveRequest
     {
         [Required]

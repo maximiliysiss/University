@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace SiteCarAsp.Services.Controller
 {
+    /// <summary>
+    /// Сервис кредитов
+    /// </summary>
     public interface ICreditsService
     {
         Task<IEnumerable<CarInformation>> GetCarsAsync();
@@ -13,9 +16,9 @@ namespace SiteCarAsp.Services.Controller
     public class CreditsService : ICreditsService
     {
         private readonly ICarsRepository carsDataProvider;
-        private readonly ICreditRepository creditRepository;
+        private readonly IDataProvider<Credit> creditRepository;
 
-        public CreditsService(ICarsRepository carsDataProvider, ICreditRepository creditRepository)
+        public CreditsService(ICarsRepository carsDataProvider, IDataProvider<Credit> creditRepository)
         {
             this.carsDataProvider = carsDataProvider;
             this.creditRepository = creditRepository;

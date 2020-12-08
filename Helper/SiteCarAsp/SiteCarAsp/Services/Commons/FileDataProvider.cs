@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 
 namespace SiteCarAsp.Services
 {
+    /// <summary>
+    /// Провайдер данных
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IDataProvider<T>
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task AddAsync(T elem);
     }
 
-    public abstract class FileDataProvider<T> : IDataProvider<T>
+    /// <summary>
+    /// Файловый провайдер данных
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class FileDataProvider<T> : IDataProvider<T>
     {
         private readonly string filePath;
         private List<T> cache;
 
-        protected FileDataProvider(string filePath)
+        public FileDataProvider(string filePath)
         {
             this.filePath = filePath;
         }

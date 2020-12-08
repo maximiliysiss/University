@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SiteCarAsp.Controllers
 {
+    /// <summary>
+    /// Контроллер для TestDrive
+    /// </summary>
     public class TestDriveController : Controller
     {
         private readonly ITestDriveService testDriveService;

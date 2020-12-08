@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace SiteCarAsp.Services
 {
+    /// <summary>
+    /// Сервис машин
+    /// </summary>
     public interface ICarService
     {
         Task<IEnumerable<CarInformation>> GetCars();

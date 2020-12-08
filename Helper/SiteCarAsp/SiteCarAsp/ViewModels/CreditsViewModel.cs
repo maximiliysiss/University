@@ -12,6 +12,9 @@ namespace SiteCarAsp.ViewModels
         public string Fio { get; set; }
         public string Phone { get; set; }
 
+        /// <summary>
+        /// Данные для выпадающего списка
+        /// </summary>
         public SelectList Cars => new SelectList(CarInformations ?? Enumerable.Empty<CarInformation>(), "Id", "Name");
 
     }
