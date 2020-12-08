@@ -1,0 +1,3 @@
+{
+  "ConnectionString": "Server=localhost,54813; Database=bank_cpp;User Id=develop;Password=root;"
+}
