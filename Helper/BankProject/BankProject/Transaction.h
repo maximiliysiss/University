@@ -10,6 +10,7 @@ namespace BankProject::Models {
 		auto_property(int, toAccountId);
 		auto_property(double, value);
 		auto_property(std::string, datetime);
+		auto_property(int, executorId);
 	};
 
 }

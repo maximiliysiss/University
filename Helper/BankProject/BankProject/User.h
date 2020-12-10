@@ -1,10 +1,9 @@
 #pragma once
 #include "defines.h"
-#include <string>
 
 namespace BankProject::Models {
 
-	enum Role {
+	enum class Role {
 		Client = 1,
 		Manager = 2,
 		TechDirector = 3

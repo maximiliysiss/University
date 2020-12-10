@@ -1,4 +1,7 @@
 #pragma once
+#include "IOContainer.h"
+#include "UserContext.h"
+#include "MainFormFactory.h"
 
 namespace BankProject {
 
@@ -9,6 +12,8 @@ namespace BankProject {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
+	using namespace BankProject::Commons;
+
 	/// <summary>
 	/// Summary for MainForm
 	/// </summary>
@@ -18,9 +23,8 @@ namespace BankProject {
 		MainForm(void)
 		{
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+
+			Controls->Add(BankProject::Forms::Common::getMainControl(IOContainer::getInstance().resolve<UserContext>()->get_role()));
 		}
 
 	protected:
@@ -39,7 +43,7 @@ namespace BankProject {
 		/// <summary>
 		/// Required designer variable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -48,11 +52,17 @@ namespace BankProject {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->components = gcnew System::ComponentModel::Container();
-			this->Size = System::Drawing::Size(300,300);
-			this->Text = L"MainForm";
-			this->Padding = System::Windows::Forms::Padding(0);
+			this->SuspendLayout();
+			// 
+			// MainForm
+			// 
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->ClientSize = System::Drawing::Size(587, 456);
+			this->Name = L"MainForm";
+			this->Text = L"MainForm";
+			this->ResumeLayout(false);
+
 		}
 #pragma endregion
 	};

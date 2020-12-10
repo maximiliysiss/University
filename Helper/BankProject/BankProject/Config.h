@@ -1,8 +1,8 @@
 #pragma once
 #include <fstream>
 #include <json/json.h>
-#include "defines.h"
 #include <exception>
+#include "defines.h"
 
 namespace BankProject::Commons {
 

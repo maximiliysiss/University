@@ -15,16 +15,16 @@ namespace BankProject::Commons {
 
 	public:
 
-		static IOContainer& getInstance() {
-			if (ioc)
-				return *ioc;
-			ioc = new IOContainer();
-			return *ioc;
-		}
+		static IOContainer& getInstance();
 
 		template<typename I, typename T>
 		void registerService(T* service) {
 			memoryContainer[typeid(I).name()] = (void*)service;
+		}
+
+		template<typename T>
+		void registerService(T* service) {
+			registerService<T, T>(service);
 		}
 
 		template<typename I>
@@ -32,6 +32,4 @@ namespace BankProject::Commons {
 			return (I*)memoryContainer[typeid(I).name()];
 		}
 	};
-
-	IOContainer* IOContainer::ioc = nullptr;
 }

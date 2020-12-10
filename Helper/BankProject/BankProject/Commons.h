@@ -1,12 +1,16 @@
 #pragma once
 #include <string>
+#include <list>
 
 using namespace System;
 
-std::string toStdString(String^ str) {
-	using namespace System::Runtime::InteropServices;
-	const char* chars = (const char*)(Marshal::StringToHGlobalAnsi(str)).ToPointer();
-	std::string tmp = chars;
-	Marshal::FreeHGlobal(IntPtr((void*)chars));
-	return tmp;
+std::string toStdString(String^ str);
+
+std::string strjoin(const char* separator);
+
+template<typename T, typename... Targs>
+T strjoin(const char* separator, T value, Targs... Fargs) // recursive variadic function
+{
+	auto res = value + separator + strjoin(separator, Fargs...);
+	return res.substr(0, res.length() - strlen(separator));
 }

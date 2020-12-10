@@ -1,7 +1,6 @@
 #include "DataContext.h"
 
-template<typename T>
-std::list<T> BankProject::Data::DataContext::select(std::string sql)
+std::list<void*> BankProject::Data::DataContext::select(std::string sql, IConverter* converter)
 {
 	SqlConnection^ connection = gcnew SqlConnection(gcnew System::String(this->connectionString.c_str()));
 	connection->Open();
@@ -9,18 +8,19 @@ std::list<T> BankProject::Data::DataContext::select(std::string sql)
 	SqlCommand^ scmd = gcnew SqlCommand(gcnew System::String(sql.c_str()), connection);
 	auto reader = scmd->ExecuteReader();
 
-	std::list<T> results;
-	Converters::Converter<T> converter;
+	std::list<void*> results;
 
 	while (reader->Read()) {
-		results.push_back(converter.convert(reader));
+		results.push_back(converter->convert(reader));
 	}
 
 	reader->Close();
 	connection->Close();
+
+	return results;
 }
 
-void BankProject::Data::DataContext::execute(std::string sql){
+void BankProject::Data::DataContext::execute(std::string sql) {
 	SqlConnection^ connection = gcnew SqlConnection(gcnew System::String(this->connectionString.c_str()));
 	connection->Open();
 

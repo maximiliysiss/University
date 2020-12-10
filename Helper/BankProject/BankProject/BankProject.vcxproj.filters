@@ -49,6 +49,21 @@
     <Filter Include="Source Files\Data\Converters">
       <UniqueIdentifier>{d841c0c6-1cee-4769-b879-6633e7a0d508}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Commons">
+      <UniqueIdentifier>{e9a581f8-1e29-4a9e-86d9-d957f69aa99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms\Controls">
+      <UniqueIdentifier>{13db54e8-52ec-4251-bcc4-edcf76c2640d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms\Common">
+      <UniqueIdentifier>{66a82854-a032-4b3b-9f94-ada1e453f5a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Controls">
+      <UniqueIdentifier>{3c2cdfe3-13f0-481b-becc-838ab034776a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Common">
+      <UniqueIdentifier>{52e7b5d2-ea91-4e58-a267-ac8400f071a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -63,8 +78,32 @@
     <ClCompile Include="DataContext.cpp">
       <Filter>Source Files\Data</Filter>
     </ClCompile>
-    <ClCompile Include="IDataContext.cpp">
+    <ClCompile Include="Repositories.cpp">
       <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="IOContainer.cpp">
+      <Filter>Source Files\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Commons.cpp">
+      <Filter>Source Files\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Crypto.cpp">
+      <Filter>Source Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="ManagerControl.cpp">
+      <Filter>Source Files\Forms\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientControl.cpp">
+      <Filter>Source Files\Forms\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectorControl.cpp">
+      <Filter>Source Files\Forms\Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFormFactory.cpp">
+      <Filter>Source Files\Forms\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthViewModel.cpp">
+      <Filter>Source Files\ViewModels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +114,6 @@
       <Filter>Header Files\Forms</Filter>
     </ClInclude>
     <ClInclude Include="DataContext.h">
-      <Filter>Header Files\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="IDataContext.h">
       <Filter>Header Files\Data</Filter>
     </ClInclude>
     <ClInclude Include="User.h">
@@ -103,6 +139,39 @@
     </ClInclude>
     <ClInclude Include="IConverter.h">
       <Filter>Header Files\Data\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="Repositories.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Crypto.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="UserContext.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFormFactory.h">
+      <Filter>Header Files\Forms\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerControl.h">
+      <Filter>Header Files\Forms\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientControl.h">
+      <Filter>Header Files\Forms\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectorControl.h">
+      <Filter>Header Files\Forms\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectorViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
