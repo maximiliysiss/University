@@ -19,6 +19,7 @@ namespace BankProject::Models {
 		auto_property(std::string, passport);
 		auto_property(std::string, birthplace);
 		auto_property(std::string, birthdate);
+		auto_property(int, departmentId);
 	};
 
 }

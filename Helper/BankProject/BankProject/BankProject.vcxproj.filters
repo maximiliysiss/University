@@ -64,6 +64,12 @@
     <Filter Include="Source Files\Forms\Common">
       <UniqueIdentifier>{52e7b5d2-ea91-4e58-a267-ac8400f071a2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Forms\Models">
+      <UniqueIdentifier>{a6f74fd8-5e94-4be9-90b4-28f09c19c4a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Models">
+      <UniqueIdentifier>{07bdba71-b4e0-4a23-9002-17763cf18346}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -104,6 +110,15 @@
     </ClCompile>
     <ClCompile Include="AuthViewModel.cpp">
       <Filter>Source Files\ViewModels</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>Source Files\Forms\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Department.cpp">
+      <Filter>Source Files\Forms\Models</Filter>
+    </ClCompile>
+    <ClCompile Include="Worker.cpp">
+      <Filter>Source Files\Forms\Models</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -172,6 +187,21 @@
     </ClInclude>
     <ClInclude Include="ClientViewModel.h">
       <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsFunctionWrapper.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
+      <Filter>Header Files\Forms\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Header Files\Forms\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Department.h">
+      <Filter>Header Files\Forms\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Departament.h">
+      <Filter>Header Files\Models</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

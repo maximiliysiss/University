@@ -1,9 +1,8 @@
 #include "AuthViewModel.h"
 #include "MainForm.h"
-#include "AuthForm.h"
 #include "Crypto.h"
 
-void BankProject::ViewModels::AuthViewModel::login(BankProject::AuthForm^ form, std::string login, std::string password) {
+void BankProject::ViewModels::AuthViewModel::login(std::string login, std::string password) {
 
 	auto findUser = repo->getByLoginPassword(login, Services::Crypto::md5(password));
 	if (findUser == nullptr) {
@@ -15,7 +14,7 @@ void BankProject::ViewModels::AuthViewModel::login(BankProject::AuthForm^ form, 
 	userContext->set_role(findUser->get_role());
 	userContext->set_userId(findUser->get_id());
 
-	form->Close();
+	close();
 
 	MainForm^ mainForm = gcnew MainForm();
 	mainForm->ShowDialog();

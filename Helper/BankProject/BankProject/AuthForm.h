@@ -10,10 +10,6 @@ namespace BankProject {
 	using namespace System::Data;
 	using namespace System::Drawing;
 
-	namespace ViewModels {
-		class AuthViewModel;
-	}
-
 	/// <summary>
 	/// Summary for AuthForm
 	/// </summary>
@@ -21,14 +17,15 @@ namespace BankProject {
 	{
 	private:
 
-		ViewModels::AuthViewModel* viewModel;
+		ViewModels::AuthViewModel^ viewModel;
 
 	public:
 		AuthForm(void)
 		{
 			InitializeComponent();
 
-			viewModel = new ViewModels::AuthViewModel();
+			viewModel = gcnew ViewModels::AuthViewModel();
+			viewModel->set_close(gcnew WindowsCloseFunc(this));
 		}
 
 	protected:
@@ -138,7 +135,7 @@ namespace BankProject {
 		}
 #pragma endregion
 	private: System::Void loginButton_Click(System::Object^ sender, System::EventArgs^ e) {
-		viewModel->login(this, toStdString(loginTextBox->Text), toStdString(passwordTextBox->Text));
+		viewModel->login(toStdString(loginTextBox->Text), toStdString(passwordTextBox->Text));
 	}
 	};
 }

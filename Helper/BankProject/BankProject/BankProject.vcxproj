@@ -114,10 +114,12 @@
   <ItemGroup>
     <ClCompile Include="AuthForm.cpp" />
     <ClCompile Include="AuthViewModel.cpp" />
+    <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientControl.cpp" />
     <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="DataContext.cpp" />
+    <ClCompile Include="Department.cpp" />
     <ClCompile Include="DirectorControl.cpp" />
     <ClCompile Include="MainFormFactory.cpp" />
     <ClCompile Include="ManagerControl.cpp" />
@@ -125,6 +127,7 @@
     <ClCompile Include="IOContainer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -139,6 +142,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="AuthViewModel.h" />
+    <ClInclude Include="Client.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="ClientControl.h">
       <FileType>CppControl</FileType>
     </ClInclude>
@@ -148,6 +154,10 @@
     <ClInclude Include="Crypto.h" />
     <ClInclude Include="DataContext.h" />
     <ClInclude Include="defines.h" />
+    <ClInclude Include="Departament.h" />
+    <ClInclude Include="Department.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="DirectorControl.h">
       <FileType>CppControl</FileType>
     </ClInclude>
@@ -166,6 +176,10 @@
     <ClInclude Include="Transaction.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserContext.h" />
+    <ClInclude Include="WindowsFunctionWrapper.h" />
+    <ClInclude Include="Worker.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.json">

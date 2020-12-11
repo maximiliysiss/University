@@ -11,7 +11,8 @@ void BankProject::Data::UserRepository::insert(User obj) {
 		("@Surname = " + sqlstring(obj.get_surname())) +
 		("@Passport = " + sqlstring(obj.get_passport())) +
 		("@Birthday = " + sqlstring(obj.get_birthdate())) +
-		("@Birthplace = " + sqlstring(obj.get_birthplace()));
+		("@Birthplace = " + sqlstring(obj.get_birthplace())) +
+		("@DepartmentId = " + str(obj.get_departmentId()));
 	this->context->execute(query);
 }
 
@@ -29,13 +30,14 @@ void BankProject::Data::UserRepository::update(User obj) {
 		("Passport = " + sqlstring(obj.get_passport())) +
 		("Birthday = " + sqlstring(obj.get_birthdate())) +
 		("Birthplace = " + sqlstring(obj.get_birthplace())) +
+		("DepartmentId = " + str(obj.get_departmentId())) +
 		"where Id = " + str(obj.get_id());
 	this->context->execute(query);
 }
 
 std::list<User*> BankProject::Data::UserRepository::select() {
 	BankProject::Data::Converters::UserConverter converter;
-	auto data = this->context->select("select Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, Id from [dbo].[Users]", &converter);
+	auto data = this->context->select("select Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, Id, DepartmentId from [dbo].[Users]", &converter);
 	std::list<User*> result;
 	std::transform(data.begin(), data.end(), std::back_inserter(result), [](auto x) { return (User*)x; });
 	return result;
@@ -44,7 +46,7 @@ std::list<User*> BankProject::Data::UserRepository::select() {
 User* BankProject::Data::UserRepository::getByLoginPassword(std::string login, std::string password)
 {
 	BankProject::Data::Converters::UserConverter converter;
-	auto data = this->context->select("select Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, Id from [dbo].[Users] where Login = "
+	auto data = this->context->select("select Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, Id, DepartmentId from [dbo].[Users] where Login = "
 		+ sqlstring(login) + " and PasswordHash = " + sqlstring(password), &converter);
 	if (data.size() == 0)
 		return nullptr;
@@ -77,4 +79,24 @@ std::list<Transaction*> BankProject::Data::TransactionRepository::getUserTransac
 void BankProject::Data::TransactionRepository::createTransaction(int from, int to, int manager, double value)
 {
 	context->execute("exec sp_create_transaction @fromAccountId = " + str(from) + ", @toAccountId = " + str(to) + ", @value = " + str(value) + ",  @executor = " + str(manager));
+}
+
+void BankProject::Data::DeparatmentRepository::insert(Department obj) {
+	context->execute("insert into [dbo].[Department](Name, Adress) values (" + sqlstring(obj.get_name()) + "," + sqlstring(obj.get_adress()) + ")");
+}
+
+void BankProject::Data::DeparatmentRepository::remove(Department obj) {
+	context->execute("delete [dbo].[Department] where Id = " + str(obj.get_id()));
+}
+
+void BankProject::Data::DeparatmentRepository::update(Department obj) {
+	context->execute("update [dbo].[Department] set Name = " + sqlstring(obj.get_name()) + ", Adress = " + sqlstring(obj.get_adress()) + " where id = " + str(obj.get_id()));
+}
+
+std::list<Department*> BankProject::Data::DeparatmentRepository::select() {
+	DepartmentConverter converter;
+	auto data = context->select("select Id, Name, Adress from [dbo].[Department]", &converter);
+	std::list<Department*> result;
+	std::transform(data.begin(), data.end(), std::back_inserter(result), [](auto x) { return (Department*)x; });
+	return result;
 }

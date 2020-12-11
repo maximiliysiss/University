@@ -2,6 +2,7 @@
 #include "Accounts.h"
 #include "User.h"
 #include "Transaction.h"
+#include "Departament.h"
 #include "Commons.h"
 
 using namespace System::Data::SqlClient;
@@ -39,6 +40,7 @@ namespace BankProject::Data::Converters {
 			user.set_passwordHash(toStdString(reader->GetString(1)));
 			user.set_role((BankProject::Models::Role)reader->GetInt32(2));
 			user.set_surname(toStdString(reader->GetString(4)));
+			user.set_departmentId(reader->GetInt32(9));
 		}
 	};
 
@@ -60,6 +62,15 @@ namespace BankProject::Data::Converters {
 			tr.set_toAccountId(reader->GetInt32(3));
 			tr.set_value(System::Convert::ToDouble(reader->GetDecimal(4)));
 			tr.set_executorId(reader->GetInt32(5));
+		}
+	};
+
+	class DepartmentConverter : public Converter<Department> {
+	protected:
+		void convertImpl(Department& d, SqlDataReader^ reader) {
+			d.set_id(reader->GetInt32(0));
+			d.set_name(toStdString(reader->GetString(1)));
+			d.set_adress(toStdString(reader->GetString(2)));
 		}
 	};
 

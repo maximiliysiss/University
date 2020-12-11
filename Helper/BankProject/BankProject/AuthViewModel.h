@@ -2,20 +2,20 @@
 #include "defines.h"
 #include "UserContext.h"
 #include "Repositories.h"
+#include "WindowsFunctionWrapper.h"
 
-namespace BankProject {
-	ref class AuthForm;
-}
+
 
 namespace BankProject::ViewModels {
 
-	class AuthViewModel {
+	ref class AuthViewModel {
 	private:
+		set_property(WindowsCloseFunc^, close);
 		Data::IUserRepository* repo;
 	public:
 		AuthViewModel() : repo(Commons::IOContainer::getInstance().resolve<Data::IUserRepository>()) {}
 
-		void login(BankProject::AuthForm^ form, std::string login, std::string password);
+		void login(std::string login, std::string password);
 	};
 
 }

@@ -5,6 +5,7 @@
 #include "Transaction.h"
 #include "Accounts.h"
 #include "Crypto.h"
+#include "Departament.h"
 #include <algorithm>
 
 using namespace BankProject::Models;
@@ -80,6 +81,15 @@ namespace BankProject::Data {
 		// Inherited via ITransactionRepository
 		virtual std::list<Transaction*> getUserTransactions(int userId) override;
 		virtual void createTransaction(int from, int to, int manager, double value) override;
+	};
+
+	class DeparatmentRepository : public IBaseRepository<Department> {
+	public:
+		// Inherited via IBaseRepository
+		virtual void insert(Department obj) override;
+		virtual void remove(Department obj) override;
+		virtual void update(Department obj) override;
+		virtual std::list<Department*> select() override;
 	};
 
 }

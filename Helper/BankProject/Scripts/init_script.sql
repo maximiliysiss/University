@@ -26,6 +26,24 @@ BEGIN
 END
 GO
 
+IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'Department')
+BEGIN 
+	CREATE TABLE [dbo].[Department](
+		Id int not null primary key identity(1,1),
+		Name nvarchar(255) not null,
+		Adress nvarchar(MAX) not null
+	)
+END
+GO
+
+IF NOT EXISTS(SELECT * from [dbo].[Department])
+BEGIN
+	INSERT INTO [dbo].[Department](Name, Adress) values
+		('BackOffice', 'BackOffice')
+END
+GO
+
+
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'Users')
 BEGIN 
 	CREATE TABLE [dbo].[Users](
@@ -37,15 +55,16 @@ BEGIN
 		Surname nvarchar(255) not null,
 		Passport nvarchar(255) not null,
 		Birthday datetime not null,
-		Birthplace nvarchar(255) not null
+		Birthplace nvarchar(255) not null,
+		DepartmentId int null references [dbo].[Department]
 	)
 END
 GO
 
 IF NOT EXISTS(SELECT * FROM [dbo].[Users])
 BEGIN
-	INSERT INTO [dbo].[Users](Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace) values
-	('admin', '33354741122871651676713774147412831195', 3, 'admin', 'admin', 'admin', '01-01-1990', 'admin')
+	INSERT INTO [dbo].[Users](Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, DepartmentId) values
+	('admin', '33354741122871651676713774147412831195', 3, 'admin', 'admin', 'admin', '01-01-1990', 'admin', 1)
 END
 
 IF NOT EXISTS(SELECT 1 FROM sys.tables WHERE name = 'Accounts')
@@ -112,14 +131,15 @@ CREATE PROCEDURE sp_create_user(
 		@Surname nvarchar(255),
 		@Passport nvarchar(255),
 		@Birthday datetime,
-		@Birthplace nvarchar(255)
+		@Birthplace nvarchar(255),
+		@DepartmentId int
 	)
 AS
 BEGIN  
 	BEGIN TRY
 		BEGIN TRANSACTION	
-		INSERT INTO [dbo].[Users](Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace) values 
-			(@Login, @PasswordHash, @RoleId, @Name, @Surname, @Passport, @Birthday, @Birthplace)
+		INSERT INTO [dbo].[Users](Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, DepartmentId) values 
+			(@Login, @PasswordHash, @RoleId, @Name, @Surname, @Passport, @Birthday, @Birthplace, @DepartmentId)
 		INSERT INTO [dbo].[Accounts](ClientId) values (@@Identity)
 		COMMIT TRANSACTION
 	END TRY
