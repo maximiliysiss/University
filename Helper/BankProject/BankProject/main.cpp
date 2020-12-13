@@ -41,6 +41,6 @@ void initIOC(Config& config) {
 	ioc.registerService<IUserRepository, UserRepository>(new UserRepository());
 	ioc.registerService<ITransactionRepository, TransactionRepository>(new TransactionRepository());
 	ioc.registerService<IAccountRepository, AccountRepository>(new AccountRepository());
-	ioc.registerService<IBaseRepository<BankProject::Models::Department>, DeparatmentRepository>(new DeparatmentRepository());
+	ioc.registerService<IDepartmentRepository, DeparatmentRepository>(new DeparatmentRepository());
 	ioc.registerService(new UserContext());
 }

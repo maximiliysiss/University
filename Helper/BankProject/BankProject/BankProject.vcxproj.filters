@@ -120,6 +120,9 @@
     <ClCompile Include="Worker.cpp">
       <Filter>Source Files\Forms\Models</Filter>
     </ClCompile>
+    <ClCompile Include="WindowsFunctionWrapper.cpp">
+      <Filter>Source Files\Commons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AuthForm.h">
@@ -202,6 +205,15 @@
     </ClInclude>
     <ClInclude Include="Departament.h">
       <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DepartmentViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkerViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="TransactionViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -32,9 +32,13 @@ namespace BankProject::Data {
 	class IUserRepository : public IBaseRepository<User> {
 	public:
 		virtual User* getByLoginPassword(std::string login, std::string password) = 0;
+		virtual std::list<User*> selectWorkers() = 0;
+		virtual std::list<User*> selectClients() = 0;
 	};
 
 	class UserRepository : public IUserRepository {
+	private:
+		virtual std::list<User*> select(std::string sql);
 	public:
 
 		virtual void insert(User obj) override;
@@ -46,6 +50,12 @@ namespace BankProject::Data {
 		virtual std::list<User*> select() override;
 
 		virtual User* getByLoginPassword(std::string login, std::string password) override;
+
+
+		// Inherited via IUserRepository
+		virtual std::list<User*> selectWorkers() override;
+
+		virtual std::list<User*> selectClients() override;
 
 	};
 
@@ -83,13 +93,23 @@ namespace BankProject::Data {
 		virtual void createTransaction(int from, int to, int manager, double value) override;
 	};
 
-	class DeparatmentRepository : public IBaseRepository<Department> {
+	class IDepartmentRepository : public IBaseRepository<Department> {
+	public:
+		virtual std::list<Department*> selectWithouDefault() = 0;
+	};
+
+	class DeparatmentRepository : public IDepartmentRepository {
+	private:
+		virtual std::list<Department*> select(std::string sql);
 	public:
 		// Inherited via IBaseRepository
 		virtual void insert(Department obj) override;
 		virtual void remove(Department obj) override;
 		virtual void update(Department obj) override;
 		virtual std::list<Department*> select() override;
+
+		// Inherited via IDepartmentRepository
+		virtual std::list<Department*> selectWithouDefault() override;
 	};
 
 }

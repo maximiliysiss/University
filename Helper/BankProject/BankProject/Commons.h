@@ -14,3 +14,6 @@ T strjoin(const char* separator, T value, Targs... Fargs) // recursive variadic 
 	auto res = value + separator + strjoin(separator, Fargs...);
 	return res.substr(0, res.length() - strlen(separator));
 }
+
+
+std::string strjoin(const char* separator, std::list<std::string> list);

@@ -2,6 +2,8 @@
 
 using namespace System::Windows::Forms;
 
+ContextMenuStrip^ generateContextMenuForDataView(System::EventHandler^ onAddNewElement);
+
 ref class WindowsCloseFunc {
 	Form^ form;
 public:

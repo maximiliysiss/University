@@ -2,6 +2,7 @@
 #include "Commons.h"
 
 #define sqlstring(type) ("'" + type + "'")
+#define tosqldatetime(type) ("convert(datetime,'" + type + "',103)")
 #define str(any) std::to_string(any)
 
 #define auto_property(type, name) \

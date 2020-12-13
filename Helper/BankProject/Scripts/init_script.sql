@@ -31,7 +31,8 @@ BEGIN
 	CREATE TABLE [dbo].[Department](
 		Id int not null primary key identity(1,1),
 		Name nvarchar(255) not null,
-		Adress nvarchar(MAX) not null
+		Adress nvarchar(MAX) not null,
+		GC bit null
 	)
 END
 GO
@@ -56,7 +57,8 @@ BEGIN
 		Passport nvarchar(255) not null,
 		Birthday datetime not null,
 		Birthplace nvarchar(255) not null,
-		DepartmentId int null references [dbo].[Department]
+		DepartmentId int null references [dbo].[Department],
+		GC bit null
 	)
 END
 GO
@@ -130,21 +132,23 @@ CREATE PROCEDURE sp_create_user(
 		@Name nvarchar(255),
 		@Surname nvarchar(255),
 		@Passport nvarchar(255),
-		@Birthday datetime,
+		@Birthday nvarchar(128),
 		@Birthplace nvarchar(255),
 		@DepartmentId int
 	)
 AS
 BEGIN  
+	DECLARE @birth datetime = CONVERT(datetime,@Birthday, 103)
 	BEGIN TRY
 		BEGIN TRANSACTION	
 		INSERT INTO [dbo].[Users](Login, PasswordHash, RoleId, Name, Surname, Passport, Birthday, Birthplace, DepartmentId) values 
-			(@Login, @PasswordHash, @RoleId, @Name, @Surname, @Passport, @Birthday, @Birthplace, @DepartmentId)
+			(@Login, @PasswordHash, @RoleId, @Name, @Surname, @Passport, @birth, @Birthplace, @DepartmentId)
 		INSERT INTO [dbo].[Accounts](ClientId) values (@@Identity)
 		COMMIT TRANSACTION
 	END TRY
 	BEGIN CATCH  
 	    ROLLBACK TRANSACTION
+	    PRINT 'This is the error: ' + error_message()
 	END CATCH
 END
 GO

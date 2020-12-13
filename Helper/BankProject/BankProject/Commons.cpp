@@ -12,3 +12,11 @@ std::string strjoin(const char* separator)
 {
 	return std::string();
 }
+
+std::string strjoin(const char* separator, std::list<std::string> list)
+{
+	std::string result;
+	for (auto tmp : list)
+		result += tmp;
+	return result;
+}

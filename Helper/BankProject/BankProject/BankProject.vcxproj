@@ -127,6 +127,7 @@
     <ClCompile Include="IOContainer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainForm.cpp" />
+    <ClCompile Include="WindowsFunctionWrapper.cpp" />
     <ClCompile Include="Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="Department.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="DepartmentViewModel.h" />
     <ClInclude Include="DirectorControl.h">
       <FileType>CppControl</FileType>
     </ClInclude>
@@ -174,12 +176,14 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Transaction.h" />
+    <ClInclude Include="TransactionViewModel.h" />
     <ClInclude Include="User.h" />
     <ClInclude Include="UserContext.h" />
     <ClInclude Include="WindowsFunctionWrapper.h" />
     <ClInclude Include="Worker.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="WorkerViewModel.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="config.json">
@@ -195,8 +199,14 @@
     <EmbeddedResource Include="AuthForm.resx">
       <DependentUpon>AuthForm.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Client.resx">
+      <DependentUpon>Client.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ClientControl.resx">
       <DependentUpon>ClientControl.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Department.resx">
+      <DependentUpon>Department.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DirectorControl.resx">
       <DependentUpon>DirectorControl.h</DependentUpon>
@@ -206,6 +216,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ManagerControl.resx">
       <DependentUpon>ManagerControl.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Worker.resx">
+      <DependentUpon>Worker.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

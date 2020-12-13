@@ -22,4 +22,21 @@ namespace BankProject::Models {
 		auto_property(int, departmentId);
 	};
 
+	class UserFactory {
+	public:
+		static User* createWorker() {
+			User* worker = new User();
+			worker->set_role(Role::Manager);
+			worker->set_birthdate(toStdString(System::DateTime::Now.ToString("dd-MM-yyyy")));
+			return worker;
+		}
+		static User* createClient() {
+			User* client = new User();
+			client->set_role(Role::Client);
+			client->set_departmentId(1);
+			client->set_birthdate(toStdString(System::DateTime::Now.ToString("dd-MM-yyyy")));
+			return client;
+		}
+	};
+
 }
