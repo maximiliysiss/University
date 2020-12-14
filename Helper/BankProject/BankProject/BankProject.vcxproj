@@ -112,27 +112,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AuthForm.cpp" />
     <ClCompile Include="AuthViewModel.cpp" />
-    <ClCompile Include="Client.cpp" />
-    <ClCompile Include="ClientControl.cpp" />
     <ClCompile Include="ClientViewModel.cpp" />
     <ClCompile Include="Commons.cpp" />
-    <ClCompile Include="CreateTransaction.cpp" />
     <ClCompile Include="CreateTransactionViewModel.cpp" />
     <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="DataContext.cpp" />
-    <ClCompile Include="Department.cpp" />
-    <ClCompile Include="DirectorControl.cpp" />
-    <ClCompile Include="EnterData.cpp" />
     <ClCompile Include="MainFormFactory.cpp" />
-    <ClCompile Include="ManagerControl.cpp" />
     <ClCompile Include="Repositories.cpp" />
     <ClCompile Include="IOContainer.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="WindowsFunctionWrapper.cpp" />
-    <ClCompile Include="Worker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

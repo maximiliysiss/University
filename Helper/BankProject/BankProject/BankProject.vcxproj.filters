@@ -46,9 +46,6 @@
     <Filter Include="Header Files\Data\Converters">
       <UniqueIdentifier>{79b8b4b8-cd2d-4bff-8804-ba20d1894016}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Data\Converters">
-      <UniqueIdentifier>{d841c0c6-1cee-4769-b879-6633e7a0d508}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Commons">
       <UniqueIdentifier>{e9a581f8-1e29-4a9e-86d9-d957f69aa99f}</UniqueIdentifier>
     </Filter>
@@ -58,34 +55,19 @@
     <Filter Include="Header Files\Forms\Common">
       <UniqueIdentifier>{66a82854-a032-4b3b-9f94-ada1e453f5a2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Forms\Controls">
-      <UniqueIdentifier>{3c2cdfe3-13f0-481b-becc-838ab034776a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Forms\Common">
       <UniqueIdentifier>{52e7b5d2-ea91-4e58-a267-ac8400f071a2}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Forms\Models">
       <UniqueIdentifier>{a6f74fd8-5e94-4be9-90b4-28f09c19c4a5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Forms\Models">
-      <UniqueIdentifier>{07bdba71-b4e0-4a23-9002-17763cf18346}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Forms\Actions">
       <UniqueIdentifier>{d376a3c8-e673-40c1-a81a-a817283a89f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Forms\Actions">
-      <UniqueIdentifier>{53538285-07ae-46ed-be60-1ffde276838d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="AuthForm.cpp">
-      <Filter>Source Files\Forms</Filter>
-    </ClCompile>
-    <ClCompile Include="MainForm.cpp">
-      <Filter>Source Files\Forms</Filter>
     </ClCompile>
     <ClCompile Include="DataContext.cpp">
       <Filter>Source Files\Data</Filter>
@@ -102,41 +84,17 @@
     <ClCompile Include="Crypto.cpp">
       <Filter>Source Files\Services</Filter>
     </ClCompile>
-    <ClCompile Include="ManagerControl.cpp">
-      <Filter>Source Files\Forms\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="ClientControl.cpp">
-      <Filter>Source Files\Forms\Controls</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectorControl.cpp">
-      <Filter>Source Files\Forms\Controls</Filter>
-    </ClCompile>
     <ClCompile Include="MainFormFactory.cpp">
       <Filter>Source Files\Forms\Common</Filter>
     </ClCompile>
     <ClCompile Include="AuthViewModel.cpp">
       <Filter>Source Files\ViewModels</Filter>
     </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>Source Files\Forms\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Department.cpp">
-      <Filter>Source Files\Forms\Models</Filter>
-    </ClCompile>
-    <ClCompile Include="Worker.cpp">
-      <Filter>Source Files\Forms\Models</Filter>
-    </ClCompile>
     <ClCompile Include="WindowsFunctionWrapper.cpp">
       <Filter>Source Files\Commons</Filter>
     </ClCompile>
-    <ClCompile Include="CreateTransaction.cpp">
-      <Filter>Source Files\Forms\Actions</Filter>
-    </ClCompile>
     <ClCompile Include="ClientViewModel.cpp">
       <Filter>Source Files\ViewModels</Filter>
-    </ClCompile>
-    <ClCompile Include="EnterData.cpp">
-      <Filter>Source Files\Forms\Actions</Filter>
     </ClCompile>
     <ClCompile Include="CreateTransactionViewModel.cpp">
       <Filter>Source Files\ViewModels</Filter>
