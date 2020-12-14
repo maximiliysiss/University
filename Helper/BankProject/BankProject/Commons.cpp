@@ -17,6 +17,6 @@ std::string strjoin(const char* separator, std::list<std::string> list)
 {
 	std::string result;
 	for (auto tmp : list)
-		result += tmp;
-	return result;
+		result += tmp + separator;
+	return result.substr(0, result.length() - strlen(separator));
 }

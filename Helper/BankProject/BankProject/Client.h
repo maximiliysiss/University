@@ -23,9 +23,33 @@ namespace BankProject {
 			this->viewModel = viewModel;
 
 			InitializeComponent();
-			//
-			//TODO: Add the constructor code here
-			//
+
+			if (viewModel->isNew()) {
+				transactionButton->Visible = false;
+				deleteButton->Visible = false;
+				addMoneyButton->Visible = false;
+			}
+
+			/// <summary>
+			/// Заполнение данными
+			/// </summary>
+			/// <param name="viewModel"></param>
+			this->nameTextBox->Text = viewModel->Name;
+			this->surnameTextBox->Text = viewModel->Surname;
+			this->passportTextBox->Text = viewModel->Passport;
+			this->birthdayDateTimePicker->Value = DateTime::Parse(viewModel->Birthday);
+			this->loginTextBox->Text = viewModel->Login;
+			this->birthplaceTextBox->Text = viewModel->Birthplace;
+
+			viewModel->set_reload(gcnew Action(this, &Client::reloadData));
+			viewModel->load();
+		}
+
+		void reloadData() {
+			this->transactionDataGridView->DataSource = viewModel->get_transactions();
+
+			this->accountTextBox->Text = viewModel->AccountIdStr;
+			this->valueTextBox->Text = viewModel->Value;
 		}
 
 	protected:
@@ -59,11 +83,21 @@ namespace BankProject {
 
 
 	private: System::Windows::Forms::Label^ label7;
+	private: System::Windows::Forms::Button^ saveButton;
+	private: System::Windows::Forms::Button^ deleteButton;
+	private: System::Windows::Forms::Button^ transactionButton;
+	private: System::Windows::Forms::DataGridView^ transactionDataGridView;
+	private: System::Windows::Forms::TextBox^ passwordTextBox;
 
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::Button^ button3;
-	private: System::Windows::Forms::DataGridView^ dataGridView1;
+	private: System::Windows::Forms::Label^ label8;
+	private: System::Windows::Forms::TextBox^ loginTextBox;
+	private: System::Windows::Forms::Label^ label9;
+	private: System::Windows::Forms::Button^ addMoneyButton;
+
+
+
+
+
 
 	private:
 		/// <summary>
@@ -92,17 +126,22 @@ namespace BankProject {
 			this->birthdayDateTimePicker = (gcnew System::Windows::Forms::DateTimePicker());
 			this->valueTextBox = (gcnew System::Windows::Forms::TextBox());
 			this->label7 = (gcnew System::Windows::Forms::Label());
-			this->button1 = (gcnew System::Windows::Forms::Button());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->button3 = (gcnew System::Windows::Forms::Button());
-			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->BeginInit();
+			this->saveButton = (gcnew System::Windows::Forms::Button());
+			this->deleteButton = (gcnew System::Windows::Forms::Button());
+			this->transactionButton = (gcnew System::Windows::Forms::Button());
+			this->transactionDataGridView = (gcnew System::Windows::Forms::DataGridView());
+			this->passwordTextBox = (gcnew System::Windows::Forms::TextBox());
+			this->label8 = (gcnew System::Windows::Forms::Label());
+			this->loginTextBox = (gcnew System::Windows::Forms::TextBox());
+			this->label9 = (gcnew System::Windows::Forms::Label());
+			this->addMoneyButton = (gcnew System::Windows::Forms::Button());
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->transactionDataGridView))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// label1
 			// 
 			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(12, 16);
+			this->label1->Location = System::Drawing::Point(12, 68);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(29, 13);
 			this->label1->TabIndex = 0;
@@ -110,22 +149,24 @@ namespace BankProject {
 			// 
 			// nameTextBox
 			// 
-			this->nameTextBox->Location = System::Drawing::Point(71, 13);
+			this->nameTextBox->Location = System::Drawing::Point(71, 65);
 			this->nameTextBox->Name = L"nameTextBox";
 			this->nameTextBox->Size = System::Drawing::Size(421, 20);
 			this->nameTextBox->TabIndex = 2;
+			this->nameTextBox->TextChanged += gcnew System::EventHandler(this, &Client::nameTextBox_TextChanged);
 			// 
 			// surnameTextBox
 			// 
-			this->surnameTextBox->Location = System::Drawing::Point(71, 39);
+			this->surnameTextBox->Location = System::Drawing::Point(71, 91);
 			this->surnameTextBox->Name = L"surnameTextBox";
 			this->surnameTextBox->Size = System::Drawing::Size(421, 20);
 			this->surnameTextBox->TabIndex = 4;
+			this->surnameTextBox->TextChanged += gcnew System::EventHandler(this, &Client::surnameTextBox_TextChanged);
 			// 
 			// label2
 			// 
 			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(12, 42);
+			this->label2->Location = System::Drawing::Point(12, 94);
 			this->label2->Name = L"label2";
 			this->label2->Size = System::Drawing::Size(56, 13);
 			this->label2->TabIndex = 3;
@@ -133,15 +174,16 @@ namespace BankProject {
 			// 
 			// passportTextBox
 			// 
-			this->passportTextBox->Location = System::Drawing::Point(71, 65);
+			this->passportTextBox->Location = System::Drawing::Point(71, 117);
 			this->passportTextBox->Name = L"passportTextBox";
 			this->passportTextBox->Size = System::Drawing::Size(421, 20);
 			this->passportTextBox->TabIndex = 6;
+			this->passportTextBox->TextChanged += gcnew System::EventHandler(this, &Client::passportTextBox_TextChanged);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(12, 68);
+			this->label3->Location = System::Drawing::Point(12, 120);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(50, 13);
 			this->label3->TabIndex = 5;
@@ -150,7 +192,7 @@ namespace BankProject {
 			// label4
 			// 
 			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(12, 94);
+			this->label4->Location = System::Drawing::Point(12, 146);
 			this->label4->Name = L"label4";
 			this->label4->Size = System::Drawing::Size(86, 13);
 			this->label4->TabIndex = 7;
@@ -158,15 +200,16 @@ namespace BankProject {
 			// 
 			// birthplaceTextBox
 			// 
-			this->birthplaceTextBox->Location = System::Drawing::Point(110, 117);
+			this->birthplaceTextBox->Location = System::Drawing::Point(110, 169);
 			this->birthplaceTextBox->Name = L"birthplaceTextBox";
 			this->birthplaceTextBox->Size = System::Drawing::Size(382, 20);
 			this->birthplaceTextBox->TabIndex = 10;
+			this->birthplaceTextBox->TextChanged += gcnew System::EventHandler(this, &Client::birthplaceTextBox_TextChanged);
 			// 
 			// label5
 			// 
 			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(12, 120);
+			this->label5->Location = System::Drawing::Point(12, 172);
 			this->label5->Name = L"label5";
 			this->label5->Size = System::Drawing::Size(92, 13);
 			this->label5->TabIndex = 9;
@@ -174,7 +217,7 @@ namespace BankProject {
 			// 
 			// accountTextBox
 			// 
-			this->accountTextBox->Location = System::Drawing::Point(71, 143);
+			this->accountTextBox->Location = System::Drawing::Point(71, 195);
 			this->accountTextBox->Name = L"accountTextBox";
 			this->accountTextBox->ReadOnly = true;
 			this->accountTextBox->Size = System::Drawing::Size(421, 20);
@@ -183,7 +226,7 @@ namespace BankProject {
 			// label6
 			// 
 			this->label6->AutoSize = true;
-			this->label6->Location = System::Drawing::Point(12, 146);
+			this->label6->Location = System::Drawing::Point(12, 198);
 			this->label6->Name = L"label6";
 			this->label6->Size = System::Drawing::Size(30, 13);
 			this->label6->TabIndex = 11;
@@ -191,14 +234,15 @@ namespace BankProject {
 			// 
 			// birthdayDateTimePicker
 			// 
-			this->birthdayDateTimePicker->Location = System::Drawing::Point(110, 91);
+			this->birthdayDateTimePicker->Location = System::Drawing::Point(110, 143);
 			this->birthdayDateTimePicker->Name = L"birthdayDateTimePicker";
 			this->birthdayDateTimePicker->Size = System::Drawing::Size(382, 20);
 			this->birthdayDateTimePicker->TabIndex = 17;
+			this->birthdayDateTimePicker->ValueChanged += gcnew System::EventHandler(this, &Client::birthdayDateTimePicker_ValueChanged);
 			// 
 			// valueTextBox
 			// 
-			this->valueTextBox->Location = System::Drawing::Point(71, 169);
+			this->valueTextBox->Location = System::Drawing::Point(71, 221);
 			this->valueTextBox->Name = L"valueTextBox";
 			this->valueTextBox->ReadOnly = true;
 			this->valueTextBox->Size = System::Drawing::Size(421, 20);
@@ -207,59 +251,113 @@ namespace BankProject {
 			// label7
 			// 
 			this->label7->AutoSize = true;
-			this->label7->Location = System::Drawing::Point(12, 172);
+			this->label7->Location = System::Drawing::Point(12, 224);
 			this->label7->Name = L"label7";
 			this->label7->Size = System::Drawing::Size(44, 13);
 			this->label7->TabIndex = 18;
 			this->label7->Text = L"Баланс";
 			// 
-			// button1
+			// saveButton
 			// 
-			this->button1->Location = System::Drawing::Point(12, 404);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(75, 23);
-			this->button1->TabIndex = 21;
-			this->button1->Text = L"Save";
-			this->button1->UseVisualStyleBackColor = true;
+			this->saveButton->Location = System::Drawing::Point(12, 456);
+			this->saveButton->Name = L"saveButton";
+			this->saveButton->Size = System::Drawing::Size(75, 23);
+			this->saveButton->TabIndex = 21;
+			this->saveButton->Text = L"Save";
+			this->saveButton->UseVisualStyleBackColor = true;
+			this->saveButton->Click += gcnew System::EventHandler(this, &Client::saveButton_Click);
 			// 
-			// button2
+			// deleteButton
 			// 
-			this->button2->Location = System::Drawing::Point(204, 404);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(75, 23);
-			this->button2->TabIndex = 22;
-			this->button2->Text = L"Delete";
-			this->button2->UseVisualStyleBackColor = true;
+			this->deleteButton->Location = System::Drawing::Point(93, 456);
+			this->deleteButton->Name = L"deleteButton";
+			this->deleteButton->Size = System::Drawing::Size(75, 23);
+			this->deleteButton->TabIndex = 22;
+			this->deleteButton->Text = L"Delete";
+			this->deleteButton->UseVisualStyleBackColor = true;
+			this->deleteButton->Click += gcnew System::EventHandler(this, &Client::deleteButton_Click);
 			// 
-			// button3
+			// transactionButton
 			// 
-			this->button3->Location = System::Drawing::Point(343, 404);
-			this->button3->Name = L"button3";
-			this->button3->Size = System::Drawing::Size(149, 23);
-			this->button3->TabIndex = 23;
-			this->button3->Text = L"Create transaction";
-			this->button3->UseVisualStyleBackColor = true;
+			this->transactionButton->Location = System::Drawing::Point(343, 456);
+			this->transactionButton->Name = L"transactionButton";
+			this->transactionButton->Size = System::Drawing::Size(149, 23);
+			this->transactionButton->TabIndex = 23;
+			this->transactionButton->Text = L"Create transaction";
+			this->transactionButton->UseVisualStyleBackColor = true;
+			this->transactionButton->Click += gcnew System::EventHandler(this, &Client::transactionButton_Click);
 			// 
-			// dataGridView1
+			// transactionDataGridView
 			// 
-			this->dataGridView1->AllowUserToAddRows = false;
-			this->dataGridView1->AllowUserToDeleteRows = false;
-			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-			this->dataGridView1->Location = System::Drawing::Point(12, 200);
-			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->ReadOnly = true;
-			this->dataGridView1->Size = System::Drawing::Size(480, 198);
-			this->dataGridView1->TabIndex = 24;
+			this->transactionDataGridView->AllowUserToAddRows = false;
+			this->transactionDataGridView->AllowUserToDeleteRows = false;
+			this->transactionDataGridView->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+			this->transactionDataGridView->Location = System::Drawing::Point(12, 252);
+			this->transactionDataGridView->Name = L"transactionDataGridView";
+			this->transactionDataGridView->ReadOnly = true;
+			this->transactionDataGridView->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
+			this->transactionDataGridView->Size = System::Drawing::Size(480, 198);
+			this->transactionDataGridView->TabIndex = 24;
+			// 
+			// passwordTextBox
+			// 
+			this->passwordTextBox->Location = System::Drawing::Point(71, 39);
+			this->passwordTextBox->Name = L"passwordTextBox";
+			this->passwordTextBox->PasswordChar = '*';
+			this->passwordTextBox->Size = System::Drawing::Size(421, 20);
+			this->passwordTextBox->TabIndex = 26;
+			this->passwordTextBox->TextChanged += gcnew System::EventHandler(this, &Client::passwordTextBox_TextChanged);
+			// 
+			// label8
+			// 
+			this->label8->AutoSize = true;
+			this->label8->Location = System::Drawing::Point(12, 42);
+			this->label8->Name = L"label8";
+			this->label8->Size = System::Drawing::Size(45, 13);
+			this->label8->TabIndex = 25;
+			this->label8->Text = L"Пароль";
+			// 
+			// loginTextBox
+			// 
+			this->loginTextBox->Location = System::Drawing::Point(71, 13);
+			this->loginTextBox->Name = L"loginTextBox";
+			this->loginTextBox->Size = System::Drawing::Size(421, 20);
+			this->loginTextBox->TabIndex = 28;
+			this->loginTextBox->TextChanged += gcnew System::EventHandler(this, &Client::loginTextBox_TextChanged);
+			// 
+			// label9
+			// 
+			this->label9->AutoSize = true;
+			this->label9->Location = System::Drawing::Point(12, 16);
+			this->label9->Name = L"label9";
+			this->label9->Size = System::Drawing::Size(38, 13);
+			this->label9->TabIndex = 27;
+			this->label9->Text = L"Логин";
+			// 
+			// addMoneyButton
+			// 
+			this->addMoneyButton->Location = System::Drawing::Point(188, 456);
+			this->addMoneyButton->Name = L"addMoneyButton";
+			this->addMoneyButton->Size = System::Drawing::Size(149, 23);
+			this->addMoneyButton->TabIndex = 29;
+			this->addMoneyButton->Text = L"Add money";
+			this->addMoneyButton->UseVisualStyleBackColor = true;
+			this->addMoneyButton->Click += gcnew System::EventHandler(this, &Client::addMoneyButton_Click);
 			// 
 			// Client
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(504, 441);
-			this->Controls->Add(this->dataGridView1);
-			this->Controls->Add(this->button3);
-			this->Controls->Add(this->button2);
-			this->Controls->Add(this->button1);
+			this->ClientSize = System::Drawing::Size(504, 489);
+			this->Controls->Add(this->addMoneyButton);
+			this->Controls->Add(this->loginTextBox);
+			this->Controls->Add(this->label9);
+			this->Controls->Add(this->passwordTextBox);
+			this->Controls->Add(this->label8);
+			this->Controls->Add(this->transactionDataGridView);
+			this->Controls->Add(this->transactionButton);
+			this->Controls->Add(this->deleteButton);
+			this->Controls->Add(this->saveButton);
 			this->Controls->Add(this->valueTextBox);
 			this->Controls->Add(this->label7);
 			this->Controls->Add(this->birthdayDateTimePicker);
@@ -278,11 +376,52 @@ namespace BankProject {
 			this->MaximizeBox = false;
 			this->Name = L"Client";
 			this->Text = L"Client";
-			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->dataGridView1))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->transactionDataGridView))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
+	private: System::Void saveButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		auto res = viewModel->Save();
+		if (res.size() > 0) {
+			MessageBox::Show(gcnew String(strjoin("\n", res).c_str()), "Error");
+			return;
+		}
+		Close();
+	}
+	// Обработка кнопок и ввода
+
+	private: System::Void deleteButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Remove();
+		Close();
+	}
+	private: System::Void loginTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Login = loginTextBox->Text->Trim();
+	}
+	private: System::Void passwordTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Password = passwordTextBox->Text->Trim();
+	}
+	private: System::Void nameTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Name = nameTextBox->Text->Trim();
+	}
+	private: System::Void surnameTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Surname = surnameTextBox->Text->Trim();
+	}
+	private: System::Void passportTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Passport = passportTextBox->Text->Trim();
+	}
+	private: System::Void birthplaceTextBox_TextChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Birthplace = birthplaceTextBox->Text->Trim();
+	}
+	private: System::Void birthdayDateTimePicker_ValueChanged(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->Birthday = birthdayDateTimePicker->Value.ToString("dd-MM-yyyy");
+	}
+	private: System::Void transactionButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->createTransaction();
+	}
+	private: System::Void addMoneyButton_Click(System::Object^ sender, System::EventArgs^ e) {
+		viewModel->addMoney();
+	}
 	};
 }

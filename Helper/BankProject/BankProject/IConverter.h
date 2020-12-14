@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Accounts.h"
 #include "User.h"
 #include "Transaction.h"
@@ -10,11 +10,18 @@ using namespace BankProject::Models;
 
 namespace BankProject::Data::Converters {
 
+	/// <summary>
+	/// Конвертер для данных из БД
+	/// </summary>
 	class IConverter {
 	public:
 		virtual void* convert(SqlDataReader^ reader) = 0;
 	};
 
+	/// <summary>
+	/// Типизированный конвертер
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<typename T>
 	class Converter : public IConverter {
 	protected:

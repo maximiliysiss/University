@@ -1,9 +1,11 @@
-#pragma once
+﻿#pragma once
 
 using namespace System::Windows::Forms;
 
+// Генерация меню для таблиц
 ContextMenuStrip^ generateContextMenuForDataView(System::EventHandler^ onAddNewElement);
 
+// Функция закрытия окна
 ref class WindowsCloseFunc {
 	Form^ form;
 public:

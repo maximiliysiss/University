@@ -11,7 +11,7 @@ namespace BankProject::ViewModels {
 		Data::IUserRepository* repo;
 		readonly_property(System::Collections::Generic::List<ViewModels::ClientViewModel^>^, clientViewModels);
 
-		set_property(System::Action^, close);
+		set_property(System::Action^, reload);
 
 		void reloadData() {
 
@@ -20,7 +20,7 @@ namespace BankProject::ViewModels {
 			for (auto cl : repo->selectClients()) {
 				clientViewModels->Add(gcnew ViewModels::ClientViewModel(cl, repo));
 			}
-			close();
+			reload();
 		}
 
 		void openClient(ViewModels::ClientViewModel^ vm) {
@@ -38,10 +38,12 @@ namespace BankProject::ViewModels {
 
 		void onAddNewClient() {
 			openClient(gcnew ViewModels::ClientViewModel(Models::UserFactory::createClient(), repo));
+			reloadData();
 		}
 
 		void onOpenClient(int index) {
 			openClient(clientViewModels[index]);
+			reloadData();
 		}
 
 	};

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "DirectorViewModel.h"
 #include "WorkerViewModel.h"
 #include "WindowsFunctionWrapper.h"
@@ -35,13 +35,21 @@ namespace BankProject {
 		}
 
 	private:
+	/// <summary>
+	/// Добавить департамент
+	/// </summary>
 	private: System::Void onAddNewDepartment(System::Object^ sender, System::EventArgs^ e) {
 		viewModel->onAddNewDepartment();
 	}
+	/// <summary>
+	/// Добавить рабочего
+	/// </summary>
 	private: System::Void onAddNewWorker(System::Object^ sender, System::EventArgs^ e) {
 		viewModel->onAddNewWorker();
 	}
-
+	/// <summary>
+	/// Обновить данные
+	/// </summary>
 	private: System::Void ReloadData() {
 		this->departmentDataGridView->DataSource = viewModel->GetDepRepos();
 		this->usersDataGridView->DataSource = viewModel->GetWorkerRepos();

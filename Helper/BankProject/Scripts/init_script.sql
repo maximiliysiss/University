@@ -112,8 +112,17 @@ CREATE PROCEDURE sp_create_transaction(
 	)
 AS
 BEGIN  
+	DECLARE @isCan int = 0
 	BEGIN TRY
-		BEGIN TRANSACTION	
+		BEGIN TRANSACTION
+		SET @isCan = CASE
+        				WHEN EXISTS(SELECT 1 from [dbo].[Accounts] WHERE Id = @fromAccountId and Value > @value) THEN 1
+                        ELSE 0
+                     END
+        IF @isCan = 0 
+		BEGIN 
+			THROW 51000, 'Not enough money', 1
+		END
 		INSERT INTO [dbo].[Transactions](FromAccountId, ToAccountId, Value, ExecutorId) values (@fromAccountId, @toAccountId, @value, @executor)
 		UPDATE [dbo].[Accounts] set Value = Value - @value WHERE Id = @fromAccountId
 		UPDATE [dbo].[Accounts] set Value = Value + @value WHERE Id = @toAccountId

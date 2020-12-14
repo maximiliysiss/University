@@ -6,7 +6,7 @@ Control^ BankProject::Forms::Common::getMainControl(Models::Role role) {
 
 	switch (role) {
 	case Models::Role::Client:
-		return gcnew ClientControl();
+		return gcnew ClientControl(gcnew ViewModels::CurrentViewModel(ioc.resolve<Data::IUserRepository>(), ioc.resolve<Data::IAccountRepository>(), ioc.resolve<Data::ITransactionRepository>()));
 	case Models::Role::Manager:
 		return gcnew ManagerControl(gcnew ViewModels::ManagerViewModel(ioc.resolve<Data::IUserRepository>()));
 	case Models::Role::TechDirector:

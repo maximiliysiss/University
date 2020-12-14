@@ -1,10 +1,11 @@
-#pragma once
+﻿#pragma once
 #include <map>
 #include <string>
 #include <typeinfo>
 
 namespace BankProject::Commons {
 
+	// Контейнер для DIP
 	class IOContainer {
 
 	private:

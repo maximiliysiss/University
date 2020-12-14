@@ -116,11 +116,15 @@
     <ClCompile Include="AuthViewModel.cpp" />
     <ClCompile Include="Client.cpp" />
     <ClCompile Include="ClientControl.cpp" />
+    <ClCompile Include="ClientViewModel.cpp" />
     <ClCompile Include="Commons.cpp" />
+    <ClCompile Include="CreateTransaction.cpp" />
+    <ClCompile Include="CreateTransactionViewModel.cpp" />
     <ClCompile Include="Crypto.cpp" />
     <ClCompile Include="DataContext.cpp" />
     <ClCompile Include="Department.cpp" />
     <ClCompile Include="DirectorControl.cpp" />
+    <ClCompile Include="EnterData.cpp" />
     <ClCompile Include="MainFormFactory.cpp" />
     <ClCompile Include="ManagerControl.cpp" />
     <ClCompile Include="Repositories.cpp" />
@@ -152,7 +156,12 @@
     <ClInclude Include="ClientViewModel.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Config.h" />
+    <ClInclude Include="CreateTransaction.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="CreateTransactionViewModel.h" />
     <ClInclude Include="Crypto.h" />
+    <ClInclude Include="CurrentClientViewModel.h" />
     <ClInclude Include="DataContext.h" />
     <ClInclude Include="defines.h" />
     <ClInclude Include="Departament.h" />
@@ -164,6 +173,9 @@
       <FileType>CppControl</FileType>
     </ClInclude>
     <ClInclude Include="DirectorViewModel.h" />
+    <ClInclude Include="EnterData.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="IConverter.h" />
     <ClInclude Include="MainFormFactory.h" />
     <ClInclude Include="ManagerControl.h">
@@ -205,11 +217,17 @@
     <EmbeddedResource Include="ClientControl.resx">
       <DependentUpon>ClientControl.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CreateTransaction.resx">
+      <DependentUpon>CreateTransaction.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Department.resx">
       <DependentUpon>Department.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DirectorControl.resx">
       <DependentUpon>DirectorControl.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EnterData.resx">
+      <DependentUpon>EnterData.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.h</DependentUpon>

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <fstream>
 #include <json/json.h>
 #include <exception>
@@ -6,6 +6,7 @@
 
 namespace BankProject::Commons {
 
+	// Конфиг для программы
 	class Config {
 
 		readonly_property(std::string, connectionString);

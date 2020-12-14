@@ -12,6 +12,10 @@ using namespace BankProject::Models;
 
 namespace BankProject::Data {
 
+	/// <summary>
+	/// Базовый репозиторий
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	template<typename T>
 	class IBaseRepository {
 	protected:
@@ -34,6 +38,8 @@ namespace BankProject::Data {
 		virtual User* getByLoginPassword(std::string login, std::string password) = 0;
 		virtual std::list<User*> selectWorkers() = 0;
 		virtual std::list<User*> selectClients() = 0;
+		virtual void createClient(User obj) = 0;
+		virtual User* getUserByAccountId(int id) = 0;
 	};
 
 	class UserRepository : public IUserRepository {
@@ -57,6 +63,14 @@ namespace BankProject::Data {
 
 		virtual std::list<User*> selectClients() override;
 
+
+		// Inherited via IUserRepository
+		virtual void createClient(User obj) override;
+
+
+		// Inherited via IUserRepository
+		virtual User* getUserByAccountId(int id) override;
+
 	};
 
 	class IAccountRepository : public IBaseRepository<Account> {
@@ -67,12 +81,16 @@ namespace BankProject::Data {
 	public:
 		virtual void update(Account obj) = 0;
 		virtual Account* getById(int id) = 0;
+		virtual void addMoney(int id, double value) = 0;
 	};
 
 	class AccountRepository : public IAccountRepository {
 	public:
 		virtual void update(Account obj) override;
 		virtual Account* getById(int id) override;
+
+		// Inherited via IAccountRepository
+		virtual void addMoney(int id, double value) override;
 	};
 
 	class ITransactionRepository : public IBaseRepository<Transaction> {

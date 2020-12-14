@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "defines.h"
 
 namespace BankProject::Models {
@@ -22,6 +22,9 @@ namespace BankProject::Models {
 		auto_property(int, departmentId);
 	};
 
+	/// <summary>
+	/// Фабрика пользователей
+	/// </summary>
 	class UserFactory {
 	public:
 		static User* createWorker() {

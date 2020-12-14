@@ -1,6 +1,5 @@
-#pragma once
+﻿#pragma once
 #include "IOContainer.h"
-#include "UserContext.h"
 #include "MainFormFactory.h"
 
 namespace BankProject {
@@ -24,7 +23,11 @@ namespace BankProject {
 		{
 			InitializeComponent();
 
-			Control^ control = BankProject::Forms::Common::getMainControl(IOContainer::getInstance().resolve<UserContext>()->get_role());
+			/// <summary>
+			/// Заполним контролов для пользователя
+			/// </summary>
+			/// <param name=""></param>
+			Control^ control = BankProject::Forms::Common::getMainControl(IOContainer::getInstance().resolve<Commons::UserContext>()->get_role());
 			control->Dock = DockStyle::Fill;
 			Controls->Add(control);
 		}

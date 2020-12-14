@@ -70,6 +70,12 @@
     <Filter Include="Source Files\Forms\Models">
       <UniqueIdentifier>{07bdba71-b4e0-4a23-9002-17763cf18346}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Forms\Actions">
+      <UniqueIdentifier>{d376a3c8-e673-40c1-a81a-a817283a89f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Actions">
+      <UniqueIdentifier>{53538285-07ae-46ed-be60-1ffde276838d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +128,18 @@
     </ClCompile>
     <ClCompile Include="WindowsFunctionWrapper.cpp">
       <Filter>Source Files\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTransaction.cpp">
+      <Filter>Source Files\Forms\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientViewModel.cpp">
+      <Filter>Source Files\ViewModels</Filter>
+    </ClCompile>
+    <ClCompile Include="EnterData.cpp">
+      <Filter>Source Files\Forms\Actions</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTransactionViewModel.cpp">
+      <Filter>Source Files\ViewModels</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -213,6 +231,18 @@
       <Filter>Header Files\ViewModels</Filter>
     </ClInclude>
     <ClInclude Include="TransactionViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTransaction.h">
+      <Filter>Header Files\Forms\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTransactionViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterData.h">
+      <Filter>Header Files\Forms\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CurrentClientViewModel.h">
       <Filter>Header Files\ViewModels</Filter>
     </ClInclude>
   </ItemGroup>

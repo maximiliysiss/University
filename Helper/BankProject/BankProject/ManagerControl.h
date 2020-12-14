@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "ManagerViewModel.h"
 
 using namespace System;
@@ -24,13 +24,23 @@ namespace BankProject {
 
 			InitializeComponent();
 
-			usersDataGridView->DataSource = viewModel->get_clientViewModels();
 			usersDataGridView->ContextMenuStrip = generateContextMenuForDataView(gcnew EventHandler(this, &ManagerControl::onAddNewClient));
 
+			viewModel->set_reload(gcnew Action(this, &ManagerControl::reloadData));
+			viewModel->load();
 		}
 
+	/// <summary>
+	/// Добавить клиента
+	/// </summary>
 	private: System::Void onAddNewClient(System::Object^ sender, System::EventArgs^ e) {
 		viewModel->onAddNewClient();
+	}
+	/// <summary>
+	/// Обновить данные
+	/// </summary>
+	private: void reloadData() {
+		usersDataGridView->DataSource = viewModel->get_clientViewModels();
 	}
 
 	protected:
@@ -113,6 +123,7 @@ namespace BankProject {
 			this->usersDataGridView->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
 			this->usersDataGridView->Size = System::Drawing::Size(766, 371);
 			this->usersDataGridView->TabIndex = 0;
+			this->usersDataGridView->CellDoubleClick += gcnew System::Windows::Forms::DataGridViewCellEventHandler(this, &ManagerControl::usersDataGridView_CellDoubleClick);
 			// 
 			// ManagerControl
 			// 
@@ -128,5 +139,8 @@ namespace BankProject {
 
 		}
 #pragma endregion
+	private: System::Void usersDataGridView_CellDoubleClick(System::Object^ sender, System::Windows::Forms::DataGridViewCellEventArgs^ e) {
+		viewModel->onOpenClient(e->RowIndex);
+	}
 	};
 }

@@ -44,6 +44,10 @@ namespace BankProject::ViewModels {
 			return Id <= 0;
 		}
 
+		/// <summary>
+		/// BackOffice?
+		/// </summary>
+		/// <returns></returns>
 		bool isDefault() {
 			return Id == 1;
 		}

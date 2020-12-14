@@ -1,11 +1,13 @@
-#pragma once
+﻿#pragma once
 #include <string>
 #include <list>
 
 using namespace System;
 
+// Конвертация System::String -> std::string
 std::string toStdString(String^ str);
 
+// join strings to one with separator
 std::string strjoin(const char* separator);
 
 template<typename T, typename... Targs>
