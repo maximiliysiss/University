@@ -19,9 +19,9 @@ void BankProject::Data::UserRepository::insert(User obj) {
 		(sqlstring(obj.get_name()) + ",") +
 		(sqlstring(obj.get_surname()) + ",") +
 		(sqlstring(obj.get_passport()) + ",") +
-		(sqlstring(obj.get_birthdate()) + ",") +
+		(tosqldatetime(obj.get_birthdate()) + ",") +
 		(sqlstring(obj.get_birthplace()) + ",") +
-		(str(obj.get_departmentId()));
+		(str(obj.get_departmentId())) + ")";
 	this->context->execute(query);
 }
 
