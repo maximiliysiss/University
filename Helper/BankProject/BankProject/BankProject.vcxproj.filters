@@ -1,0 +1,212 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Forms">
+      <UniqueIdentifier>{f01b7425-8440-4c67-ad94-e2012bdcc270}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data">
+      <UniqueIdentifier>{ac7df90c-35cb-41ae-a9c2-1910e194d7de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Models">
+      <UniqueIdentifier>{7ef6b309-b4ac-4d86-b916-3ed53139b059}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Commons">
+      <UniqueIdentifier>{04d4c29b-c2f7-4a2d-8adf-2fb572987af6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Services">
+      <UniqueIdentifier>{603dd28e-3062-4eb5-a1e4-64ad6d12c08f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ViewModels">
+      <UniqueIdentifier>{bf99681c-31a8-4700-834a-1f352ef701e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms">
+      <UniqueIdentifier>{83bfab26-59a3-4083-bc1e-d311231dda34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Data">
+      <UniqueIdentifier>{4e887174-9585-4106-9d61-c5550e12cc28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ViewModels">
+      <UniqueIdentifier>{833737c9-8081-4e3b-b86f-3f932bc42111}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Services">
+      <UniqueIdentifier>{b06c9aa5-e2fe-4ed0-b43b-f6702a7c2d94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Data\Converters">
+      <UniqueIdentifier>{79b8b4b8-cd2d-4bff-8804-ba20d1894016}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commons">
+      <UniqueIdentifier>{e9a581f8-1e29-4a9e-86d9-d957f69aa99f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms\Controls">
+      <UniqueIdentifier>{13db54e8-52ec-4251-bcc4-edcf76c2640d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms\Common">
+      <UniqueIdentifier>{66a82854-a032-4b3b-9f94-ada1e453f5a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Forms\Common">
+      <UniqueIdentifier>{52e7b5d2-ea91-4e58-a267-ac8400f071a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms\Models">
+      <UniqueIdentifier>{a6f74fd8-5e94-4be9-90b4-28f09c19c4a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Forms\Actions">
+      <UniqueIdentifier>{d376a3c8-e673-40c1-a81a-a817283a89f4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DataContext.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Repositories.cpp">
+      <Filter>Source Files\Data</Filter>
+    </ClCompile>
+    <ClCompile Include="IOContainer.cpp">
+      <Filter>Source Files\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Commons.cpp">
+      <Filter>Source Files\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="Crypto.cpp">
+      <Filter>Source Files\Services</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFormFactory.cpp">
+      <Filter>Source Files\Forms\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthViewModel.cpp">
+      <Filter>Source Files\ViewModels</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowsFunctionWrapper.cpp">
+      <Filter>Source Files\Commons</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientViewModel.cpp">
+      <Filter>Source Files\ViewModels</Filter>
+    </ClCompile>
+    <ClCompile Include="CreateTransactionViewModel.cpp">
+      <Filter>Source Files\ViewModels</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AuthForm.h">
+      <Filter>Header Files\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="MainForm.h">
+      <Filter>Header Files\Forms</Filter>
+    </ClInclude>
+    <ClInclude Include="DataContext.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="User.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="defines.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Accounts.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Transaction.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="IOContainer.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Config.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Commons.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="IConverter.h">
+      <Filter>Header Files\Data\Converters</Filter>
+    </ClInclude>
+    <ClInclude Include="Repositories.h">
+      <Filter>Header Files\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Crypto.h">
+      <Filter>Header Files\Services</Filter>
+    </ClInclude>
+    <ClInclude Include="UserContext.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFormFactory.h">
+      <Filter>Header Files\Forms\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerControl.h">
+      <Filter>Header Files\Forms\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientControl.h">
+      <Filter>Header Files\Forms\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectorControl.h">
+      <Filter>Header Files\Forms\Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="ManagerViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectorViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowsFunctionWrapper.h">
+      <Filter>Header Files\Commons</Filter>
+    </ClInclude>
+    <ClInclude Include="Worker.h">
+      <Filter>Header Files\Forms\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>Header Files\Forms\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Department.h">
+      <Filter>Header Files\Forms\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="Departament.h">
+      <Filter>Header Files\Models</Filter>
+    </ClInclude>
+    <ClInclude Include="DepartmentViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="WorkerViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="TransactionViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTransaction.h">
+      <Filter>Header Files\Forms\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateTransactionViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+    <ClInclude Include="EnterData.h">
+      <Filter>Header Files\Forms\Actions</Filter>
+    </ClInclude>
+    <ClInclude Include="CurrentClientViewModel.h">
+      <Filter>Header Files\ViewModels</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="config.json">
+      <Filter>Resource Files</Filter>
+    </Text>
+  </ItemGroup>
+</Project>
