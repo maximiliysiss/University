@@ -56,7 +56,7 @@ public class ChatServer extends Thread implements Serverable {
     public void run() {
         super.run();
 
-        System.out.println("Try start server");
+        System.out.println("Try start server " + ip + ":" + port);
 
         try {
             InetAddress inetAddress = InetAddress.getByName(ip);

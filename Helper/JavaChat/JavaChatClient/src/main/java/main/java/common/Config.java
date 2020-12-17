@@ -3,6 +3,7 @@ package main.java.common;
 import com.google.gson.Gson;
 import org.apache.commons.io.IOUtils;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
@@ -41,7 +42,7 @@ public class Config {
      */
     public static Config readConfig(String path) {
 
-        try (InputStream inputStream = ClassLoader.getSystemClassLoader().getResourceAsStream(path)) {
+        try (InputStream inputStream = new FileInputStream(path)) {
             Gson gson = new Gson();
             return gson.fromJson(IOUtils.toString(inputStream, StandardCharsets.UTF_8), Config.class);
         } catch (IOException e) {
