@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+    <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700'>
+    <link rel='stylesheet' href="lib/slick/slick.css">
+    <link rel='stylesheet' href='lib/slick/slick-theme.css'>
+    <link rel="stylesheet" href="lib/cards/css/cards.css">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+    <link rel="importer" href="pages/shared/header-navigation.html">
+    <link rel="importer" href="pages/shared/car-table.html" onafterload="onLoadTable">
+    <link rel="importer" href="pages/shared/footer.html">
+</body>
+
+<script src="lib/jquery/jquery.min.js"></script>
+<script src="lib/bootstrap/js/bootstrap.min.js"></script>
+<script src='lib/slick/slick.min.js'></script>
+<script src='lib/cards/js/cards.js'></script>
+<script src="js/importer.js"></script>
+<script src="js/filters.js"></script>
+<script src="js/data.js"></script>
+<script src="js/ui-constructor.js"></script>
+
+<script>
+    function onLoadTable(htmlElement) {
+        htmlElement = $("#car-table");
+        loadedData = getData();
+        initUICarTable(loadedData, htmlElement);
+    }
+</script>
+
+</html>

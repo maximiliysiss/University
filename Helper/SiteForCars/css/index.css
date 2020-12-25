@@ -1,0 +1,44 @@
+body,
+html {
+    padding: 0;
+    margin: 0;
+    font-family: 'Roboto Light', sans-serif;
+}
+
+svg {
+    vertical-align: baseline;
+}
+
+.car-table {
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.footer {
+    background: rgb(248, 249, 250);
+    width: 100%;
+    padding: 20px;
+    font-weight: lighter;
+}
+
+.used-line {
+    top: 0;
+    left: 0;
+    width: 100%;
+    position: absolute;
+    padding: 10px;
+    background: #FFA07A;
+    font-weight: bolder;
+}
+
+.filter {
+    border: 1px solid rgba(0, 0, 0, .125);
+    margin-left: 10px;
+}
+
+.filter-active {
+    background: rgba(0, 0, 0, .125);
+}
+
+.filter-body>div {
+    margin-bottom: 10px;
+}
