@@ -18,7 +18,7 @@ namespace SiteCarAsp.Services
                 MapperConfiguration mapperConfiguration = new MapperConfiguration(x =>
                 {
                     x.CreateMap<CreateCreditRequest, CreditsViewModel>();
-                    x.CreateMap<CreateTestDriveRequest, TestDriveService>();
+                    x.CreateMap<CreateTestDriveRequest, TestDriveViewModel>();
 
                     x.CreateMap<CreateCreditRequest, Credit>();
                     x.CreateMap<CreateTestDriveRequest, TestDrive>();

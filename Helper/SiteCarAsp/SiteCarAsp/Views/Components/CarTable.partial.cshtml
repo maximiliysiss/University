@@ -1,13 +1,9 @@
 ﻿@model IEnumerable<SiteCarAsp.Models.CarInformation>
 @inject SiteCarAsp.Services.ColorService colorService;
 
-@{ 
-    bool isAnyUsed = Model.Any(x => x.Used);
-}
-
 @foreach (var car in Model)
 {
-    <div class="shop-card @(isAnyUsed ? "car-used": "")">
+    <div class="shop-card @(car.Used ? "car-used": "")">
         <div class="title">
             @car.Name
         </div>
