@@ -7,7 +7,6 @@ import java.util.Map;
  * HardCode контейнер. Singleton
  */
 public class IOContainer implements IContainer {
-    private static IOContainer ioContainer;
 
     public IOContainer() {
     }

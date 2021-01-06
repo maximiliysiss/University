@@ -60,7 +60,11 @@ namespace SiteCarAsp.Services
                 Directory.CreateDirectory(directoryPath);
 
             using var fs = new FileStream(filePath, FileMode.OpenOrCreate);
-            await JsonSerializer.SerializeAsync(fs, cache);
+            var jsonOptions = new JsonSerializerOptions
+            {
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+            };
+            await JsonSerializer.SerializeAsync(fs, cache, jsonOptions);
         }
     }
 }

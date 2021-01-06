@@ -5,7 +5,6 @@ import com.example.plantsdictionary.data.models.FamilyPlant;
 import com.example.plantsdictionary.data.models.Favorite;
 import com.example.plantsdictionary.data.models.Plants;
 import com.example.plantsdictionary.infrastructure.threads.Future;
-import com.example.plantsdictionary.infrastructure.threads.Job;
 import com.example.plantsdictionary.interfaces.DataProvider;
 
 import java.util.List;
@@ -78,7 +77,7 @@ public class ComplexDataProvider implements DataProvider {
     @Override
     public void insertFavorite(Favorite favorite) {
         try {
-            new Job(x -> localDatabase.daoFavorites().insert(favorite)).join();
+            new Thread(() -> localDatabase.daoFavorites().insert(favorite)).join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -92,7 +91,7 @@ public class ComplexDataProvider implements DataProvider {
     @Override
     public void deleteFavorite(int plantId) {
         try {
-            new Job(x -> localDatabase.daoFavorites().delete(plantId)).join();
+            new Thread(() -> localDatabase.daoFavorites().delete(plantId)).join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
