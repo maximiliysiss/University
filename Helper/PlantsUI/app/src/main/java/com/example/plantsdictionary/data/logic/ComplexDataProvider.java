@@ -77,7 +77,9 @@ public class ComplexDataProvider implements DataProvider {
     @Override
     public void insertFavorite(Favorite favorite) {
         try {
-            new Thread(() -> localDatabase.daoFavorites().insert(favorite)).join();
+            Thread th = new Thread(() -> localDatabase.daoFavorites().insert(favorite));
+            th.start();
+            th.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -91,7 +93,9 @@ public class ComplexDataProvider implements DataProvider {
     @Override
     public void deleteFavorite(int plantId) {
         try {
-            new Thread(() -> localDatabase.daoFavorites().delete(plantId)).join();
+            Thread th = new Thread(() -> localDatabase.daoFavorites().delete(plantId));
+            th.start();
+            th.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
