@@ -9,9 +9,22 @@ using System.Threading.Tasks;
 
 namespace RockShop.Services
 {
+    /// <summary>
+    /// Сервис авторизации
+    /// </summary>
     public interface IAuthService
     {
+        /// <summary>
+        /// Войти
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         Task<bool> LoginAsync(string login, string password);
+        /// <summary>
+        /// Выйти
+        /// </summary>
+        /// <returns></returns>
         Task LogoutAsync();
     }
 

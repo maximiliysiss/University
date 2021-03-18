@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RockShop.Services
 {
+    /// <summary>
+    /// Сервис для камней (CRUD операции)
+    /// </summary>
     public interface IRockService
     {
         Task<IEnumerable<Rock>> GetRocksAsync();

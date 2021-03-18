@@ -2,8 +2,16 @@
 
 namespace RockShop.Services
 {
+    /// <summary>
+    /// Сервис шифрования
+    /// </summary>
     public interface ICryptService
     {
+        /// <summary>
+        /// mD5 хеширование
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         string CreateMD5(string input);
     }
 

@@ -6,9 +6,22 @@ using System.Threading.Tasks;
 
 namespace RockShop.Services
 {
+    /// <summary>
+    /// Сервис заказов
+    /// </summary>
     public interface IOrderService
     {
+        /// <summary>
+        /// Добавить новый заказ
+        /// </summary>
+        /// <param name="orderId"></param>
+        /// <param name="orderCount"></param>
+        /// <returns></returns>
         Task<bool> AddOrderAsync(int orderId, int orderCount);
+        /// <summary>
+        /// Получить все заказы
+        /// </summary>
+        /// <returns></returns>
         Task<IEnumerable<Order>> GetOrdersAsync();
     }
 

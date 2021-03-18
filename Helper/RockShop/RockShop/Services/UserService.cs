@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace RockShop.Services
 {
+    /// <summary>
+    /// Сервис для пользователей (CRUD операции)
+    /// </summary>
     public interface IUserService
     {
         Task<IEnumerable<User>> GetUsersAsync();

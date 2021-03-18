@@ -2,6 +2,9 @@
 
 namespace RockShop.Data.Models
 {
+    /// <summary>
+    /// Пользователь
+    /// </summary>
     public class User
     {
         public long Id { get; set; }

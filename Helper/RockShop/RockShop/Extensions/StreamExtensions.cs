@@ -5,6 +5,11 @@ namespace RockShop.Extensions
 {
     public static class StreamExtensions
     {
+        /// <summary>
+        /// Конвертация Stream -> byte[]
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         public static async Task<byte[]> ToByteArrayAsync(this Stream input)
         {
             byte[] buffer = new byte[16 * 1024];

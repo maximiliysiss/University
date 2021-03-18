@@ -2,6 +2,9 @@
 
 namespace RockShop.Models
 {
+    /// <summary>
+    /// Модель Создать заказ
+    /// </summary>
     public class CreateOrderRequest
     {
         [Required(ErrorMessage = "Обязательное поле")]

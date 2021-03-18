@@ -4,6 +4,9 @@ using RockShop.Services;
 
 namespace RockShop.Data
 {
+    /// <summary>
+    /// Контекст данных для БД
+    /// </summary>
     public class DatabaseContext : DbContext
     {
         private readonly ICryptService cryptService;
@@ -21,6 +24,7 @@ namespace RockShop.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Сразу создадим админа
             modelBuilder.Entity<User>(x =>
             {
                 x.HasData(new User { Id = 1, Login = "admin", PasswordHash = cryptService.CreateMD5("admin") });

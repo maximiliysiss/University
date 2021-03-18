@@ -4,6 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RockShop.Areas.Admin.ViewModels.Rocks
 {
+    /// <summary>
+    /// Модель редакатирования камня
+    /// </summary>
     public class EditRockRequest
     {
         [Required(ErrorMessage = "Обязательное поле")]

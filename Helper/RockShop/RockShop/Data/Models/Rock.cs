@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RockShop.Data.Models
 {
+    /// <summary>
+    /// Камень
+    /// </summary>
     public class Rock
     {
         public long Id { get; set; }
