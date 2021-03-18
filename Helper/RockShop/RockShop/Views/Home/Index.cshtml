@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<RockShop.Data.Models.Rock>
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = RockShop.Properties.Resource.Home;
 }
 
 <div class="text-center d-flex flex-row flex-wrap">
@@ -12,7 +12,7 @@
                 <img src="data:image/png;base64, @item.Image" alt="Avatar" style="width:80%">
                 <h5>@item.Description</h5>
                 <h5>@item.Price</h5>
-                <button class="w3-button w3-white w-100 js-order" id="@item.Id" data-id="@item.Id" data-name="@item.Name">Order</button>
+                <button class="w3-button w3-white w-100 js-order" id="@item.Id" data-id="@item.Id" data-name="@item.Name">@RockShop.Properties.Resource.CreateOrder</button>
             </div>
         </div>
     }
@@ -22,23 +22,23 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New order</h5>
+                <h5 class="modal-title" id="exampleModalLabel">@RockShop.Properties.Resource.NewOrder</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form asp-action="CreateOrder">
-                <input type="hidden" id="orderid" />
+            <form asp-action="CreateOrder" asp-controller="Order">
+                <input type="hidden" id="orderid" name="orderid" />
                 <div class="modal-body">
-                    <p>Item: <span id="order-item"></span></p>
+                    <p>@RockShop.Properties.Resource.Item: <span id="order-item"></span></p>
                     <div>
-                        <p>Count:</p>
-                        <input type="number" id="ordercount" />
+                        <p>@RockShop.Properties.Resource.Count:</p>
+                        <input type="number" id="ordercount" name="ordercount" />
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Confirm order</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">@RockShop.Properties.Resource.Close</button>
+                    <button type="submit" class="btn btn-success">@RockShop.Properties.Resource.ConfirmOrder</button>
                 </div>
             </form>
         </div>
@@ -55,7 +55,7 @@
             $('.js-order').on('click', function () {
                 $('#ordercount').val(0);
                 $('#order-item').html($(this).attr('data-name'));
-                $('#orderid').html($(this).attr('data-id'));
+                $('#orderid').val($(this).attr('data-id'));
 
                 modalWnd.modal('show');
             });
@@ -80,10 +80,10 @@
             "hideMethod": "fadeOut"
         };
 
-        @if(ViewBag.Message != null)
+        @if(TempData["Message"] is string message)
         {
             <text>
-                toastr["@(ViewBag.MessageType ?? "success")"]("@ViewBag.Message");
+                toastr["@((string)TempData["MessageType"] ?? "success")"]("@message");
             </text>
         }
 

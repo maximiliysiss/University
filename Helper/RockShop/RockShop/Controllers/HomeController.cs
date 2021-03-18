@@ -20,13 +20,6 @@ namespace RockShop.Controllers
             return View(await rockService.GetRocksAsync());
         }
 
-        public async Task<IActionResult> CreateOrder()
-        {
-            ViewBag.Message = "Order created";
-            ViewBag.MessageType = "success";
-            return View("Index", await rockService.GetRocksAsync());
-        }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

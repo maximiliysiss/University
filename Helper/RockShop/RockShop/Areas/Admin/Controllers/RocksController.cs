@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RockShop.Areas.Admin.ViewModels.Rocks;
 using RockShop.Data.Models;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 namespace RockShop.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
     public class RocksController : Controller
     {
         private readonly IRockService rockService;

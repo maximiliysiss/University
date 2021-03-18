@@ -1,14 +1,12 @@
 ﻿@model IEnumerable<RockShop.Data.Models.User>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = RockShop.Properties.Resource.User;
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">@RockShop.Properties.Resource.Create</a>
 </p>
 <table class="table">
     <thead>
@@ -33,9 +31,9 @@
                     @Html.DisplayFor(modelItem => item.PasswordHash)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.Id">@RockShop.Properties.Resource.Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">@RockShop.Properties.Resource.Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">@RockShop.Properties.Resource.Delete</a>
                 </td>
             </tr>
         }
