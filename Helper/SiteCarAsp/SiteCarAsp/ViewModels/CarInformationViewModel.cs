@@ -4,6 +4,12 @@ using System.Linq;
 
 namespace SiteCarAsp.ViewModels
 {
+    public class Filter
+    {
+        public string Caption { get; set; }
+        public string Field { get; set; }
+    }
+
     /// <summary>
     /// Модель вьюхи для машин
     /// </summary>
@@ -17,11 +23,11 @@ namespace SiteCarAsp.ViewModels
         /// <summary>
         /// Фильтры
         /// </summary>
-        public Dictionary<string, IEnumerable<string>> Filters
-            => new Dictionary<string, IEnumerable<string>>
+        public Dictionary<Filter, IEnumerable<string>> Filters
+            => new Dictionary<Filter, IEnumerable<string>>
             {
-                { "type", Cars.Select(x=>x.Type).Distinct() },
-                { "body", Cars.Select(x=>x.Body).Distinct() }
+                { new Filter{ Caption = "Тип", Field = "type" }, Cars.Select(x=>x.Type).Distinct() },
+                { new Filter{ Caption = "Кузов", Field = "body" }, Cars.Select(x=>x.Body).Distinct() }
             };
 
         /// <summary>
