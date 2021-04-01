@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +10,9 @@ using RockShop.Services;
 
 namespace RockShop
 {
+    /// <summary>
+    /// Настройка приложения
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -19,7 +22,7 @@ namespace RockShop
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // Конфигурация сервисов
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DatabaseContext>(x => x.UseSqlServer(Configuration.GetConnectionString("ConnectionString")));
@@ -41,7 +44,7 @@ namespace RockShop
             services.AddControllersWithViews();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Конфигурация конвейера
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
